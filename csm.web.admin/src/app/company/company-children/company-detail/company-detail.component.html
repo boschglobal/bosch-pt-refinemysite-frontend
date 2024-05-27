@@ -1,0 +1,19 @@
+<div class="ss-company-detail">
+    <div class="ss-company-detail__header">
+        <h1>{{company.name}}</h1>
+    </div>
+    <div class="ss-company-detail__content">
+        <nav mat-tab-nav-bar [tabPanel]="tabPanel" mat-align-tabs="start" class="ss-navbar">
+            <a *ngFor="let tab of routes"
+               mat-tab-link
+               [routerLink]="tab.routerLink"
+               [active]="RouterLinkActive.isActive"
+               routerLinkActive
+               #RouterLinkActive="routerLinkActive">
+                <span>{{tab.label | translate}}</span>
+            </a>
+        </nav>
+        <router-outlet class="ss-company-detail__tab-content"></router-outlet>
+    </div>
+</div>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

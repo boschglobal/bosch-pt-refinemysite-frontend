@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-snackbar">
+    <mat-icon aria-hidden="false" aria-label="Warning Icon" class="ss-snackbar__icon">warning</mat-icon>
+    <span class="ss-snackbar__content">
+        <ng-container *ngIf="data.message?.key">
+            {{data.message?.key | translate:data.message?.params}}
+        </ng-container>
+        <ng-container *ngIf="data.message?.text">
+            {{data.message?.text}}
+        </ng-container>
+    </span>
+</div>

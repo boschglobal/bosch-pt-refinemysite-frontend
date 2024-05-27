@@ -1,0 +1,26 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "src/assets/styles/constants/index";
+
+.ss-supergraphic {
+    position: relative;
+    width: 100%;
+    z-index: $z-index_1000;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url('../../../../../assets/images/supergraphic.png');
+        background-size: cover;
+        height: $supergraphic-height;
+        width: 100%;
+        z-index: $z-index_10000;
+    }
+}

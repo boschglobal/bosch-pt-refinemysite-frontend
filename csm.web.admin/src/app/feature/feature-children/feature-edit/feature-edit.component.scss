@@ -1,0 +1,18 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "../../../../assets/styles/constants/index";
+
+.ss-feature-edit {
+    padding: $base-dimension--x2;
+
+    &__title {
+        font-family: BoschBold, sans-serif;
+        font-size: $font-size-lg;
+    }
+}

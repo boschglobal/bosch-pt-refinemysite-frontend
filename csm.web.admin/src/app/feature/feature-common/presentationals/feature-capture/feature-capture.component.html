@@ -1,0 +1,31 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="capture-wrapper ss-feature-capture">
+    <form [formGroup]="form">
+        <section>
+            <mat-form-field *ngIf="isCreating" class="ss-feature-capture__name-field">
+                <mat-label>{{ 'FeatureResource_Name' | translate}}</mat-label>
+                <input matInput formControlName="name"/>
+            </mat-form-field>
+            <mat-form-field *ngIf="!isCreating" class="ss-feature-capture__status-field">
+                <mat-label>{{ 'FeatureResource_Status' | translate}}</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let status of statusList" [value]="status[0]">
+                        {{status[1]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section class="capture-wrapper__footer">
+            <button type="button" mat-raised-button (click)="handleCancel()">{{ 'Generic_Cancel' | translate }}</button>
+            <button type="submit" mat-raised-button color="primary" (click)="handleSubmit()"
+                    [disabled]="!form.valid || isSubmitting">{{ 'Generic_Save' | translate }}</button>
+        </section>
+    </form>
+</div>

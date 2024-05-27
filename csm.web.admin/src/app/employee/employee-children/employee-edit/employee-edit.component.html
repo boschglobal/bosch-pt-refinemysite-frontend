@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+  <div class="ss-employee-edit">
+    <h2 class="ss-employee-edit__title" *ngIf="!dataConfig.isCompanyAssignment">{{'EmployeeCaptureComponent_TitleEdit' | translate}}</h2>
+    <h2 class="ss-employee-edit__title" *ngIf="dataConfig.isCompanyAssignment">{{'UserListComponent_AssignCompany_Label' | translate}}</h2>
+    <ss-employee-capture
+            [mode]="mode"
+            [defaultValues]="dataConfig.defaultValues"
+            (update)="handleUpdate($event)"
+            (cancel)="handleCancel()"
+            [isCompanyAssignment]="dataConfig.isCompanyAssignment">
+    </ss-employee-capture>
+</div>

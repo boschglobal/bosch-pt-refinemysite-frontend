@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" class="ss-navbar">
+    <a *ngFor="let tab of routes"
+       mat-tab-link
+       [routerLink]="tab.routerLink"
+       [active]="RouterLinkActive.isActive"
+       routerLinkActive
+       #RouterLinkActive="routerLinkActive">
+        <mat-icon>{{tab.icon}}</mat-icon>
+        <span>{{tab.label | translate}}</span>
+    </a>
+</nav>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

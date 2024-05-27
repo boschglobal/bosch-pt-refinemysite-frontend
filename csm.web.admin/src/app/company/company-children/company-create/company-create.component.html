@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-company-create">
+    <h2 class="ss-company-create__title">{{ 'Generic_AddCompany' | translate }}</h2>
+    <ss-company-capture
+            [mode]="mode"
+            (create)="handleCreate($event)"
+            (cancel)="handleCancel()">
+    </ss-company-capture>
+</div>

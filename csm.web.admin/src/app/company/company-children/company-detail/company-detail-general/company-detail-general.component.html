@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-company-detail-general">
+    <div>
+        <div *ngIf="company?.streetAddress" class="ss-company-detail-general__address">
+            <h3>{{('CompanyResource_StreetAddress' | translate)}}:</h3>
+            <p>{{company.streetAddress.street}} {{company.streetAddress.houseNumber}}</p>
+            <p>{{company.streetAddress.zipCode}} {{company.streetAddress?.area ? (company.streetAddress?.area + '-') : ''}}{{company.streetAddress.city}}</p>
+            <p>{{company.streetAddress.country}}</p>
+        </div>
+        <div *ngIf="company?.postBoxAddress" [ngClass]="{'ss-company-detail-general__pobox': company.streetAddress}">
+            <h3>{{('CompanyResource_PostBoxAddress' | translate)}}:</h3>
+            <p>{{company.postBoxAddress.postBox}}</p>
+            <p>{{company.postBoxAddress.zipCode}} {{company.postBoxAddress?.area ? (company.postBoxAddress?.area + '-') : ''}}{{company.postBoxAddress.city}}</p>
+            <p>{{company.postBoxAddress.country}}</p>
+        </div>
+    </div>
+    <div class="ss-company-detail-general__address-actions">
+        <button mat-flat-button color="primary" class="ss-company-detail-general__address-actions-edit" (click)="openEditModal()">{{'Generic_EditCompany' | translate}}</button>
+        <button mat-flat-button color="warn" (click)="openDeleteModal()" [disabled]="!canDelete(company)">
+            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+        </button>
+    </div>
+</div>

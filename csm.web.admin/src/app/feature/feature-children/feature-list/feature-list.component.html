@@ -1,0 +1,46 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-feature-list__wrapper table-wrapper">
+    <table mat-table [dataSource]="features">
+        <caption>
+            <div class="ss-feature-list__header-wrapper">
+                <h1 class="ss-feature-list__title">{{'FeatureListComponent_Title' | translate}}</h1>
+                <button mat-flat-button
+                        color="primary"
+                        (click)="openCreateModal()">{{'Generic_AddFeature' | translate}}</button>
+            </div>
+        </caption>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef id="name">
+                {{'FeatureResource_Name' | translate}}
+            </th>
+            <td mat-cell *matCellDef="let feature" class="ss-feature-list__interactive-cell"> {{feature.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef id="status">
+                {{'FeatureResource_Status' | translate}}
+            </th>
+            <td mat-cell *matCellDef="let feature" class="ss-feature-list__interactive-cell"> {{getStatus(feature.state)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef id="actions">{{'Generic_Action' | translate}}</th>
+            <td mat-cell *matCellDef="let feature">
+                <button mat-flat-button color="primary" class="ss-feature-list__action-button" (click)="openEditModal(feature)">
+                    <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ss-loader *ngIf="isLoading && !features.length"></ss-loader>
+</div>

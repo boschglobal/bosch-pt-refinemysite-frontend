@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-login">
+    <img class="ss-login__icon" [src]="userIconSrc" alt="generic user icon">
+    <h3 class="ss-login__welcome">{{'Landing_WelcomeMessage' | translate}}</h3>
+    <button mat-raised-button color="primary"
+            class="ss-button ss-button--primary ss-button--large ss-button--responsive"
+            [ngStyle]="{'margin-top': '20px'}"
+            (click)="login()">
+        <span>{{'Generic_Login' | translate}}</span>
+    </button>
+</div>

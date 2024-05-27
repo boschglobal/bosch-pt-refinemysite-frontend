@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    custom/ingressClass: admin-nginx
+spec:
+  ingressClassName: admin-nginx
+  rules:
+  - host: {{ quote .Values.ingressHost }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ .Chart.Name }}
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - {{ quote .Values.ingressHost }}
+    secretName: tls-secret

@@ -1,0 +1,89 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-user-list__wrapper table-wrapper">
+    <table mat-table [dataSource]="employableUsers" matSort (matSortChange)="handleSort($event)" [matSortActive]="sort.field" [matSortDirection]="sort.direction" [matSortDisableClear]="true">
+        <caption>
+            <h1 class="ss-user-list__title">{{'UserListComponent_Title' | translate}}</h1>
+        </caption>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef id="userName" mat-sort-header="name" class="flex-fill">
+                {{'Generic_User_Name' | translate}}
+                <mat-form-field [appearance]="'fill'" [floatLabel]="'auto'" (click)="$event.stopPropagation()" class="ss-user-list__filter-field">
+                    <mat-label>{{'Generic_SearchByUserName' | translate}}</mat-label>
+                    <input matInput [(ngModel)]="filterData.name" type="text" (ngModelChange)="handleSearch(userSearchFilterEnum.Name, $event)"
+                           (keydown)="$event.stopPropagation()"/>
+                </mat-form-field>
+
+            </th>
+            <td mat-cell *matCellDef="let employableUser" class="ss-user-list__interactive-cell" (click)="toUserDetails(employableUser)"> {{employableUser.user?.displayName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef id="email" mat-sort-header="email">
+                {{'UserResource_Email' | translate}}
+                <mat-form-field [appearance]="'fill'" [floatLabel]="'auto'" (click)="$event.stopPropagation()" class="ss-user-list__filter-field">
+                    <mat-label>{{'Generic_SearchByEmail' | translate}}</mat-label>
+                    <input matInput [(ngModel)]="filterData.email" type="text" (ngModelChange)="handleSearch(userSearchFilterEnum.Email, $event)"
+                           (keydown)="$event.stopPropagation()"/>
+                </mat-form-field>
+            </th>
+            <td mat-cell *matCellDef="let employableUser" class="ss-user-list__interactive-cell" (click)="toUserDetails(employableUser)"> {{employableUser.user?.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+            <th mat-header-cell *matHeaderCellDef id="company" mat-sort-header="company">
+                {{'Generic_Company' | translate}}
+                <mat-form-field [appearance]="'fill'" [floatLabel]="'auto'" (click)="$event.stopPropagation()" class="ss-user-list__filter-field">
+                    <mat-label>{{'Generic_SearchByCompany' | translate}}</mat-label>
+                    <input matInput [(ngModel)]="filterData.companyName" type="text" (ngModelChange)="handleSearch(userSearchFilterEnum.CompanyName, $event)"
+                           (keydown)="$event.stopPropagation()"/>
+                </mat-form-field>
+            </th>
+            <td mat-cell *matCellDef="let employableUser" class="ss-user-list__interactive-cell"
+                (click)="employableUser.company && toUserDetails(employableUser)" [ngClass]="{'center': !employableUser.company}">
+                <span *ngIf="employableUser.company">{{employableUser.company.displayName}} </span>
+                <button *ngIf="!employableUser.company"
+                        mat-flat-button
+                        color="primary"
+                        (click)="handleAddEmployableUser(employableUser)"
+                        [disabled]="!canCreate(employableUser)">
+                    {{'UserListComponent_AssignCompany_Label' | translate}}
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef id="createdAt" mat-sort-header="createdAt"> {{'Generic_CreatedDate' | translate}}  </th>
+            <td mat-cell *matCellDef="let employableUser" class="ss-user-list__interactive-cell" (click)="toUserDetails(employableUser)"> {{employableUser.user?.createdAt | date: 'MMM, d, y'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef id="actions">{{'Generic_Action' | translate}}</th>
+            <td mat-cell *matCellDef="let employableUser">
+                <button mat-flat-button color="primary" class="ss-user-list__action-button"
+                        [disabled]="!canEdit(employableUser)"
+                        (click)="handleEditDialogOpen(employableUser)">
+                    <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ss-loader *ngIf="isLoading && !employableUsers.length"></ss-loader>
+    <mat-paginator [length]="paginatorData.totalElements"
+                   [pageSize]="paginatorData.pageSize"
+                   [pageIndex]="paginatorData.pageNumber"
+                   [showFirstLastButtons]="true"
+
+                   [pageSizeOptions]="userListSizeOptions"
+                   (page)="handlePaginationChange($event)">
+    </mat-paginator>
+</div>

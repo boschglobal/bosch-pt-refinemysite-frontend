@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-feature-edit">
+    <h2 class="ss-feature-edit__title">{{ 'Generic_EditFeature' | translate }}</h2>
+    <ss-feature-capture
+        [mode]="mode"
+        [defaultValues]="dataConfig"
+        (update)="handleUpdate($event)"
+        (cancel)="handleCancel()">
+    </ss-feature-capture>
+</div>

@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-detail">
+    <div class="ss-project-detail__header">
+        <h1>{{project.title}}</h1>
+    </div>
+    <div class="ss-project-detail__content">
+        <nav mat-tab-nav-bar [tabPanel]="tabPanel" mat-align-tabs="start" class="ss-navbar">
+            <a *ngFor="let tab of routes"
+               mat-tab-link
+               [routerLink]="tab.routerLink"
+               [active]="RouterLinkActive.isActive"
+               routerLinkActive
+               #RouterLinkActive="routerLinkActive">
+                <span>{{tab.label | translate}}</span>
+            </a>
+        </nav>
+        <router-outlet class="ss-project-detail__tab-content"></router-outlet>
+    </div>
+</div>
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>

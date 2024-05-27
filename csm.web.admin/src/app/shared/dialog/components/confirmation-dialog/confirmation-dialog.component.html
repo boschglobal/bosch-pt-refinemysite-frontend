@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="confirmation-dialog">
+    <div class="confirmation-dialog__content">
+        <h1 class="confirmation-dialog__title">{{dataConfig.titleLabel | translate}}</h1>
+        <p class="confirmation-dialog__message">{{dataConfig.message | translate}}</p>
+    </div>
+    <mat-form-field *ngIf="dataConfig.confirmationInputLabel"
+                    class="confirmation-dialog__confirmation-text">
+        <mat-label>{{dataConfig.confirmationInputLabel | translate}}</mat-label>
+        <input type="text"
+               matInput
+               [(ngModel)]="confirmationText"
+               (ngModelChange)="setCanConfirm()"/>
+    </mat-form-field>
+    <div class="confirmation-dialog__buttons">
+        <button mat-flat-button
+                (click)="handleCancel()">{{dataConfig.cancelButtonLabel | translate}}</button>
+        <button mat-flat-button
+                [color]="dataConfig.confirmButtonColor"
+                [disabled]="!canConfirm || isSubmitting"
+                (click)="handleConfirm()">{{dataConfig.confirmationButtonLabel | translate}}</button>
+    </div>
+</div>

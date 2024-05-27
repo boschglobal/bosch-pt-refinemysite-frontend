@@ -1,0 +1,51 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-footer">
+    <div class="ss-footer-wrapper">
+        <div>
+            <span class="ss-footer-wrapper__copyright">{{'Copyright_Label' | translate: footerCopyrightYearConfig }}</span>
+        </div>
+        <div>
+            <ul>
+                <li>
+                    <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                       [href]="'Legal_Terms_Link' | translate"
+                       [target]="'_blank'"
+                       [attr.data-automation]="'footer-terms-link'">{{'Legal_Terms_Label' | translate}}</a>
+                </li>
+                <li>
+                    <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                       [href]="'Legal_EULA_Link' | translate"
+                       [target]="'_blank'"
+                       [attr.data-automation]="'footer-eula-link'">{{'Legal_EULA_Label' | translate}}</a>
+                </li>
+                <li>
+                    <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                       [href]="'Legal_PrivacyStatement_Link' | translate"
+                       [target]="'_blank'"
+                       [attr.data-automation]="'footer-privacy-statement-link'">{{'Legal_PrivacyStatement_Label' | translate}}</a>
+                </li>
+                <li>
+                    <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                       [href]="'Legal_Imprint_Link' | translate"
+                       [target]="'_blank'"
+                       [attr.data-automation]="'footer-imprint-link'">{{'Legal_Imprint_Label' | translate}}</a>
+                </li>
+                <li>
+                    <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                       [href]="'3rdpartylicenses.txt'"
+                       [target]="'_blank'"
+                       [attr.data-automation]="'footer-oss-licenses-link'">{{'Legal_OSSLicenses_Label' | translate}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<ss-supergraphic class="ss-supergraphic__footer"></ss-supergraphic>
+

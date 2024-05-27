@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-supergraphic class="ss-supergraphic__header"></ss-supergraphic>
+<div class="ss-header">
+    <a [routerLink]="indexRoute" routerLinkActive="router-link-active"  class="ss-header__logo" >
+        <img src="/assets/images/logo/common.png" alt="Bosch logo">
+    </a>
+    <div class="ss-header__info">
+        <span class="ss-header__info__displayName">{{displayName}}</span>
+        <div class="ss-header__info__logout" (click)="handleLogout()">
+            <mat-icon class="ss-header__info__logout__icon" aria-label="Warning Icon">power_settings_new</mat-icon>
+            <span class="ss-header__info__logout__text">{{'Generic_Logout' | translate}}</span>
+        </div>
+    </div>
+</div>

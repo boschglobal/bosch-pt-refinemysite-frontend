@@ -1,0 +1,33 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "../../../assets/styles/constants/index";
+
+.table-wrapper {
+    display: block;
+
+    table {
+        width: 100%;
+        border: 1px solid $light_grey_30;
+
+        caption {
+            text-align: left;
+        }
+
+        tbody {
+            tr:nth-child(odd) {
+                background-color: $light_grey_20;
+            }
+        }
+
+        th {
+            font-family: BoschSans-Regular, sans-serif;
+            font-size: $base-dimension--x2;
+        }
+    }
+}

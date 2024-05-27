@@ -1,0 +1,38 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-information">
+    <div>
+        <p class="ss-project-information__field--relevant">
+            <span class="ss-project-information__field-title">{{'Generic_Id' | translate}}:</span>
+            <span class="ss-project-information__field-value">{{project.id}}</span>
+        </p>
+        <p class="ss-project-information__field--relevant">
+            <span class="ss-project-information__field-title">{{'Generic_Company' | translate}}:</span>
+            <ss-button-link class="ss-project-information__field-value"
+                            [link]="companyLink"
+                            [showArrow]="false"></ss-button-link>
+        </p>
+        <p class="ss-project-information__field--relevant">
+            <span class="ss-project-information__field-title">{{'Generic_Creator' | translate}}:</span>
+            <span class="ss-project-information__field-value">{{project.createdBy.displayName}}</span>
+        </p>
+        <p class="ss-project-information__field--not-relevant">
+            <span class="ss-project-information__field-title">{{'Generic_CreatedDate' | translate}}:</span>
+            <span class="ss-project-information__field-value">{{project.createdDate | date}}</span>
+        </p>
+    </div>
+    <div class="ss-project-information__actions">
+        <button mat-flat-button
+                color="warn"
+                [disabled]="!canDelete"
+                (click)="handleDelete()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>

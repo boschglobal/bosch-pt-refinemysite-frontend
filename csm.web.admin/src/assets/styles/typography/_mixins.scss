@@ -1,0 +1,87 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+ @import "../constants/font";
+ @import "../constants/dimensions";
+ @import "../constants/colors";
+
+ @mixin title($font-family, $color) {
+     font-family: $font-family;
+     font-size: $font-size-lg;
+     line-height: 1.2;
+     color: $color;
+ }
+
+ @mixin title-regular($color: $black) {
+     @include title((Bosch, sans-serif), $color);
+ }
+
+ @mixin title-medium($color: $black) {
+     @include title((BoschMedium, sans-serif), $color);
+ }
+
+ @mixin title-bold($color: $black) {
+     @include title((BoschBold, sans-serif), $color);
+ }
+
+ @mixin heading($font-family, $color) {
+     font-family: $font-family;
+     font-size: $font-size-base;
+     line-height: 1.5;
+     color: $color;
+ }
+
+ @mixin heading-regular($color: $black) {
+     @include heading((Bosch, sans-serif), $color);
+ }
+
+ @mixin heading-medium($color: $black) {
+     @include heading((BoschMedium, sans-serif), $color);
+ }
+
+ @mixin heading-bold($color: $black) {
+     @include heading((BoschBold, sans-serif), $color);
+ }
+
+ @mixin body($font-family, $color) {
+     font-family: $font-family;
+     font-size: $font-size-sm;
+     line-height: 1.5;
+     color: $color;
+ }
+
+ @mixin body-regular($color: $black) {
+     @include body((Bosch, sans-serif), $color);
+ }
+
+ @mixin body-medium($color: $black) {
+     @include body((BoschMedium, sans-serif), $color);
+ }
+
+ @mixin body-bold($color: $black) {
+     @include body((BoschBold, sans-serif), $color);
+ }
+
+ @mixin caption($font-family, $color) {
+     font-family: $font-family;
+     font-size: $font-size-xs;
+     line-height: 1.5;
+     color: $color;
+ }
+
+ @mixin caption-regular($color: $black) {
+     @include caption((Bosch, sans-serif), $color);
+ }
+
+ @mixin caption-medium($color: $black) {
+     @include caption((BoschMedium, sans-serif), $color);
+ }
+
+ @mixin caption-bold($color: $black) {
+     @include caption((BoschBold, sans-serif), $color);
+ }

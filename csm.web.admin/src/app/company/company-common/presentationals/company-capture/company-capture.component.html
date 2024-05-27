@@ -1,0 +1,111 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="capture-wrapper ss-company-capture">
+    <form [formGroup]="form">
+        <section>
+            <mat-form-field class="ss-company-capture__name-field">
+                <mat-label>{{ 'CompanyResource_Name' | translate}}</mat-label>
+                <input matInput formControlName="name"/>
+            </mat-form-field>
+        </section>
+        <section class="ss-company-capture__fieldset">
+            <fieldset class="ss-company-capture__fieldset-field">
+                <legend class="ss-company-capture__fieldset-legend">
+                    {{ 'CompanyResource_StreetAddress' | translate }}
+                </legend>
+                <section>
+                    <mat-checkbox color="primary" formControlName="hasStreetAddress">
+                        {{ 'CompanyResource_StreetAddress' | translate }}
+                    </mat-checkbox>
+                </section>
+                <section class="ss-company-capture__fieldset-section" formGroupName="streetAddress">
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_Street' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="street"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_HouseNo' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="houseNumber"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_ZipCode' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="zipCode"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_City' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="city"/>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ 'AddressResource_Area' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="area"/>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ 'AddressResource_Country' | translate}}</mat-label>
+                        <input matInput
+                               formControlName="country"
+                               type="text"
+                               autocomplete="off"
+                               [matAutocomplete]="autocompleteCountryStreetAddress"/>
+                        <mat-autocomplete #autocompleteCountryStreetAddress>
+                            <mat-option *ngFor="let country of filteredCountriesForStreetAddress | async" [value]="country">
+                                {{country}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </section>
+            </fieldset>
+            <fieldset class="ss-company-capture__fieldset-field">
+                <legend class="ss-company-capture__fieldset-legend">
+                    {{ 'CompanyResource_PostBoxAddress' | translate }}
+                </legend>
+                <section>
+                    <mat-checkbox color="primary" formControlName="hasPostBoxAddress">
+                        {{ 'CompanyResource_PostBoxAddress' | translate }}
+                    </mat-checkbox>
+                </section>
+                <section class="ss-company-capture__fieldset-section" formGroupName="postBoxAddress">
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ 'AddressResource_PostBox' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="postBox"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_ZipCode' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="zipCode"/>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>{{ 'AddressResource_City' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="city"/>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ 'AddressResource_Area' | translate}}</mat-label>
+                        <input type="text" matInput formControlName="area"/>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ 'AddressResource_Country' | translate}}</mat-label>
+                        <input matInput
+                               formControlName="country"
+                               type="text"
+                               autocomplete="off"
+                               [matAutocomplete]="autocompleteCountryBoxAddress"/>
+                        <mat-autocomplete #autocompleteCountryBoxAddress>
+                            <mat-option *ngFor="let country of filteredCountriesForBoxAddress | async" [value]="country">
+                                {{country}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </section>
+            </fieldset>
+        </section>
+        <section class="capture-wrapper__footer">
+            <button type="button" mat-raised-button (click)="handleCancel()">{{ 'Generic_Cancel' | translate }}</button>
+            <button type="submit" mat-raised-button color="primary" (click)="handleSubmit()"
+                    [disabled]="!form.valid || isSubmitting">{{ 'Generic_Save' | translate }}</button>
+        </section>
+    </form>
+</div>

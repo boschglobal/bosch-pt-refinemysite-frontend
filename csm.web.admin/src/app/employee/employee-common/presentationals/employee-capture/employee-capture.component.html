@@ -1,0 +1,56 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+-->
+
+<div class="capture-wrapper ss-employee-capture">
+    <form [formGroup]="form">
+        <section class="ss-employee-capture__fieldset">
+            <mat-form-field>
+                <mat-label>{{'Generic_User' | translate}}</mat-label>
+                <input [matAutocomplete]="autoUser"
+                       formControlName="user"
+                       matInput type="text"
+                       placeholder="{{'Generic_SearchByNameOrEmail' | translate}}"/>
+                <mat-autocomplete #autoUser="matAutocomplete" [displayWith]='displayUserData'>
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        <div class="ss-employee-capture__autocomplete-option">
+                            <span class="ss-employee-capture__autocomplete-option--primary">{{option.email}}</span>
+                            <span class="ss-employee-capture__autocomplete-option--secondary">
+                                {{option.displayName}}
+                            </span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{'Generic_Company' | translate}}</mat-label>
+                <input [matAutocomplete]="autoCompany" formControlName="company" matInput type="text"/>
+                <mat-autocomplete #autoCompany="matAutocomplete" [displayWith]='displayCompanyData'>
+                    <mat-option *ngFor="let company of filteredCompaniesOptions | async" [value]="company">
+                        <div class="ss-employee-capture__autocomplete-option">
+                            <span class="ss-employee-capture__autocomplete-option-primary">
+                                {{company.displayName}}
+                            </span>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>{{'Generic_Roles' | translate}}</mat-label>
+                <mat-select formControlName="roles" multiple>
+                    <mat-option *ngFor="let role of roleOptions"
+                                [value]="role.value">{{role.label | translate}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section class="capture-wrapper__footer">
+            <button type="button" (click)="handleCancel()" mat-raised-button>{{ 'Generic_Cancel' | translate }}</button>
+            <button type="submit" (click)="handleSubmit()" [disabled]="!form.valid || isSubmitting" color="primary"
+                    mat-raised-button>{{ 'Generic_Save' | translate }}</button>
+        </section>
+    </form>
+</div>

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+    tags.datadoghq.com/service: {{ .Chart.Name }}
+    tags.datadoghq.com/version: {{ .Chart.Version }}
+  annotations:
+    ad.datadoghq.com/tags: '{"layer": "web"}'
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: {{ .Chart.Name }}
+      labels:
+        app: {{ .Chart.Name }}
+        tags.datadoghq.com/service: {{ .Chart.Name }}
+        tags.datadoghq.com/version: {{ .Chart.Version }}
+      annotations:
+        ad.datadoghq.com/tags: '{"layer":"web"}'
+        ad.datadoghq.com/{{ .Chart.Name }}.logs: '[{"source":"nginx"}]'
+    spec:
+      securityContext:
+        runAsNonRoot: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: smartsite/reservered-for
+                operator: DoesNotExist
+      containers:
+      - name: {{ .Chart.Name }}
+        image: ptcsmacr.azurecr.io/com.bosch.pt/csm.web.admin:{{ .Chart.Version }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: server
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+              - ALL
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}

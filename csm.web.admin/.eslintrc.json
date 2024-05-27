@@ -1,0 +1,195 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "header"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+    ],
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "ss",
+                        "style": "kebab-case"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "ss",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/pipe-prefix": [
+                    "error",
+                    {
+                        "prefixes": [
+                            "ss"
+                        ]
+                    }
+                ],
+                "@angular-eslint/use-lifecycle-interface": "error",
+                "header/header": [
+                    "error",
+                    "block",
+                    [
+                        "",
+                        " * *************************************************************************",
+                        " *",
+                        {
+                            "pattern": " \\* Copyright: Robert Bosch Power Tools GmbH, \\d{4}",
+                            "template": " * Copyright: Robert Bosch Power Tools GmbH, 2023"
+                        },
+                        " *",
+                        " * *************************************************************************",
+                        " "
+                    ],
+                    1
+                ],
+                "brace-style": [
+                    "error",
+                    "1tbs"
+                ],
+                "curly": [
+                    "error",
+                    "multi-line"
+                ],
+                "jsdoc/no-types": "off",
+                "max-len": [
+                    "error",
+                    {
+                        "code": 140
+                    }
+                ],
+                "no-underscore-dangle": "off",
+                "no-shadow": "off",
+                "no-multi-spaces": "warn",
+                "object-curly-spacing": [
+                    "error",
+                    "never"
+                ],
+                "prefer-arrow/prefer-arrow-functions": "off",
+                "radix": "off",
+                "space-infix-ops": "warn",
+                "@typescript-eslint/no-shadow": "error",
+                "@typescript-eslint/naming-convention": [
+                    "warn",
+                    {
+                        "selector": "default",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase",
+                            "snake_case"
+                        ],
+                        "leadingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "private"
+                        ],
+                        "leadingUnderscore": "require",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "readonly"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "method",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "private"
+                        ],
+                        "leadingUnderscore": "require",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "enumMember",
+                        "format": [
+                            "PascalCase"
+                        ],
+                        "leadingUnderscore": "forbid",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "variable",
+                        "format": [
+                            "camelCase",
+                            "UPPER_CASE"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "typeLike",
+                        "format": [
+                            "PascalCase"
+                        ]
+                    }
+                ],
+                "@typescript-eslint/no-namespace": "off",
+                "@typescript-eslint/ban-types": "off",
+                "@typescript-eslint/consistent-type-definitions": "error",
+                "@typescript-eslint/dot-notation": "off",
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "off",
+                    {
+                        "accessibility": "explicit"
+                    }
+                ],
+                "@typescript-eslint/member-ordering": "off"
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {}
+        }
+    ]
+}

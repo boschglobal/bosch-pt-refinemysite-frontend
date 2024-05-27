@@ -1,0 +1,39 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+  <div class="ss-user-employee-details">
+    <div class="ss-user-employee-details__title">
+      <h2>{{'UserDetailsComponent_Employee_Title' | translate}}</h2>
+      <div class="ss-user-employee-details__buttons">
+        <button mat-flat-button color="primary" class="ss-user-employee-details__buttons--edit" (click)="handleEdit()">{{'EmployeeCaptureComponent_TitleEdit' | translate}}</button>
+        <button mat-flat-button color="warn" [disabled]="!canDelete(employee)" (click)="handleDelete()">
+            <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <ul class="ss-user-employee-details__fields-relevant">
+      <li class="ss-user-employee-details__field">
+        <span class="ss-user-employee-details__field--title">{{'Generic_Company' | translate}}:</span>
+        <span class="ss-user-employee-details__field--value">{{employee.company.displayName}}</span>
+      </li>
+      <li class="ss-user-employee-details__field">
+        <span class="ss-user-employee-details__field--title">{{'Generic_Roles' | translate}}:</span>
+        <span class="ss-user-employee-details__field--value"> {{employee.roles | ssRoles}} </span>
+      </li>
+    </ul>
+    <ul class="ss-user-employee-details__fields-not-relevant">
+      <li class="ss-user-employee-details__field">
+        <span class="ss-user-employee-details__field--title">{{'Generic_CreatedDate' | translate}}:</span>
+        <span class="ss-user-employee-details__field--value">{{employee.createdDate | date}}</span>
+      </li>
+      <li class="ss-user-employee-details__field">
+        <span class="ss-user-employee-details__field--title">{{'UserResource_LastModifiedDate' | translate}}:</span>
+        <span class="ss-user-employee-details__field--value">{{employee.lastModifiedDate | date}}</span>
+      </li>
+    </ul>
+  </div>

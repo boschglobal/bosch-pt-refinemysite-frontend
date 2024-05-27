@@ -1,0 +1,76 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-company-list__wrapper table-wrapper">
+    <table mat-table [dataSource]="companies" matSort (matSortChange)="handleSort($event)" [matSortActive]="sort.field" [matSortDirection]="sort.direction" [matSortDisableClear]="true">
+        <caption>
+            <div class="ss-company-list__header-wrapper">
+                <h1 class="ss-company-list__title">{{'CompanyListComponent_Title' | translate}}</h1>
+                <button mat-flat-button
+                        color="primary"
+                        (click)="openCreateModal()">{{'Generic_AddCompany' | translate}}</button>
+            </div>
+        </caption>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef id="name" mat-sort-header="name">
+                 {{'CompanyResource_Name' | translate}}
+                 <mat-form-field (click)="$event.stopPropagation()" class="ss-company-list__filter-field">
+                     <mat-label>{{'Generic_SearchByCompanyName' | translate}}</mat-label>
+                    <input matInput [(ngModel)]="filterData.name" type="text" (ngModelChange)="handleNameSearch($event)" (keydown)="$event.stopPropagation()"/>
+                 </mat-form-field>
+
+            </th>
+            <td mat-cell *matCellDef="let company" class="ss-company-list__interactive-cell" (click)="toCompanyDetails(company)"> {{company.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef id="address"> {{'CompanyResource_StreetAddress' | translate}}  </th>
+            <td mat-cell *matCellDef="let company" class="ss-company-list__interactive-cell" (click)="toCompanyDetails(company)">
+                <ng-container *ngIf="company.streetAddress">
+                    <p>{{company.streetAddress.street}} {{company.streetAddress.houseNumber}}</p>
+                    <p>{{company.streetAddress.zipCode}} {{company.streetAddress?.area ? (company.streetAddress?.area + '-') : ''}}{{company.streetAddress.city}}</p>
+                    <p>{{company.streetAddress.country}}</p>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="pobox">
+            <th mat-header-cell *matHeaderCellDef id="pobox"> {{'CompanyResource_PostBoxAddress' | translate}}  </th>
+            <td mat-cell *matCellDef="let company" class="ss-company-list__interactive-cell" (click)="toCompanyDetails(company)">
+                <ng-container *ngIf="company.postBoxAddress">
+                    <p>{{company.postBoxAddress.postBox}}</p>
+                    <p>{{company.postBoxAddress.zipCode}} {{company.postBoxAddress?.area ? (company.postBoxAddress?.area + '-') : ''}}{{company.postBoxAddress.city}}</p>
+                    <p>{{company.postBoxAddress.country}}</p>
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef id="actions">{{'Generic_Action' | translate}}</th>
+            <td mat-cell *matCellDef="let company">
+                <button mat-flat-button color="primary" class="ss-company-list__action-button" (click)="openEditModal(company)">
+                    <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                </button>
+                <button mat-flat-button color="warn" class="ss-company-list__action-button" [disabled]="!canDelete(company)" (click)="openDeleteModal(company)">
+                    <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ss-loader *ngIf="isLoading && !companies.length"></ss-loader>
+    <mat-paginator [length]="paginatorData.totalElements"
+                   [pageSize]="paginatorData.pageSize"
+                   [pageIndex]="paginatorData.pageNumber"
+                   [showFirstLastButtons]="true"
+                   [pageSizeOptions]="companyListSizeOptions"
+                   (page)="handlePaginationChange($event)">
+    </mat-paginator>
+</div>

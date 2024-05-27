@@ -1,0 +1,58 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-user-description-details">
+    <div class="ss-user-description-details__title">
+        <h2>{{'UserDetailsComponent_User_Title' | translate}}</h2>
+        <div class="ss-user-description-details__buttons">
+            <button mat-flat-button color="warn"
+                    [disabled]="!canDelete(user)"
+                    (click)="handleDelete()">
+                <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+            </button>
+        </div>
+    </div>
+    <ul class="ss-user-description-details__fields-relevant">
+        <li class="ss-user-description-details__field">
+            <span class="ss-user-description-details__field--title">{{'UserResource_Email' | translate}}:</span>
+            <span class="ss-user-description-details__field--value">{{user.email}}</span>
+        </li>
+        <li class="ss-user-description-details__field">
+            <span class="ss-user-description-details__field--title">{{'UserResource_Country' | translate}}:</span>
+            <span class="ss-user-description-details__field--value"> {{getCountryKey | translate}} </span>
+        </li>
+        <li class="ss-user-description-details__field">
+            <mat-checkbox [checked]="user.admin"
+                          color="primary"
+                          labelPosition="before"
+                          (click)="handleEditAdmin()">
+                <span class="ss-user-description-details__field--label">{{'UserResource_Admin' | translate}}:</span>
+            </mat-checkbox>
+        </li>
+        <li class="ss-user-description-details__field">
+            <mat-checkbox [checked]="user.locked"
+                          color="primary"
+                          labelPosition="before"
+                          (click)="handleEditLock()">
+                <span class="ss-user-description-details__field--label">{{'UserResource_Locked' | translate}}:</span>
+            </mat-checkbox>
+        </li>
+    </ul>
+
+    <ul class="ss-user-description-details__fields-not-relevant">
+        <li class="ss-user-description-details__field">
+            <span class="ss-user-description-details__field--title">{{'Generic_CreatedDate' | translate}}:</span>
+            <span class="ss-user-description-details__field--value">{{user.createdDate | date}}</span>
+        </li>
+        <li class="ss-user-description-details__field">
+            <span class="ss-user-description-details__field--title">{{'UserResource_LastModifiedDate' | translate}}
+                :</span>
+            <span class="ss-user-description-details__field--value">{{user.lastModifiedDate | date}}</span>
+        </li>
+    </ul>
+</div>

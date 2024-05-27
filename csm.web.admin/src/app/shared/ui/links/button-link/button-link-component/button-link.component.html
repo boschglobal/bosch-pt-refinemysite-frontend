@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<button *ngIf="isActionButton()"
+        class="ss-button-link"
+        [attr.data-automation]="'button-action'"
+        (click)="getLinkAction()">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+</button>
+
+<a *ngIf="isLinkButton()"
+   class="ss-button-link"
+   [attr.data-automation]="'button-link'"
+   [routerLink]="getRouterLink()"
+   [queryParams]="getQueryParams()">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+</a>
+
+<ng-template #content>
+    <label class="ss-button-link--label"
+           [attr.data-automation]="'button-link-label'">
+        {{getLinkText | translate}}
+    </label>
+    <mat-icon *ngIf="showArrow">keyboard_arrow_right</mat-icon>
+</ng-template>

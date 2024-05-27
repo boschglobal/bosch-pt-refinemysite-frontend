@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-user-details">
+    <div class="ss-user-details__header">
+        <h1>{{displayName()}}</h1>
+    </div>
+    <div class="ss-user-details__content">
+        <ss-user-description-details [user]="user"
+                                     (editAdmin)="handleEditAdmin($event)"
+                                     (editLock)="handleEditLock($event)"
+                                     (delete)="handleDeleteUser()">
+        </ss-user-description-details>
+        <ss-user-employee-details *ngIf="employee"
+                                  [employee]="employee"
+                                  (edit)="handleEditEmployee($event)"
+                                  (delete)="handleDeleteEmployee($event)">
+        </ss-user-employee-details>
+    </div>
+</div>

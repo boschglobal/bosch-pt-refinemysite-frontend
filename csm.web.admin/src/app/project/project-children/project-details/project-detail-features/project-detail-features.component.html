@@ -1,0 +1,49 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-detail-features table-wrapper">
+    <table [dataSource]="dataSource"
+           mat-table>
+        <caption>
+            <div class="ss-project-detail-features__header">
+                <h1 class="ss-project-detail-features__title">{{'Generic_Features' | translate}}</h1>
+            </div>
+        </caption>
+        <ng-container matColumnDef="name">
+            <th *matHeaderCellDef
+                id="name"
+                mat-header-cell>
+                {{'Generic_Feature' | translate}}
+            </th>
+            <td *matCellDef="let feature"
+                mat-cell>
+                {{feature.displayName}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th *matHeaderCellDef
+                id="status"
+                mat-header-cell>{{'Generic_Status' | translate}}</th>
+            <td *matCellDef="let feature"
+                mat-cell>
+                <mat-slide-toggle
+                    [color]="sliderColor"
+                    [checked]="feature.whitelisted"
+                    (click)="handleUpdate(feature)">
+                </mat-slide-toggle>
+            </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns"
+            mat-header-row></tr>
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ss-loader *ngIf="isLoading"></ss-loader>
+</div>

@@ -1,0 +1,67 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="employee-list__wrapper table-wrapper">
+    <table  (matSortChange)="sortData($event)"
+            [dataSource]="dataSource"
+            mat-table
+            matSort
+            matSortActive="name"
+            matSortDirection="asc"
+            matSortDisableClear>
+        <caption>
+            <div class="employee-list__header-wrapper">
+                <h1 class="employee-list__title">{{'EmployeeListComponent_Title' | translate}}</h1>
+                <button mat-flat-button
+                        color="primary"
+                        (click)="handleAddEmployee()">{{'EmployeeCaptureComponent_TitleCreate' | translate}}</button>
+            </div>
+        </caption>
+        <ng-container matColumnDef="name">
+            <th *matHeaderCellDef id="name" mat-header-cell
+                mat-sort-header="name">{{'Generic_User_Name' | translate}}</th>
+            <td *matCellDef="let employee" mat-cell> {{employee.user.displayName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th *matHeaderCellDef id="email" mat-header-cell
+                mat-sort-header="email">{{'UserResource_Email' | translate}}</th>
+            <td *matCellDef="let employee" mat-cell> {{employee.user.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+            <th *matHeaderCellDef id="roles" mat-header-cell> {{'Generic_Roles' | translate}} </th>
+            <td *matCellDef="let employee" mat-cell> {{employee.roles | ssRoles}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th *matHeaderCellDef id="actions" mat-header-cell>{{'Generic_Action' | translate}}</th>
+            <td *matCellDef="let employee" mat-cell>
+                <button (click)="handleEditEmployee(employee)" class="employee-list__action-button" color="primary"
+                        mat-flat-button>
+                    <mat-icon aria-hidden="false" aria-label="edit icon">edit</mat-icon>
+                </button>
+                <button (click)="handleRemoveEmployee(employee)" [disabled]="!canDelete(employee)"
+                        class="employee-list__action-button"
+                        color="warn" mat-flat-button>
+                    <mat-icon aria-hidden="false" aria-label="delete icon">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <ss-loader *ngIf="isLoading && !dataSource.data.length"></ss-loader>
+    <mat-paginator (page)="updatePagination($event)"
+                   [length]="paginatorData.totalElements"
+                   [pageIndex]="paginatorData.pageNumber"
+                   [pageSizeOptions]="pageSizeOptions"
+                   [pageSize]="paginatorData.pageSize"
+                   [showFirstLastButtons]="true"></mat-paginator>
+</div>

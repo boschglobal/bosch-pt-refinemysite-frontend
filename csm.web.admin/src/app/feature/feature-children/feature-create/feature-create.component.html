@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-feature-create">
+    <h2 class="ss-feature-create__title">{{ 'Generic_AddFeature' | translate }}</h2>
+    <ss-feature-capture
+        [mode]="mode"
+        (create)="handleCreate($event)"
+        (cancel)="handleCancel()">
+    </ss-feature-capture>
+</div>

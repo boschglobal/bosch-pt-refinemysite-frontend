@@ -1,0 +1,42 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "../../../../../assets/styles/constants/index";
+@import "../../../../../assets/styles/typography/index";
+
+.ss-project-information {
+    margin: $base-dimension--x2;
+    padding-bottom: $base-dimension--x2;
+    display: flex;
+    justify-content: space-between;
+
+    &__actions {
+        margin-top: -$base-dimension;
+    }
+
+    &__field {
+
+        &--relevant {
+            margin: $base-dimension 0;
+        }
+
+        &--not-relevant {
+            margin: $base-dimension--x4 0 0;
+            font-size: $font-size-xs;
+        }
+
+        &-title {
+            color: $dark_grey;
+        }
+
+        &-value {
+            display: inline-block;
+            padding-left: $base-dimension + $base-dimension--x025;
+        }
+    }
+}

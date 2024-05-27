@@ -1,0 +1,102 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-list table-wrapper">
+    <table mat-table
+           [dataSource]="projects"
+           matSort
+           [matSortActive]="sort.field"
+           [matSortDisableClear]="true"
+           [matSortDirection]="sort.direction"
+           (matSortChange)="handleSortChange($event)">
+        <caption>
+            <h1 class="ss-project-list__title">{{'ProjectListComponent_Title' | translate}}</h1>
+        </caption>
+        <ng-container matColumnDef="title">
+            <th scope="col"
+                mat-header-cell
+                *matHeaderCellDef>
+                <span [mat-sort-header]="'title'">{{'ProjectResource_Name' | translate}}</span>
+                <mat-form-field class="ss-project-list__filters"
+                                [floatLabel]="'auto'"
+                                [subscriptSizing]="'fixed'">
+                    <mat-label>{{'Generic_SearchByProjectName' | translate}}</mat-label>
+                    <input type="text"
+                           label=""
+                           matInput
+                           [(ngModel)]="filters.title"
+                           (ngModelChange)="handleFiltersChange()"/>
+                </mat-form-field>
+            </th>
+            <td mat-cell
+                *matCellDef="let project">{{project.title}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="creator">
+            <th scope="col"
+                mat-header-cell
+                *matHeaderCellDef>
+                <span [mat-sort-header]="'creator'">{{'Generic_Creator' | translate}}</span>
+                <mat-form-field class="ss-project-list__filters"
+                                [floatLabel]="'auto'">
+                    <mat-label>{{'Generic_SearchByCreator' | translate}}</mat-label>
+                    <input type="text"
+                           matInput
+                           [(ngModel)]="filters.creator"
+                           (ngModelChange)="handleFiltersChange()"/>
+                </mat-form-field>
+            </th>
+            <td mat-cell
+                *matCellDef="let project">{{project.createdBy.displayName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="company">
+            <th scope="col"
+                mat-header-cell
+                *matHeaderCellDef>
+                <span [mat-sort-header]="'company'">{{'Generic_Company' | translate}}</span>
+                <mat-form-field class="ss-project-list__filters"
+                                [floatLabel]="'auto'">
+                    <mat-label>{{'Generic_SearchByCompany' | translate}}</mat-label>
+                    <input type="text"
+                           matInput
+                           [(ngModel)]="filters.company"
+                           (ngModelChange)="handleFiltersChange()"/>
+                </mat-form-field>
+            </th>
+            <td mat-cell
+                *matCellDef="let project">{{project.company.displayName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDate">
+            <th scope="col"
+                mat-header-cell
+                *matHeaderCellDef>
+                <span [mat-sort-header]="'createdDate'">{{'Generic_CreatedDate' | translate}}</span>
+            </th>
+            <td mat-cell
+                *matCellDef="let project"> {{project.createdDate | date:'MMM, d, y'}} </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            *matRowDef="let project; columns: displayedColumns;"
+            (click)="navigateToProjectDetails(project)"
+        ></tr>
+    </table>
+
+    <ss-loader *ngIf="isLoading && !projects.length"></ss-loader>
+    <mat-paginator [length]="paginator.totalElements"
+                   [pageSize]="paginator.pageSize"
+                   [pageIndex]="paginator.pageNumber"
+                   [showFirstLastButtons]="true"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="handlePaginationChange($event)">
+    </mat-paginator>
+</div>
