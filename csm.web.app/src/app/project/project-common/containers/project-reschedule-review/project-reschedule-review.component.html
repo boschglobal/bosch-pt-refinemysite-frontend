@@ -1,0 +1,65 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-reschedule-review">
+    <div
+        class="ss-project-reschedule-review__progress"
+        *ngIf="!validationComplete"
+        [attr.data-automation]="'ss-project-reschedule-review-progress'">
+        <ss-status-transition
+            [title]="'Reschedule_Review_SyncLabel' | translate"
+            [description]="'Reschedule_Review_SyncDescription' | translate"
+            [showCancelButton]="false"
+            [status]="transitionStatus">
+        </ss-status-transition>
+    </div>
+    <div
+        *ngIf="validationComplete"
+        [attr.data-automation]="'ss-project-reschedule-review-complete'"
+        class="ss-project-reschedule-review__complete">
+        <h3 class="ss-project-reschedule-review__title">{{ 'Reschedule_Review_Label' | translate }}</h3>
+        <ul class="ss-project-reschedule-review__list">
+            <li [attr.data-automation]="'ss-project-reschedule-review-successful-milestones'">
+                {{ summary.milestones | translate: {numberOfMilestones: reschedule.successful.milestones.length} }}
+            </li>
+            <li [attr.data-automation]="'ss-project-reschedule-review-successful-tasks'">
+                {{ summary.tasks | translate: {numberOfTasks: reschedule.successful.tasks.length} }}
+            </li>
+        </ul>
+
+        <ss-callout class="ss-project-reschedule-review__callout"
+            [attr.data-automation]="'ss-project-reschedule-review-callout'"
+            [type]="callout.type"
+            [message]="callout.message | translate: callout.messageParams"
+            [preformatted]="callout.preformatted">
+        </ss-callout>
+
+        <ng-container *ngIf="!!failedItems[0].items.length">
+            <ss-group-list-selection
+                class="ss-project-reschedule-review__failed-items"
+                [itemsPerGroupItem]="itemsPerGroupItem"
+                [groups]="failedItems"
+                [attr.data-automation]="'ss-failed-item-list'">
+            <ng-template #itemTemplate let-item>
+                <ss-milestone-overview-card
+                *ngIf="item.type === objectTypeEnum.Milestone"
+                    [milestone]="item.resource"
+                    [attr.data-automation]="'ss-failed-item-milestone-overview-card-' + item.id"
+                    (itemClicked)="handleMilestoneCardClicked($event)">
+                </ss-milestone-overview-card>
+                <ss-task-overview-card
+                *ngIf="item.type === objectTypeEnum.Task"
+                    [task]="item.resource"
+                    [attr.data-automation]="'ss-failed-item-task-overview-card-' + item.id"
+                    (itemClicked)="handleTaskCardClicked($event)">
+                </ss-task-overview-card>
+            </ng-template>
+            </ss-group-list-selection>
+        </ng-container>
+    </div>
+</div>

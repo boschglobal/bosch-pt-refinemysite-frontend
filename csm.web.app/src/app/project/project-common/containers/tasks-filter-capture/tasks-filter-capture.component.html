@@ -1,0 +1,113 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-tasks-filter-capture"
+     [formGroup]="form">
+    <ss-collapsible-select
+        [value]="collapsibleSelectValue"
+        [expanded]="true"
+        [label]="'Generic_Tasks' | translate"
+        (selectAll)="handleSelect(true)"
+        (deselectAll)="handleSelect(false)">
+        <div class="ss-tasks-filter-capture__input-group">
+            <ss-checkbox-button
+                [automationAttr]="'all-days-in-date-range'"
+                [name]="'allDaysInDateRange'"
+                [dimension]="'tiny'"
+                [isDisabled]="allDaysInDateRangeDisabled"
+                [control]="form.controls.allDaysInDateRange"
+                [value]="form.controls.allDaysInDateRange.value"
+                [formControlName]="'allDaysInDateRange'">
+                {{'Task_Filter_AllDaysInDateRange' | translate}}
+            </ss-checkbox-button>
+        </div>
+        <div class="ss-tasks-filter-capture__input-group"
+             formGroupName="status">
+            <span class="ss-tasks-filter-capture__group-title">{{'Task_Status_Label' | translate}}</span>
+            <ng-container *ngFor="let checkbox of statusOptions">
+                <ss-checkbox-button
+                    [automationAttr]="checkbox.status"
+                    [name]="checkbox.status"
+                    [dimension]="'tiny'"
+                    [control]="form.controls.status.controls[checkbox.status]"
+                    [formControlName]="checkbox.status">
+                    <ss-task-status-icon
+                        class="ss-tasks-filter-capture__checkbox-icon"
+                        [status]="checkbox.status"
+                        [dimension]="'small'"></ss-task-status-icon>
+                    {{checkbox.label | translate}}
+                </ss-checkbox-button>
+            </ng-container>
+            <ss-callout *ngIf="isRescheduleContext"
+                        class="ss-tasks-filter-capture__callout"
+                        [type]="'neutral'"
+                        [message]="'Task_Filter_ShiftNotPossibleDoneAndAccepted' | translate"
+                        [attr.data-automation]="'task-status-reschedule-callout'">
+            </ss-callout>
+        </div>
+        <div class="ss-tasks-filter-capture__input-group">
+            <ss-input-multiple-select
+                [name]="'craft'"
+                [options]="craftList"
+                [hasSelectAllOption]="true"
+                [label]="'Generic_Craft' | translate"
+                [control]="form.controls.projectCraftIds"
+                [formControlName]="'projectCraftIds'">
+            </ss-input-multiple-select>
+            <ng-template #craftOptionTemplate let-data>
+                <div class="craft" [ngStyle]="{'background-color': data.craftColor}"></div>
+            </ng-template>
+            <ss-input-multiple-select
+                [automationAttr]="'ss-task-filter-assignee'"
+                [name]="'ss-task-filter-assignee'"
+                [options]="participantsByCompanyList"
+                [hasSelectAllOption]="true"
+                [control]="form.controls.assigneeIds"
+                [formControlName]="'assigneeIds'"
+                [label]="'Task_Filter_CompanyAndAssigneeLabel' | translate">
+            </ss-input-multiple-select>
+        </div>
+        <div *ngIf="!isRescheduleContext"
+             class="ss-tasks-filter-capture__input-group"
+             [attr.data-automation]="'topics-filter-section'">
+            <span class="ss-tasks-filter-capture__group-title">{{'Generic_Topics' | translate}}</span>
+            <ss-checkbox-button
+                [automationAttr]="'topics-available'"
+                [name]="'topicsAvailable'"
+                [control]="form.controls.hasTopics"
+                [dimension]="'tiny'"
+                [formControlName]="'hasTopics'">
+                <ss-icon [attr.data-automation]="'topics-available-icon-check'"
+                         [dimension]="'small'"
+                         [name]="'topic'"
+                         class="ss-tasks-filter-capture__checkbox-icon">
+                </ss-icon>
+                {{'Task_Filter_TopicsAvailableLabel' | translate}}
+            </ss-checkbox-button>
+            <ng-container [formGroupName]="'topicCriticality'">
+                <ss-checkbox-button
+                    [automationAttr]="'critical-topics'"
+                    [name]="'criticalTopics'"
+                    [control]="form.controls.topicCriticality.controls['CRITICAL']"
+                    [dimension]="'tiny'"
+                    [formControlName]="'CRITICAL'">
+                    <ss-icon [attr.data-automation]="'critical-topics-icon-check'"
+                             [dimension]="'small'"
+                             [name]="'topic-critical'"
+                             class="ss-tasks-filter-capture__checkbox-icon">
+                    </ss-icon>
+                    {{'Task_Filter_CriticalTopicsLabel' | translate}}
+                </ss-checkbox-button>
+            </ng-container>
+        </div>
+    </ss-collapsible-select>
+</div>
+
+<ng-template #assigneeUserPicture let-data>
+    <div class="ss-tasks-filter-capture__assignee__user-picture" [ssBackgroundImage]="data"></div>
+</ng-template>

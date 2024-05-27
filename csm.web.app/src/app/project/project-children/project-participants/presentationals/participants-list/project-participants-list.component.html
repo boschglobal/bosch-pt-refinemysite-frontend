@@ -1,0 +1,78 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-participants-list">
+    <ss-collapsible-list [records]="participants" [isLoading]="isLoading">
+        <ng-template #primaryTemplate let-record>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <ss-card-user
+                        [attr.data-automation]="'project-participants-list-user'"
+                        [user]="record.user"
+                        [status]="record.status"
+                        [invitedStatusTooltipMessage]="'Participant_Invited_TooltipMessage'"
+                        [validationStatusTooltipMessage]="'Participant_InValidation_TooltipMessage'"
+                        (click)="onClickDetailsParticipant(record)">
+                    </ss-card-user>
+                </div>
+                <div *ngIf="isActiveParticipant(record)" class="ss-project-participants-list__row-cell col-xs-12 col-sm-12 col-md-6"
+                     [attr.data-automation]="'project-participants-list-primary-company-'+record.id">
+                    <ss-card-company [company]="record.company"></ss-card-company>
+                </div>
+                <div *ngIf="!isActiveParticipant(record)" class="ss-project-participants-list__row-cell col-xs-12 col-sm-12 col-md-6"
+                     [attr.data-automation]="'project-participants-list-primary-email-'+record.id">
+                    <ss-mail-link [email]="record.email"></ss-mail-link>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #actionsTemplate let-record>
+            <div>
+                <ss-dropdown-menu
+                    [buttonSize]="'normal'"
+                    [buttonStyle]="'tertiary'"
+                    [icon]="'options'"
+                    [items]="record.options"
+                    (itemClicked)="handleDropdownItemClicked($event)"
+                    [ngClass]="{'ss-project-participants-list__actions-placeholder': showActionsPlaceholder(record)}"
+                    [attr.data-automation]="'ss-project-participants-list-actions'">
+                </ss-dropdown-menu>
+            </div>
+        </ng-template>
+
+        <ng-template #secondaryTemplate let-record>
+            <div class="ss-project-participants-list__secondary">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="ss-project-participants-list__secondary-first">
+                            <p>{{'Participant_Role_Label' | translate}}: {{record.role | translate}}</p>
+                            <p *ngIf="record.craft">
+                                {{'Participant_Craft_Label' | translate}}: {{record.craft}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6">
+                        <p *ngIf="record.telephone">
+                            <ss-phone-link [phone]="record.telephone"></ss-phone-link>
+                        </p>
+                        <p *ngIf="isActiveParticipant(record)">
+                            <ss-mail-link [email]="record.email"></ss-mail-link>
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12" *ngIf="isActiveParticipant(record)">
+                        <button (click)="onClickDetailsParticipant(record)"
+                                class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                                [attr.data-automation]="'participant-detail-button'">
+                            {{'Generic_Details' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ss-collapsible-list>
+</div>

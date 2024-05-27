@@ -1,0 +1,58 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-table class="ss-project-tasks-table"
+          [records]="tasks"
+          [settings]="settings"
+          [isSelecting]="isSelecting"
+          [isRowSelectable]="isRowSelectable"
+          [selectedRows]="selectedRows"
+          (sort)="onSortTable($event)"
+          (clickRow)="onClickRowTable($event)"
+          (selectionChange)="onSelectionChange.emit($event)">
+    <ss-table-cell [field]="'name'" [cellClass]="'ss-project-tasks-table__title'"></ss-table-cell>
+    <ss-table-cell [field]="'workArea'">
+        <ng-template let-workArea>
+            <span [attr.data-automation]="'tasks-table-work-area'">
+                {{workArea.position}}. {{workArea.name}}
+            </span>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'start'">
+        <ng-template let-start>
+            <span [ssMessageDate]="start"></span>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'end'">
+        <ng-template let-end>
+            <span [ssMessageDate]="end"></span>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'craft'">
+        <ng-template let-craft>
+            <ss-craft-label [hasEllipsis]="true"
+                            [craft]="craft"></ss-craft-label>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'company'">
+        <ng-template let-company>
+            <ss-project-tasks-card-assignee [projectTaskCardAssigneeModel]="company"
+                                            [isSelecting]="isSelecting"></ss-project-tasks-card-assignee>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'status'">
+        <ng-template let-status>
+            <ss-task-status-icon [status]="status"></ss-task-status-icon>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'news'">
+        <ng-template let-news>
+            <ss-project-tasks-news-label [news]="news"></ss-project-tasks-news-label>
+        </ng-template>
+    </ss-table-cell>
+</ss-table>

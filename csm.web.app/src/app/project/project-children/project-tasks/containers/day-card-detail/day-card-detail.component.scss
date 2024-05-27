@@ -1,0 +1,107 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/vendor/bootstrap/index";
+
+$card-header-height: $base-dimension--x6;
+$card-wrapper-max-height: 222px;
+
+.ss-day-card-detail {
+    background-color: $white;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    position: relative;
+
+    @include media-breakpoint-up(md) {
+        width: 360px;
+
+        &__close {
+            display: none;
+        }
+    }
+
+    &__header-buttons {
+        display: flex;
+    }
+
+    &__content {
+        font-size: $font-size-sm;
+        color: $black;
+        height: 100%;
+
+        header {
+            min-height: $card-header-height;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h6 {
+                margin: 0 $base-dimension--x2;
+                font-family: "RmS-Bold", sans-serif;
+                font-size: $font-size-base;
+                color: $black;
+                @include ellipsis();
+            }
+
+            ss-icon {
+                fill: $dark_grey_75;
+            }
+
+            .ss-day-card-detail__edit {
+                ss-icon {
+                    fill: $dark_blue;
+                }
+            }
+        }
+
+        &-wrapper {
+            width: 100%;
+            max-height: 100%;
+            height: calc(100% - #{$base-dimension--x6});
+            padding: $base-dimension $base-dimension--x2 0 $base-dimension--x2;
+            overflow-y: auto;
+
+            @include media-breakpoint-up(md) {
+                max-height: $card-wrapper-max-height;
+            }
+        }
+    }
+
+    &__item {
+        display: flex;
+        margin-bottom: $base-dimension;
+
+        &:last-child {
+            margin-bottom: $base-dimension--x2;
+        }
+
+        &-text {
+            width: calc(100% - #{$base-dimension--x6});
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-left: $base-dimension--x3;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-line;
+            hyphens: auto;
+        }
+
+        button {
+            justify-content: flex-start;
+        }
+
+        ss-icon {
+            fill: $dark_grey_75
+        }
+    }
+}

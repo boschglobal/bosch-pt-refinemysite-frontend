@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-files
+            [isDisabled]="defaultInputState.files.isDisabled"
+            [canAddFiles]="defaultInputState.files.canAddFiles"
+            [maxSize]="defaultInputState.files.maxSize"
+            [multiple]="defaultInputState.files.multiple"
+            [accept]="defaultInputState.files.accept"
+            [automationAttr]="defaultInputState.files.automationAttr"
+            [name]="defaultInputState.files.name"
+            [label]="defaultInputState.files.label"
+            [secondaryLabel]="defaultInputState.files.secondaryLabel"
+            [size]="defaultInputState.files.size"
+            [control]="formGroup.get(defaultInputState.files.controlName)"
+            formControlName="files">
+    </ss-input-files>
+</form>

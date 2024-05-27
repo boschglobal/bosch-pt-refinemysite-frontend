@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-milestone-edit">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-milestone-capture #milestoneCapture
+                         [focus]="focus"
+                         [mode]="captureMode"
+                         [defaultValues]="defaultValues"
+                         (onSubmit)="handleSubmit($event)"
+                         (onCancel)="handleCancel()">
+    </ss-milestone-capture>
+</div>

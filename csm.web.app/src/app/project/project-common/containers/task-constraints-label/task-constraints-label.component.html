@@ -1,0 +1,36 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="hasConstraints || canCreateOrUpdate"
+         class="ss-task-constraints-label"
+         [ngClass]="{'ss-task-constraints-label--has-constraints': hasConstraints}"
+         [attr.data-automation]="'task-constraints-label'">
+    <h6 class="ss-task-constraints-label__title">{{'Generic_Constraints' | translate}}</h6>
+    <div class="ss-task-constraints-label__content">
+        <ss-icon class="ss-task-constraints-label__icon"
+                 [name]="'problem-frame'"
+                 [dimension]="'normal'">
+        </ss-icon>
+        <div>
+            <p *ngIf="hasConstraints"
+               class="ss-task-constraints-label__constraints"
+               [attr.data-automation]="'task-constraints-label-constraints'">
+                {{commaSeparatedConstraintsNames}}
+            </p>
+            <button *ngIf="canCreateOrUpdate"
+                    class="ss-task-constraints-label__button ss-button ss-button--secondary-clear-blue"
+                    [attr.data-automation]="'task-constraints-label-create-or-update-button'"
+                    (click)="openModal()">
+                <span>
+                    {{hasConstraints ? ('Generic_Update' | translate) : ('Task_AddConstraint_Label'  | translate)}}
+                </span>
+            </button>
+        </div>
+    </div>
+</section>
+

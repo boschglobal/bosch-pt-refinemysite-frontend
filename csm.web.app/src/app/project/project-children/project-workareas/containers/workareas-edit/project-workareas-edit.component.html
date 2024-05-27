@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-workareas-edit">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <ss-project-workareas-capture
+        #projectWorkareasCapture
+        [defaultValues]="defaultValues"
+        [mode]="captureMode"
+        (onCancel)="handleCancel()"
+        (onSubmit)="handleSubmit($event)">
+    </ss-project-workareas-capture>
+</div>

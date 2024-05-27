@@ -1,0 +1,55 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-job-card-list">
+    <div *ngIf="isLoading"
+         class="ss-job-card-list__loading-indicator"
+         [attr.data-automation]="'job-card-list-loading'">
+        <ss-tiny-loader [attr.data-automation]="'job-card-list-loader-icon'"></ss-tiny-loader>
+        <span class="ss-job-card-list__loading-indicator-label"
+              [attr.data-automation]="'job-card-list-loading-label'">{{ 'Generic_Loading' | translate }}</span>
+    </div>
+    <ss-no-items *ngIf="!cards.length && !jobServiceUnavailable"
+                 class="ss-job-card-list__no-items"
+                 [icon]="'refresh'"
+                 [title]="'Job_CardList_EmptyListLabel' | translate"
+                 [attr.data-automation]="'job-card-list-empty'">
+    </ss-no-items>
+    <ss-no-items *ngIf="jobServiceUnavailable && !cards.length"
+                 class="ss-job-card-list__no-items"
+                 [icon]="'connection-off'"
+                 [title]="'Job_CardList_ServiceUnavailableLabel' | translate"
+                 [description]="'Generic_TryAgainLater' | translate"
+                 [attr.data-automation]="'job-card-list-service-unavailable'">
+    </ss-no-items>
+    <ul class="ss-job-card-list__cards">
+        <li *ngFor="let card of cards; trackBy: trackByFn"
+            class="ss-job-card-list__item"
+            [attr.data-automation]="'ss-job-card-list-item-' + card.id">
+            <ng-container *ngTemplateOutlet="cardTemplate; context: {$implicit: card}"></ng-container>
+        </li>
+    </ul>
+</div>
+
+<ng-template #cardTemplate let-item>
+    <ng-container [ngSwitch]="item.type">
+        <ss-job-card *ngSwitchCase="calendarExportTypeCardEnum"
+                     [card]="item"
+                     (downloadTriggered)="handleCardClick($event)"></ss-job-card>
+        <ss-job-card *ngSwitchCase="projectImportTypeCardEnum"
+                     [card]="item"
+                     (downloadTriggered)="handleCardClick($event)"></ss-job-card>
+        <ss-job-card *ngSwitchCase="projectExportTypeCardEnum"
+                     [card]="item"
+                     (downloadTriggered)="handleCardClick($event)"></ss-job-card>
+        <ss-job-card *ngSwitchCase="projectCopyTypeCardEnum"
+                     [card]="item"></ss-job-card>
+        <ss-job-card *ngSwitchCase="projectRescheduleTypeCardEnum"
+                     [card]="item"></ss-job-card>
+    </ng-container>
+</ng-template>

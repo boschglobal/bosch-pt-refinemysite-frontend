@@ -1,0 +1,115 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-project-tasks-list {
+    color: $dark_grey;
+
+    &__primary {
+        &--status {
+            display: flex;
+            margin: 0 0 ($base-dimension--x05) $base-dimension;
+
+            & a {
+                margin-left: $base-dimension--x4;
+                @include ellipsis();
+                color: $dark_blue !important;
+                font-family: RmS-Medium, sans-serif;
+                cursor: pointer;
+            }
+        }
+
+        &--work-area-news {
+            align-items: flex-start;
+            display: flex;
+        }
+
+        &--news {
+            display: inline-flex;
+            min-width: 52px;
+
+            ::ng-deep .ss-project-task-news-label {
+                display: block;
+                margin-left: $base-dimension;
+
+                & span {
+                    margin-top: 0 !important;
+                }
+
+                &__critical,
+                &__uncritical {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        &--work-area {
+            display: block;
+            margin: 0 0 0 12px;
+            @include ellipsis();
+        }
+
+        &--dates p {
+            margin-bottom: $base-dimension;
+        }
+
+        ss-project-tasks-card-assignee {
+            & ::ng-deep ss-card-user {
+                display: flex;
+
+                & .ss-card-user__information-title {
+                    margin-bottom: $base-dimension;
+                }
+            }
+        }
+
+        &--holder {
+            align-items: flex-start;
+        }
+
+        @include media-breakpoint-up(lg) {
+            &--holder {
+                display: flex;
+                justify-content: baseline;
+            }
+
+            &--dates p:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__secondary {
+        &--dates,
+        &--crafts {
+            margin: $base-dimension 0 $base-dimension $base-dimension--x8;
+
+            & p {
+                margin-bottom: $base-dimension;
+                @include ellipsis();
+            }
+        }
+
+        &--company {
+            display: flex;
+            margin: 0 0 $base-dimension--x2 9px;
+        }
+
+        & button {
+            margin-left: $base-dimension--x8;
+        }
+
+        @include media-breakpoint-up(md) {
+            &--crafts {
+                margin-bottom: $base-dimension--x2;
+            }
+        }
+    }
+}

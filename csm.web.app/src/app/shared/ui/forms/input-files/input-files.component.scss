@@ -1,0 +1,196 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/mixins";
+
+$size: 104px + 2px;
+$picture-max-size: 80px;
+$picture-min-size: 40px;
+$border-size: 2px;
+
+@mixin center-items {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.ss-input-files {
+    $this: &;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+
+    &--multiple {
+        height: auto;
+    }
+
+    &__label {
+        position: relative;
+        min-height: $size;
+        height: 100%;
+        width: 100%;
+        margin-bottom: 0 !important;
+        background: rgba(255, 255, 255, .7);
+        border: 1px dashed $light_grey;
+        transition: .2s all;
+
+        &--active {
+            cursor: pointer;
+        }
+    }
+
+    &__input {
+        display: none;
+    }
+
+    &__preview {
+        pointer-events: none;
+        z-index: $z-index_100;
+        margin: $base-dimension;
+
+        ul {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax($picture-max-size, 1fr));
+            height: 100%;
+            gap: $base-dimension;
+
+            li > div {
+                display: block;
+                padding-top: 100%;
+            }
+        }
+
+        &-single {
+            position: relative;
+
+            div {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                background-color: $light_grey_75;
+                background-position: center;
+            }
+
+            a {
+                @include center-items;
+                width: 100%;
+                height: 100%;
+                pointer-events: auto;
+                border: $border-size solid $light_grey;
+                fill: $white;
+                cursor: auto;
+
+                &:hover {
+                    background: rgba(0, 0, 0, .3);
+                }
+
+                ss-icon {
+                    position: absolute;
+                    top: $base-dimension;
+                    right: $base-dimension;
+                    cursor: pointer;
+                }
+            }
+
+            &--valid a {
+                border-color: $valid;
+            }
+
+            &--invalid a {
+                border-color: $invalid;
+            }
+        }
+
+        &-plus {
+            position: relative;
+            background: $white;
+            border: $border-size solid $light_grey;
+
+            ss-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                fill: $light_grey;
+            }
+        }
+    }
+
+    &__placeholder {
+        @include body-1($dark_grey);
+        height: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &--multiple {
+            @include center-items;
+        }
+
+        &--single {
+            padding: $base-dimension--x3;
+        }
+
+        &-icon {
+            margin-bottom: $base-dimension--x2;
+        }
+
+        &-label {
+            &--secondary {
+                @include body-2($dark_grey_75);
+                display: flex;
+                align-items: center;
+                min-height: 32px;
+                margin-top: $base-dimension;
+
+                button {
+                    margin-left: $base-dimension--x05;
+                }
+            }
+        }
+    }
+
+    &__invalid {
+        display: block;
+        margin: 10px 0 0 $base-dimension--x2;
+        font-size: $font-size-xs;
+        font-family: RmS-Bold, sans-serif;
+        color: $form-invalid;
+
+        ::selection {
+            background: none;
+        }
+    }
+
+    &--focused {
+        #{$this}__label {
+            background: rgba($dark_blue, .3);
+        }
+    }
+
+    &--small {
+        #{$this}__preview {
+            margin: 0 $base-dimension $base-dimension--x05;
+
+            ul {
+                grid-template-columns: repeat(auto-fill, minmax($picture-min-size, 1fr));
+                gap: $base-dimension--x05;
+            }
+
+            &-single ss-icon {
+                top: $base-dimension--x05;
+                right: $base-dimension--x05;
+            }
+        }
+    }
+}

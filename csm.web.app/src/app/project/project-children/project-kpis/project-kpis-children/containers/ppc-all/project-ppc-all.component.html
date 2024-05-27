@@ -1,0 +1,56 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+<ss-project-kpis-section [title]="'Generic_AllCompanies' | translate">
+    <ng-container header>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-blue ss-button--no-padding"
+                ssFlyout
+                [flyoutId]="flyoutTooltipPpcAllId"
+                [flyoutAlignment]="'start'"
+                [flyoutTemplate]="ssProjectKpisPpcAllTooltipInfo"
+                [attr.data-automation]="'project-kpis-ppc-all-tooltip-info-button'">
+            <ss-icon [name]="'info-marker'"
+                     [color]="iconInfoMarker">
+            </ss-icon>
+        </button>
+    </ng-container>
+
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <div class="ss-project-ppc-all__graph">
+        <ss-project-ppc-all-graph [data]="fulfilledDayCardsAllGraphData"
+                                  [settings]="fulfilledDayCardsAllGraphSettings"
+                                  [rfvListByWeek]="fulfilledDayCardsAllRfvListByWeek"></ss-project-ppc-all-graph>
+    </div>
+    <aside class="ss-project-ppc-all__legend">
+        <ss-project-ppc-all-legend [rfvListTotals]="fulfilledDayCardsAllRfvListTotals"
+                                   [dataTimeInterval]="fulfilledDayCardsAllTimeInterval"></ss-project-ppc-all-legend>
+    </aside>
+</ss-project-kpis-section>
+
+
+<ng-template #ssProjectKpisPpcAllTooltipInfo>
+    <ss-flyout-tooltip>
+        <div class="ss-project-ppc-all-tooltip-info" [attr.data-automation]="'project-ppc-all-tooltip-info'">
+            <p class="ss-project-ppc-all-tooltip-info__description">
+                {{ 'Project_Kpis_PpcAllInfoTooltipDescription' | translate }}
+            </p>
+            <h6>
+                {{ 'Project_Kpis_PpcAllInfoTooltipTitle' | translate }}
+            </h6>
+            <ul class="ss-project-ppc-all-tooltip-info__legend">
+                <li *ngFor="let trafficLight of trafficLightsLegendList" class="ss-project-ppc-all-tooltip-info__legend-item">
+                    <ss-traffic-light [settings]="trafficLightSettings" [value]="trafficLight.value"></ss-traffic-light>
+                    <span class="ss-project-ppc-all-tooltip-info__legend-item-value">{{ trafficLight.label | translate }}</span>
+                </li>
+            </ul>
+            <div class="ss-project-ppc-all-tooltip-info__mean">
+                <span class="ss-project-ppc-all-tooltip-info__mean-icon"></span>
+                <span class="ss-project-ppc-all-tooltip-info__mean-description">{{ 'Project_Kpis_PpcAllInfoTooltipMeanSubtitle' | translate }}</span>
+            </div>
+        </div>
+    </ss-flyout-tooltip>
+</ng-template>

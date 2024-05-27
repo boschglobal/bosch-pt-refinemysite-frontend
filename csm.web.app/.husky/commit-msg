@@ -1,0 +1,9 @@
+#!/bin/sh
+if ! head -1 "$1" | grep -qE "SMAR-[0-9]{5}:\s[A-Z]"; then
+    echo "Aborting commit because your commit message is invalid."
+    echo "The commit message must adhere to the following rules:"
+    echo "- Start with ticket id 'SMAR-12345'"
+    echo "- Followed by ': '"
+    echo "- Followed by an uppercase letter, example: 'Create component'"
+    exit 1
+fi

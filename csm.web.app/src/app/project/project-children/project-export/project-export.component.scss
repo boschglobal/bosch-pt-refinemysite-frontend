@@ -1,0 +1,100 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index.scss";
+@import "assets/styles/vendor/bootstrap/index";
+
+$min-subtitle-width: 190px;
+
+.ss-project-export {
+    padding: $base-dimension--x2;
+
+    &__buttons {
+        @include media-breakpoint-up(sm) {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    ul {
+        padding-bottom: $base-dimension;
+    }
+
+    &__checkbox-text {
+        display: flex;
+        flex-direction: column;
+
+        &__sub_title {
+            font-size: $font-size-xs;
+            color: $dark_grey_75;
+            min-width: $min-subtitle-width;
+        }
+
+        &__invalid {
+            font-size: $font-size-xs;
+            color: $invalid;
+            font-family: RmS-Medium, sans-serif;
+            padding-top: $base-dimension--x025;
+
+            &--hidden {
+                visibility: hidden;
+            }
+        }
+    }
+
+    &__tooltip {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    ::ng-deep .ss-checkbox-button {
+        height: 62px !important;
+
+        &__checkbox {
+            margin-left: $form-input-label-check-spacing;
+        }
+    }
+
+    &__info-icon {
+        cursor: pointer;
+    }
+
+    li + li {
+        margin-top: $base-dimension--x05;
+    }
+
+    fieldset > *:not(ss-checkbox-button) {
+        margin-left: 12px;
+    }
+
+    legend {
+        @include subtitle-2();
+        display: flex;
+        align-items: center;
+        margin-bottom: $base-dimension--x05;
+        color: inherit;
+
+        ss-icon {
+            padding: 0 $base-dimension;
+        }
+    }
+
+    fieldset[disabled] {
+        legend, span {
+            color: $black;
+            opacity: .4;
+            cursor: not-allowed;
+        }
+    }
+
+    &__content {
+        max-height: 510px;
+        overflow: auto;
+    }
+}

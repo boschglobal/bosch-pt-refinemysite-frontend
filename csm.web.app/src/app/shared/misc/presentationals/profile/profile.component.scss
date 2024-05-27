@@ -1,0 +1,68 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-profile {
+
+    &__panel {
+        display: grid;
+        grid-gap: $base-dimension--x2;
+        grid-template:
+            "contacts" auto
+            "singlekey-id" auto
+             / 1fr;
+        padding: $base-dimension--x2 $base-dimension--x2 0;
+
+        @include media-breakpoint-up(lg) {
+            grid-template:
+                "contacts singlekey-id" auto
+                / 1fr 1fr;
+        }
+
+        &--own-profile {
+            grid-template:
+                "contacts" auto
+                "language" auto
+                "singlekey-id" auto
+                "privacy" auto
+                 / 1fr;
+
+            @include media-breakpoint-up(lg) {
+                grid-template:
+                    "contacts language" auto
+                    "singlekey-id privacy" auto
+                     / 1fr 1fr;
+            }
+        }
+
+        & > * {
+            background: transparent;
+        }
+
+        &-contacts {
+            grid-area: contacts;
+        }
+
+        &-singlekey-id {
+            grid-area: singlekey-id;
+        }
+
+        &-language {
+            grid-area: language;
+        }
+
+        &-privacy {
+            grid-area: privacy;
+        }
+
+        button {
+            height: auto; // TODO: Remove this on SMAR-14626
+        }
+    }
+}

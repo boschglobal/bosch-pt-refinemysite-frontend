@@ -1,0 +1,48 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-milestone-slots"
+    [attr.data-automation]="'ss-milestone-slots'"
+    [ngClass]="{'ss-milestone-slots--dragging': isDragging}">
+    <li *ngFor="let daySlot of daySlots; trackBy: trackByIndex; let index = index;"
+        [ngStyle]="daySlot.styles"
+        [attr.data-automation]="'milestone-slots-day-' + index">
+        <ul class="ss-milestone-slots__day"
+            cdkDropList
+            (cdkDropListEntered)="handleEnterContainer($event)"
+            [cdkDropListData]="daySlot.id"
+            [cdkDropListEnterPredicate]="canEnterContainer">
+            <ng-container *ngFor="let slot of daySlot.milestoneSlots; trackBy: trackBySlot">
+                <li class="ss-milestone-slots__slot"
+                    #milestoneSlots
+                    cdkDrag
+                    [id]="milestoneSlotIdPrefix+slot.milestone.id"
+                    [cdkDragData]="slot"
+                    [cdkDragDisabled]="slot.dragDisabled"
+                    [cdkDragStartDelay]="dragStartDelay"
+                    (cdkDragStarted)="handleDragStart($event)"
+                    (cdkDragDropped)="handleDrop($event)">
+                    <div class="ss-milestone-slots__milestone"
+                         [ngStyle]="slot.styles"
+                         [attr.data-automation]="'milestone-slots-milestone-' + slot.milestone.id">
+                        <ng-container
+                            *ngTemplateOutlet="milestoneTemplate; context: {$implicit: slot.milestone}"></ng-container>
+                    </div>
+                    <div *cdkDragPlaceholder
+                         class="ss-milestone-slots__placeholder"></div>
+                    <ng-container *cdkDragPreview>
+                        <div class="ss-milestone-slots__preview">
+                            <ng-container
+                                *ngTemplateOutlet="milestoneTemplate; context: {$implicit: slot.milestone}"></ng-container>
+                        </div>
+                    </ng-container>
+                </li>
+            </ng-container>
+        </ul>
+    </li>
+</ul>

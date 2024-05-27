@@ -1,0 +1,266 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div #calendar
+     cdkDropListGroup
+     cdkScrollable
+     class="ss-calendar"
+     [ngClass]="{'ss-calendar--hide-scroll':hideScroll}"
+     (scroll)="handleScroll()">
+    <div #calendarWrapper
+         class="ss-calendar-wrapper">
+        <ss-loader class="ss-calendar-loader"
+                   [isLoading]="isLoading"
+                   [attr.data-automation]="'calendar-loader'">
+        </ss-loader>
+        <svg #calendarDependencies
+             class="ss-calendar-dependencies"
+             [ngClass]="{'ss-calendar-dependencies--hidden': !showDependencies}"
+             [attr.data-automation]="'calendar-dependencies'">
+            <g *ngFor="let calendarDependencyLine of calendarDependencyLines; trackBy:trackDependencyLine"
+                class="ss-calendar-dependency"
+                [class.ss-calendar-dependency--dimmed-out]="calendarDependencyLine.dimmedOut"
+                [class.ss-calendar-dependency--critical]="calendarDependencyLine.critical"
+                [attr.data-automation]="'calendar-dependencies-group-' + calendarDependencyLine.id"
+                >
+                <path class="ss-calendar-dependency__line"
+                      [attr.d]="calendarDependencyLine.line.linePath"
+                      [attr.data-automation]="'calendar-dependencies-line-' + calendarDependencyLine.id">
+                </path>
+                <path class="ss-calendar-dependency__arrow-head"
+                      [attr.d]="calendarDependencyLine.line.arrowHeadPath"
+                      [attr.data-automation]="'calendar-dependencies-arrowhead-' + calendarDependencyLine.id">
+                </path>
+            </g>
+
+
+            <g [attr.data-automation]="'outOfScopeIndicators'">
+                <path *ngFor="let indicator of calendarDependencyOutOfScopeIndicators; trackBy: trackDependencyOutOfScopeIndicator"
+                      class="ss-calendar-out-of-scope-indicator__line"
+                      [attr.d]="indicator.line.d"
+                      [attr.data-automation]="'indicator-line-' + indicator.id"
+                      [class.ss-calendar-out-of-scope-indicator__line--dimmed-out]="indicator.dimmedOut"
+                      [class.ss-calendar-out-of-scope-indicator__line--critical]="indicator.critical"></path>
+                <g *ngFor="let indicator of calendarDependencyOutOfScopeIndicators; trackBy: trackDependencyOutOfScopeIndicator"
+                   [attr.data-automation]="indicator.id">
+                   <circle class="ss-calendar-out-of-scope-indicator__circle"
+                           [ngClass]="{'ss-calendar-out-of-scope-indicator__circle--has-critical-dependencies': indicator.critical}"
+                           [class.ss-calendar-out-of-scope-indicator__circle--dimmed-out]="indicator.dimmedOut"
+                           [attr.cx]="indicator.circle.cx"
+                           [attr.cy]="indicator.circle.cy"
+                           [attr.r]="indicator.circle.r"
+                           [attr.data-automation]="'indicator-circle-' + indicator.id"></circle>
+                    <text class="ss-calendar-out-of-scope-indicator__text"
+                          [attr.x]="indicator.text.x"
+                          [attr.y]="indicator.text.y"
+                          [class.ss-calendar-out-of-scope-indicator__text--dimmed-out]="indicator.dimmedOut"
+                          [attr.data-automation]="'indicator-text-' + indicator.id">{{indicator.count | ssTruncatedCounter:9}}</text>
+                </g>
+            </g>
+        </svg>
+        <div class="ss-calendar-year-placeholder">
+            <h5 class="ss-calendar-year-placeholder__title"
+                [attr.data-automation]="'calendar-year__title'">
+                {{ yearScopeLabel }}
+            </h5>
+        </div>
+        <div #calendarHeader
+             class="ss-calendar-row ss-calendar-header"
+             [attr.data-automation]="'calendar-header'">
+            <div class="ss-calendar-header-cells">
+                <div #calendarHeaderCell *ngFor="let week of weeks; trackBy:trackByDate"
+                     class="ss-calendar-header-cell"
+                     [id]="week.id"
+                     [ngStyle]="week.styles"
+                     [attr.data-automation]="week.id">
+                    <ss-calendar-header [week]="week.date"
+                                        [isExpanded]="week.isExpanded"
+                                        [daySlotsWithMilestones]="week.daySlotsWithMilestones"
+                                        [focusedDay]="calendarHeaderFocusedDay"
+                                        [holidays]="holidays"
+                                        [workingDays]="workingDays"
+                                        [lowestCalendarRelatedHeight]="lowestCalendarRelatedHeight"
+                                        (headerClick)="handleHeaderClick(week.date)">
+                    </ss-calendar-header>
+                </div>
+            </div>
+        </div>
+        <div class="ss-calendar-milestones">
+            <div class="ss-calendar-milestones__placeholder"></div>
+            <div>
+                <div class="ss-calendar-milestones__creation-slots-wrapper">
+                    <div *ngIf="enableMilestoneCreation"
+                         class="ss-calendar-milestones__creation-slots"
+                         [attr.data-automation]="'milestone-creation-row-0'">
+                        <div *ngFor="let week of weeks; trackBy:trackByDate"
+                             class="ss-calendar-milestones__creation-slots-week"
+                             [ngStyle]="week.styles">
+                            <ng-container
+                                *ngTemplateOutlet="creationSlotsTemplate; context: {$implicit: {week: week.date, header: true}}"></ng-container>
+                        </div>
+                    </div>
+                </div>
+                <ss-milestone-slots
+                    class="ss-calendar-milestones__slots"
+                    [attr.data-automation]="'milestone-slots-row-header'"
+                    [canMoveMilestone]="canMoveMilestone"
+                    [expandedWeeks]="expandedWeeks"
+                    [milestoneTemplate]="milestoneTemplate"
+                    [milestones]="milestones['header']"
+                    [rowId]="'header'"
+                    [scope]="calendarScope"
+                    [weekWidth]="weekWidth"
+                    (isDraggingMilestone)="handleIsMilestoneDragging($event)"
+                    (draggingDay)="handleMilestoneDraggingOnDay($event)"
+                    (draggingMilestone)="keepScrollOnElement($event)"
+                    (moveMilestone)="handleMoveMilestone($event)">
+                </ss-milestone-slots>
+            </div>
+        </div>
+        <div *ngFor="let row of parsedRows; let rowIndex = index; trackBy:trackRow" class="ss-calendar-body">
+            <div class="ss-calendar-row">
+                <div #calendarColumn
+                     class="ss-calendar-column">
+                    <ng-container
+                        *ngTemplateOutlet="columnTemplate; context: {$implicit: row}"></ng-container>
+                </div>
+                <div class="ss-calendar__lines">
+                    <div *ngIf="enableMilestoneCreation"
+                         class="ss-calendar-milestones__creation-slots ss-calendar-milestones__creation-slots--row"
+                         [attr.data-automation]="'milestone-creation-row-' + (rowIndex + 1)">
+                        <div *ngFor="let week of weeks; trackBy:trackByDate"
+                             class="ss-calendar-milestones__creation-slots-week"
+                             [ngStyle]="week.styles">
+                            <ng-container
+                                *ngTemplateOutlet="creationSlotsTemplate; context: {$implicit: {week: week.date, header: false, rowId: row.id}}"></ng-container>
+                        </div>
+                    </div>
+                    <ss-milestone-slots
+                        class="ss-calendar-milestones__slots ss-calendar-milestones__slots--row"
+                        [attr.data-automation]="'milestone-slots-row-' + (row.id || 'no-row')"
+                        [canMoveMilestone]="canMoveMilestone"
+                        [expandedWeeks]="expandedWeeks"
+                        [milestoneTemplate]="milestoneTemplate"
+                        [milestones]="milestones[row.id || 'no-row']"
+                        [rowId]="row.id || 'no-row'"
+                        [scope]="calendarScope"
+                        [weekWidth]="weekWidth"
+                        (isDraggingMilestone)="handleIsMilestoneDragging($event)"
+                        (draggingDay)="handleMilestoneDraggingOnDay($event)"
+                        (draggingMilestone)="keepScrollOnElement($event)"
+                        (moveMilestone)="handleMoveMilestone($event)">
+                    </ss-milestone-slots>
+                    <div class="ss-calendar__lines-wrapper">
+                        <div class="ss-calendar-drag-row"
+                             [ngClass]="{'ss-calendar-drag-row--hidden': !isDraggingRecord}">
+                            <ng-container [ngSwitch]="recordGridUnit">
+                                <ng-container *ngSwitchCase="'week'">
+                                    <div *ngFor="let week of weeks; let columnIndex = index; trackBy:trackByDate"
+                                         class="ss-calendar-week-column ss-calendar-drag-slot"
+                                         [id]="getSlotId(columnIndex, rowIndex)"
+                                         [ngStyle]="standardCellStyle"
+                                         cdkDropList
+                                         cdkDropListSortingDisabled
+                                         (cdkDropListEntered)="handleEnterContainer($event)"
+                                         (cdkDropListExited)="handleExitContainer()"
+                                         (cdkDropListDropped)="handleDrop($event)">
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="'day'">
+                                    <div *ngFor="let week of weeks; let columnIndex = index; trackBy:trackByDate"
+                                         class="ss-calendar-week-column ss-calendar-week-column--day-grid"
+                                         [ngStyle]="standardCellStyle">
+                                        <div *ngFor="let dayIndex of weekDays; trackBy:trackByWeekDay"
+                                             class="ss-calendar-drag-slot"
+                                             [id]="getDaySlotId(columnIndex, rowIndex, dayIndex)"
+                                             cdkDropList
+                                             cdkDropListSortingDisabled
+                                             (cdkDropListEntered)="handleEnterContainer($event)"
+                                             (cdkDropListExited)="handleExitContainer()"
+                                             (cdkDropListDropped)="handleDrop($event)">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <div *ngFor="let line of row.lines; trackBy:trackLine"
+                             class="ss-calendar__line"
+                             [ngClass]="{'ss-calendar__line--expanded': isExpanded}">
+                            <ng-container *ngFor="let calendarRecord of line; trackBy:trackRecord">
+                                <div *ngIf="calendarRecord.record"
+                                     #cardList
+                                     [id]="calendarRecord.record.id"
+                                     class="ss-calendar-body-cell"
+                                     [ngStyle]="calendarRecord.styles"
+                                     [ngClass]="calendarRecord.classes"
+                                     [attr.data-automation]="calendarRecord.record.id + '-calendar-card'"
+                                     cdkDropList
+                                     cdkDropListSortingDisabled
+                                     [cdkDropListEnterPredicate]="canEnterContainer">
+                                    <div *ngIf="calendarRecord.visible"
+                                         cdkDrag
+                                         [cdkDragData]="calendarRecord"
+                                         [cdkDragStartDelay]="calendarRecordDragStartDelay"
+                                         (mousedown)="handleRecordMouseDown($event)"
+                                         (touchstart)="handleRecordTouchStart($event)"
+                                         [cdkDragDisabled]="calendarRecord.dragRecordDisabled"
+                                         (cdkDragStarted)="handleRecordDragStart($event, calendarRecord)"
+                                         (cdkDragEnded)="handleRecordDragEnd()"
+                                         (cdkDragReleased)="handleRecordRelease()">
+                                        <ng-container
+                                            *ngTemplateOutlet="cardTemplate; context: {$implicit: calendarRecord.record}"></ng-container>
+                                        <div class="ss-calendar-drag-slot__preview"
+                                             [ngStyle]="slotHighlightStyles"
+                                             *cdkDragPlaceholder>
+                                        </div>
+                                        <ng-template cdkDragPreview [matchSize]="!multipleRecordsSelected">
+                                            <ng-container
+                                                *ngTemplateOutlet="cardDragPreviewTemplate; context: {shiftAmount:shiftAmount, currentRecordsIds:currentRecordsIds}"></ng-container>
+                                        </ng-template>
+                                    </div>
+                                    <div *ngIf="!calendarRecord.visible">
+                                        <ng-container
+                                            *ngTemplateOutlet="cardPlaceholderTemplate; context: {$implicit: calendarRecord.record}"></ng-container>
+                                    </div>
+                                </div>
+                                <div *ngIf="calendarRecord.record && calendarRecord.isDragging"
+                                     class="ss-calendar-body-cell"
+                                     [ngClass]="{'ss-calendar-body-cell--ghost': !isCopying}"
+                                     [ngStyle]="calendarRecord.styles">
+                                    <ng-container
+                                        *ngTemplateOutlet="cardTemplate; context: {$implicit: calendarRecord.record}"></ng-container>
+                                </div>
+                                <div *ngIf="!calendarRecord.record"
+                                     class="ss-calendar-body-cell"
+                                     [ngStyle]="calendarRecord.styles">
+                                </div>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="addRecordPermission && !isExpanded"
+                             class="ss-calendar__line-add"
+                             [ngClass]="{'ss-calendar__line-add--hidden': isDraggingRecord}">
+                            <ng-container *ngFor="let week of weeks; let i = index; trackBy:trackByDate">
+                                <button type="button"
+                                        [ngStyle]="week.styles"
+                                        class="ss-button ss-button--normal ss-button--fit ss-button--secondary-clear-grey"
+                                        (click)="onClickAddRecord(i, row.id)">
+                                    <ss-icon [name]="addRecordStyles.icon"
+                                             [color]="addRecordStyles.desktopColor"
+                                             [dimension]="addRecordStyles.size">
+                                    </ss-icon>
+                                </button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-container
+            *ngTemplateOutlet="filterAlertMessageTemplate"></ng-container>
+    </div>
+</div>

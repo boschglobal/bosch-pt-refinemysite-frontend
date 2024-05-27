@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-day-card"
+         [attr.data-automation]="'day-card'"
+         [ngClass]="cardClasses">
+    <header>
+        <h3 [title]="dayCard.title"
+            [attr.data-automation]="'day-card-title'">{{dayCard.title}}</h3>
+    </header>
+    <footer>
+        <div class="ss-day-card__manpower">
+            <ss-icon [name]="'manpower'"></ss-icon>
+            <span [attr.data-automation]="'day-card-manpower'">{{dayCard.manpower}}</span>
+        </div>
+        <div *ngIf="canShowDayCardStatusIcon"
+             class="ss-day-card__status"
+             [attr.data-automation]="'day-card-status'">
+            <ss-icon [name]="dayCardStatusIcon.name"
+                     [color]="dayCardStatusIcon.color">
+            </ss-icon>
+        </div>
+    </footer>
+</section>

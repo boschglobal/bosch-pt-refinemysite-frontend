@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-autocomplete
+            [automationAttr]="defaultInputState.autocomplete.automationAttr"
+            [alwaysShowOptions]="defaultInputState.autocomplete.alwaysShowOptions"
+            [name]="defaultInputState.autocomplete.name"
+            [label]="defaultInputState.autocomplete.label"
+            [isRequired]="defaultInputState.autocomplete.isRequired"
+            [isDisabled]="defaultInputState.autocomplete.isDisabled"
+            [maxCharacter]="defaultInputState.autocomplete.maxCharacter"
+            [maxOptions]="defaultInputState.autocomplete.maxOptions"
+            [searchType]="defaultInputState.autocomplete.searchType"
+            [showCounter]="defaultInputState.autocomplete.showCounter"
+            [sortList]="defaultInputState.autocomplete.sortList"
+            [control]="formGroup.get(defaultInputState.autocomplete.controlName)"
+            [list]="defaultInputState.autocomplete.list"
+            [formControl]="formGroup.get(defaultInputState.autocomplete.controlName)">
+    </ss-input-autocomplete>
+</form>

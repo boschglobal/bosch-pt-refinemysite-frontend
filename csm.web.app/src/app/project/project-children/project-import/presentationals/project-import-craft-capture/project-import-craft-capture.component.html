@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-import-craft-capture">
+    <span class="ss-project-import-craft-capture__title">{{'Project_Import_CraftColumnTitle' | translate}}</span>
+    <div class="ss-project-import-craft-capture__body">
+        <form class="ss-project-import-craft-capture__form"
+              [formGroup]="form">
+            <ss-input-select-dropdown
+                [automationAttr]="'craftColumn'"
+                [name]="'craftColumn'"
+                [label]="'Project_Import_SelectCraftColumnLabel' | translate"
+                [control]="form.get('craftColumn')"
+                [options]="options"
+                [emptyOptionMessageKey]="'Generic_NoSelection'"
+                formControlName="craftColumn">
+            </ss-input-select-dropdown>
+        </form>
+        <div class="ss-project-import-craft-capture__img">
+            <img src="/assets/images/import-wizard/discipline-map-explanation.png"
+                 alt="discipline map explanatory image"/>
+        </div>
+    </div>
+</div>

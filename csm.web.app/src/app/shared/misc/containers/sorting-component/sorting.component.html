@@ -1,0 +1,38 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup" class="ss-sorting">
+    <div class="ss-sorting__col">
+        <span class="ss-label-group ss-sorting__label">{{'Generic_Order' | translate}}</span>
+        <ss-radio-button
+            *ngFor="let sortDirection of sortDirections; trackBy: trackByFn"
+            [attr.data-automation]="sortDirection.value"
+            [name]="'direction'"
+            [value]="sortDirection.value"
+            [dimension]="'tiny'"
+            [control]="formGroup.get('direction')"
+            (ngModelChange)="onSubmitForm()"
+            formControlName="direction">
+            {{sortDirection.label | translate}}
+        </ss-radio-button>
+    </div>
+    <div class="ss-sorting__col">
+        <span class="ss-label-group ss-sorting__label">{{'Generic_SortCategory' | translate}}</span>
+        <ss-radio-button
+            *ngFor="let sortMethod of sortMethods; trackBy: trackByFn"
+            [attr.data-automation]="sortMethod.value"
+            [name]="'field'"
+            [value]="sortMethod.value"
+            [dimension]="'tiny'"
+            [control]="formGroup.get('field')"
+            (ngModelChange)="onSubmitForm()"
+            formControlName="field">
+            {{sortMethod.label | translate}}
+        </ss-radio-button>
+    </div>
+</form>

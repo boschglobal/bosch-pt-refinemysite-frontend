@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<span class="ss-tag" *ngIf="item">
+    <div class="ss-tag__tag"
+         [attr.data-automation]="'tag-' + item.id">
+        <div class="ss-tag__text">
+            {{item.displayName}}
+        </div>
+    </div>
+    <div class="ss-tag__icon-close"
+         (click)="removeTag(item)"
+         [attr.data-automation]="'tag-remove-' + item.id">
+        <ss-icon [name]="'close'" [dimension]="'xsmall'"></ss-icon>
+    </div>
+</span>

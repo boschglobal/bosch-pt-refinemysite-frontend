@@ -1,0 +1,342 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "simple-import-sort",
+        "import-newlines",
+        "header",
+        "@html-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+    ],
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "tsconfig.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": [
+                            "element",
+                            "attribute"
+                        ],
+                        "prefix": "ss",
+                        "style": "kebab-case"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "ss",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/pipe-prefix": [
+                    "error",
+                    {
+                        "prefixes": [
+                            "ss"
+                        ]
+                    }
+                ],
+                "@angular-eslint/use-lifecycle-interface": "error",
+                "header/header": [
+                    "error",
+                    "block",
+                    [
+                        "",
+                        " * *************************************************************************",
+                        " *",
+                        {
+                            "pattern": " \\* Copyright: Robert Bosch Power Tools GmbH, 2023",
+                            "template": " * Copyright: Robert Bosch Power Tools GmbH, 2023"
+                        },
+                        " *",
+                        " * *************************************************************************",
+                        " "
+                    ],
+                    1
+                ],
+                "import-newlines/enforce": [
+                    "error",
+                    {
+                        "items": 1
+                    }
+                ],
+                "modules-newline/import-declaration-newline": "off",
+                "modules-newline/export-declaration-newline": "off",
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "warn",
+                    {
+                        "allowTypedFunctionExpressions": false,
+                        "allowedNames": [
+                            "ngOnInit",
+                            "ngOnDestroy",
+                            "ngAfterViewInit",
+                            "ngOnChanges",
+                            "ngDoCheck",
+                            "ngAfterContentInit",
+                            "ngAfterContentChecked",
+                            "ngAfterViewChecked"
+                        ]
+                    }
+                ],
+                "simple-import-sort/exports": "error",
+                "simple-import-sort/imports": "error",
+                "indent": [
+                    "error",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "FunctionDeclaration": {
+                            "parameters": "first"
+                        },
+                        "FunctionExpression": {
+                            "parameters": "first"
+                        }
+                    }
+                ],
+                "no-console": [
+                    "error",
+                    {
+                        "allow": [
+                            "error"
+                        ]
+                    }
+                ],
+                "comma-dangle": [
+                    "warn",
+                    {
+                        "arrays": "always-multiline",
+                        "objects": "always-multiline",
+                        "imports": "only-multiline",
+                        "exports": "only-multiline",
+                        "functions": "only-multiline"
+                    }
+                ],
+                "curly": [
+                    "error",
+                    "multi-line"
+                ],
+                "jsdoc/no-types": "off",
+                "max-len": [
+                    "warn",
+                    {
+                        "code": 140,
+                        "ignorePattern": "^import .*"
+                    }
+                ],
+                "no-underscore-dangle": "off",
+                "no-shadow": "off",
+                "no-multi-spaces": "warn",
+                "no-multiple-empty-lines": [
+                    "error",
+                    {
+                        "max": 1,
+                        "maxEOF": 0
+                    }
+                ],
+                "no-nested-ternary": "error",
+                "no-restricted-globals": [
+                    "error",
+                    "xdescribe",
+                    "fdescribe"
+                ],
+                "no-unused-vars": "error",
+                "object-curly-newline": [
+                    "error",
+                    {
+                        "ImportDeclaration": {
+                            "multiline": true,
+                            "minProperties": 3
+                        },
+                        "ExportDeclaration": {
+                            "multiline": true,
+                            "minProperties": 2
+                        }
+                    }
+                ],
+                "object-curly-spacing": [
+                    "error",
+                    "never"
+                ],
+                "prefer-arrow/prefer-arrow-functions": "off",
+                "radix": [
+                    "error",
+                    "always"
+                ],
+                "brace-style": [
+                    "error",
+                    "1tbs"
+                ],
+                "keyword-spacing": [
+                    "error"
+                ],
+                "space-before-blocks": [
+                    "error",
+                    "always"
+                ],
+                "space-infix-ops": "warn",
+                "@typescript-eslint/no-shadow": "error",
+                "@typescript-eslint/naming-convention": [
+                    "warn",
+                    {
+                        "selector": "default",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase",
+                            "snake_case"
+                        ],
+                        "leadingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "private"
+                        ],
+                        "leadingUnderscore": "require",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "property",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "readonly"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "method",
+                        "format": [
+                            "camelCase"
+                        ],
+                        "modifiers": [
+                            "private"
+                        ],
+                        "leadingUnderscore": "require",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "enumMember",
+                        "format": [
+                            "PascalCase"
+                        ],
+                        "leadingUnderscore": "forbid",
+                        "trailingUnderscore": "forbid"
+                    },
+                    {
+                        "selector": "variable",
+                        "format": [
+                            "camelCase",
+                            "UPPER_CASE"
+                        ],
+                        "leadingUnderscore": "allow",
+                        "trailingUnderscore": "allow"
+                    },
+                    {
+                        "selector": "typeLike",
+                        "format": [
+                            "PascalCase"
+                        ]
+                    }
+                ],
+                "@typescript-eslint/no-namespace": "off",
+                "@typescript-eslint/ban-types": "off",
+                "@typescript-eslint/consistent-type-definitions": "error",
+                "@typescript-eslint/dot-notation": "off",
+                "@typescript-eslint/explicit-member-accessibility": [
+                    "warn",
+                    {
+                        "accessibility": "explicit",
+                        "overrides": {
+                            "constructors": "off"
+                        },
+                        "ignoredMethodNames": [
+                            "ngOnInit",
+                            "ngOnDestroy",
+                            "ngAfterViewInit",
+                            "ngOnChanges",
+                            "ngDoCheck",
+                            "ngAfterContentInit",
+                            "ngAfterContentChecked",
+                            "ngAfterViewChecked"
+                        ]
+                    }
+                ],
+                "@typescript-eslint/member-ordering": "off",
+                "@typescript-eslint/semi": [
+                    "error"
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.test.component.ts"
+            ],
+            "rules": {
+                "no-unused-vars": [
+                    "error",
+                    {
+                        "args": "none"
+                    }
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "parser": "@html-eslint/parser",
+            "extends": [
+                "plugin:@html-eslint/recommended"
+            ],
+            "rules": {
+                "@html-eslint/no-duplicate-id": "error",
+                "@html-eslint/require-closing-tags": "error",
+                "@html-eslint/no-multiple-empty-lines": [
+                    "error",
+                    {
+                        "max": 1
+                    }
+                ],
+                "@html-eslint/no-trailing-spaces": "warn",
+                "@html-eslint/element-newline": "error",
+                "@html-eslint/require-doctype": "off",
+                "@html-eslint/indent": "off"
+            }
+        }
+    ],
+    "env": {
+        "browser": true,
+        "es2020": true
+    }
+}

@@ -1,0 +1,57 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-colorpicker"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <div class="ss-input-colorpicker__color-swatch-wrapper"
+         (click)="handleOpen()">
+        <div class="ss-input-colorpicker__color-swatch"
+             [attr.data-automation]="automationAttr + '-color-swatch'"
+             [ngStyle]="{'background': value}"></div>
+    </div>
+    <input class="ss-input__input"
+           [type]="'color'"
+           [attr.data-automation]="automationAttr"
+           [name]="name"
+           [disabled]="isDisabled"
+           [readonly]="isReadOnly"
+           (focus)="onInputFocus($event)"
+           (blur)="onInputBlur($event)"
+           [(ngModel)]="value">
+    <ss-modal [title]="modalTitle"
+              [isOpened]="isOpened"
+              (close)="handleClose()"
+              [size]="'small'">
+        <ng-template #body>
+            <ul>
+                <li *ngFor="let option of options"
+                    class="ss-input-colorpicker__color"
+                    [style.background]="option"
+                    (click)="handleSelect(option)"
+                    [ngClass]="{'ss-input-colorpicker__color--selected': isSelected(option)}"
+                    [attr.data-automation]="automationAttr + '-color-' + option">
+                    <ss-icon [name]="'check'" *ngIf="isSelected(option)"></ss-icon>
+                </li>
+            </ul>
+        </ng-template>
+        <ng-template #footer>
+            <button class="ss-button ss-button--normal ss-button--secondary-ghost-grey"
+                    (click)="handleClose()"
+                    [attr.data-automation]="automationAttr + '-modal-cancel'">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button ss-button
+                    [buttonProportional]="true"
+                    (click)="handleConfirmSelection()"
+                    [attr.data-automation]="automationAttr + '-modal-confirm'">
+                {{'Generic_Ok' | translate}}
+            </button>
+        </ng-template>
+    </ss-modal>
+</div>

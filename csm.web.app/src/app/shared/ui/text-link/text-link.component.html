@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ng-container *ngFor="let item of items">
+    <span
+        *ngIf="item.type === 'text'"
+        class="ss-text-link__text"
+        [attr.data-automation]="'text-link'">{{item.text}}</span>
+    <ss-button-link
+        *ngIf="item.type !== 'text'"
+        [link]="item.link"
+        [linkIcon]="item.linkIcon"
+        [title]="item.text"
+        [attr.data-automation]="'text-link'">
+    </ss-button-link>
+</ng-container>

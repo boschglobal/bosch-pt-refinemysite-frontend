@@ -1,0 +1,39 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-collapsible-button-list>
+    <div inline>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'more'"></ss-icon>
+        </button>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'document-download'"></ss-icon>
+        </button>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'filter'"></ss-icon>
+        </button>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'notification'"></ss-icon>
+        </button>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'card-user'"></ss-icon>
+        </button>
+        <button class="ss-button ss-button--normal ss-button--no-padding" (click)="buttonClick($event)">
+            <ss-icon [name]="'chart'"></ss-icon>
+        </button>
+    </div>
+    <div collapsed>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">Add</button>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">Download</button>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">Filter</button>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">Notifications
+        </button>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">User</button>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-black" (click)="buttonClick($event)">KPIs</button>
+    </div>
+</ss-collapsible-button-list>

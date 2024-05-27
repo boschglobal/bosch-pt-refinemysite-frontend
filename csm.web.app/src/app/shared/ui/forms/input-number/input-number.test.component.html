@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-number
+            [automationAttr]="defaultInputState.number.automationAttr"
+            [name]="defaultInputState.number.name"
+            [label]="defaultInputState.number.label | translate"
+            [isRequired]="defaultInputState.number.isRequired"
+            [isDisabled]="defaultInputState.number.isDisabled"
+            [max]="defaultInputState.number.max"
+            [min]="defaultInputState.number.min"
+            [step]="defaultInputState.number.step"
+            [icon]="defaultInputState.number.icon"
+            [maxDigits]="defaultInputState.number.maxDigits"
+            [control]="formGroup.get(defaultInputState.number.controlName)"
+            formControlName="number">
+    </ss-input-number>
+</form>

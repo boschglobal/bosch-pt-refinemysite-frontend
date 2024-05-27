@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-wizard-steps"
+    [attr.data-automation]="'ss-wizard-steps'">
+    <li
+        *ngFor="let step of wizardSteps; let i = index"
+        class="ss-wizard-steps__step">
+        <ss-wizard-step
+            [label]="step.label"
+            [active]="step.active"
+            [disabled]="step.disabled"
+            [size]="wizardStepSize"
+            [leftLineColor]="getLeftLineColor(i)"
+            [rightLineColor]="getRightLineColor(i)"
+            (click)="handleNavigation(i)">
+            <ss-icon *ngIf="step.icon" [name]="step.icon"></ss-icon>
+            <span *ngIf="!step.icon">{{i+1}}</span>
+        </ss-wizard-step>
+    </li>
+</ul>

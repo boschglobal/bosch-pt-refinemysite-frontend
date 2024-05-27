@@ -1,0 +1,67 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+.ngx-charts {
+    .tooltip-bar,
+    .line-highlight.active,
+    .line-highlight.active .area {
+        display: none;
+    }
+
+    .tooltip-anchor {
+        fill: $dark_grey_50 !important;
+    }
+
+    g[ngx-charts-circle] circle {
+        pointer-events: all !important;
+    }
+
+    g[ngx-charts-x-axis-ticks] text, g[ngx-charts-y-axis-ticks] text {
+        font-size: $font-size-sm !important;
+    }
+
+    g[ngx-charts-x-axis-ticks] text {
+        fill: $dark_grey;
+    }
+
+    g[ngx-charts-y-axis-ticks] text {
+        fill: $dark_grey_50;
+    }
+
+    g[ngx-charts-x-axis-ticks] line.gridline-path-vertical {
+        stroke: white;
+    }
+}
+
+.ngx-charts-tooltip-content {
+    background-color: $light_grey_12_5 !important;
+    border: 1px solid $light_grey_50;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    max-width: 300px;
+
+    .tooltip-caret.position-top {
+        margin-top: -1px;
+        border-top-color: $light_grey_50 !important;
+    }
+
+    .tooltip-caret.position-bottom {
+        border-bottom-color: $light_grey_50 !important;
+    }
+
+    .tooltip-caret.position-right {
+        border-right-color: $light_grey_50 !important;
+    }
+
+    .tooltip-caret.position-left {
+        margin-left: -1px;
+        border-left-color: $light_grey_50 !important;
+    }
+
+}

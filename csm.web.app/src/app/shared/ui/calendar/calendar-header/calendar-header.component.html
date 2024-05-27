@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-calendar-header">
+    <div #calendarHeader
+         class="ss-calendar-header__header"
+         (click)="handleHeaderClick()"
+         [ngClass]="{'ss-calendar-header__header--active': parsedWeek.week.isCurrent}"
+         [attr.data-automation]="'calendar-header-header'">
+        <div class="ss-calendar-header__header-content">
+            <h6 class="ss-calendar-header__title">{{'Generic_Week' | translate}} {{parsedWeek.week.number}}</h6>
+            <span class="ss-calendar-header__subtitle"
+                  [attr.data-automation]="'calendar-header-subtitle'">{{parsedWeek.week.monthLabel}}</span>
+        </div>
+        <ss-icon *ngIf="isExpanded" [name]="'arrow-collapse'"></ss-icon>
+        <ss-icon *ngIf="!isExpanded" [name]="'arrow-expand'"></ss-icon>
+    </div>
+    <ul class="ss-calendar-header__week-days"
+        [attr.data-automation]="'calendar-header-week-days'">
+        <li *ngFor="let day of parsedWeek.days; trackBy: trackByDay"
+            class="ss-calendar-header__week-days__day"
+            [ngClass]="day.classes"
+            [ngStyle]="{'--row-height': day.classes[cssClassWeekDayCurrent] ? todayLineHeight : ''}"
+            [attr.data-automation]="'calendar-header-week-day'">
+            <span class="ss-calendar-header__week-days__day--label"
+                  [attr.data-automation]="'calendar-header-week-day-label'">
+                {{day.label}}
+            </span>
+            <span *ngIf="day.dayHasMilestones"
+                  class="ss-calendar-header__milestone-marker"
+                  [attr.data-automation]="'calendar-header-milestone-marker'">
+            </span>
+        </li>
+    </ul>
+</div>

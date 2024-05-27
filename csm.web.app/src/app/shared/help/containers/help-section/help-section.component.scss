@@ -1,0 +1,97 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/mixins";
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/index";
+
+$help-section-width: 360px;
+$help-section-max-height: 650px;
+
+.ss-help-section {
+
+    &__panel {
+        @include shadow-2;
+        display: flex;
+        background: $white;
+        border: 1px solid $light_grey_50;
+        position: fixed;
+        flex-direction: column;
+        z-index: $z-index_1000;
+        right: $base-dimension;
+        width: $help-section-width;
+        max-height: $help-section-max-height;
+        left: initial;
+        top: initial;
+        bottom: initial;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        flex-direction: row;
+        border-bottom: 1px solid $light_grey_25;
+        height: $base-dimension--x6;
+        padding-left: $base-dimension--x2;
+    }
+
+    &__title {
+        @include subtitle-2();
+    }
+
+    &__container {
+        flex: 1;
+        overflow-y: auto;
+
+        &__section {
+            padding: $base-dimension 0px $base-dimension;
+            border-bottom: 1px solid $light_grey_25;
+        }
+
+        &__section:last-child {
+            padding-bottom: unset;
+        }
+    }
+
+    &__sub-header {
+        height: $base-dimension--x5;
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        padding-left: $base-dimension--x150;
+
+        span {
+            margin-left: $base-dimension;
+            font-size: $font-size-sm;
+        }
+    }
+
+    &__link {
+        width: 100%;
+        justify-content: unset;
+    }
+
+    &__whats-new {
+        &:not(:last-child) {
+            border-bottom: 1px solid $light_grey_25;
+        }
+
+        align-items: center;
+
+        ::ng-deep .ss-text-link__text {
+            font-size: $font-size-xs !important;
+        }
+
+        img {
+            width: 100%;
+            margin-top: $base-dimension;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<button
+    ss-button
+    [buttonSize]="'tiny'"
+    [buttonStyle]="'integrated'"
+    [buttonNoPadding]="true"
+    (click)="handleShowMore()"
+    [attr.data-automation]="'show-more-toggle'"
+    class="ss-show-more">
+    <span>{{ getText() | translate }}</span>
+</button>

@@ -1,0 +1,48 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-card-user
+    *ngIf="isAssigned() && (isSent() || !canBeSent())"
+    [size]="userCardSize"
+    [user]="projectTaskCardAssigneeModel.assignee"
+    [company]="projectTaskCardAssigneeModel.company"
+    [email]="projectTaskCardAssigneeModel.email"
+    [phone]="projectTaskCardAssigneeModel.phone"
+    [attr.data-automation]="'card-user'"
+    class="ss-project-tasks-card-assignee__user"
+    (click)="navigateToUserProfile($event)">
+</ss-card-user>
+<ss-card-information
+    *ngIf="canBeSent() && isAssigned() && !isSent()"
+    [size]="informationCardSize"
+    [icon]="'letter'"
+    [title]="projectTaskCardAssigneeModel.company.displayName"
+    [description]="projectTaskCardAssigneeModel.assignee.displayName"
+    [callForAction]="true"
+    [attr.data-automation]="'card-send'"
+    class="ss-project-tasks-card-assignee__send"
+    (click)="handleSend($event)">
+</ss-card-information>
+<ss-card-information
+    *ngIf="canBeAssigned() && !isAssigned()"
+    [icon]="'card-user'"
+    [title]="'Generic_AssignNow' | translate"
+    [callForAction]="true"
+    [size]="informationCardSize"
+    [attr.data-automation]="'card-assign'"
+    class="ss-project-tasks-card-assignee__assign"
+    (click)="handleAssign($event)">
+</ss-card-information>
+<ss-card-information
+    *ngIf="!canBeAssigned() && !isAssigned()"
+    [size]="informationCardSize"
+    [icon]="'manpower'"
+    [title]="'Generic_NotAssigned' | translate"
+    [attr.data-automation]="'card-not-assigned'"
+    class="ss-project-tasks-card-assignee__not-assigned">
+</ss-card-information>

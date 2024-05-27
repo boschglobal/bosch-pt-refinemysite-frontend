@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-textarea
+            [automationAttr]="defaultInputState.textarea.automationAttr"
+            [name]="defaultInputState.textarea.name"
+            [label]="defaultInputState.textarea.label | translate"
+            [isRequired]="defaultInputState.textarea.isRequired"
+            [isDisabled]="defaultInputState.textarea.isDisabled"
+            [isAutosize]="defaultInputState.textarea.isAutosize"
+            [maxCharacter]="defaultInputState.textarea.maxCharacter"
+            [showCounter]="defaultInputState.textarea.showCounter"
+            [control]="formGroup.get(defaultInputState.textarea.controlName)"
+            formControlName="textarea">
+    </ss-input-textarea>
+</form>

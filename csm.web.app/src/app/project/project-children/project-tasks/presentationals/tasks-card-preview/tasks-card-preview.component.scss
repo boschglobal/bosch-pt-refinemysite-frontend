@@ -1,0 +1,180 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+@import "../../../../../shared/ui/calendar/contants/calendar.contants";
+
+$task-height: $base-dimension--x6;
+
+:host {
+    container: task-card-preview / inline-size;
+}
+
+.ss-task-card-preview {
+    @include dragging-shadow;
+    $this: &;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: $base-dimension--x05;
+    transition: box-shadow 250ms ease-in-out;
+    background: inherit;
+    position: relative;
+    height: $task-height;
+
+    &__line {
+        display: flex;
+    }
+
+    &__status-icon ::ng-deep .ss-icon {
+        fill: $white;
+    }
+
+    &__title {
+        @include subtitle-2($white);
+        line-height: $base-dimension--x3;
+        margin: 0;
+        padding: 0 $base-dimension 0 $base-dimension--x05;
+        @include ellipsis();
+    }
+
+    &__description {
+        @include caption-2($light_grey_25);
+        line-height: $base-dimension--x2;
+        margin: 0;
+        flex: 1;
+        @include ellipsis();
+
+        span {
+            padding: 0 $base-dimension 0 $base-dimension--x3 + $base-dimension--x05;
+        }
+    }
+
+    &__icon-indicators {
+        padding-right: $base-dimension--x05;
+    }
+
+    &--selected {
+        background: $white !important;
+        padding: $base-dimension--x025;
+        border: $base-dimension--x025 solid;
+
+        #{$this}__title {
+            @include subtitle-1();
+            line-height: $base-dimension--x3;
+        }
+
+        #{$this}__description {
+            color: $dark_grey;
+        }
+    }
+
+    &--focused,
+    &--dimmed-out:not(#{$this}--selected) {
+        padding: 3px;
+        border: 1px solid;
+    }
+
+    &--focused {
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $black !important;
+        }
+
+        #{$this}__title {
+            color: $black;
+        }
+
+        #{$this}__description {
+            color: $dark_grey;
+        }
+    }
+
+    &--focused#{$this}--dimmed-out {
+        border-color: $light_grey_50 !important;
+        background: $light_grey_12_5 !important;
+    }
+
+    &--dimmed-out {
+        background: $light_grey_50 !important;
+    }
+
+    &--dimmed-out:not(#{$this}--selected) {
+        border-color: $light_grey_75 !important;
+
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $dark_grey !important;
+        }
+
+        #{$this}__title,
+        #{$this}__description {
+            color: $dark_grey;
+        }
+    }
+
+    &__marker {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+    }
+
+    @container task-card-preview (width < 72px) {
+        &__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(1) {
+            display: none;
+        }
+
+        &:not(&--css-has-supported) &__icon-indicators {
+            display: none;
+        }
+    }
+
+    @container task-card-preview (width < 52px) {
+        &__line {
+            justify-content: center;
+        }
+
+        &__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(2)) ss-icon:nth-child(1),
+        &__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(2) {
+            display: none;
+        }
+
+        &__description,
+        &__title {
+            display: none;
+        }
+
+        &__left-sticky, &__icon-indicators, &__right-sticky {
+            padding: 0 !important;
+        }
+
+        &__icon-indicators ::ng-deep .ss-task-card-indicators {
+            ss-icon + ss-icon {
+                margin-left: 0 !important;
+            }
+        }
+    }
+
+    @container task-card-preview (width < 26px) {
+        &__status-icon ::ng-deep .ss-icon {
+            width: 22px;
+        }
+
+        &__select-icon ::ng-deep .ss-icon {
+            width: 20px;
+        }
+
+        &__select-icon ::ng-deep .ss-icon,
+        &--focused &__status-icon ::ng-deep .ss-icon {
+            margin-left: -1px;
+        }
+    }
+}

@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+<section class="ss-project-kpis ss-content">
+    <ss-toolbar ssSticky
+                [title]="'Generic_KPI'"
+                [stickyTop]="54"
+                [stickyId]="'toolbar'"
+                [stickyBorderBottom]="true">
+        <div mappings>
+            <ss-project-kpis-time-filter></ss-project-kpis-time-filter>
+        </div>
+    </ss-toolbar>
+    <ss-project-kpis-tab-navigation></ss-project-kpis-tab-navigation>
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+</section>

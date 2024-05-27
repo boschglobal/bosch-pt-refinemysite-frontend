@@ -1,0 +1,12 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<a *ngIf="email" class="ss-mail-link" [href]="getLink()" target="_top" (click)="$event.stopPropagation()">
+    <ss-icon *ngIf="showIcon" [name]="'letter'" [color]="iconColor" [attr.data-automation]="'mail-link-icon'"></ss-icon>
+    <span>{{getLinkText()}}</span>
+</a>

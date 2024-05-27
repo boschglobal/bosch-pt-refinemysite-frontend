@@ -1,0 +1,15 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+$daycard-width: $base-dimension--x9;
+$week-width: 154;
+$week-spacer: $base-dimension--x2;
+$expanded-week-width: $daycard-width * 7;
+$left-column-width: 240px;
+$header-height: 54px;
+$milestone-creation-slots-height: 20px;

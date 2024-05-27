@@ -1,0 +1,36 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-no-items"
+         [ngClass]="noItemsClasses">
+    <ss-icon *ngIf="icon"
+             [name]="icon"
+             [dimension]="iconSize"
+             [color]="titleIconColor"
+             [animated]="animatedIcon"
+             [attr.data-automation]="'no-items-icon'">
+    </ss-icon>
+    <h4 class="ss-no-items__title" *ngIf="title"
+        [attr.data-automation]="'no-items-title'">{{title}}</h4>
+    <h5 class="ss-no-items__description"
+        [attr.data-automation]="'no-items-description'">{{description}}</h5>
+    <button *ngIf=showButton
+            ss-button
+            [buttonProportional]="true"
+            [buttonStyle]="buttonStyle"
+            class="ss-no-items__button"
+            [attr.data-automation]="'no-items-button'"
+            (click)="clickButton.emit($event)">
+        <ss-icon *ngIf="buttonIcon"
+                 [name]="buttonIcon"
+                 [color]="buttonIconColor"
+                 [dimension]="'normal'">
+        </ss-icon>
+        <span>{{buttonText}}</span>
+    </button>
+</section>

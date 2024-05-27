@@ -1,0 +1,70 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-rfv-cr">
+    <ss-project-kpis-section [title]="'Generic_CourseOfReasons' | translate">
+        <ng-container header>
+            <div class="ss-project-rfv-cr__header">
+                <button class="ss-button ss-button--small ss-button--secondary-clear-blue ss-button--no-padding"
+                        ssFlyout
+                        [flyoutId]="'ssProjectKpisRfvCrInfoTooltip'"
+                        [flyoutAlignment]="'start'"
+                        [flyoutTemplate]="ssProjectKpisRfvCrTooltipInfo"
+                        [attr.data-automation]="'project-rfv-cr-tooltip-info-button'">
+                    <ss-icon [name]="'info-marker'"
+                             [color]="iconInfoMarkerColor">
+                    </ss-icon>
+                </button>
+
+                <div class="ss-project-rfv-cr__header__chart-select">
+                    <ss-dropdown-select
+                        [itemsAlignment]="'end'"
+                        [(items)]="chartTypeList"
+                        (itemClicked)="handleChartTypeChange($event)">
+                    </ss-dropdown-select>
+                </div>
+            </div>
+        </ng-container>
+
+        <ss-loader [isLoading]="isLoading"></ss-loader>
+
+        <ss-no-items *ngIf="noReasonsForVarianceAllData" class="ss-project-rfv-cr__empty-state"
+                     [icon]="'chart'"
+                     [title]="'Project_Kpis_NoPlannedDayCards' | translate"
+                     [attr.data-automation]="'project-rfv-cr-no-items'">
+        </ss-no-items>
+        <ng-container *ngIf="!noReasonsForVarianceAllData && !isLoading">
+            <div class="ss-project-rfv-cr__graph">
+                <ss-project-rfv-cr-chart [chartData]="chartData"
+                                         [chartSeriesColors]="rfvSeriesColor"
+                                         [currentChart]="currentChart"
+                                         [settings]="reasonsForVarianceAllChartSettings"></ss-project-rfv-cr-chart>
+            </div>
+            <aside class="ss-project-rfv-cr__legend">
+                <ss-project-rfv-cr-legend [rfvItems]="rfvControlList" (rfvItemClick)="rfvControlListItemSelection($event)"
+                                          (rfvItemEnter)="toggleRfvSerieColor($event, true)"
+                                          (rfvItemLeave)="toggleRfvSerieColor($event, false)"
+                                          (rfvReset)="resetRfvControlList()"></ss-project-rfv-cr-legend>
+            </aside>
+        </ng-container>
+    </ss-project-kpis-section>
+</div>
+
+<ng-template #ssProjectKpisRfvCrTooltipInfo>
+    <ss-flyout-tooltip>
+        <div class="ss-project-rfv-cr-tooltip-info" [attr.data-automation]="'project-rfv-cr-tooltip-info'">
+            <p class="ss-project-rfv-cr-tooltip-info__description">
+                {{ 'Project_Kpis_RfvCrInfoTooltipDescription' | translate }}
+            </p>
+        </div>
+    </ss-flyout-tooltip>
+</ng-template>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>

@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-card-contact">
+    <div class="ss-card-contact__image" [style.background-image]="getImage()" [ngStyle]="imgStyle"></div>
+    <div class="ss-card-contact__info">
+        <span>
+            {{'Generic_Email' | translate}}:
+            <a *ngIf="hasAnchor(getEmail()); else elseEmail"
+               [href]="'mailto:' + getEmail()"
+               [attr.data-automation]="'contact-email'">{{getEmail()}}</a>
+            <ng-template #elseEmail>{{getEmail()}}</ng-template>
+        </span>
+        <span  [attr.data-automation]="'contact-phone'">
+            {{'Generic_Phone' | translate}}:
+            <a *ngIf="hasAnchor(getPhone()) ; else elsePhone"
+               [href]="'tel:' + getPhone().replace(replacePhone, '')">{{getPhone()}}</a>
+            <ng-template #elsePhone>{{getPhone()}}</ng-template>
+        </span>
+    </div>
+</div>

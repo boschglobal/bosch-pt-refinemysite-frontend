@@ -1,0 +1,135 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+<div class="ss-project-copy">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <form [formGroup]="form">
+        <div class="row">
+            <fieldset class="col-12">
+                <ss-input-text
+                    #nameInput
+                    [automationAttr]="'projectName'"
+                    [name]="'projectName'"
+                    [label]="'Project_Title_Label' | translate"
+                    [isRequired]="true"
+                    [maxCharacter]="100"
+                    [control]="form.controls.projectName"
+                    formControlName="projectName">
+                </ss-input-text>
+            </fieldset>
+            <fieldset class="col-12"
+                      [attr.data-automation]="'include-options'">
+                <legend class="ss-project-copy__checkbox-label">{{'Project_Copy_SelectitemsLabel' | translate}}</legend>
+                <ss-checkbox-button class="ss-project-copy__select-all"
+                                    [automationAttr]="'selectAll'"
+                                    [name]="'selectAll'"
+                                    [isIndeterminate]="isIndeterminated"
+                                    [control]="form.controls.selectAll"
+                                    [formControlName]="'selectAll'">
+                    {{'Generic_SelectAll' | translate}}
+                </ss-checkbox-button>
+                <ng-container *ngFor="let option of projectCopyOptions">
+                    <ss-checkbox-button
+                        [automationAttr]="option.value"
+                        [name]="option.value"
+                        [control]="form.controls[option.value]"
+                        [formControlName]="option.value">
+                        {{option.label | translate}}
+                    </ss-checkbox-button>
+                </ng-container>
+                <ss-checkbox-button
+                    [automationAttr]="'tasks'"
+                    [name]="'tasks'"
+                    [isIndeterminate]="isIndeterminatedTasks"
+                    [control]="form.controls['tasks']"
+                    [formControlName]="'tasks'">
+                    {{'Generic_TasksLabel' | translate}}
+                </ss-checkbox-button>
+                <ss-checkbox-button class="ss-project-copy__checkbox-task-options"
+                                    [automationAttr]="'dayCards'"
+                                    [name]="'dayCards'"
+                                    [isDisabled]="!isTasksSelected"
+                                    [control]="form.controls['dayCards']"
+                                    [formControlName]="'dayCards'">
+                    {{'Generic_DayCards' | translate}}
+                </ss-checkbox-button>
+                <ss-checkbox-button class="ss-project-copy__checkbox-task-options"
+                                    [automationAttr]="'keepTaskAssignee'"
+                                    [name]="'keepTaskAssignee'"
+                                    [isDisabled]="!isTasksSelected"
+                                    [control]="form.controls['keepTaskAssignee']"
+                                    [formControlName]="'keepTaskAssignee'">
+                    {{'Project_Copy_KeepTaskAssignees' | translate}}
+                    <ss-icon class="ss-project-copy__checkbox-info"
+                             [name]="'info-tiny'"
+                             [dimension]="'xsmall'"
+                             [color]="tooltipIconColor"
+                             ssFlyout
+                             [flyoutTrigger]="tooltipFlyoutTrigger"
+                             [flyoutId]="'ssProjectCopyTooltipTaskAssignee'"
+                             [flyoutTemplate]="ssProjectCopyTooltip"
+                             [flyoutContentZIndex]="flyoutZIndex"
+                             [flyoutPosition]="'right'"
+                             [flyoutAlignment]="'end'"
+                    ></ss-icon>
+                </ss-checkbox-button>
+                <ss-checkbox-button class="ss-project-copy__checkbox-task-options"
+                                    [automationAttr]="'keepTaskStatus'"
+                                    [name]="'keepTaskStatus'"
+                                    [isDisabled]="!isKeepTaskAssigneeSelected"
+                                    [control]="form.controls['keepTaskStatus']"
+                                    [formControlName]="'keepTaskStatus'">
+                    {{'Project_Copy_KeepTaskStatus' | translate}}
+                    <ss-icon class="ss-project-copy__checkbox-info"
+                             [name]="'info-tiny'"
+                             [dimension]="'xsmall'"
+                             [color]="tooltipIconColor"
+                             ssFlyout
+                             [flyoutTrigger]="tooltipFlyoutTrigger"
+                             [flyoutId]="'ssProjectCopyTooltipTaskStatus'"
+                             [flyoutTemplate]="ssProjectCopyTooltip"
+                             [flyoutContentZIndex]="flyoutZIndex"
+                             [flyoutPosition]="'right'"
+                             [flyoutAlignment]="'end'"
+                    ></ss-icon>
+                </ss-checkbox-button>
+                <ss-checkbox-button
+                    [automationAttr]="'milestones'"
+                    [name]="'milestones'"
+                    [control]="form.controls['milestones']"
+                    [formControlName]="'milestones'">
+                    {{'Generic_Milestones' | translate}}
+                </ss-checkbox-button>
+            </fieldset>
+        </div>
+        <div class="ss-project-copy__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'copy'"
+                        [disabled]="!isFormValid()"
+                        (click)="handleCopy()">
+                    {{'Generic_Copy' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-template #ssProjectCopyTooltip>
+    <ss-flyout-tooltip
+        class="ss-project-copy__tooltip">
+        {{ 'Project_Copy_Tooltip' | translate }}
+    </ss-flyout-tooltip>
+</ng-template>

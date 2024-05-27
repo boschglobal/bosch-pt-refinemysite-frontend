@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-milestone"
+     [id]="milestoneIdPrefix + milestone.id"
+     [title]="milestone.name"
+     [ngClass]="classes"
+     (click)="handleSelect()"
+     [attr.data-automation]="'milestone-' + milestone.id">
+    <ss-milestone-marker
+        [isDimmedOut]="isDimmedOut"
+        [isFocused]="isFocused"
+        [isSelected]="isSelected"
+        [isCritical]="isCritical"
+        [milestoneMarker]="milestoneMarker">
+    </ss-milestone-marker>
+    <span class="ss-milestone__title"
+          [attr.data-automation]="'milestone-title'">{{milestone.name}}</span>
+</div>

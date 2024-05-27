@@ -1,0 +1,79 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index.scss";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-calendar-export {
+    padding: $base-dimension--x2;
+
+    &__required-info {
+        font-size: $font-size-xs;
+        font-family: RmS-Regular, sans-serif;
+        color: $dark_grey_75;
+        text-transform: capitalize;
+        text-align: right;
+    }
+
+    &__buttons {
+        @include media-breakpoint-up(sm) {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    ::ng-deep .ss-checkbox-button {
+        height: 62px !important;
+
+        &__checkbox {
+            margin-left: $form-input-label-check-spacing;
+        }
+    }
+
+    ::ng-deep .ss-input {
+        padding-bottom: $base-dimension--x4 + $base-dimension--x025;
+    }
+
+    &__checkbox-text {
+        display: flex;
+        flex-direction: column;
+
+        &__sub_title {
+            font-size: $font-size-xs;
+            color: $dark_grey_75;
+        }
+
+        &__invalid {
+            font-size: $font-size-xs;
+            color: $invalid;
+            font-family: RmS-Medium, sans-serif;
+            padding-top: $base-dimension--x025;
+
+            &--hidden {
+                visibility: hidden;
+            }
+        }
+    }
+
+    li + li {
+        margin-top: $base-dimension--x05;
+    }
+
+    fieldset > *:not(ss-checkbox-button) {
+        margin-left: 12px;
+    }
+
+    legend {
+        @include subtitle-2();
+        margin-bottom: 0;
+    }
+
+    ::ng-deep .ss-callout {
+        margin-bottom: $base-dimension--x2;
+    }
+}

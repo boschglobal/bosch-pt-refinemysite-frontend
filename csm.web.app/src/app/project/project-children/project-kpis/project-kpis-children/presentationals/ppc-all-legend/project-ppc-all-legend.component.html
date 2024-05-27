@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-ppc-all-legend">
+    <header class="ss-project-ppc-all-legend__header">
+        <h6 class="ss-project-ppc-all-legend__title" [attr.data-automation]="'project-ppc-all-legend-title'">{{ totalNumberOfRfv }} {{ 'Project_Kpis_NotFulfilledDayCards' | translate }}</h6>
+        <span class="ss-project-ppc-all-legend__sub-title">{{ 'Project_Kpis_RfvInWeekTitle' | translate }} {{ timeInterval }}</span>
+    </header>
+    <ss-no-items *ngIf="!totalNumberOfRfv"
+                 class="ss-project-ppc-all-legend__empty-state"
+                 [icon]="'chart'"
+                 [size]="'small'"
+                 [title]="'Project_Kpis_NoPlannedDayCards' | translate"
+                 [attr.data-automation]="'project-ppc-all-legend-no-items'">
+    </ss-no-items>
+    <ss-project-kpis-list *ngIf="totalNumberOfRfv"
+                          [data]="rfvListTotals"
+                          [attr.data-automation]="'project-ppc-all-legend-kpis-list'"></ss-project-kpis-list>
+</div>

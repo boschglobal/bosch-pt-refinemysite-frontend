@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-menu-item
+    [disabled]="disabled"
+    [focused]="focused"
+    [label]="label"
+    [reserveIndicatorSpace]="reserveIndicatorSpace"
+    [selected]="selected"
+    [selectedIcon]="selectedIcon"
+    [size]="size"
+    [type]="type"
+    (itemClick)="handleItemClick($event)">
+    <span *ngIf="customContent"></span>
+</ss-menu-item>

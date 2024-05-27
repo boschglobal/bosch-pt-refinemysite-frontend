@@ -1,0 +1,54 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-import-workarea-capture">
+    <span class="ss-project-import-workarea-capture__title">{{'Project_Import_SelectWorkAreaColumnTitle' | translate}}</span>
+    <div class="ss-project-import-workarea-capture__body">
+        <form class="ss-project-import-workarea-capture__form"
+              [formGroup]="form">
+            <div class="ss-project-import-workarea-capture__form-line">
+                <ss-radio-button
+                    [name]="'readWorkAreasHierarchically'"
+                    [value]="false"
+                    [dimension]="'tiny'"
+                    [control]="form.get('readWorkAreasHierarchically')"
+                    formControlName="readWorkAreasHierarchically">
+                </ss-radio-button>
+                <ss-input-select-dropdown
+                    class="ss-project-import-workarea-capture__dropdown"
+                    [name]="'workAreaColumn'"
+                    [label]="'Project_Import_WorkAreaColumnLabel' | translate"
+                    [control]="form.get('workAreaColumn')"
+                    [isRequired]
+                    [options]="options"
+                    [emptyOptionMessageKey]="'Generic_NoSelection'"
+                    formControlName="workAreaColumn">
+                </ss-input-select-dropdown>
+            </div>
+            <div class="ss-project-import-workarea-capture__form-line">
+                <ss-radio-button
+                    class="ss-project-import-workarea-capture__hierarchically"
+                    [name]="'readWorkAreasHierarchically'"
+                    [value]="true"
+                    [dimension]="'tiny'"
+                    [control]="form.get('readWorkAreasHierarchically')"
+                    formControlName="readWorkAreasHierarchically">
+                    <span>{{'Project_Import_WorkAreaHierarchicallyDescription' | translate}}</span>
+                </ss-radio-button>
+            </div>
+        </form>
+        <div class="ss-project-import-workarea-capture__picture">
+            <img *ngIf="!form.get('workAreaColumn').disabled" src="/assets/images/import-wizard/working-areas-map-explanation.png"
+                 alt="working area map explanatory image"
+                 [attr.data-automation]="'project-import-workarea-map-image'"/>
+            <img *ngIf="form.get('workAreaColumn').disabled" src="/assets/images/import-wizard/working-areas-breakdown-structure.png"
+                 alt="working area breakdown explanatory image"
+                 [attr.data-automation]="'project-import-workarea-breakdown-image'"/>
+        </div>
+    </div>
+</div>

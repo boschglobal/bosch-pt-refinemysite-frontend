@@ -1,0 +1,66 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="task; else skeleton"
+     class="ss-task-overview-card"
+     [ngClass]="{
+        'ss-task-overview-card--critical': isCritical,
+        'ss-task-overview-card--fallback-has': useCssHasFallback}"
+     [attr.data-automation]="'task-overview-card'">
+    <button class="ss-task-overview-card__button"
+        [attr.data-automation]="'task-overview-card-button'"
+        (click)="handleContentClicked()">
+        <div class="ss-task-overview-card__icon">
+            <div class="ss-task-overview-card__icon-element"
+                 [ngStyle]="{'background-color': task.projectCraft.color}"
+                 [attr.data-automation]="'task-overview-card-icon-element'"></div>
+        </div>
+        <div class="ss-task-overview-card__content">
+            <div class="ss-task-overview-card__content-name">
+                <ss-task-status-icon [status]="task.status"></ss-task-status-icon>
+                <span class="ss-task-overview-card__content-name-label"
+                      [attr.data-automation]="'task-overview-card-name'">{{ task.name }}</span>
+            </div>
+            <div class="ss-task-overview-card__content-time-scope"
+                 [title]="timeScope"
+                 [attr.data-automation]="'task-overview-card-time-scope'">
+                <span [attr.data-automation]="'task-overview-card-start-date'">{{ startDate }}</span>
+                <span class="ss-task-overview-card__content-time-scope-spacer"></span>
+                <span [attr.data-automation]="'task-overview-card-end-date'">{{ endDate }}</span>
+            </div>
+            <span class="ss-task-overview-card__content-working-area"
+                  [attr.data-automation]="'task-overview-card-working-area'">
+                  <ng-container *ngIf="task.workArea">{{ task.workArea.displayName }}</ng-container>
+                  <ng-container *ngIf="!task.workArea">{{ 'Generic_WithoutArea' | translate }}</ng-container>
+            </span>
+        </div>
+    </button>
+
+    <div *ngIf="!!actions?.length"
+         class="ss-task-overview-card__actions"
+         [attr.data-automation]="'task-overview-card-actions'">
+        <ss-dropdown-menu
+            [buttonStyle]="'tertiary-black'"
+            [icon]="'options'"
+            [items]="actions"
+            (itemClicked)="handleDropdownItemClicked($event)">
+        </ss-dropdown-menu>
+    </div>
+</div>
+
+<ng-template #skeleton>
+    <div class="ss-task-overview-card"
+         [attr.data-automation]="'task-overview-card-skeleton'">
+        <div class="ss-task-overview-card__icon--skeleton"></div>
+        <div class="ss-task-overview-card__content">
+            <span class="ss-task-overview-card__content-name--skeleton"></span>
+            <span class="ss-task-overview-card__content-time-scope--skeleton"></span>
+            <span class="ss-task-overview-card__content-working-area--skeleton"></span>
+        </div>
+    </div>
+</ng-template>

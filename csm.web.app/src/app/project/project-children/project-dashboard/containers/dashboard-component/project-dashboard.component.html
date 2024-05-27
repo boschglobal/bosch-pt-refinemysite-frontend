@@ -1,0 +1,163 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="project">
+    <ss-generic-banner class="ss-project-dashboard__header"
+                       [title]="project.title"
+                       [subtitle]="project.projectNumber"
+                       [description]="project.description"
+                       [picture]="getProjectPicture"
+                       [link]="projectLink">
+        <div actions>
+            <button *ngIf="permissions.canImportProject"
+                    ss-button
+                    [buttonSize]="'small'"
+                    [buttonStyle]="'tertiary-black'"
+                    [buttonNoPadding]="true"
+                    (click)="handleActionClick(projectDashboardActionsIdsEnum.Import)"
+                    ssFlyout
+                    [flyoutTrigger]="tooltipFlyoutTrigger"
+                    [flyoutId]="'ssProjectDashboardImportTooltip'"
+                    [flyoutTemplate]="ssProjectDashboardImportTooltip"
+                    [attr.data-automation]="'project-dashboard-import-btn'">
+                <ss-icon [name]="'import'" [color]="actionButtonColor"></ss-icon>
+            </button>
+            <button *ngIf="!showDropdown && permissions.canEditProject"
+                    ss-button
+                    [buttonSize]="'small'"
+                    [buttonStyle]="'tertiary-black'"
+                    [buttonNoPadding]="true"
+                    (click)="handleActionClick(projectDashboardActionsIdsEnum.Edit)"
+                    [attr.data-automation]="'project-dashboard-edit-btn'">
+                <ss-icon [name]="'edit'" [color]="actionButtonColor"></ss-icon>
+            </button>
+            <ss-dropdown-menu
+                *ngIf="showDropdown"
+                [buttonSize]="'small'"
+                [icon]="'options'"
+                [items]="dropdownActions"
+                [itemsAlignment]="'start'"
+                (itemClicked)="handleActionClick($event.id)"
+                [attr.data-automation]="'project-dashboard-dropdown-menu'">
+            </ss-dropdown-menu>
+        </div>
+    </ss-generic-banner>
+    <div class="ss-project-dashboard">
+        <ss-generic-dashboard-tile
+            *ngIf="permissions.canSeeProjectTasks"
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-task"
+            [title]="'Project_Dashboard_TasksLabel' | translate"
+            [statistic]="project._embedded.statistics.criticalTopics"
+            [statisticLabel]="getTopicLabelKey() | translate"
+            [icon]="'list'"
+            [attr.data-automation]="'project-dashboard-tile-tasks'"
+            (tileClick)="handleUnsetFilters()"
+            (statisticClick)="handleSetCriticalTopicFilter()">
+            <ss-task-donut-chart class="ss-project-dashboard__chart"
+                                 [attr.data-automation]="'ss-project-dashboard-chart'"
+                                 [taskChart]="taskChart">
+            </ss-task-donut-chart>
+            <div class="ss-project-dashboard__tile-task-holder">
+                <ng-container *ngFor="let key of taskStatusList; trackBy: trackByFn;">
+                    <div class="ss-project-dashboard__tile-task-holder-item"
+                         [attr.data-automation]="'project-dashboard-tile-task-item'"
+                         (click)="handleSetStatusFilter(key.status)">
+                        <ss-task-status-icon [status]="key.status"></ss-task-status-icon>
+                        <div class="ss-project-dashboard__tile-task-holder-item-labels">
+                            <span>{{key.label | translate}}</span>
+                            <span>{{key.taskNumber}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ss-generic-dashboard-tile>
+        <ss-generic-dashboard-tile
+            *ngIf="permissions.canSeeProjectTasks"
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-calendar"
+            [title]="'Generic_CalendarLabel' | translate"
+            [icon]="'calendar'"
+            [attr.data-automation]="'project-dashboard-tile-calendar'"
+            (tileClick)="handleNavigate(calendarUrl)">
+        </ss-generic-dashboard-tile>
+        <ss-generic-dashboard-tile
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-kpis"
+            [title]="'Generic_KPI' | translate"
+            [icon]="'chart'"
+            [attr.data-automation]="'project-dashboard-tile-kpis'"
+            (tileClick)="handleNavigate(kpisUrl)">
+        </ss-generic-dashboard-tile>
+        <ss-generic-dashboard-tile
+            *ngIf="permissions.canSeeProjectParticipants"
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-team"
+            [title]="'Project_Dashboard_TeamLabel' | translate"
+            [statistic]="project.participants"
+            [statisticLabel]="getParticipantLabelKey() | translate"
+            [icon]="'participants'"
+            [attr.data-automation]="'project-dashboard-tile-participants'"
+            (tileClick)="handleNavigate(teamUrl)">
+        </ss-generic-dashboard-tile>
+        <ss-generic-dashboard-tile
+            *ngIf="permissions.canSeeProjectCrafts"
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-crafts"
+            [title]="'Project_Dashboard_CraftsLabel' | translate"
+            [icon]="'crafts'"
+            [attr.data-automation]="'project-dashboard-tile-crafts'"
+            (tileClick)="handleNavigate(craftsUrl)">
+        </ss-generic-dashboard-tile>
+        <ss-generic-dashboard-tile
+            class="ss-project-dashboard__tile ss-project-dashboard__tile-workareas"
+            [title]="'Project_Dashboard_WorkareaTitle' | translate"
+            [icon]="'workarea'"
+            [attr.data-automation]="'project-dashboard-tile-workareas'"
+            (tileClick)="handleNavigate(workareasUrl)">
+        </ss-generic-dashboard-tile>
+    </div>
+</section>
+
+<ss-modal [id]="projectImportModalId"
+          [title]="'Generic_ImportData' | translate"
+          [size]="'large'">
+    <ng-template #body>
+        <ss-project-import-wizard
+            (closed)="closeModal()">
+        </ss-project-import-wizard>
+    </ng-template>
+</ss-modal>
+
+<ss-modal [id]="projectExportModalId"
+          [title]="'Generic_ExportProject' | translate"
+          [size]="'small'">
+    <ng-template #body>
+        <ss-project-export
+            (closed)="closeModal()">
+        </ss-project-export>
+    </ng-template>
+</ss-modal>
+
+<ss-modal [id]="projectCopyModalId"
+          [title]="'Generic_CopyProject' | translate"
+          [size]="'small'">
+    <ng-template #body>
+        <ss-project-copy
+            [projectCopyTitle]="projectCopyTitle"
+            (closed)="closeModal()">
+        </ss-project-copy>
+    </ng-template>
+</ss-modal>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>
+
+<ng-template #ssProjectDashboardImportTooltip>
+    <ss-flyout-tooltip
+        class="ss-project-dashboard__import-tooltip"
+        [attr.data-automation]="'project-dashboard-import-tooltip-flyout'">
+        {{ 'Project_Import_DashboardButtonTooltip' | translate }}
+    </ss-flyout-tooltip>
+</ng-template>

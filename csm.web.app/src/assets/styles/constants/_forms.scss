@@ -1,0 +1,24 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "colors";
+@import "dimensions";
+
+$form-valid: $valid;
+$form-invalid: $invalid;
+$form-warning: $warning;
+
+$form-character: $dark_grey_50;
+$form-focus: $dark_blue_05;
+$form-option-focus: $light_grey_50;
+$form-label: $dark_grey_50;
+
+$form-info: darken($form-label, 10%);
+
+$form-input-height: $base-dimension--x6;
+$form-input-label-check-spacing: 12px;

@@ -1,0 +1,34 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-task-workflow-topics"
+     [attr.data-automation]="'project-task-workflow-topics'">
+    <ss-project-task-topic-capture
+        class="ss-project-task-workflow-topics__capture"
+        #projectTaskTopicCapture
+        [isSubmitting]="isSubmitting"
+        [isCollapsed]="isCollapsed"
+        [user]="user"
+        (canceled)="handleCaptureCanceled()"
+        (focused)="handleCaptureFocused()"
+        (submitted)="onSubmitCapture($event)">
+    </ss-project-task-topic-capture>
+    <ss-task-topics-list class="ss-project-task-workflow-topics__list"></ss-task-topics-list>
+    <div>
+        <ss-no-items
+            *ngIf="canShowNoItemsFeedback"
+            class="ss-project-task-workflow-topics__no-items"
+            [icon]="'topic'"
+            [title]="'Task_NoTopics_Message' | translate"
+            [description]="'Task_NoTopics_Description' | translate"
+            [attr.data-automation]="'project-task-workflow-topics-no-records'">
+        </ss-no-items>
+    </div>
+    <div *ngIf="!isCollapsed"
+         class="ss-project-task-workflow-topics__background"></div>
+</div>

@@ -1,0 +1,16 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+:host {
+    background: $white;
+}
+
+.ss-project-participants-sort-capture {
+    min-width: $base-dimension--x20 + $base-dimension--x7;
+}

@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-craft-label">
+    <div class="ss-task-craft-label__color"
+         [ngStyle]="{'background-color': craft.color}"
+         [attr.data-automation]="'task-craft-label-color'">
+    </div>
+    <span class="ss-task-craft-label__name"
+          [attr.data-automation]="'task-craft-label-name'">
+        {{craft.name}}
+    </span>
+</div>

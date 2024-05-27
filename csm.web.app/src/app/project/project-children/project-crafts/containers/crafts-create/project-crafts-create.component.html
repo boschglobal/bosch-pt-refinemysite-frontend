@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-crafts-create">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <ss-project-crafts-capture
+        #projectCraftsCapture
+        [defaultValues]="defaultValues"
+        [mode]="captureMode"
+        [crafts]="crafts"
+        (onCancel)="handleCancel()"
+        (onSubmit)="handleSubmit($event)">
+    </ss-project-crafts-capture>
+</div>

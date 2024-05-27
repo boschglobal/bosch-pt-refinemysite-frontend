@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-chip [item]="item"
+         (remove)="remove($event)"></ss-chip>
+<ng-template #customVisualContentTemplate let-data>
+    <div class="craft"
+         [ngStyle]="{background: data}"
+         [attr.data-automation]="'chip-custom-visual-content'">
+    </div>
+</ng-template>

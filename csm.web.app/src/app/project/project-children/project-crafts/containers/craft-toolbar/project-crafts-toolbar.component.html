@@ -1,0 +1,34 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar ssSticky
+            [title]="'Generic_CraftsLabel'"
+            [stickyTop]="54"
+            [stickyId]="'toolbar'"
+            [stickyBorderBottom]="true">
+    <div actions>
+        <button *ngIf="hasCreatePermission"
+                ss-button
+                [buttonActive]="showCreateCraft"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                (click)="toggleCreateCraft()"
+                [attr.data-automation]="'create-craft-button'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span>
+                <span class="ss-project-craft-toolbar__label--normal">{{ 'Craft_Add_Title' | translate }}</span>
+                <span class="ss-project-craft-toolbar__label--small">{{ 'Generic_Add' | translate }}</span>
+            </span>
+        </button>
+    </div>
+</ss-toolbar>
+<ss-project-crafts-create
+    *ngIf="showCreateCraft"
+    (onCancel)="toggleCreateCraft()"
+    [attr.data-automation]="'project-craft-create'">
+</ss-project-crafts-create>

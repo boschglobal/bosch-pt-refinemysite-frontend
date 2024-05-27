@@ -1,0 +1,99 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-drawer *ngIf="task"
+           class="ss-tasks-detail-drawer"
+           [attr.data-automation]="'tasks-detail-drawer'">
+    <ng-template #header>
+        <div class="ss-tasks-detail-drawer__header" [style]="{'background-color': task.projectCraft.color}">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'inverted'"
+                (click)="handleClose()"
+                [attr.data-automation]="'tasks-detail-drawer-close'">
+                <ss-icon [name]="'close'"></ss-icon>
+            </button>
+            <button *ngIf="task.permissions.canUpdate"
+                    ss-button
+                    [buttonNoPadding]="true"
+                    [buttonStyle]="'inverted'"
+                    (click)="openModal()"
+                    [attr.data-automation]="'tasks-detail-drawer-update'">
+                <ss-icon [name]="'edit'"></ss-icon>
+            </button>
+            <ss-dropdown-menu
+                [buttonSize]="'normal'"
+                [buttonStyle]="'inverted'"
+                [icon]="'options'"
+                [items]="dropdownItems"
+                (itemClicked)="handleDropdownItemClicked($event)">
+            </ss-dropdown-menu>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-tasks-detail-drawer__body">
+            <h2 class="ss-tasks-detail-drawer__body-title">{{task.name}}</h2>
+            <div class="ss-tasks-detail-drawer__body-section">
+                <ss-project-tasks-status-label [task]="task"></ss-project-tasks-status-label>
+                <ss-task-craft-label [craft]="task.projectCraft"></ss-task-craft-label>
+                <ss-project-task-date [calendarContext]="true"
+                                      [task]="task"
+                                      (navigateToTask)="handleNavigateToTask()"></ss-project-task-date>
+                <ss-task-location-label [task]="task"
+                                        [workArea]="workArea"></ss-task-location-label>
+            </div>
+            <div class="ss-tasks-detail-drawer__body-section">
+                <ss-task-constraints-label [task]="task"></ss-task-constraints-label>
+            </div>
+            <div class="ss-tasks-detail-drawer__body-section">
+                <ss-task-details
+                    [task]="task"
+                    [attachments]="attachments"
+                    [textMaxSize]="detailsTextMaxSize"
+                    [picturesPerRow]="detailsPicturePerRow"></ss-task-details>
+            </div>
+            <div class="ss-tasks-detail-drawer__body-section">
+                <ss-task-milestone-relation-list [task]="task"></ss-task-milestone-relation-list>
+                <ss-dependencies-list
+                    [originator]="dependencyOriginator"
+                    [relationsObservables]="relationsObservables"
+                    [canAddDependencies]="true">
+                </ss-dependencies-list>
+            </div>
+            <div *ngIf="assigneeParticipant"
+                 class="ss-tasks-detail-drawer__body-section">
+                <h6 class="ss-tasks-detail-drawer__body-section-title">{{'Task_Assignee_Title' | translate}}</h6>
+                <ss-project-tasks-card-assignee
+                    [enableFocus]="true"
+                    [size]="'small'"
+                    [projectTaskCardAssigneeModel]="assigneeParticipant"
+                    [attr.data-automation]="'ss-panel-information__content-assignee'"
+                    (openCapture)="openModal(taskCaptureFormField.Company)">
+                </ss-project-tasks-card-assignee>
+            </div>
+            <div *ngIf="creatorParticipant"
+                 class="ss-tasks-detail-drawer__body-section">
+                <h6 class="ss-tasks-detail-drawer__body-section-title">{{'Generic_Creator' | translate}}</h6>
+                <ss-project-tasks-card-assignee
+                    [size]="'small'"
+                    [projectTaskCardAssigneeModel]="creatorParticipant"
+                    [attr.data-automation]="'ss-panel-information__content-creator'">
+                </ss-project-tasks-card-assignee>
+            </div>
+            <div class="ss-tasks-detail-drawer__body-section">
+                <ss-task-drawer-topics [task]="task"></ss-task-drawer-topics>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <div class="ss-tasks-detail-drawer__footer">
+            <ss-button-link [link]="taskLink"></ss-button-link>
+        </div>
+    </ng-template>
+</ss-drawer>

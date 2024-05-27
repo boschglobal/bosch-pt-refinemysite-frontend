@@ -1,0 +1,27 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+.ss-donut-chart {
+    &__chart {
+        width: 100%;
+    }
+
+    &__label, &__value {
+        font-family: RmS-Light, sans-serif;
+        fill: $dark_grey_75;
+    }
+
+    &__value {
+        font-size: $base-dimension--x4;
+    }
+
+    &__label {
+        font-size: $base-dimension--x2;
+    }
+}

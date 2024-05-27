@@ -1,0 +1,49 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="legalDocuments.length"
+         class="ss-legal-documents">
+    <h3 class="ss-legal-documents__title">{{'Legal_Terms_Label' | translate}}</h3>
+    <p class="ss-legal-documents__text">{{'Legal_Terms_ConsentText1' | translate}}</p>
+    <p class="ss-legal-documents__text">{{'Legal_Terms_ConsentText2' | translate}}</p>
+    <p class="ss-legal-documents__text">{{'Legal_Terms_ConsentText3' | translate}}</p>
+    <form [formGroup]="form">
+        <div *ngFor="let document of legalDocuments"
+            class="ss-legal-documents__option">
+            <ss-checkbox-button
+                [automationAttr]="document.type"
+                [control]="form.get(document.type)"
+                [dimension]="'small'"
+                [formControlName]="document.type"
+                [name]="document.type">
+                <div>
+                    <span class="ss-legal-documents__consent">{{'Generic_AcceptThe' | translate}}</span>
+                </div>
+            </ss-checkbox-button>
+            <a class="ss-legal-documents__link"
+                ss-button
+                [buttonStyle]="'integrated'"
+                [buttonSize]="'tiny'"
+                [buttonNoPadding]="true"
+                [href]="document.url"
+                [target]="'_blank'">{{document.displayName}}</a>
+        </div>
+        <div class="ss-legal-documents__buttons">
+            <button ss-button
+                    type="submit"
+                    [disabled]="form.invalid"
+                    (click)="handleAccept()"
+                    [attr.data-automation]="'legal-documents-accept-button'">{{'Generic_Accept' | translate}}</button>
+            <button ss-button
+                    [buttonStyle]="'integrated-black'"
+                    type="button"
+                    (click)="handleDelay()"
+                    [attr.data-automation]="'legal-documents-delay-button'">{{'Generic_NotRightNow' | translate}}</button>
+        </div>
+    </form>
+</section>

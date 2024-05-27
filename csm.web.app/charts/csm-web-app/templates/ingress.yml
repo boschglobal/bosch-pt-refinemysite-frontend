@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    custom/ingressClass: nginx
+  annotations:
+    # To enable the instrumentation OpenTracing must be enabled in the ConfigMap of the ingress-controller.
+    # Additionally OpenTracing MUST be disabled or enabled for a single Ingress:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentracing/
+    nginx.ingress.kubernetes.io/enable-opentracing: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: {{ quote .Values.ingressHost }}
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ .Chart.Name }}
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - {{ quote .Values.ingressHost }}
+    secretName: tls-secret

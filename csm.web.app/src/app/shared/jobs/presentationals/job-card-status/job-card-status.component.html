@@ -1,0 +1,33 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-job-card-status" [ngSwitch]="status">
+    <div *ngSwitchCase="jobStatusRunningEnum"
+         [@statusIconAnimation]
+         class="ss-job-card-status__icon ss-job-card-status__icon--running"
+         [attr.data-automation]="'card-status-running'">
+        <ss-icon [name]="'refresh-strong'" [dimension]="'small'" [color]="jobStatusRunningIconColor"></ss-icon>
+    </div>
+    <div *ngSwitchCase="jobStatusCompletedEnum"
+         [@statusIconAnimation]
+         class="ss-job-card-status__icon ss-job-card-status__icon--completed"
+         [attr.data-automation]="'card-status-completed'">
+        <ss-icon [name]="'check'" [dimension]="'small'" [color]="jobStatusCompletedIconColor"></ss-icon>
+    </div>
+    <div *ngSwitchCase="jobStatusFailedEnum"
+         [@statusIconAnimation]
+         class="ss-job-card-status__icon ss-job-card-status__icon--failed"
+         [attr.data-automation]="'card-status-failed'">
+        <ss-icon [name]="'exclamation'" [dimension]="'normal'" [color]="jobStatusFailedIconColor"></ss-icon>
+    </div>
+    <div *ngSwitchCase="jobStatusPartlyCompletedEnum"
+         [@statusIconAnimation]
+         [attr.data-automation]="'card-status-partly-completed'">
+        <ss-icon [name]="'warning-filled'" [dimension]="30"></ss-icon>
+    </div>
+</div>

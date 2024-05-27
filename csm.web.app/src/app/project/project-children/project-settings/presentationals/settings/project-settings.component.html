@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<section>
+    <ss-toolbar [title]="'Generic_Settings'"
+                ssSticky
+                [stickyId]="'toolbar'"
+                [stickyTop]="54">
+    </ss-toolbar>
+    <ss-navigation-tabs [routes]="routes"
+                        ssSticky
+                        [stickyId]="'project-settings-navigation'"
+                        [stickyTop]="102">
+    </ss-navigation-tabs>
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
+    </div>
+</section>

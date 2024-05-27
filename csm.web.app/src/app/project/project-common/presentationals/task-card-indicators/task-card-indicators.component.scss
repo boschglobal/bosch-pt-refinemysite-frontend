@@ -1,0 +1,17 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+.ss-task-card-indicators {
+    display: flex;
+
+    ss-icon + ss-icon {
+        margin-left: $base-dimension--x05;
+    }
+}

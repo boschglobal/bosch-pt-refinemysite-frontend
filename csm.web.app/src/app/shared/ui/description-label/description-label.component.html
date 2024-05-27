@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-description-label">
+    <h6 *ngIf="title"
+        class="ss-description-label__title"
+        [attr.data-automation]="'description-label-title'">{{title}}</h6>
+    <div class="ss-description-label__content">
+        <ss-icon class="ss-description-label__icon"
+                 [name]="'notes-frame'"></ss-icon>
+        <ss-text-link [text]="description"></ss-text-link>
+    </div>
+</div>

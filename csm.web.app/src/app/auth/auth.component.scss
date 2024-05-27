@@ -1,0 +1,70 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: $full-height;
+}
+
+.ss-supergraphic__auth ::ng-deep.ss-supergraphic {
+    top: 0;
+}
+
+.ss-auth-wrapper {
+    flex: 1 0 auto;
+
+    &__background {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: calc(100% - #{$base-dimension--x2});
+        display: none;
+        background-size: cover;
+        background-image: url('/assets/images/background/3.jpg');
+    }
+
+    &__content {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        padding-top: $base-dimension--x6;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .ss-supergraphic__auth {
+        display: none;
+    }
+
+    .ss-auth-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        &__content {
+            position: relative;
+            height: inherit;
+            margin: 104px 0 $base-dimension--x2 0;
+            padding: 0 $base-dimension--x2;
+        }
+
+        &--center {
+            .ss-auth-wrapper__content {
+                min-height: 50%;
+            }
+        }
+
+        &__background {
+            display: block;
+        }
+    }
+}

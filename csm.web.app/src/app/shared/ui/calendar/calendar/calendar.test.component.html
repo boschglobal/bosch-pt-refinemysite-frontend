@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+
+<ss-calendar [drawingStrategy]="drawingStrategy"
+             [recordGridUnit]="recordGridUnit"
+             [rows]="rows"
+             [hideScroll]="hideScroll"
+             [milestones]="milestones">
+    <ng-template #columnTemplate let-row>
+        <div class="row-header"></div>
+    </ng-template>
+    <ng-template #cardTemplate let-entry>
+        <div [id]="entry.id"
+             [attr.data-automation]="'calendar-record'">
+        </div>
+    </ng-template>
+</ss-calendar>

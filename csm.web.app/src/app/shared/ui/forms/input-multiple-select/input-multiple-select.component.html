@@ -1,0 +1,50 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-multiple-select"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr">
+    <div class="ss-input__input ss-input-multiple-select__wrapper"
+         ssFlyout
+         [flyoutId]="optionsFlyoutModel.id"
+         [flyoutComponent]="optionsFlyoutModel.component"
+         [flyoutComponentProperties]="optionsFlyoutModel.properties"
+         [flyoutAlignment]="optionsFlyoutModel.alignment"
+         [flyoutPosition]="optionsFlyoutModel.position"
+         [flyoutTrigger]="[]"
+         [flyoutCloseKeyTriggers]="optionsFlyoutModel.closeKeyTriggers"
+         [flyoutShowOverlay]="false"
+         [flyoutUseTriggerWidth]="true">
+        <div #inputContent
+             class="ss-input-multiple-select__content"
+             (click)="handleContentClick($event)"
+             [attr.data-automation]="'ss-input-multiple-select-input-content'">
+            <ss-chip *ngFor="let chip of selectedChipList; trackBy: trackByOptionFn" [item]="chip"
+                     (remove)="handleChipRemove($event)"></ss-chip>
+            <input #searchInput type="text"
+                   class="ss-input-multiple-select__search-input"
+                   [name]="'ss-input-multiple-select__search-input'"
+                   [formControl]="searchInputControl"
+                   (blur)="onInputBlur($event)"
+                   (focus)="onInputFocus($event)"
+                   (keydown)="handleKeyDown($event)"
+                   [attr.data-automation]="'ss-input-multiple-select-input-search-input'"
+                   [attr.autocomplete]="'off'"/>
+        </div>
+    </div>
+    <label class="ss-input__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span *ngIf="isInvalid()"
+          [ngClass]="getErrorClasses()"
+          [attr.data-automation]="automationAttr + '-invalid'"
+          class="ss-input__invalid">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>

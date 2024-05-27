@@ -1,0 +1,326 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+
+$datepicker-day-diameter: 30px;
+$datepicker-table-min-width: 270px;
+$selected-color: $dark_blue;
+$selected-range-color: $dark_blue_05;
+$hovered-color: $light_blue;
+$hovered-range-color: $light_grey_25;
+
+@mixin range-background($left-color, $right-color, $circle-color) {
+    background: linear-gradient(90deg, $left-color 50%, $right-color 50%);
+
+    div {
+        background: $circle-color;
+    }
+}
+
+:host {
+    min-width: 328px;
+    background: $white;
+    user-select: none;
+    display: block;
+}
+
+.ss-datepicker-calendar {
+    $this: &;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid $light_grey_50;
+        height: $form-input-height;
+
+        ss-icon {
+            cursor: pointer;
+            width: $form-input-height;
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        span {
+            color: $dark_grey;
+            cursor: pointer;
+
+            &:hover {
+                color: $hovered-color;
+            }
+        }
+
+        ::ng-deep ss-icon {
+            fill: $black;
+
+            &:hover {
+                fill: $hovered-color;
+            }
+        }
+    }
+
+    &__body {
+        display: flex;
+        justify-content: center;
+        padding: $base-dimension--x2 $base-dimension;
+
+        table {
+            min-width: $datepicker-table-min-width;
+            border-collapse: separate;
+            border-spacing: 0 $base-dimension;
+
+            th,
+            td {
+                text-align: center;
+                padding: 0 $base-dimension--x05;
+            }
+
+            th + td {
+                padding-left: $base-dimension;
+            }
+
+            th:first-child {
+                padding-right: $base-dimension;
+            }
+
+            thead {
+                @include caption-1($dark_grey);
+
+                th {
+                    padding-bottom: $base-dimension--x2;
+
+                    &:nth-child(2) {
+                        padding-left: $base-dimension;
+                    }
+                }
+            }
+
+            tbody {
+
+                th {
+                    position: relative;
+
+                    &:after {
+                        content: "";
+                        height: calc(100% + #{$base-dimension});
+                        border-right: 1px solid $light_grey_50;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                    }
+                }
+
+                tr:last-child {
+                    th:after {
+                        height: calc(100%);
+                    }
+                }
+
+                th,
+                td {
+                    &#{$this}__cell > div {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: $datepicker-day-diameter;
+                        height: $datepicker-day-diameter;
+                        margin: 0 auto;
+                        font-size: $font-size-xs;
+                        border-radius: $datepicker-day-diameter*0.5;
+                        cursor: pointer;
+                    }
+
+                    &#{$this}__cell-week {
+                        div {
+                            @include caption-1($dark_grey_75);
+                        }
+
+                        &--disabled > div {
+                            cursor: not-allowed;
+                            color: $dark_grey_25;
+                        }
+
+                        &--hovered > div {
+                            color: $hovered-color;
+                        }
+
+                        &--selected > div {
+                            color: $selected-color;
+                        }
+
+                        &:hover {
+                            #{$this}__cell:not(#{$this}__cell-week--disabled) {
+                                color: $hovered-color;
+                            }
+                        }
+                    }
+
+                    &#{$this}__cell-day {
+
+                        &--not-in-current-month > div {
+                            color: $dark_grey_50;
+                        }
+
+                        &--disabled > div {
+                            cursor: not-allowed;
+                            color: $dark_grey_25;
+                        }
+
+                        &--today > div {
+                            border: 1px solid $black;
+                        }
+
+                        &--selected-range {
+                            background: $selected-range-color;
+
+                            &:nth-child(2) {
+                                @include range-background($white, $selected-range-color, $selected-range-color);
+                            }
+
+                            &:nth-child(8) {
+                                @include range-background($selected-range-color, $white, $selected-range-color);
+                            }
+                        }
+
+                        &--selected,
+                        &--selected-start,
+                        &--selected-end {
+                            &:not(#{$this}__cell-day--disabled) > div {
+                                color: $white;
+                                background: $selected-color;
+                                border: none;
+                            }
+                        }
+
+                        &--selected-start {
+                            &#{$this}__cell-day--selected-range {
+                                @include range-background($white, $selected-range-color, $selected-color);
+
+                                &:nth-child(8) {
+                                    background: $white;
+                                }
+                            }
+
+                            &#{$this}__cell-day--hovered-range:not(#{$this}__cell-day--hovered) {
+                                @include range-background($white, $hovered-range-color, $selected-color);
+                            }
+                        }
+
+                        &--selected-end {
+                            &#{$this}__cell-day--selected-range {
+                                @include range-background($selected-range-color, $white, $selected-color);
+
+                                &:nth-child(2) {
+                                    background: $white;
+                                }
+                            }
+
+                            &#{$this}__cell-day--hovered-range:not(#{$this}__cell-day--hovered) {
+                                @include range-background($selected-range-color, $hovered-range-color, $selected-color);
+                            }
+                        }
+
+                        &--selected-start#{$this}__cell-day--selected-end {
+                            background: $white;
+                        }
+
+                        &--hovered-range {
+                            &:not(#{$this}__cell-day--selected-start):not(#{$this}__cell-day--selected-end) {
+                                background: $hovered-range-color;
+
+                                &:nth-child(2) {
+                                    @include range-background($white, $hovered-range-color, $hovered-range-color);
+                                }
+
+                                &:nth-child(8) {
+                                    @include range-background($hovered-range-color, $white, $hovered-range-color);
+                                }
+
+                                &#{$this}__cell-day--hovered-range-start {
+                                    @include range-background($white, $hovered-range-color, $hovered-color);
+
+                                    &:nth-child(8) {
+                                        background: $white;
+                                    }
+                                }
+
+                                &#{$this}__cell-day--hovered-range-end {
+                                    @include range-background($hovered-range-color, $white, $hovered-color);
+
+                                    &:nth-child(2) {
+                                        background: $white;
+                                    }
+                                }
+                            }
+
+                            &#{$this}__cell-day--selected-start#{$this}__cell-day--selecting-start:not(#{$this}__cell-day--hovered) {
+                                @include range-background($hovered-range-color, $selected-range-color, $selected-color);
+
+                                &:nth-child(2) {
+                                    @include range-background($white, $selected-range-color, $selected-color);
+                                }
+
+                                &:nth-child(8) {
+                                    @include range-background($hovered-range-color, $white, $selected-color);
+                                }
+                            }
+
+                            &#{$this}__cell-day--selected-end#{$this}__cell-day--selecting-start:not(#{$this}__cell-day--hovered) {
+                                @include range-background($hovered-range-color, $white, $selected-color);
+
+                                &:nth-child(2) {
+                                    background: $white;
+                                }
+                            }
+
+                            &#{$this}__cell-day--selected-end#{$this}__cell-day--selecting-end:not(#{$this}__cell-day--hovered) {
+                                @include range-background($selected-range-color, $hovered-range-color, $selected-color);
+
+                                &:nth-child(2) {
+                                    @include range-background($white, $hovered-range-color, $selected-color);
+                                }
+
+                                &:nth-child(8) {
+                                    @include range-background($selected-range-color, $white, $selected-color);
+                                }
+                            }
+
+                            &#{$this}__cell-day--selected-start#{$this}__cell-day--selecting-end:not(#{$this}__cell-day--hovered) {
+                                @include range-background($white, $hovered-range-color, $selected-color);
+
+                                &:nth-child(8) {
+                                    background: $white;
+                                }
+                            }
+                        }
+                    }
+
+                    &#{$this}__cell-day--hovered,
+                    &:hover {
+                        &#{$this}__cell:not(#{$this}__cell-week--disabled):not(#{$this}__cell-day) > div {
+                            color: $hovered-color;
+                        }
+
+                        &#{$this}__cell-day:not(#{$this}__cell-day--disabled):not(#{$this}__cell-day--selected):not(#{$this}__cell-day--selected-start):not(#{$this}__cell-day--selected-end) > div {
+                            background: $hovered-color;
+                            color: $white;
+                            border: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

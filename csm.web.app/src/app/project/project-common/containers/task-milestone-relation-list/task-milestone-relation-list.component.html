@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-group-list-selection
+    *ngIf="canShowGroupListSelection"
+    [title]="'Generic_Milestones' | translate"
+    [itemsPerGroupItem]="itemsPerGroupItem"
+    [groups]="groups"
+    [attr.data-automation]="'ss-task-milestone-relation-list'">
+    <ng-template #itemTemplate let-item>
+        <ss-milestone-overview-card
+            [milestone]="item.milestone"
+            (itemClicked)="handleMilestoneCardClicked($event)">
+        </ss-milestone-overview-card>
+    </ng-template>
+</ss-group-list-selection>

@@ -1,0 +1,171 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+
+$input-border-width: 1px;
+$input-field-height: 48px;
+$input-field-padding-left: $base-dimension--x2;
+$input-flyout-max-height: 270px;
+$input-spacing-top: 20px;
+$input-spacing-bottom: 26px;
+$input-toggle-button-dimension: $input-field-height;
+
+@mixin label-small {
+    @include heading-5();
+    transform: translate(0, -28px) scale(.75);
+    width: 100%;
+}
+
+.ss-input {
+    $this: &;
+    position: relative;
+    padding: $input-spacing-top 0 $input-spacing-bottom 0;
+
+    :disabled {
+        opacity: .4;
+        cursor: not-allowed;
+    }
+
+    &__input {
+        padding: 0 $base-dimension--x2;
+        height: $input-field-height;
+        color: $black;
+        width: 100%;
+        border: 0;
+        border-bottom: $input-border-width solid $light_grey;
+        transition: box-shadow cubic-bezier(.38, .04, .35, .96) .50s;
+        backface-visibility: hidden;
+        z-index: $z-index_2;
+        font-size: $font-size-base;
+        background-color: $white;
+        border-radius: 0;
+        @include ellipsis();
+
+        &::placeholder {
+            color: $form-label;
+        }
+    }
+
+    &__icon ~ &__input {
+        padding: 0 $input-toggle-button-dimension 0 $input-field-padding-left;
+    }
+
+    &__label {
+        @include body-1($form-label);
+        position: absolute;
+        top: 28px;
+        left: $input-field-padding-left;
+        margin-bottom: 0 !important;
+        transform: translateY(4px);
+        transform-origin: 0 0;
+        transition: color cubic-bezier(.38, .04, .35, .96) .50s, transform cubic-bezier(.38, .04, .35, .96) .50s;
+        z-index: 0;
+        pointer-events: none;
+
+        &::selection {
+            background: none;
+        }
+    }
+
+    &__character {
+        @include caption-2($form-character);
+        position: absolute;
+        top: 3px;
+        right: 0;
+
+        ::selection {
+            background: none;
+        }
+    }
+
+    &__invalid,
+    &__warning {
+        @include caption-1();
+        display: none;
+        padding: $base-dimension--x05 $base-dimension--x2;
+        min-height: $input-spacing-bottom;
+
+        ::selection {
+            background: none;
+        }
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__invalid {
+        color: $form-invalid;
+    }
+
+    &__warning {
+        color: $form-warning;
+    }
+
+    &__icon {
+        position: absolute;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $input-toggle-button-dimension;
+        width: $input-toggle-button-dimension;
+        fill: $black;
+    }
+
+    &--filled,
+    &--focused {
+        #{$this}__label {
+            @include label-small
+        }
+
+        #{$this}__character {
+            color: $black;
+        }
+    }
+
+    &--focused {
+        #{$this}__input {
+            box-shadow: inset 0 -100px $form-focus
+        }
+    }
+
+    &--filled:not(&--focused) {
+        #{$this}__label {
+            color: $form-label
+        }
+
+        #{$this}__character {
+            color: $form-character;
+        }
+    }
+
+    &--valid {
+        #{$this}__input {
+            border-color: $form-valid;
+        }
+    }
+
+    &--invalid {
+        #{$this}__input {
+            border-color: $form-invalid;
+        }
+    }
+
+    &--warning {
+        #{$this}__input {
+            border-color: $form-warning;
+        }
+    }
+
+    &--invalid,
+    &--warning {
+        padding-bottom: 0;
+    }
+}

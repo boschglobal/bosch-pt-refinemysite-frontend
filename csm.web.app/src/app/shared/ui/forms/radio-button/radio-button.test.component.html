@@ -1,0 +1,19 @@
+<!--
+    ~ **************************************************************************
+    ~
+    ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+    ~
+    ~ **************************************************************************
+    -->
+
+<form [formGroup]="formGroup">
+    <ss-radio-button
+        [automationAttr]="defaultInputState.radioButton.automationAttr"
+        [name]="defaultInputState.radioButton.name"
+        [value]="defaultInputState.radioButton.value"
+        [isChecked]="defaultInputState.radioButton.isChecked"
+        [dimension]="defaultInputState.radioButton.dimension"
+        [control]="formGroup.get(defaultInputState.radioButton.controlName)"
+        formControlName="radio">
+    </ss-radio-button>
+</form>

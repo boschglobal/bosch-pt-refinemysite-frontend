@@ -1,0 +1,62 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-job-list-button">
+    <button
+        ss-button
+        [buttonStyle]="buttonStyle"
+        [buttonNoPadding]="true"
+        ssFlyout
+        [flyoutId]="jobCardListFlyoutId"
+        [flyoutTemplate]="jobCardListTemplate"
+        [flyoutShowOverlay]="false"
+        [attr.data-automation]="'job-list-button'">
+        <ss-icon *ngIf="!hasJobsRunning"
+                 class="ss-job-list-button__icon"
+                 [@bulgeButtonIconRegular]="buttonAnimationState"
+                 [name]="'refresh'"
+                 [attr.data-automation]="'job-list-button-refresh-icon'"></ss-icon>
+        <span *ngIf="hasJobsRunning"
+              class="ss-job-list-button__icon"
+              [@bulgeButtonIconStrong]="hasJobsRunning">
+            <ss-icon class="ss-job-list-button__icon--running"
+                     [name]="'refresh-strong'"
+                     [attr.data-automation]="'job-list-button-refresh-strong-icon'"></ss-icon>
+        </span>
+        <svg class="ss-job-list-button__badge" viewBox="0 0 96 96" width="24px" height="24px">
+            <circle class="ss-job-list-button__badge-circle"
+                    cx="80%" cy="20%" r="0px"
+                    [@bulgeBadge]="hasJobNews ? 'badgeBulgeIn' : 'badgeBulgeOut'"></circle>
+        </svg>
+    </button>
+</div>
+
+<ng-template #jobCardListTemplate>
+    <div class="ss-job-list-button__card-list">
+        <header class="ss-job-list-button__card-list__header">
+            <button
+                class="ss-job-list-button__card-list__header-back-button"
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'tertiary-black'"
+                [buttonSize]="'normal'"
+                (click)="closeJobCardListFlyout()"
+                [attr.data-automation]="'job-list-button-list-close-button'">
+                <ss-icon [name]="'arrow'"></ss-icon>
+            </button>
+            <h5 class="ss-job-list-button__card-list__header-title">{{ 'Generic_Jobs' | translate }}</h5>
+        </header>
+        <div class="ss-job-list-button__card-list__content">
+            <ss-job-card-list
+                [isLoading]="isJobCardListLoading"
+                [jobs]="jobs"
+                [jobServiceUnavailable]="jobServiceUnavailable"
+                (jobCardClicked)="handleJobCardClick($event)"></ss-job-card-list>
+        </div>
+    </div>
+</ng-template>

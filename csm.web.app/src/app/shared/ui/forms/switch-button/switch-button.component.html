@@ -1,0 +1,34 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-switch-button"
+     [ngClass]="switchButtonStyles"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <div class="ss-switch-button__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        <label>
+            <input class="ss-switch-button__input"
+               type="checkbox"
+               [attr.data-automation]="automationAttr"
+               [disabled]="isDisabled"
+               [readonly]="isReadOnly"
+               [checked]="isChecked()"
+               (click)="onInputChange($event)">
+            <span class="ss-switch-button__button"
+                  [attr.data-automation]="automationAttr + '-button'">
+                <ss-icon *ngIf="icon" [attr.data-automation]="automationAttr + '-icon-' + icon"
+                         [name]="icon">
+                </ss-icon>
+            </span>
+        </label>
+        <span class="ss-switch-button__content"
+              [attr.data-automation]="automationAttr + '-content'">
+            <ng-content></ng-content>
+        </span>
+    </div>
+</div>

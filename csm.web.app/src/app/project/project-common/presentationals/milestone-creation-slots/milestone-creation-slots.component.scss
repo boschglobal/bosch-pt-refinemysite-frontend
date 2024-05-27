@@ -1,0 +1,39 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "../../constants/milestone.contants";
+
+.ss-milestone-creation-slots {
+    display: flex;
+    margin: 0;
+
+    &__slot {
+        width: 100%;
+        height: $marker-size;
+        background-color: $light_blue_a10;
+        cursor: cell;
+
+        &:hover {
+            background-color: $light_blue_a30;
+        }
+
+        &--selected {
+            background-color: transparent;
+        }
+
+        &-marker {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &__slot + &__slot {
+        margin-left: $base-dimension--x025;
+    }
+}

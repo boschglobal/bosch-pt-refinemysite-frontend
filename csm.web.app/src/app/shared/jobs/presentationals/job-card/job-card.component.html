@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-job-card"
+     [ngClass]="cardClasses"
+     (click)="handleReroute()"
+     [attr.data-automation]="'job-card'">
+    <ss-job-card-status [status]="card.data.status"></ss-job-card-status>
+    <div class="ss-job-card__content">
+        <span class="ss-job-card__content-title"
+              [attr.data-automation]="'job-card-title'">{{card.data.title | translate:{fileType: card.data.titleTranslationParams?.fileType} }}</span>
+        <span *ngIf="card.data.description"
+              class="ss-job-card__content-description"
+              [title]="card.data.description"
+              [attr.data-automation]="'job-card-file-name'">{{card.data.description}}</span>
+        <div class="ss-job-card__content-footer">
+            <span class="ss-job-card__date"
+                  [attr.data-automation]="'job-card-date'">{{ card.lastModifiedDate | ssDate:'xs':'relative' | async }}</span>
+            <span class="ss-job-card__projectName"
+                  [title]="card.data.projectName"
+                  [attr.data-automation]="'job-card-project-name'">{{card.data.projectName}}</span>
+        </div>
+    </div>
+    <button *ngIf="card.data.artifactUrl"
+            class="ss-job-card__download-button"
+            ss-button
+            [title]="'Generic_Download' | translate"
+            [buttonSize]="'small'"
+            [buttonStyle]="'tertiary'"
+            [buttonNoPadding]="true"
+            ssDownloadFile
+            [downloadSubscriptionFn]="handleDownload()"
+            (downloadFinish)="handleDownloadFinished()"
+            [attr.data-automation]="'job-card-download-button'">
+        <ss-icon [name]="'download'"></ss-icon>
+    </button>
+</div>

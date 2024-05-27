@@ -1,0 +1,58 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-workareas-capture" [ngClass]="getElementStyles('capture')">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        <div [ngClass]="getElementStyles('grid')">
+            <div [ngClass]="getElementStyles('input')">
+                <div class="ss-project-workareas-capture__inputs-wrapper">
+                    <div *ngIf="isEditMode()" class="ss-project-workareas-capture__inputs--edit-index">
+                        {{getPositionInEdit()}}
+                    </div>
+                    <ss-input-text
+                        #workareaInput
+                        [debounceTime]="0"
+                        [automationAttr]="'name'"
+                        [name]="'name'"
+                        [label]="'Generic_WorkingArea' | translate"
+                        [isRequired]="true"
+                        [maxCharacter]="validations.name.maxLength"
+                        [control]="form.get('name')"
+                        [formControl]="form.get('name')"
+                        [autofocus]="true">
+                    </ss-input-text>
+                </div>
+                <ss-input-number
+                    [automationAttr]="'position'"
+                    [name]="'position'"
+                    [label]="'Generic_Position' | translate"
+                    [isRequired]="true"
+                    [min]="minStep"
+                    [max]="maxPosition"
+                    [control]="form.get('position')"
+                    [formControl]="form.get('position')">
+                </ss-input-number>
+            </div>
+            <div [ngClass]="getElementStyles('button')">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="submit"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'add'"
+                        [disabled]="!isFormValid()">
+                    {{submitKey | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

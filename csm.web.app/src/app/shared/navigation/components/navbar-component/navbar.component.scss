@@ -1,0 +1,144 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/mixins";
+
+.ss-navbar {
+    display: block;
+    position: fixed;
+    overflow: hidden;
+    height: $navbar-height;
+    background-color: transparent;
+    transition: width 0.1s ease-in-out, z-index 0.1s ease-in-out;
+    width: $navbar-width;
+    z-index: $z-index_4;
+
+    ss-copyright {
+        padding: 12px $base-dimension--x2;
+        animation: FadeIn 200ms ease-in-out;
+        font-size: $font-size-xs;
+        color: $white;
+        display: block;
+        background-color: $black;
+    }
+
+    button {
+        background-color: $white;
+        border: none;
+        padding: 0;
+        width: $navbar-width;
+        height: $navbar-height;
+        cursor: pointer;
+
+        ss-icon {
+            fill: $dark_grey_75;
+        }
+    }
+
+    ul {
+        width: inherit;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li a {
+            display: flex;
+            min-width: $navbar-width;
+            height: $navbar-height;
+            cursor: pointer;
+            align-items: center;
+            margin: 0;
+        }
+    }
+
+    &__header {
+        &-title {
+            @include heading-2($white);
+        }
+
+        &-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: $navbar-width;
+            fill: $white;
+        }
+    }
+
+    &__items {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: $black;
+        transition: height 0.1s ease-in-out;
+        height: calc(100% - #{$navbar-height});
+    }
+
+    &__item {
+        position: relative;
+        height: $navbar-height;
+
+        &:hover {
+            background-color: $light_grey_500;
+        }
+    }
+
+    &--expanded {
+        width: 100%;
+        background-color: $black;
+        z-index: $z-index_10000;
+
+        &-scroll {
+            overflow-y: auto;
+        }
+
+        .ss-navbar__items {
+            display: flex;
+        }
+
+        .ss-navbar__header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: $base-dimension--x2;
+        }
+
+        button {
+            background-color: transparent;
+
+            ss-icon {
+                fill: $white;
+            }
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        top: $supergraphic-height;
+        background-color: $black;
+
+        button {
+            background-color: transparent;
+
+            ss-icon {
+                fill: $white;
+            }
+        }
+
+        &__items {
+            display: flex;
+        }
+
+        &--expanded {
+            width: 304px;
+        }
+    }
+}

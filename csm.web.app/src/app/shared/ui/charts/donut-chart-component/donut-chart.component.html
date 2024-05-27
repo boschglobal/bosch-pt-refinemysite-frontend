@@ -1,0 +1,51 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-donut-chart"
+     [attr.data-automation]="getDataAutomationSelector('donut-chart')">
+    <svg #donutChart
+         class="ss-donut-chart__chart"
+         [attr.viewBox]="getViewBox"
+         [attr.width]="getPXDimension"
+         [attr.height]="getPXDimension">
+        <g [attr.data-automation]="getDataAutomationSelector('donut-chart-center')"
+           (click)="handleClickCenter($event)">
+            <text class="ss-donut-chart__label"
+                  x="50%"
+                  y="50%"
+                  text-anchor="middle"
+                  dy="-13">
+                {{getLabel() | translate}}
+            </text>
+            <text class="ss-donut-chart__value"
+                  x="50%"
+                  y="50%"
+                  text-anchor="middle"
+                  dy="20">
+                {{getValue()}}
+            </text>
+        </g>
+        <path class="ss-donut-chart__path"
+              [attr.data-automation]="getDataAutomationSelector('donut-chart-empty-path')"
+              fill="#ffffff"
+              [attr.d]="getEmptyPathData()">
+        </path>
+        <ng-container *ngFor="let slice of slices; trackBy: trackByFn; let i = index;">
+            <path *ngIf="canRenderPath(slice)"
+                  class="ss-donut-chart__path"
+                  [attr.data-automation]="getDataAutomationSelector('donut-chart-path', i)"
+                  [attr.d]="getPathData(slice)"
+                  [attr.fill]="getPathFill(slice)"
+                  [attr.fill-opacity]="getPathFillOpacity(slice)"
+                  (mouseenter)="handleMouseEnter(slice)"
+                  (mouseleave)="handleMouseLeave()"
+                  (click)="handleClickSlice($event, slice)">
+            </path>
+        </ng-container>
+    </svg>
+</div>

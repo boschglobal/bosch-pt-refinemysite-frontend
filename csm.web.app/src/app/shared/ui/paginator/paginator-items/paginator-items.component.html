@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-paginator-items">
+    <div class="ss-paginator-items__items-wrapper">
+        <span *ngFor="let item of items; let i = index"
+              [attr.data-automation]="'paginator-item-' + item"
+              (click)="selectItem(i, $event)"
+              class="ss-paginator-items__item"
+              [ngClass]="getClasses(i)">{{item}}</span>
+    </div>
+</div>

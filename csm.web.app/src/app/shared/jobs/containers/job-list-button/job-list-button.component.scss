@@ -1,0 +1,92 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$job-card-list-content-height: 360px;
+$job-card-list-header-height: 48px;
+
+.ss-job-list-button {
+    display: flex;
+
+    &__icon,
+    &__badge {
+        margin: 0;
+        position: absolute;
+    }
+
+    &__icon--running {
+        @include infinite-rotate();
+        display: block;
+    }
+
+    &__badge {
+        display: block;
+        overflow: visible;
+
+        &-circle {
+            fill: $red;
+            stroke-width: $base-dimension--x025;
+            stroke: $white;
+            vector-effect: non-scaling-stroke;
+        }
+    }
+
+    &__card-list {
+        background-color: $white;
+
+        @include media-breakpoint-down(xs) {
+            top: $supergraphic-height !important;
+            left: 0 !important;
+            width: 100% !important;
+            max-height: 100% !important;
+            height: 100%;
+        }
+
+        @include media-breakpoint-up(sm) {
+            width: 360px !important;
+        }
+
+        &__content {
+            height: calc(100% - #{$job-card-list-header-height});
+            overflow: auto;
+
+            @include media-breakpoint-up(sm) {
+                max-height: $job-card-list-content-height;
+            }
+        }
+
+        &__header {
+            display: flex;
+            align-items: center;
+            height: $job-card-list-header-height;
+            border-bottom: 1px solid $light_grey_25;
+
+            &-title {
+                @include subtitle-2();
+                margin: 0;
+                padding-left: $base-dimension;
+
+                @include media-breakpoint-up(sm) {
+                    padding-left: $base-dimension--x2;
+                }
+            }
+
+            &-back-button {
+                display: flex;
+
+                @include media-breakpoint-up(sm) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-working-days">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <h4 class="ss-working-days__title">{{ 'Generic_WorkingDays' | translate }}</h4>
+    <p class="ss-working-days__description">{{ 'WorkingDays_Update_Description' | translate }}</p>
+    <div>
+        <ss-working-days-capture
+            class="ss-working-days__capture-section"
+            [defaultValue]="workingDaysCaptureDefaultValues"
+            (submitForm)="handleSubmit($event)">
+        </ss-working-days-capture>
+        <ss-working-days-holidays-list
+            class="ss-working-days__capture-section"
+            [holidays]="workDaysHolidaysList"
+            (actionClicked)="handleWorkingDaysHolidayActions($event)">
+        </ss-working-days-holidays-list>
+        <ss-working-days-toggle-capture
+            class="ss-working-days__capture-section"
+            [defaultValue]="workOnNonWorkingDaysCaptureDefaultValues"
+            (handleWorkOnNonWorkingDaysChange)="handleWorkOnNonWorkingDaysChange($event)">
+        </ss-working-days-toggle-capture>
+    </div>
+</div>
+
+<ss-modal
+    [title]="modalWorkingDaysHolidayTitle | translate"
+    [id]="modalWorkingDaysHolidayId"
+    [size]="'small'">
+    <ng-template #body>
+        <ss-loader [isLoading]="isLoading"></ss-loader>
+        <ss-working-days-holiday-capture
+            [defaultValue]="workingDaysHolidayCaptureDefaultValues"
+            [holidays]="workDaysHolidaysList"
+            [mode]="modalWorkingDaysHolidayType"
+            (submitWorkingDaysHoliday)="handleSubmitWorkingDaysHoliday($event)"
+            (cancelWorkingDaysHoliday)="closeModal()">
+        </ss-working-days-holiday-capture>
+    </ng-template>
+</ss-modal>

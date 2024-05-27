@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div [ngClass]="{
+            'ss-modal': true,
+            'ss-modal--large': size === 'large',
+            'ss-modal--medium': size === 'medium',
+            'ss-modal--small': size === 'small',
+            'ss-modal--dialog': size === 'dialog',
+            'ss-modal--without-header': !title,
+            'ss-modal--without-footer': !footer
+        }"
+     [attr.data-automation]="'modal'">
+    <div *ngIf="isOpened || modal.id === id"
+         class="ss-modal__wrapper"
+         [attr.data-automation]="'modal-wrapper'">
+        <section #modalContent
+                 class="ss-modal__content"
+                 [attr.data-automation]="'modal-content'">
+            <header *ngIf="title">
+                <h6 [attr.data-automation]="'modal-title'">{{title}}</h6>
+                <button
+                    *ngIf="closeable"
+                    class="ss-button ss-button--secondary-clear-grey ss-button--normal ss-button ss-button--no-padding"
+                    (click)="handleClose()"
+                    [attr.data-automation]="'modal-close'">
+                    <ss-icon [name]="'close'"></ss-icon>
+                </button>
+            </header>
+            <div *ngIf="body"
+                 class="ss-modal__main"
+                  [ngClass]="{'ss-modal__content--no-footer': !footer}">
+                <div class="ss-modal__body-wrapper">
+                    <ng-container *ngTemplateOutlet="body; context: {$implicit: modal.data}"></ng-container>
+                </div>
+            </div>
+            <footer *ngIf="footer">
+                <ng-container *ngTemplateOutlet="footer; context: {$implicit: modal.data}"></ng-container>
+            </footer>
+        </section>
+    </div>
+</div>

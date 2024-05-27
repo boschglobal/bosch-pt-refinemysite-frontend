@@ -1,0 +1,194 @@
+trigger:
+  branches:
+    include:
+      - integration
+      - production
+      - SMAR-*
+      - sandbox*
+  paths:
+    exclude:
+      - .azuredevops/*
+      - .idea/*
+      - .vscode/*
+      - .editorconfig
+      - .gitignore
+      - azure-pipelines-daily-build.yml
+      - azure-pipelines-workitem.yml
+      - README.md
+
+name: "1.0.0-$(Date:yyyyMMdd)-$(Build.SourceBranchName)$(Rev:.r)"
+
+resources:
+  repositories:
+    - repository: csm_templates
+      type: git
+      name: csm.azuredevops.pipelines
+      ref: refs/heads/master
+
+variables:
+  - name: isIntegration
+    value: ${{ eq(variables['Build.SourceBranchName'], 'integration') }}
+  - name: isSandbox
+    value: ${{ startsWith(variables['Build.SourceBranchName'], 'sandbox') }}
+  - name: isPullRequest
+    value: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
+  - template: /templates/variables/pipelines.yaml@csm_templates
+
+stages:
+  - stage: build
+    displayName: BUILD
+    dependsOn: []
+    pool:
+      vmImage: ${{ variables.webImage }}
+    variables:
+      - group: Build Pipelines
+      - name: NODE_OPTIONS
+        value: --max_old_space_size=8192
+    jobs:
+      - job: build
+        steps:
+          - task: NodeTool@0
+            displayName: Install Node.js
+            inputs:
+              versionSpec: 16.19.1
+
+          - task: Cache@2
+            displayName: Cache npm build
+            inputs:
+              key: '"csm.web.app.v1" | package.json'
+              path: ../../../.npm
+
+          - script: |
+              npm install -g @angular/cli
+              npm ci
+            displayName: Install dependencies
+
+          - script: npm run prod
+            displayName: Build application
+
+          - publish: $(System.DefaultWorkingDirectory)/dist
+            artifact: dist
+            condition: and(succeeded(), eq(variables.isPullRequest, false))
+
+  - stage: test
+    displayName: TEST
+    dependsOn: []
+    condition: eq(variables.isSandbox, false)
+    pool:
+      vmImage: ${{ variables.webImage }}
+    variables:
+      - group: Build Pipelines
+      - name: NODE_OPTIONS
+        value: --max_old_space_size=8192
+    jobs:
+      - job: test
+        steps:
+          - task: NodeTool@0
+            displayName: Install Node.js
+            inputs:
+              versionSpec: 16.19.1
+
+          - task: Cache@2
+            displayName: Cache npm build
+            inputs:
+              key: '"csm.web.app.v1" | package.json'
+              path: ../../../.npm
+
+          - script: |
+              npm install -g @angular/cli
+              npm ci
+            displayName: Install dependencies
+
+          - script: npm run check-licenses
+            displayName: Check existence of dependencies with strong copyleft licenses
+
+          - script: npm audit --production
+            displayName: Check existence of dependencies with vulnerabilities
+
+          - script: npm run test-coverage
+            displayName: Run unit tests
+
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish code coverage results
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+              reportDirectory: $(System.DefaultWorkingDirectory)/coverage
+
+          - script: npm run lint
+            displayName: Run linter
+
+          - template: /templates/sonarqube/sonarqube-vpn.yaml@csm_templates
+            parameters:
+              sonarQubeRunAnalysisSteps:
+                - script: npm run static-analysis version=$(Build.BuildNumber) sourceBranchName=$(Build.SourceBranchName) buildReason=$(Build.Reason)
+                  displayName: SonarQube analysis
+
+  - stage: push
+    displayName: PUSH
+    dependsOn:
+      - build
+      - test
+    condition: and(not(failed()), not(canceled()), eq(variables.isPullRequest, false))
+    pool:
+      vmImage: ${{ variables.webImage }}
+    variables:
+      - group: Build Pipelines
+    jobs:
+      - job: push
+        steps:
+          - checkout: self
+            persistCredentials: true
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: dist
+              path: $(System.DefaultWorkingDirectory)/dist
+
+          - template: /templates/docker/docker.yaml@csm_templates
+            parameters:
+              condition: and(succeeded(), eq(variables.isPullRequest, false))
+              command: buildAndPush
+              repository: csm.web.app
+              pushTag: $(Build.BuildNumber)
+
+          - template: /templates/docker/docker.yaml@csm_templates
+            parameters:
+              condition: and(succeeded(), eq(variables.isIntegration, true))
+              command: tagAndPush
+              repository: csm.web.app
+              existingTag: $(Build.BuildNumber)
+              pushTag: latest
+
+          - template: /templates/helm/helm-package.yaml@csm_templates
+            parameters:
+              condition: and(succeeded(), eq(variables.isPullRequest, false))
+              chartPath: charts/csm-web-app
+              chartName: csm-web-app
+              chartVersion: $(Build.BuildNumber)
+
+          - bash: git push origin HEAD:master
+            displayName: Push integration to master
+            condition: and(succeeded(), eq(variables.isIntegration, true))
+
+  - ${{ if eq(variables.isSandbox, true) }}:
+      - stage: sandbox
+        displayName: ${{ upper(variables['Build.SourceBranchName']) }}
+        dependsOn: push
+        condition: and(succeeded('push'), eq(variables.isSandbox, true))
+        pool:
+          name: Azure-selfhosted Ubuntu
+          demands:
+            - SMARTSITE_ENV -equals ${{ lower(variables['Build.SourceBranchName']) }}
+        variables:
+          - group: ${{ replace(lower(variables['Build.SourceBranchName']), 's', 'S') }}
+        jobs:
+          - template: /templates/helm/helm-deploy-blue-green.yaml@csm_templates
+            parameters:
+              environment: NO_APPROVAL
+              azureSubscription: sandbox
+              aksEnv: ${{ lower(variables['Build.SourceBranchName']) }}
+              chartName: csm-web-app
+              chartVersion: $(Build.BuildNumber)
+              releaseName: csm-web-app
+              helmValuesFile: charts/csm-web-app/values-${{ lower(variables['Build.SourceBranchName']) }}.yaml

@@ -1,0 +1,74 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-drawer class="ss-project-filter-drawer">
+    <ng-template #header>
+        <div class="ss-project-filter-drawer__header">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleClose()"
+                [attr.data-automation]="'project-filter-drawer-close'">
+                <ss-icon [name]="'close'"></ss-icon>
+            </button>
+            <span class="ss-project-filter-drawer__header-title">{{'Generic_Filter' | translate}}</span>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-project-filter-drawer__body">
+            <ss-project-filter-chips
+                [taskFiltersCriteria]="projectTaskFilters.criteria"
+                [milestoneFiltersCriteria]="milestoneFilters.criteria"
+                (clearFilters)="handleClearFilters()"
+                (taskFiltersCriteriaChanged)="handleTaskFiltersChanged($event)"
+                (milestoneFiltersCriteriaChanged)="handleMilestoneFiltersChanged($event)">
+            </ss-project-filter-chips>
+            <ss-project-filter-capture
+                #projectFilterCapture
+                [context]="context"
+                [taskFilters]="projectTaskFilters"
+                [milestoneFilters]="milestoneFilters"
+                (formValidity)="handleFormValidityChange($event)"
+            ></ss-project-filter-capture>
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <form *ngIf="showHighlightOption"
+              class="ss-project-filter-drawer__footer-form"
+              [formGroup]="form">
+            <ss-checkbox-button
+                [control]="form.controls.highlight"
+                [dimension]="'tiny'"
+                [formControlName]="'highlight'"
+                [name]="'highlight'"
+                [automationAttr]="'project-filter-drawer-highlight'">
+                {{'Task_Filter_HighlightResultsLabel' | translate}}
+            </ss-checkbox-button>
+        </form>
+        <div class="ss-project-filter-drawer__footer-buttons">
+            <button
+                ss-button
+                [buttonStyle]="'secondary-black'"
+                [buttonSize]="'small'"
+                (click)="resetForm()"
+                [attr.data-automation]="'project-filter-drawer-reset'">
+                {{'Generic_Reset' | translate}}
+            </button>
+            <button
+                ss-button
+                [buttonStyle]="'primary'"
+                [buttonSize]="'small'"
+                [disabled]="!isFormValid"
+                (click)="submitForm()"
+                [attr.data-automation]="'project-filter-drawer-submit'">
+                {{'Generic_Apply' | translate}}
+            </button>
+        </div>
+    </ng-template>
+</ss-drawer>

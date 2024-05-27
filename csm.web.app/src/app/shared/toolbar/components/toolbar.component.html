@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-toolbar">
+    <h2 class="ss-toolbar__title" [attr.data-automation]="'toolbar-title'">{{title | translate}}</h2>
+    <div class="ss-toolbar__mappings">
+        <ng-content select="[mappings]"></ng-content>
+    </div>
+    <div class="ss-toolbar__actions">
+        <ng-content select="[actions]"></ng-content>
+    </div>
+</div>

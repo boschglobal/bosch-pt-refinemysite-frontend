@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-login">
+    <div class="ss-login__login">
+        <h1 class="ss-login__welcome">{{'Brand_Welcome' | translate}}</h1>
+        <p class="ss-login__call-for-action">{{'Brand_CallForAction' | translate}}</p>
+        <button type="button"
+                class="ss-login__button"
+                ss-button
+                [buttonSize]="'normal'"
+                [attr.data-automation]="'login'"
+                (click)="login()">
+            <span>{{'Generic_Login' | translate}}</span>
+        </button>
+        <div class="ss-login__register">
+            <span>{{'Generic_NotRegisteredYet' | translate}} </span>
+            <a [routerLink]="'/auth/register'">{{'Generic_CreateAnAccount' | translate}}</a>
+        </div>
+    </div>
+    <div class="ss-login__promotion ss-login__promotion--disabled">
+    </div>
+</div>

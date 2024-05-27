@@ -1,0 +1,37 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-participants-content" [ngClass]="{'ss-project-participants-content--loading': isLoading}">
+    <ss-loader [isLoading]="isLoading && !participants.length"></ss-loader>
+    <ss-project-participants-list
+        *ssIfMediaQuery="['xs', 'sm', 'md']"
+        [participants]="participants"
+        [isLoading]="isLoading"
+        (actionClicked)="handleDropdownItemClicked($event)"
+        (onClickDetails)="onClickDetails($event)">
+    </ss-project-participants-list>
+    <ss-project-participants-table
+        *ssIfMediaQuery="['lg', 'xl']"
+        [participants]="participants"
+        [sort]="sort"
+        (actionClicked)="handleDropdownItemClicked($event)"
+        (onSort)="onSortTable($event)"
+        (onClickRow)="onClickRow($event)">
+    </ss-project-participants-table>
+    <ss-no-items *ngIf="hasNoPendingParticipants"
+                 class="ss-project-participants-content__no-records"
+                 [icon]="'user-not-active'"
+                 [title]="'Participant_List_NoRecords_PendingTitle' | translate"
+                 [description]="'Participant_List_NoRecords_PendingDescription' | translate"
+                 [attr.data-automation]="'ss-project-participants-content-no-items-pending-participants'">
+    </ss-no-items>
+</div>
+<div class="container-no-padding" *ngIf="!isLoading && participants.length">
+    <ss-project-participants-pagination></ss-project-participants-pagination>
+</div>
+

@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-project-card [title]="'Generic_Contact'">
+    <ss-card-user *ngFor="let contact of contacts; trackBy:trackContact"
+                  class="col-lg-6 ss-project-card__contact"
+                  [size]="'large'"
+                  [user]="contact.user"
+                  [company]="contact.company"
+                  [email]="contact.email"
+                  [phone]="contact.phoneNumbers.length > 0 ? contact.phoneNumbers[0].phoneNumber: null"
+                  (click)="handleClick($event, contact)"
+                  [attr.data-automation]="'project-card-user'">
+    </ss-card-user>
+</ss-project-card>

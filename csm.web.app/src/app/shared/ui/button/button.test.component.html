@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<button
+    ss-button
+    [buttonActive]="buttonActive"
+    [buttonNoPadding]="buttonNoPadding"
+    [buttonProportional]="buttonProportional"
+    [buttonStyle]="buttonStyle"
+    [buttonSize]="buttonSize"
+    [buttonCircular]="buttonCircular"
+    [disabled]="disable">
+    <ss-icon *ngIf="icon"
+             [name]="'more'"></ss-icon>
+    <span *ngIf="text">{{text}}</span>
+</button>

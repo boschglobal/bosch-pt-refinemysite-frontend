@@ -1,0 +1,54 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+.ss-panel {
+    padding: $base-dimension--x2;
+    color: $black;
+    background: $light_grey_25;
+
+    @for $index from 1 through 6 {
+        h#{$index} {
+            font-size: $font-size-base;
+            color: $black;
+            font-family: RmS-Medium, sans-serif;
+            line-height: 16px;
+            margin-bottom: 10px;
+        }
+    }
+
+    &--background {
+        background: $light_grey_25;
+        padding: $base-dimension--x2;
+        min-height: 100%;
+    }
+
+    &__title {
+        border-bottom: 2px solid $light_grey_50;
+
+        @for $index from 1 through 6 {
+            h#{$index} {
+                font-size: $font-size-lg;
+                color: $black;
+                font-family: RmS-Regular, sans-serif;
+                line-height: 16px;
+                margin-bottom: 10px;
+                margin-top: 0;
+            }
+        }
+    }
+
+    &__content {
+        margin: $base-dimension--x3 auto;
+
+        &-row {
+            margin: 12px;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+    }
+}

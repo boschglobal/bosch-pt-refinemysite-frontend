@@ -1,0 +1,52 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-crafts-list" [attr.data-automation]="'craft-list'">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <p class="ss-project-crafts-list__description">{{ 'ProjectCraftsList_Sort_Information' | translate }}</p>
+
+    <ss-sortable-list
+        [records]="crafts"
+        [editIndex]="editedIndex"
+        (sort)="handleSort($event)">
+        <ng-template #template let-craft>
+            <div class="ss-project-crafts-list__item"
+                 [ngClass]="{'ss-project-crafts-list__item--editing': editingCraftId === craft.id}"
+                 [attr.data-automation]="'craft-list-item'">
+                <ng-container *ngIf="editingCraftId !== craft.id">
+                    <ss-craft-label [craft]="craft"></ss-craft-label>
+                    <div class="ss-project-crafts-list__item-actions">
+                        <ss-dropdown-menu
+                            [buttonSize]="'normal'"
+                            [buttonStyle]="'tertiary'"
+                            [icon]="'options'"
+                            [items]="craft.dropdownItems"
+                            (itemClicked)="handleDropdownItemClicked($event)"
+                            [attr.data-automation]="'project-craft-options'">
+                        </ss-dropdown-menu>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="editingCraftId === craft.id">
+                    <ss-project-crafts-edit [craft]="craft"
+                                            (onCancel)="disableEdit()">
+                    </ss-project-crafts-edit>
+                </ng-container>
+            </div>
+        </ng-template>
+    </ss-sortable-list>
+
+    <ss-no-items
+        *ngIf="hasNoCrafts"
+        class="ss-project-crafts-list__no-items"
+        [icon]="'crafts'"
+        [title]="'Craft_NoRecords_Title' | translate"
+        [description]="'Craft_NoRecords_Description' | translate"
+        [attr.data-automation]="'project-crafts-list-no-items'">
+    </ss-no-items>
+</div>
+

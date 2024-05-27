@@ -1,0 +1,65 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+
+.ss-tasks-detail-drawer {
+
+    &__header {
+        display: flex;
+
+        button:first-child {
+            margin-right: auto;
+        }
+    }
+
+    &__body {
+        padding: $base-dimension--x3 $base-dimension--x3 0;
+
+        &-title {
+            @include heading-4();
+            margin-bottom: $base-dimension--x2;
+            display: flex;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        &-section {
+            &:not(:last-child) {
+                display: block;
+                margin-bottom: $base-dimension--x3;
+            }
+
+            & > *:not(:last-child) {
+                display: block;
+                margin-bottom: $base-dimension;
+            }
+
+            &-title {
+                @include subtitle-1();
+            }
+        }
+
+        ::ng-deep ss-project-tasks-card-assignee .ss-card-user__personal:not(:hover) .ss-card-user__information-title,
+        ::ng-deep ss-project-tasks-card-assignee .ss-card-user__personal:not(:hover) .ss-card-user__information-description {
+            color: $dark_blue !important;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: $base-dimension--x2;
+    }
+
+    ss-task-milestone-relation-list ::ng-deep ss-group-list-selection ::ng-deep ss-group-item-list {
+        display: block;
+        padding-bottom: $base-dimension--x2;
+    }
+}

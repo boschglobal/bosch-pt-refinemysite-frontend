@@ -1,0 +1,88 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="form"
+         class="ss-privacy-settings">
+    <h3 class="ss-privacy-settings__title">{{'Generic_PrivacySettings' | translate}}</h3>
+    <p class="ss-privacy-settings__text">{{'Legal_Privacy_ConsentText1' | translate}}</p>
+    <p class="ss-privacy-settings__text">{{'Legal_Privacy_ConsentText2' | translate}}</p>
+    <form [formGroup]="form">
+        <div class="ss-privacy-settings__options">
+            <ss-checkbox-button
+                [automationAttr]="'performance'"
+                [name]="'performance'"
+                [dimension]="'normal'"
+                [control]="form.get('performance')"
+                [formControlName]="'performance'">
+                <div>
+                    <div>{{'Legal_Privacy_ConsentPerformanceCookies' | translate}}</div>
+                    <a ss-button
+                       [buttonStyle]="'integrated'"
+                       [buttonSize]="'tiny'"
+                       [buttonNoPadding]="true"
+                       [href]="'Legal_PrivacyStatement_Link' | translate"
+                       [target]="'_blank'">
+                        {{'Generic_ReadMore' | translate}}
+                    </a>
+                </div>
+            </ss-checkbox-button>
+            <ss-checkbox-button
+                [automationAttr]="'comfort'"
+                [name]="'comfort'"
+                [dimension]="'normal'"
+                [control]="form.get('comfort')"
+                [formControlName]="'comfort'">
+                <div>
+                    <div>{{'Legal_Privacy_ConsentComfortCookies' | translate}}</div>
+                    <a ss-button
+                       [buttonStyle]="'integrated'"
+                       [buttonSize]="'tiny'"
+                       [buttonNoPadding]="true"
+                       [href]="'Legal_PrivacyStatement_Link' | translate"
+                       [target]="'_blank'">
+                        {{'Generic_ReadMore' | translate}}
+                    </a>
+                </div>
+            </ss-checkbox-button>
+        </div>
+        <p class="ss-privacy-settings__hint">{{'Legal_Privacy_ConsentText3' | translate}}</p>
+        <div class="ss-privacy-settings__buttons">
+            <button ss-button
+                    type="submit"
+                    (click)="handleAcceptAll()"
+                    [attr.data-automation]="'privacy-settings-accept-all-button'">
+                {{'Generic_AcceptAll' | translate}}
+            </button>
+            <button ss-button
+                    [buttonStyle]="'integrated'"
+                    type="button"
+                    (click)="handleSave()"
+                    [attr.data-automation]="'privacy-settings-save-button'">
+                {{'Generic_Save' | translate}}
+            </button>
+        </div>
+    </form>
+    <ul class="ss-privacy-settings__links">
+        <li>
+            <a ss-button
+               [buttonStyle]="'integrated'"
+               [buttonSize]="'tiny'"
+               [href]="'Legal_PrivacyStatement_Link' | translate"
+               [target]="'_blank'"
+               [attr.data-automation]="'privacy-settings-privacy-statement-link'">{{'Legal_PrivacyStatement_Label' | translate}}</a>
+        </li>
+        <li>
+            <a ss-button
+               [buttonStyle]="'integrated'"
+               [buttonSize]="'tiny'"
+               [href]="'Legal_Imprint_Link' | translate"
+               [target]="'_blank'"
+               [attr.data-automation]="'privacy-settings-imprint-link'">{{'Legal_Imprint_Label' | translate}}</a>
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<button
+    *ngIf="items.length"
+    class="ss-dropdown-select"
+    ss-button
+    [buttonSize]="size"
+    [buttonStyle]="buttonStyle"
+    [buttonNoPadding]="false"
+    ssFlyout
+    [flyoutId]="flyoutId"
+    [flyoutAlignment]="itemsAlignment"
+    [flyoutTemplate]="flyoutTemplate"
+    [flyoutShowOverlay]="false"
+    [flyoutUseTriggerWidth]="true"
+    [attr.data-automation]="'ss-dropdown-select-button'">
+    <ng-container *ngIf="customFigureTemplate"
+                  [ngTemplateOutlet]="customFigureTemplate"
+                  [ngTemplateOutletContext]="{$implicit: selectedItem}"></ng-container>
+    <span *ngIf="selectedItem.label"
+          class="ss-dropdown-select__label"
+          [attr.data-automation]="'ss-dropdown-select-label'">
+        {{selectedItem.label | translate}}
+    </span>
+    <ss-icon
+        [dimension]="'small'"
+        [name]="'arrow'"
+        [rotate]="iconRotation">
+    </ss-icon>
+</button>
+
+<ng-template #flyoutTemplate>
+    <div class="ss-dropdown-select__options">
+        <ss-menu-list
+            [itemsList]="items"
+            [size]="size"
+            (itemClicked)="handleItemClicked($event)"
+            (itemsListChange)="handleItemsListChange($event)">
+        </ss-menu-list>
+    </div>
+</ng-template>

@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-day-card-edit">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-day-card-capture #dayCardCapture
+                         [focus]="focus"
+                         [mode]="captureMode"
+                         [dateConfig]="dateConfig"
+                         [defaultValues]="defaultValues"
+                         (onSubmit)="handleSubmit($event)"
+                         (onCancel)="handleCancel()">
+    </ss-day-card-capture>
+</div>

@@ -1,0 +1,97 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/index";
+@import "assets/styles/mixins";
+
+$step-icon-height: 48px;
+$step-line-top-position-large: 16px;
+$step-line-top-position-small: 8px;
+
+:host {
+    display: flex;
+}
+
+.ss-wizard-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    &__label {
+        @include caption-2();
+        margin-top: $base-dimension--x05;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &--active &__label {
+        @include caption-3();
+    }
+
+    &--disabled &__label {
+        @include caption-2($light_grey);
+        cursor: not-allowed;
+    }
+
+    &__button, &__dot {
+        z-index: 1;
+    }
+
+    &__dot {
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background-color: $dark_blue;
+    }
+
+    &--active &__dot {
+        cursor: pointer;
+        background-color: $dark_blue_125;
+    }
+
+    &--disabled &__dot {
+        cursor: not-allowed;
+        background-color: $light_grey;
+    }
+
+    &__line {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 1px;
+        top: $step-line-top-position-large;
+
+        &--left {
+            right: 50%;
+        }
+
+        &--right {
+            left: 50%;
+        }
+
+        &--grey {
+            background-color: $dark-grey_75;
+        }
+
+        &--blue {
+            background-color: $dark_blue;
+        }
+
+        &--small {
+            top: $step-line-top-position-small;
+        }
+
+        &--hide {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-dropdown-menu
+    [buttonStyle]="buttonStyle"
+    [buttonNoPadding]="buttonNoPadding"
+    [itemsAlignment]="itemsAlignment"
+    [closeOnItemClick]="closeOnItemClick"
+    [icon]="icon"
+    [items]="items"
+    [menuItemSize]="menuItemSize"
+    [buttonSize]="buttonSize"
+    [title]="title"
+    [label]="label"
+    (itemClicked)="handleItemClicked($event)"
+    (itemsChange)="handleItemsChange($event)">
+    <span *ngIf="customContent"></span>
+</ss-dropdown-menu>

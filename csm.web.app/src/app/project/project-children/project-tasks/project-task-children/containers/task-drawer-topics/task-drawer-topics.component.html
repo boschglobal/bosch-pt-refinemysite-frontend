@@ -1,0 +1,50 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-drawer-topics">
+    <div class="ss-task-drawer-topics__header">
+        <div class="ss-task-drawer-topics__header-left">
+            <h2>
+                <span>{{'Generic_Topics' | translate}}</span>
+                <span *ngIf="numberOfTopics > 0"
+                      [attr.data-automation]="'ss-task-drawer-topics-total'">
+                    ({{numberOfTopics}})
+                </span>
+            </h2>
+            <button
+                *ngIf="numberOfTopics > 0"
+                class="ss-task-drawer-topics__collapse-button"
+                ss-button
+                [buttonSize]="'tiny'"
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleCollapse()"
+                [attr.data-automation]="'ss-task-drawer-topics-collapsed-button'">
+                <ss-icon
+                    [name]="'arrow'"
+                    [rotate]="arrowIconRotation">
+                </ss-icon>
+            </button>
+        </div>
+        <button ss-button
+                [buttonSize]="'tiny'"
+                [buttonStyle]="'tertiary'"
+                [buttonNoPadding]="true"
+                (click)="handleAddButton()"
+                [attr.data-automation]="'ss-task-drawer-topics-add-button'">
+            <ss-icon [name]="'more'"></ss-icon>
+        </button>
+    </div>
+    <ss-task-topics-list
+        [hidden]="collapsed"
+        [taskId]="taskId"
+        [textMaxSize]="textMaxSize"
+        [size]="'tiny'"
+        [attr.data-automation]="'ss-task-drawer-topics-list'">
+    </ss-task-topics-list>
+</div>

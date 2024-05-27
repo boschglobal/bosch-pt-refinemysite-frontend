@@ -1,0 +1,22 @@
+<!--
+~ **************************************************************************
+~
+~ Copyright: Robert Bosch Power Tools GmbH, 2020
+~
+~ **************************************************************************
+-->
+
+<form [formGroup]="formGroup">
+    <ss-checkbox-button
+        [automationAttr]="defaultInputState.checkbox.automationAttr"
+        [id]="defaultInputState.checkbox.id"
+        [name]="defaultInputState.checkbox.name"
+        [dimension]="defaultInputState.checkbox.dimension"
+        [isDisabled]="defaultInputState.checkbox.isDisabled"
+        [isIndeterminate]="defaultInputState.checkbox.isIndeterminate"
+        [checkedIcon]="defaultInputState.checkbox.icon"
+        [control]="formGroup.get(defaultInputState.checkbox.controlName)"
+        [value]="defaultInputState.checkbox.value"
+        formControlName="checkbox">
+    </ss-checkbox-button>
+</form>

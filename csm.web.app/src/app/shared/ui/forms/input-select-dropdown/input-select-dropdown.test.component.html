@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-select-dropdown
+        [automationAttr]="defaultInputState.selectDropdown.automationAttr"
+        [name]="defaultInputState.selectDropdown.name"
+        [label]="defaultInputState.selectDropdown.label | translate"
+        [isRequired]="defaultInputState.selectDropdown.isRequired"
+        [isDisabled]="defaultInputState.selectDropdown.isDisabled"
+        [options]="defaultInputState.selectDropdown.options"
+        [multiple]="defaultInputState.selectDropdown.multiple"
+        [translateLabel]="defaultInputState.selectDropdown.translateLabel"
+        [emptyOptionMessageKey]="defaultInputState.selectDropdown.emptyOptionMessageKey"
+        [optionTemplate]="useOptionTemplate ? optionTemplate :  null"
+        [control]="formGroup.get(defaultInputState.selectDropdown.controlName)"
+        [formControlName]="defaultInputState.selectDropdown.controlName">
+    </ss-input-select-dropdown>
+</form>
+<ng-template #optionTemplate let-option>
+    <div class="custom-option"
+         [attr.data-automation]="'custom-option'">
+        {{option.value}}
+    </div>
+</ng-template>

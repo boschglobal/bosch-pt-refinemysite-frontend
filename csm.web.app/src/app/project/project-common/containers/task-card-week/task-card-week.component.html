@@ -1,0 +1,161 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="canShowTaskCardWeek"
+     class="ss-task-card-week"
+     [id]="taskCardWeekId"
+     [ngClass]="cardClasses"
+     [ngStyle]="cardStyles"
+     ssFlyout
+     [flyoutTemplate]="shiftAmountFlyout"
+     [flyoutId]="taskCardWeekId"
+     [flyoutAlignment]="resizeAtEnd ? 'end' : 'start'"
+     [flyoutPosition]="'above'"
+     [flyoutTrigger]="[]"
+     [attr.data-automation]="'task-card-week'">
+    <div *ngIf="taskContinuesToLeft"
+         class="ss-task-card-week__continues ss-task-card-week__continues--to-left"
+         [ngStyle]="{'border-right-color': cardTaskModel.solidColor}"
+         [attr.data-automation]="'task-card-week-continues-left'">
+    </div>
+
+    <div *ngIf="!taskContinuesToLeft && canEditTaskSchedule"
+         class="ss-task-card-week__handle ss-task-card-week__handle--left"
+         cdkDrag
+         cdkDragLockAxis="x"
+         (cdkDragStarted)="handleResizeStarted(false)"
+         (cdkDragMoved)="handleResizeLeft($event)"
+         (cdkDragEnded)="handleResizeEnded($event)"
+         [attr.data-automation]="'task-card-week-resize-left'">
+    </div>
+
+    <div class="ss-task-card-week__content"
+         [ngStyle]="{'background-color': isFocused ? cardTaskModel.lightColor : cardTaskModel.solidColor}">
+        <div class="ss-task-card-week__details"
+             [ngStyle]="{'border-color': cardTaskModel.solidColor}"
+             (click)="handleSelect()"
+             [attr.data-automation]="'task-card-week-details'">
+            <div class="ss-task-card-week__details-line">
+                <div class="ss-task-card-week__left-sticky">
+                    <ss-icon *ngIf="isSelected"
+                             class="ss-task-card-week__select-icon"
+                             [name]="'check-frame-squared'"
+                             [color]="selectedCheckColor"
+                             [attr.data-automation]="'task-card-week-selected-check'">
+                    </ss-icon>
+                    <ss-task-status-icon
+                        *ngIf="!isSelected"
+                        [title]="cardTaskModel.title"
+                        class="ss-task-card-week__status-icon"
+                        [status]="cardTaskModel.status"
+                        [attr.data-automation]="'task-card-week-status'">
+                    </ss-task-status-icon>
+                    <h3 class="ss-task-card-week__title"
+                        [title]="cardTaskModel.title"
+                        [attr.data-automation]="'task-card-week-title'">
+                        {{cardTaskModel.title}}
+                    </h3>
+                </div>
+                <div class="ss-task-card-week__details-remain"></div>
+                <div class="ss-task-card-week__right-sticky">
+                    <ss-tiny-loader *ngIf="isLoading"
+                                    class="ss-task-card-week__loading"
+                                    [mode]="'inverted'"
+                                    [attr.data-automation]="'task-card-week-loading'">
+                    </ss-tiny-loader>
+                    <ng-container *ngIf="!canShowDescription && !isLoading" [ngTemplateOutlet]="iconIndicators"></ng-container>
+                </div>
+            </div>
+            <div *ngIf="canShowDescription"
+                 class="ss-task-card-week__details-line">
+                <div class="ss-task-card-week__left-sticky ss-task-card-week__left-sticky--description">
+                    <p class="ss-task-card-week__description"
+                       [attr.data-automation]="'task-card-week-description'">
+                        {{cardTaskModel.description}}
+                    </p>
+                </div>
+                <div class="ss-task-card-week__details-remain"></div>
+                <div class="ss-task-card-week__right-sticky">
+                    <ng-container *ngTemplateOutlet="iconIndicators"></ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="ss-task-card-week__footer">
+            <div [ngStyle]="footerStyles">
+                <div class="ss-task-card-week__duration-indicator"
+                     [attr.data-automation]="'task-card-week-duration-indicator'"
+                     [ngStyle]="taskDurationStyles"></div>
+                <ss-task-daycards *ngIf="showDayCardIndicators || canShowDailyCards"
+                                  [isLoading]="isLoading"
+                                  [showIndicators]="showDayCardIndicators"
+                                  [canCreate]="canCreateDayCard"
+                                  [canEdit]="canEditTaskSchedule"
+                                  [cardTaskModel]="cardTaskModel"
+                                  [dayCards]="dayCards"
+                                  [expandedWeeks]="expandedWeeks"
+                                  [focusedDaycardId]="focusedDaycardId"
+                                  [weekWidth]="weekWidth"
+                                  [workDays]="workDays"
+                                  [taskViewMode]="taskViewMode"
+                                  (createDayCard)="handleCreateDayCard($event)"
+                                  (moveDayCard)="handleMoveDayCard($event)"
+                                  (copyDayCard)="handleCopyDayCard($event)"
+                                  [attr.data-automation]="'task-card-week-day-card-list'">
+                </ss-task-daycards>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!taskContinuesToRight && canEditTaskSchedule"
+         class="ss-task-card-week__handle ss-task-card-week__handle--right"
+         cdkDrag
+         cdkDragLockAxis="x"
+         (cdkDragStarted)="handleResizeStarted(true)"
+         (cdkDragMoved)="handleResizeRight($event)"
+         (cdkDragEnded)="handleResizeEnded($event)"
+         [attr.data-automation]="'task-card-week-resize-right'">
+    </div>
+
+    <div *ngIf="taskContinuesToRight"
+         class="ss-task-card-week__continues ss-task-card-week__continues--to-right"
+         [ngStyle]="{'border-left-color': cardTaskModel.solidColor}"
+         [attr.data-automation]="'task-card-week-continues-right'">
+    </div>
+
+    <ss-marker class="ss-task-card-week__marker"
+               [isVisible]="cardTaskModel.hasNews && showUnreadNews"
+               [isCritical]="true"
+               [withBorder]="true"
+               [size]="'medium'"
+               [attr.data-automation]="'task-card-week-has-news-marker'">
+    </ss-marker>
+</div>
+
+<ng-template #iconIndicators>
+    <ss-task-card-indicators
+        class="ss-task-card-week__icon-indicators"
+        [constraints]="cardTaskModel.constraints"
+        [statistics]="cardTaskModel.statistics"
+        [isDimmed]="isTaskDimmedOut"
+        [isFocused]="isFocused"
+        [isSelected]="isSelected"
+        [predecessorRelations]="taskPredecessorRelations"
+        [successorRelations]="taskSuccessorRelations"
+        [attr.data-automation]="'task-card-week-icon-indicators'">
+    </ss-task-card-indicators>
+</ng-template>
+
+<ng-template #shiftAmountFlyout>
+    <div class="ss-task-card-week__shift-amount">
+        <div *ngIf="resizeAmount !== 0"
+             class="ss-task-card-week__shift-amount-label"
+             [attr.data-automation]="'task-card-week-shift-amount'">
+            {{(resizeAtEnd ? resizeAmount : -resizeAmount) | ssTaskShiftAmount: 'resize':'day'}}
+        </div>
+    </div>
+</ng-template>

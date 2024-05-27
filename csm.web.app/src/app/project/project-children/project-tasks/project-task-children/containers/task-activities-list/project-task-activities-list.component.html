@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-task-activities-list"
+     [attr.data-automation]="'project-task-activities-list'">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-no-items *ngIf="canRenderActivitiesUnavailable"
+                 [title]="'Activity_NoRecords_Title' | translate"
+                 [description]="'Activity_NoRecords_Description' | translate"
+                 [buttonText]="'Generic_Retry' | translate"
+                 [showButton]="true"
+                 [icon]="'connection-off'"
+                 (clickButton)="handleRetry()"
+                 [attr.data-automation]="'project-task-activities-list-unavailable'">
+    </ss-no-items>
+    <ul *ngIf="activities && activities.length"
+        [attr.data-automation]="'project-task-activities-list-entry'">
+        <li *ngFor="let activity of activities; trackBy: trackByFn; let i = index;"
+            class="ss-project-task-activities-list__entry"
+            [attr.data-automation]="'project-task-activities-list-entry'">
+            <ss-project-task-activity-card [activity]="activity"
+                                           (onClickThumbnail)="openTheater($event)">
+            </ss-project-task-activity-card>
+        </li>
+    </ul>
+    <button *ngIf="canRenderMoreItems"
+            class="ss-project-task-activities-list__load-more"
+            ss-button
+            [buttonStyle]="'secondary-grey'"
+            [buttonSize]="'small'"
+            (click)="handleLoadMore()"
+            [attr.data-automation]="'project-task-activities-list-load-more'">
+        <span>{{'Activity_LoadMore_Label' | translate}}</span>
+    </button>
+</div>

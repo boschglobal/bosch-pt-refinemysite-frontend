@@ -1,0 +1,41 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-reschedule-shift-capture"
+     [formGroup]="form">
+    <span class="ss-project-reschedule-shift-capture__title">{{'Reschedule_By_Label' | translate}}</span>
+    <div>
+        <ss-radio-button
+            [name]="'unit'"
+            [value]="'days'"
+            [dimension]="'small'"
+            [control]="form.controls.unit"
+            [formControlName]="'unit'">
+            {{'Generic_Days' | translate}}
+        </ss-radio-button>
+        <ss-radio-button
+            [name]="'unit'"
+            [value]="'weeks'"
+            [dimension]="'small'"
+            [control]="form.controls.unit"
+            [formControlName]="'unit'">
+            {{'Generic_Weeks' | translate}}
+        </ss-radio-button>
+    </div>
+    <ss-input-number
+        class="ss-project-reschedule-shift-capture__amount"
+        [name]="'amount'"
+        [label]="inputLabel | translate"
+        [isRequired]="true"
+        [control]="form.controls.amount"
+        [formControl]="form.controls.amount">
+    </ss-input-number>
+    <ss-callout [type]="alertType"
+                [message]="'Reschedule_Shift_Label' | translate">
+    </ss-callout>
+</div>

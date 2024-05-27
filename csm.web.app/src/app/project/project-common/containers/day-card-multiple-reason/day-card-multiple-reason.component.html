@@ -1,0 +1,15 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-daycard-reason-capture [dayCardReasons]="rfvList"
+                           [dayCardReasonsRequestStatus]="rfvListRequestStatus"
+                           [requestStatus]="requestStatus"
+                           (submitForm)="handleSubmit($event)"
+                           (cancelForm)="handleCancel()">
+    {{'DayCard_MultipleReasonNotDone_Description' | translate}}
+</ss-daycard-reason-capture>

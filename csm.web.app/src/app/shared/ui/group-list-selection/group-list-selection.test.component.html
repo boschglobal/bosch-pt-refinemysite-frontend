@@ -1,0 +1,32 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-group-list-selection [title]="title"
+    [multipleSelectionToolbarData]="multipleSelectionToolbarData"
+    [itemsPerGroupItem]="itemsPerGroupItem"
+    [groups]="groups">
+    <ng-template #itemTemplate
+        let-item>
+        <span>{{item | json}}</span>
+    </ng-template>
+    <ng-template #actionsTemplate>
+        <ss-dropdown-menu [buttonSize]="'tiny'"
+            [menuItemSize]="'tiny'"
+            [buttonStyle]="'tertiary'"
+            [icon]="'more'"
+            [items]="actions"
+            (itemClicked)="handleDropdownItemClicked($event)">
+        </ss-dropdown-menu>
+    </ng-template>
+    <ng-template #messageTemplate>
+        <ss-callout *ngIf="showMessage"
+                    [type]="'warning'"
+                    [message]="'An error occurred. Beware.'">
+        </ss-callout>
+    </ng-template>
+</ss-group-list-selection>

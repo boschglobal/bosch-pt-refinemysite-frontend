@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-project-kpis-section class="ss-project-ppc-grouped" [title]="'Generic_PerCompany' | translate">
+    <div class="ss-project-ppc-grouped__header" header>
+        <button class="ss-button ss-button--small ss-button--secondary-clear-blue ss-button--no-padding"
+                ssFlyout
+                [flyoutId]="'ssProjectKpisPpcGroupedTooltip'"
+                [flyoutAlignment]="'start'"
+                [flyoutTemplate]="ssProjectKpisPpcGroupedTooltipInfo"
+                [attr.data-automation]="'project-kpis-ppc-grouped-tooltip-info-button'">
+            <ss-icon [name]="'info-marker'"
+                     [color]="iconInfoMarker">
+            </ss-icon>
+        </button>
+
+        <div *ngIf="!showUnit()" class="ss-project-ppc-grouped__header__unit">{{ 'Generic_PercentageWithSymbol' | translate}}</div>
+    </div>
+
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+
+    <ss-no-items *ngIf="columns.length === 0"
+                 [icon]="'chart'"
+                 [title]="'Project_Kpis_NoPlannedDayCards' | translate"
+                 [attr.data-automation]="'project-ppc-grouped-no-items'"
+                 class="ss-project-ppc-grouped__empty">
+    </ss-no-items>
+    <ss-ppc-grouped-table *ngIf="columns.length > 0" [columns]="columns" [rows]="rows" [trafficLightSettings]="trafficLightSettings" [showTotalsColumn]="addTotalColumn"></ss-ppc-grouped-table>
+</ss-project-kpis-section>
+
+<ng-template #ssProjectKpisPpcGroupedTooltipInfo>
+    <ss-flyout-tooltip>
+        <div class="ss-project-ppc-grouped__tooltip-info" [attr.data-automation]="'project-ppc-grouped-tooltip-info'">
+            {{ 'Project_Kpis_PpcPerCompanyInfoTooltipDescription' | translate }}
+        </div>
+    </ss-flyout-tooltip>
+</ng-template>

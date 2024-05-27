@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-card-information"
+     [ngClass]="getCardClasses()"
+     [attr.data-automation]="'card-information'">
+    <div class="ss-card-information__icon"
+         [ngClass]="getCssClassModifier('ss-card-information__icon')">
+        <ss-icon [name]="icon" [dimension]="size"></ss-icon>
+    </div>
+    <div class="ss-card-information__information"
+         [ngClass]="getCssClassModifier('ss-card-information__information')">
+        <span class="ss-card-information__information-title"
+              [attr.data-automation]="'card-information-title'">
+            {{title}}
+        </span>
+        <span *ngIf="description"
+              class="ss-card-information__information-description"
+              [attr.data-automation]="'card-information-description'">
+            {{description}}
+        </span>
+    </div>
+</div>

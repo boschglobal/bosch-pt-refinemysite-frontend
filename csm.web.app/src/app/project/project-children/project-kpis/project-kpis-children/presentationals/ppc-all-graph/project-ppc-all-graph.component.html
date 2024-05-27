@@ -1,0 +1,32 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-ppc-all-graph">
+    <ngx-charts-line-chart
+        [animations]="graphSettings.animations"
+        [results]="graphData"
+        [scheme]="graphSettings.scheme"
+        [tooltipDisabled]="graphSettings.tooltipDisabled"
+        [xAxis]="graphSettings.xAxis"
+        [xAxisTicks]="graphSettings.xAxisTicks"
+        [xAxisTickFormatting]="graphSettings.xAxisTickFormatting"
+        [referenceLines]="graphSettings.referenceLines"
+        [showRefLines]="graphSettings.showRefLines"
+        [showRefLabels]="graphSettings.showRefLabels"
+        [yAxis]="graphSettings.yAxis"
+        [yAxisTickFormatting]="graphSettings.yAxisTickFormatting"
+        [yAxisTicks]="graphSettings.yAxisTicks"
+        [yScaleMax]="graphSettings.yScaleMax">
+        <ng-template #tooltipTemplate let-model="model">
+            <ss-project-kpis-tooltip [weekLabel]="model.name" [value]="model.value" [list]="getWeekRfvList(model.name)"></ss-project-kpis-tooltip>
+        </ng-template>
+        <ng-template #seriesTooltipTemplate let-model="model">
+            <!-- This needs to be here so that the graph library does not render its own seriesTooltipTemplate template -->
+        </ng-template>
+    </ngx-charts-line-chart>
+</div>

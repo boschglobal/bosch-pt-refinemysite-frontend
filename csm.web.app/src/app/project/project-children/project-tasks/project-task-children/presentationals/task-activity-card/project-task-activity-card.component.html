@@ -1,0 +1,49 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-task-activity-card"
+     [ngClass]="getActivityClasses()"
+     [attr.data-automation]="'activity-card'">
+    <div class="ss-project-task-activity-card__user"
+         [ssBackgroundImage]="projectTaskActivityCardModel.userPicture"
+         [attr.data-automation]="'activity-list-item-user'">
+    </div>
+    <div class="ss-project-task-activity-card__information">
+        <h4>
+            <ng-container *ngFor="let title of projectTaskActivityCardModel.title">
+                <a *ngIf="isObject(title) && isAnchor(title.type)"
+                   [routerLink]="getRouterLink(title.id)">{{title.text}}</a>
+                <span *ngIf="isObject(title) && !isAnchor(title.type)"
+                      class="ss-project-task-activity-card__information--bold">{{title.text}}</span>
+                <span *ngIf="!isObject(title)">{{title}}</span>
+            </ng-container>
+        </h4>
+        <ul *ngIf="hasContent"
+            class="ss-project-task-activity-card__information-list">
+            <li *ngFor="let content of projectTaskActivityCardModel.content; trackBy: trackByFn; let i = index;"
+                class="ss-project-task-activity-card__information-list-item">
+                <ss-text-link [text]="content"></ss-text-link>
+            </li>
+        </ul>
+        <div *ngIf="hasAttachment">
+            <ss-thumbnail-gallery
+                    [itemsPerRow]="itemsPerRow"
+                    [links]="[projectTaskActivityCardModel.attachment.link]"
+                    (clickThumbnail)="onClickThumbnailEvent(projectTaskActivityCardModel.thumbnail)">
+            </ss-thumbnail-gallery>
+            <span class="ss-project-task-activity-card__information-picture-name"
+                  [attr.data-automation]="'file-name'">
+                {{projectTaskActivityCardModel.attachment.fileName}}
+            </span>
+        </div>
+        <span class="ss-project-task-activity-card__information-date"
+              [attr.data-automation]="'activity-date'">
+            {{projectTaskActivityCardModel.activityDate}}
+        </span>
+    </div>
+</div>

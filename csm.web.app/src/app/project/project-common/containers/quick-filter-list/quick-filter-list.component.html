@@ -1,0 +1,63 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<form class="ss-quick-filter-list"
+      [formGroup]="form">
+    <fieldset class="ss-quick-filter-list__default">
+        <ul>
+            <li *ngFor="let quickFilter of defaultQuickFiltersOptions; trackBy: trackByFn">
+                <ss-radio-button
+                    [automationAttr]="'quick-filter-list-option-' + quickFilter.option.value"
+                    [name]="'quickFilter'"
+                    [value]="quickFilter.option.value"
+                    [dimension]="'tiny'"
+                    [control]="form.controls.quickFilter"
+                    formControlName="quickFilter">
+                    {{quickFilter.option.label | translate}}
+                </ss-radio-button>
+            </li>
+        </ul>
+    </fieldset>
+    <fieldset *ngIf="canCreateUserQuickFilters || !!userQuickFiltersOptions.length"
+              class="ss-quick-filter-list__user">
+        <legend>{{'Generic_MyFilters' | translate}}</legend>
+        <ul>
+            <li *ngFor="let quickFilter of userQuickFiltersOptions; trackBy: trackByFn">
+                <ss-radio-button
+                    [automationAttr]="'quick-filter-list-option-' + quickFilter.option.value"
+                    [name]="'quickFilter'"
+                    [value]="quickFilter.option.value"
+                    [dimension]="'tiny'"
+                    [control]="form.controls.quickFilter"
+                    formControlName="quickFilter">
+                    {{quickFilter.option.label}}
+                </ss-radio-button>
+                <ss-dropdown-menu
+                    [buttonSize]="'tiny'"
+                    [menuItemSize]="'tiny'"
+                    [buttonStyle]="'tertiary-grey'"
+                    [icon]="'options'"
+                    [items]="quickFilter.dropdownItems"
+                    (itemClicked)="handleDropdownItemClicked($event)">
+                </ss-dropdown-menu>
+            </li>
+            <li *ngIf="canCreateUserQuickFilters">
+                <button
+                    ss-button
+                    [buttonNoPadding]="true"
+                    [buttonSize]="'tiny'"
+                    [buttonStyle]="'integrated-black'"
+                    (click)="handleCreate()"
+                    [attr.data-automation]="'quick-filter-list-create-button'">
+                    <ss-icon [name]="'more'"></ss-icon>
+                    <span>{{ 'Generic_AddNewFilter' | translate}}</span>
+                </button>
+            </li>
+        </ul>
+    </fieldset>
+</form>

@@ -1,0 +1,56 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-workareas-list">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <p class="ss-project-workareas-list__description">{{ 'ProjectWorkareasList_Sort_Information' | translate }}</p>
+
+    <ss-sortable-list
+        [records]="workareas"
+        [editIndex]="editedIndex"
+        (sort)="handleSort($event)">
+        <ng-template #template let-workarea>
+            <div class="ss-project-workareas-list__item"
+                 [attr.data-automation]="'project-workarea-list-item-holder'"
+                 [ngClass]="{'ss-project-workareas-list__item--editing': editingWorkareaId === workarea.id}">
+                <ng-container *ngIf="editingWorkareaId !== workarea.id">
+                    <div class="ss-project-workareas-list__item-information"
+                         [attr.data-automation]="'project-workarea-list-item'">
+                        <span class="ss-project-workareas-list__item-name">
+                            {{workarea.position}}. {{workarea.name}}
+                        </span>
+                    </div>
+                    <div class="ss-project-workareas-list__item-actions">
+                        <ss-dropdown-menu
+                            [buttonSize]="'normal'"
+                            [buttonStyle]="'tertiary'"
+                            [icon]="'options'"
+                            [items]="workarea.dropdownItems"
+                            (itemClicked)="handleDropdownItemClicked($event)"
+                            [attr.data-automation]="'workarea-list-item-options'">
+                        </ss-dropdown-menu>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="editingWorkareaId === workarea.id">
+                    <ss-project-workareas-edit
+                        [workarea]="workarea"
+                        (onCancel)="disableEdit()"
+                    ></ss-project-workareas-edit>
+                </ng-container>
+            </div>
+        </ng-template>
+    </ss-sortable-list>
+    <ss-no-items
+        *ngIf="hasNoWorkareas"
+        class="ss-project-workareas-list__no-items"
+        [icon]="'workarea'"
+        [title]="'Workarea_NoRecords_Title' | translate"
+        [description]="'Workarea_NoRecords_Description' | translate"
+        [attr.data-automation]="'project-workareas-list-no-items'">
+    </ss-no-items>
+</div>

@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-datepicker-calendar
+    [min]="min"
+    [max]="max"
+    [disabledDates]="disabledDates"
+    [selectionType]="selectionType"
+    [referenceDate]="referenceDate"
+    [selection]="selectedDate"
+    (pick)="selectDate.emit($event)">
+</ss-datepicker-calendar>

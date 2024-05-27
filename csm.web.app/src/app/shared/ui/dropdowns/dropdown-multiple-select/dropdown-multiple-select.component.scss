@@ -1,0 +1,68 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "../../forms/input.base";
+
+.ss-dropdown-multiple-select {
+    width: 100%;
+
+    &__label {
+        display: inline-flex;
+        margin-right: auto;
+        @include ellipsis();
+
+        &-badge-single-number {
+            @include caption-3($white);
+            border-radius: 50%;
+            width: $base-dimension--x2;
+            margin-left: $base-dimension;
+            height: $base-dimension--x2;
+            display: inline-block;
+            background-color: $light_blue;
+            font-size: $font-size-xxs;
+            margin-top: 3px;
+        }
+
+        &-badge-multiple-number {
+            @include caption-3($white);
+            border-radius: $base-dimension;
+            width: $base-dimension--x3;
+            margin-left: $base-dimension;
+            height: $base-dimension--x2;
+            display: inline-block;
+            background-color: $light_blue;
+            font-size: $font-size-xxs;
+            margin-top: 3px;
+        }
+    }
+
+    &__options {
+        min-width: $base-dimension * 23;
+        background-color: $white;
+        width: 100%;
+
+        ss-input-checkbox-nested {
+            display: block;
+            max-height: $input-flyout-max-height;
+            overflow: auto !important;
+            width: 100%;
+
+            ::ng-deep .ss-checkbox-button {
+                margin: $base-dimension $base-dimension--x2 0px $base-dimension--x2;
+                width: calc(100% - $base-dimension--x4);
+
+                .ss-checkbox-button__label {
+                    width: 100%;
+                }
+            }
+        }
+
+    }
+}

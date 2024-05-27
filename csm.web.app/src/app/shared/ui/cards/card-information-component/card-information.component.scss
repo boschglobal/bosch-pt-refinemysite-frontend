@@ -1,0 +1,113 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+
+.ss-card-information {
+    display: flex;
+    align-items: center;
+    height: $base-dimension--x6;
+    width: 100%;
+
+    &--call-for-action {
+        cursor: pointer;
+
+        .ss-card-information {
+            &__icon {
+                border: 1px solid $dark_blue;
+
+                ss-icon {
+                    fill: $dark_blue;
+                }
+            }
+
+            &__information {
+                &-title,
+                &-description {
+                    color: $dark_blue;
+                }
+            }
+        }
+
+        &:hover {
+            .ss-card-information {
+                &__information {
+                    &-title,
+                    &-description {
+                        color: $black;
+                    }
+                }
+
+                &__icon {
+                    border-color: $black;
+
+                    ss-icon {
+                        fill: $black;
+                    }
+                }
+            }
+        }
+    }
+
+    &__icon {
+        height: 100%;
+        min-width: 47px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid $dark_grey_75;
+        border-radius: 50%;
+
+        ss-icon {
+            fill: $dark_grey_75;
+        }
+
+        &--small {
+            min-width: 32px;
+            height: 32px;
+        }
+    }
+
+    &__information {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        margin-left: $base-dimension--x2;
+        width: calc(100% - 45px);
+
+        &-title {
+            font-size: $font-size-base;
+            color: $dark_grey;
+        }
+
+        &-description {
+            font-size: $font-size-sm;
+        }
+
+        &-title,
+        &-description {
+            @include ellipsis();
+        }
+
+        &--small {
+
+            .ss-card-information__information {
+                &-title {
+                    margin-bottom: 0;
+                    font-size: $font-size-sm;
+                }
+
+                &-description {
+                    font-family: RmS-Light, sans-serif;
+                    font-size: $font-size-xs;
+                    color: $dark_grey_75;
+                }
+            }
+        }
+    }
+}

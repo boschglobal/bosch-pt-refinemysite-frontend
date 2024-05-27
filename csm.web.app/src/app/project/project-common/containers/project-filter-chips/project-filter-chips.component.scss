@@ -1,0 +1,29 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+.ss-project-filter-chips {
+    padding: $base-dimension $base-dimension--x2;
+
+    &__list {
+        display: block;
+        border-bottom: 1px solid $light_grey_25;
+        padding-bottom: 20px;
+    }
+
+    &__craft-chip {
+        width: $base-dimension--x2;
+        height: $base-dimension--x2;
+        margin: 0 $base-dimension 0 10px;
+    }
+
+    &__milestone-type-chip {
+        margin: 0 $base-dimension--x05 0 $base-dimension;
+    }
+}

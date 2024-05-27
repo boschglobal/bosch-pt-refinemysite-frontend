@@ -1,0 +1,57 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar [title]="'Generic_TeamLabel'" ssSticky [stickyTop]="54" [stickyId]="'toolbar'" [stickyBorderBottom]="true">
+    <div mappings>
+        <ss-select-list [options]="toolbarFilterOptions"
+                        [selected]="selectedToolbarFilterOption"
+                        (change)="handleToolbarFilterChange($event)">
+        </ss-select-list>
+    </div>
+    <div actions>
+        <button *ngIf="hasInvitePermission"
+                ss-button
+                [buttonActive]="showParticipantInviteCapture"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                (click)="toggleInviteParticipantCapture()"
+                [attr.data-automation]="'participant-invite-button'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span>
+                <span class="ss-project-participants__label--normal">{{ 'Participant_InviteParticipant_Label' | translate }}</span>
+                <span class="ss-project-participants__label--small">{{ 'Participant_Invite_Label' | translate }}</span>
+            </span>
+        </button>
+        <ss-collapsible-button-list>
+            <div inline>
+                <button type="button"
+                        *ssIfMediaQuery="['xs', 'sm', 'md']"
+                        ssFlyout
+                        ss-button
+                        [flyoutId]="sortFlyout.id"
+                        [flyoutComponent]="sortFlyout.component"
+                        [flyoutCloseKeyTriggers]="sortFlyout.closeKeyTriggers"
+                        [flyoutShowOverlay]="false"
+                        [buttonActive]="isSortingFlyoutOpen"
+                        [buttonSize]="'small'"
+                        [buttonStyle]="'tertiary-grey'"
+                        [buttonNoPadding]="true"
+                        [title]="'Generic_Sort' | translate"
+                        (click)="toggleSortFlyout()">
+                    <ss-icon [name]="'sort'"></ss-icon>
+                </button>
+            </div>
+        </ss-collapsible-button-list>
+    </div>
+</ss-toolbar>
+<ss-project-participants-capture #participantInviteCapture
+                                 [hidden]="!showParticipantInviteCapture"
+                                 (onClose)="closeInviteParticipantCapture()"></ss-project-participants-capture>
+<div class="container-fluid">
+    <ss-project-participants-content></ss-project-participants-content>
+</div>

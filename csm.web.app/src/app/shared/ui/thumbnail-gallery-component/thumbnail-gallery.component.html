@@ -1,0 +1,32 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-thumbnail-gallery" [attr.data-automation]="'thumbnail-gallery'">
+    <ul class="ss-thumbnail-gallery__list"
+        [style.--items-per-row]="itemsPerRow">
+        <ng-container *ngFor="let link of getLinksCollection(); let i = index;">
+            <li class="ss-thumbnail-gallery__list-item"
+                [attr.data-automation]="'thumbnail-gallery-li-' + i">
+                <button
+                    class="ss-thumbnail-gallery__button"
+                    (click)="clickHandler(i)"
+                    [attr.data-automation]="'thumbnail-gallery-button-' + i"
+                    [attr.aria-label]="(isOverlayIndex(i) ? 'Attachment_LoadMore_Label' : 'Attachment_Details_Label') | translate">
+                    <div [ssBackgroundImage]="link"
+                        class="ss-thumbnail-gallery__image"></div>
+                    <div *ngIf="isOverlayIndex(i)"
+                        class="ss-thumbnail-gallery__overlay"
+                        data-automation="thumbnail-gallery-plus-n-overlay"
+                        aria-hidden="true">
+                        +{{ numberOfFurtherPics }}
+                    </div>
+                </button>
+            </li>
+        </ng-container>
+    </ul>
+</div>

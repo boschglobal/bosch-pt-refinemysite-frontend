@@ -1,0 +1,128 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$country-code-width: 120px;
+
+.ss-user-capture {
+    &__banner {
+        padding: $base-dimension--x2;
+        background: $light_grey_25;
+        margin-bottom: $base-dimension--x2;
+
+        &-mandatory {
+            font-size: $font-size-sm;
+            color: $dark_grey_50;
+            text-transform: capitalize;
+        }
+
+        &-first {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &-gender {
+                display: flex;
+
+                ss-radio-button:first-child {
+                    display: block;
+                    margin-right: $base-dimension--x2;
+                    margin-bottom: $base-dimension--x2;
+                }
+            }
+
+            &-name {
+                width: 100%;
+            }
+
+            &-picture-info {
+                position: relative;
+                margin-bottom: $base-dimension--x2;
+                font-size: $font-size-sm;
+                color: $dark_grey_50;
+                text-align: center;
+            }
+        }
+
+        &-second {
+            display: block;
+        }
+
+        ss-input-picture {
+            display: block;
+            padding: $base-dimension--x4 0 $base-dimension--x4 0;
+        }
+    }
+
+    .ss-form-group-phone-inputs__country-code .ss-input-text {
+        width: $country-code-width;
+    }
+
+    .ss-form-group-phone-inputs__number .ss-input-text {
+        width: calc(100% - #{$country-code-width});
+    }
+
+    &__panel {
+        display: grid;
+        grid-gap: $base-dimension--x2;
+        grid-template:
+                "contacts" auto
+                "language" auto
+                 / 1fr;
+
+        @include media-breakpoint-up(lg) {
+            grid-template:
+                    "contacts language" auto
+                     / 1fr 1fr;
+        }
+
+        &-contacts {
+            grid-area: contacts;
+        }
+
+        &-language {
+            grid-area: language;
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .ss-user-capture__banner {
+        &-first {
+            flex-direction: row;
+
+            &-gender {
+                display: block;
+                margin-left: $base-dimension--x3;
+
+                ::ng-deep .ss-radio-button__span {
+                    word-break: normal;
+                }
+            }
+
+            &-name {
+                margin-left: $base-dimension--x4;
+            }
+
+            &-picture-info {
+                position: absolute;
+                bottom: 0;
+                margin: 0;
+            }
+        }
+
+        &-second {
+            margin: 13px 0;
+        }
+    }
+}
+
+.ss-panel__content-row {
+    margin: 0;
+}

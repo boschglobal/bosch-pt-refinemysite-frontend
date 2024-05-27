@@ -1,0 +1,104 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-project-task-information">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <div class="ss-project-task-information__header"
+         ssSticky
+         [stickyId]="'task-detail'"
+         [stickyTop]="54"
+         [stickyUntil]="stickyBreakpointValue">
+        <h3 [attr.data-automation]="'project-task-information-name'">{{task.name}}</h3>
+        <div class="ss-project-task-information__header-actions">
+            <button
+                *ngIf="canEdit"
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'tertiary'"
+                (click)="openModal()"
+                [attr.data-automation]="'edit-pencil'">
+                <ss-icon [name]="'edit'"></ss-icon>
+            </button>
+            <ss-dropdown-menu
+                [buttonSize]="'normal'"
+                [buttonStyle]="'tertiary'"
+                [icon]="'options'"
+                [items]="dropdownItems"
+                (itemClicked)="handleDropdownItemClicked($event)"
+                [attr.data-automation]="'project-task-information-options'">
+            </ss-dropdown-menu>
+        </div>
+    </div>
+    <div class="ss-project-task-information__content"
+         ssSticky
+         [stickyId]="'task-detail-content'"
+         [stickyBottom]="16"
+         [stickyTop]="102"
+         [stickyUntil]="stickyBreakpointValue"
+         [stickyIndex]="1">
+        <div class="ss-project-task-information__details">
+            <ss-project-tasks-status-label [task]="task"></ss-project-tasks-status-label>
+            <ss-task-craft-label [craft]="task.projectCraft"></ss-task-craft-label>
+            <ss-project-task-date [task]="task"></ss-project-task-date>
+            <ss-task-location-label [task]="task"
+                                    [workArea]="workArea"></ss-task-location-label>
+            <ss-task-constraints-label [task]="task"></ss-task-constraints-label>
+            <ss-task-details
+                [task]="task"
+                [attachments]="attachments">
+            </ss-task-details>
+            <ss-auditable-resource-label
+                class="ss-project-task-information__task-auditable-resource-label"
+                [resource]="task">
+            </ss-auditable-resource-label>
+        </div>
+        <div class="ss-project-task-information__participants">
+            <div>
+                <h6>{{'Generic_Creator' | translate}}</h6>
+                <ss-project-tasks-card-assignee
+                    *ngIf="creatorParticipant"
+                    [size]="'large'"
+                    [projectTaskCardAssigneeModel]="creatorParticipant"
+                    [attr.data-automation]="'ss-panel-information__content-creator'">
+                </ss-project-tasks-card-assignee>
+            </div>
+            <div>
+                <h6>{{'Task_Assignee_Title' | translate}}</h6>
+                <ss-project-tasks-card-assignee
+                    *ngIf="assigneeParticipant"
+                    [enableFocus]="true"
+                    [size]="'large'"
+                    [projectTaskCardAssigneeModel]="assigneeParticipant"
+                    [attr.data-automation]="'ss-panel-information__content-assignee'"
+                    (openCapture)="openModal(taskCaptureFormField.Company)">
+                </ss-project-tasks-card-assignee>
+            </div>
+        </div>
+
+    </div>
+</section>
+<ss-modal
+    [title]="'Task_Update_Title' | translate"
+    [id]="calendarEditTaskModalId"
+    [size]="'large'">
+    <ng-template #body>
+        <ss-project-tasks-edit
+            (onClose)="closeModal()">
+        </ss-project-tasks-edit>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'Constraint_Select_DialogTitle' | translate"
+    [id]="calendarUpdateConstraintsModalId"
+    [size]="'medium'">
+    <ng-template #body>
+        <ss-task-constraints
+            (closeEvent)="closeModal()">
+        </ss-task-constraints>
+    </ng-template>
+</ss-modal>

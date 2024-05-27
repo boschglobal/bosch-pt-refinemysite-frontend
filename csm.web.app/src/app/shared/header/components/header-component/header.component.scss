@@ -1,0 +1,55 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$breadcrumb-min-width: 158px;
+
+.ss-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: $header-height;
+    z-index: $z-index_2;
+    background: $white;
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        width: 112px;
+        cursor: pointer;
+
+        > img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+    }
+
+    @include media-breakpoint-up(sm) {
+        padding-left: 0;
+    }
+
+    &__action-item-question-mark {
+        display: none;
+
+        @include media-breakpoint-up(sm) {
+            display: flex;
+        }
+    }
+
+    ::ng-deep ss-breadcrumb {
+        flex: 1 auto 0;
+        min-width: $breadcrumb-min-width;
+    }
+}

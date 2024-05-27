@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar ssSticky
+            class="ss-project-toolbar"
+            [title]="'Generic_ProjectLabel'"
+            [stickyTop]="54"
+            [stickyId]="'toolbar'"
+            [stickyBorderBottom]="true">
+    <div actions>
+        <a *ngIf="showCreateButton"
+           ss-button
+           [buttonSize]="'small'"
+           [buttonStyle]="'tertiary'"
+           [routerLink]="createProjectPageUrl"
+           [attr.data-automation]="'create-project'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span>
+                <span class="ss-project-toolbar__label--normal">{{ 'Generic_CreateProjectLabel' | translate }}</span>
+                <span class="ss-project-toolbar__label--small">{{ 'Generic_Create' | translate }}</span>
+            </span>
+        </a>
+        <a *ngIf="!!downloadProjectsExcelTemplateUrl"
+           download
+           ss-button
+           [buttonSize]="'small'"
+           [buttonStyle]="'tertiary'"
+           [href]="downloadProjectsExcelTemplateUrl"
+           [attr.data-automation]="'download-template'">
+            <ss-icon [name]="'download'" [dimension]="'normal'"></ss-icon>
+            <span>
+                <span class="ss-project-toolbar__label--normal">{{ 'Project_Export_ExcelTemplateButtonLabel' | translate }} </span>
+                <span class="ss-project-toolbar__label--small">{{ 'Generic_Export' | translate }}</span>
+            </span>
+        </a>
+    </div>
+</ss-toolbar>

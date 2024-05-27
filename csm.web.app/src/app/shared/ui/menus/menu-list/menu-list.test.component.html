@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-menu-list
+    [itemsList]="itemsList"
+    [size]="size"
+    [style.max-height]="restrictedHeight ? '270px' : 'none'"
+    (itemClicked)="handleItemClicked($event)"
+    (itemHovered)="handleItemHovered($event)"
+    (itemsListChange)="handleItemsListChange($event)">
+</ss-menu-list>
+
+<ng-template #customFigureTemplate let-item>
+    <span
+        *ngIf="item.customData"
+        [style.display]="'inline-block'"
+        [style.width]="'24px'"
+        [style.height]="'24px'"
+        [style.background-color]="item.customData"></span>
+</ng-template>

@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<form class="ss-constraint-capture"
+      [ngClass]="{'ss-constraint-capture--edit': isEditMode}"
+      [attr.data-automation]="'constraint-capture'"
+      [formGroup]="form"
+      (ngSubmit)="handleSubmit()">
+    <ss-input-text
+        #constraintInput
+        class="ss-constraint-capture__name"
+        [automationAttr]="'name'"
+        [name]="'name'"
+        [label]="'Generic_Constraint' | translate"
+        [isRequired]="true"
+        [maxCharacter]="maxLength"
+        [control]="form.get('name')"
+        [formControl]="form.get('name')"
+        [debounceTime]="0"
+        [autofocus]="true">
+    </ss-input-text>
+    <div class="ss-constraint-capture__buttons ss-button-group">
+        <button type="button"
+                class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                [attr.data-automation]="'cancel'"
+                (click)="handleCancel()">
+            {{'Generic_Cancel' | translate}}
+        </button>
+        <button type="submit"
+                ss-button
+                [buttonProportional]="true"
+                [attr.data-automation]="'submit'"
+                [disabled]="!form.valid">
+            {{ submitFormLabel | translate}}
+        </button>
+    </div>
+</form>

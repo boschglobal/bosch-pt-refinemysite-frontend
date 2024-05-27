@@ -1,0 +1,89 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input-files"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <div class="ss-input-files__label"
+        [class.ss-input-files__label--active]="canAddFiles"
+        (dragover)="handleDragOver()"
+        (click)="handleClick()"
+        (dragenter)="handleDragEnter()"
+        (dragleave)="handleDragLeave()"
+        (drop)="handleDrop($event)"
+        [attr.data-automation]="automationAttr + '-label'">
+        <div *ngIf="!multiple; else: multipleLabel"
+             class="ss-input-files__placeholder ss-input-files__placeholder--single"
+             [attr.data-automation]="automationAttr + '-placeholder-single'">
+            <ss-icon
+                class="ss-input-files__placeholder-icon"
+                [name]="'import'"
+                [color]="placeholderIconColor"
+                [dimension]="40"></ss-icon>
+            <span>{{label}}</span>
+            <div class="ss-input-files__placeholder-label--secondary">
+                <span [attr.data-automation]="automationAttr + '-secondary-label'">{{files[0]?.file.name || secondaryLabel}}</span>
+                <button *ngIf="files[0]"
+                        ss-button
+                        [buttonNoPadding]="true"
+                        [buttonStyle]="'tertiary-grey'"
+                        [buttonSize]="'tiny'"
+                        (click)="deletePicture($event, 0)"
+                        [attr.data-automation]="automationAttr + '-delete-single'">
+                    <ss-icon [name]="'close'"
+                             [dimension]="'small'"></ss-icon>
+                </button>
+            </div>
+        </div>
+        <ng-template #multipleLabel>
+            <div *ngIf="canShowPlaceholder()"
+                 class="ss-input-files__placeholder ss-input-files__placeholder--multiple"
+                 [attr.data-automation]="automationAttr + '-placeholder-multiple'">
+                <span>{{label}}</span>
+                <span class="ss-input-files__placeholder-label--secondary">{{secondaryLabel}}</span>
+            </div>
+        </ng-template>
+        <input #inputFiles
+               [attr.data-automation]="automationAttr"
+               [accept]="accept"
+               class="ss-input-files__input"
+               type="file"
+               [multiple]="multiple"
+               (change)="handleInputChange($event)">
+        <div *ngIf="multiple"
+             class="ss-input-files__preview">
+            <ul>
+                <li *ngFor="let file of files; let i = index"
+                    class="ss-input-files__preview-single"
+                    [ngClass]="getPreviewClasses(i)"
+                    (click)="$event.stopPropagation()"
+                    [attr.data-automation]="automationAttr+ '-preview-' + i">
+                    <ss-loader [isLoading]="file.preview.loading"></ss-loader>
+                    <div [ngStyle]="{'background-image': getPreviewSrc(i)}"></div>
+                    <a>
+                        <ss-icon (click)="deletePicture($event, i)"
+                                 [attr.data-automation]="automationAttr + '-preview-delete-' + i"
+                                 [name]="'close'"
+                                 [dimension]="'small'"></ss-icon>
+                    </a>
+                </li>
+                <li *ngIf="canAddFiles"
+                    class="ss-input-files__preview-plus">
+                    <div>
+                        <ss-icon [name]="'more'" [dimension]="'large'"></ss-icon>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <span *ngIf="getTotalErrors() > 0"
+          class="ss-input-files__invalid"
+          [attr.data-automation]="automationAttr + '-invalid'">
+        {{getErrorMessageKey() | translate:getErrorMessageParams()}}
+    </span>
+</div>

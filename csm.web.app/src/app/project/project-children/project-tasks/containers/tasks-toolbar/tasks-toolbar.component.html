@@ -1,0 +1,136 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar
+    class="ss-tasks-toolbar"
+    ssSticky
+    [stickyTop]="54"
+    [stickyId]="'toolbar'"
+    [stickyBorderBottom]="true"
+    [title]="'Generic_TasksLabel'">
+    <div class="ss-tasks-toolbar__actions" actions>
+        <button *ngIf="hasCreatePermission && !isXsOrSmResolution"
+                ss-button
+                [buttonActive]="showCreateTask"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                (click)="toggleCreateTask(!showCreateTask)"
+                [attr.data-automation]="'create-task-button'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span *ngIf="!isXsOrSmResolution">{{ 'Task_Create_Title' | translate }}</span>
+        </button>
+        <button *ngIf="hasCreatePermission && isXsOrSmResolution"
+                ss-button
+                [buttonActive]="showCreateTask"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                [buttonNoPadding]="true"
+                [title]="'Task_Create_Title' | translate"
+                (click)="toggleCreateTask(!showCreateTask)"
+                [attr.data-automation]="'create-task-button'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+        </button>
+        <button *ngIf="!isXsOrSmResolution && hasAssignPermission"
+                ss-button
+                [buttonActive]="showAssignTask"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary-black'"
+                [buttonNoPadding]="true"
+                [title]="'Task_AssignAndSend_Label' | translate"
+                (click)="toggleAssignTask(!showAssignTask)"
+                [attr.data-automation]="'assign-task-button'">
+            <ss-icon [name]="'card-user'" [dimension]="'normal'"></ss-icon>
+        </button>
+        <button *ngIf="!isXsOrSmResolution && hasSendPermission"
+                ss-button
+                [buttonActive]="showSendTask"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary-black'"
+                [buttonNoPadding]="true"
+                [title]="'Generic_Send' | translate"
+                (click)="toggleSendTask(!showSendTask)"
+                [attr.data-automation]="'send-task-button'">
+            <ss-icon [name]="'letter'" [dimension]="'normal'"></ss-icon>
+        </button>
+        <button ss-button
+                [buttonActive]="isFilterDrawerOpened"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary-black'"
+                [buttonNoPadding]="true"
+                [title]="'Generic_Filter' | translate"
+                (click)="toggleFilterDrawer()">
+            <ss-icon [attr.data-automation]="'tasks-toolbar-filter-badge'"
+                     [badgeFillColor]="filterIconBadgeFillColor"
+                     [badgeStrokeColor]="filterIconBadgeStrokeColor"
+                     [badge]="hasFilters"
+                     [name]="'filter'"
+                     [dimension]="'normal'"></ss-icon>
+        </button>
+        <button ss-button
+                [buttonActive]="isQuickFilterDrawerOpened"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary-black'"
+                [buttonNoPadding]="true"
+                [title]="'Generic_QuickFilters' | translate"
+                (click)="toggleQuickFilterDrawer()">
+            <ss-icon [attr.data-automation]="'tasks-toolbar-filter-badge'"
+                     [name]="'bookmark'"
+                     [dimension]="'normal'"></ss-icon>
+        </button>
+        <button *ssIfMediaQuery="['xs', 'sm', 'md', 'lg']"
+                ss-button
+                [buttonActive]="isSortingFlyoutOpen"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary-black'"
+                [buttonNoPadding]="true"
+                ssFlyout
+                [flyoutAlignment]="sortFlyout.alignment"
+                [flyoutCloseKeyTriggers]="sortFlyout.closeKeyTriggers"
+                [flyoutComponentProperties]="sortFlyout.properties"
+                [flyoutComponent]="sortFlyout.component"
+                [flyoutId]="sortFlyout.id"
+                [flyoutMobileDrawer]="sortFlyout.mobileDrawer"
+                [flyoutPosition]="sortFlyout.position"
+                [flyoutShowOverlay]="false"
+                [flyoutTriggerElement]="sortFlyout.triggerElement"
+                [flyoutTrigger]="sortFlyout.trigger"
+                [title]="'Generic_Sort' | translate"
+                (click)="toggleSortFlyout()"
+                [attr.data-automation]="'sort-flyout-button'">
+            <ss-icon [name]="'sort'"></ss-icon>
+        </button>
+        <ss-dropdown-menu
+            *ngIf="isXsOrSmResolution"
+            [icon]="'options'"
+            [items]="getDropdownItems()"
+            (itemClicked)="handleDropdownItemClicked($event)"
+            [attr.data-automation]="'dropdown-button'">
+        </ss-dropdown-menu>
+    </div>
+</ss-toolbar>
+<ss-project-tasks-create
+    *ngIf="showCreateTask"
+    [context]="'list'"
+    (onClose)="toggleCreateTask(false)"
+    [attr.data-automation]="'project-tasks-create'">
+</ss-project-tasks-create>
+<ss-project-tasks-assign-capture
+    *ngIf="showAssignTask"
+    (onClose)="toggleAssignTask(false)"
+    [isSelecting]="showAssignTask"
+    [attr.data-automation]="'project-tasks-assign'">
+</ss-project-tasks-assign-capture>
+<ss-project-tasks-send-capture
+    *ngIf="showSendTask"
+    (onCancel)="toggleSendTask(false)"
+    [isSelecting]="showSendTask"
+    [attr.data-automation]="'project-tasks-send'">
+</ss-project-tasks-send-capture>
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>

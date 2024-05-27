@@ -1,0 +1,44 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-menu-list">
+    <ul>
+        <li *ngFor="let itemsList of parsedMenuItemsLists; trackBy: trackByItemsListFn; let listIndex = index"
+            [attr.data-automation]="'ss-menu-list-' + listIndex">
+            <h2 *ngIf="itemsList.title"
+                class="ss-menu-list__title"
+                [attr.data-automation]="'ss-menu-list-title'">{{itemsList.title | translate}}</h2>
+            <ul (mouseleave)="handleItemHovered(null)"
+                [attr.data-automation]="'ss-menu-list-sub-list'">
+                <li *ngFor="let item of itemsList.items; trackBy: trackByItemFn">
+                    <ss-menu-item
+                        #menuItem
+                        class="ss-menu-list__item"
+                        [disabled]="item.disabled"
+                        [focused]="showFocus && item.index === cursorIndex"
+                        [label]="item.label"
+                        [size]="size"
+                        [reserveIndicatorSpace]="itemsList.reserveIndicatorSpace"
+                        [selected]="item.selected"
+                        [type]="item.type"
+                        (itemClick)="handleClick(item)"
+                        (mouseenter)="handleItemHovered(item)"
+                        [attr.data-automation]="'ss-menu-list-item-' + item.index">
+                        <ng-container *ngIf="itemsList.customFigureTemplate"
+                                      [ngTemplateOutlet]="itemsList.customFigureTemplate"
+                                      [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+                    </ss-menu-item>
+                </li>
+            </ul>
+            <div *ngIf="itemsList.separator"
+                 class="ss-menu-list__separator"
+                 [attr.data-automation]="'ss-menu-list-separator'">
+            </div>
+        </li>
+    </ul>
+</div>

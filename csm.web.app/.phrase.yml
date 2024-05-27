@@ -1,0 +1,8 @@
+phrase:
+  access_token: bbe996b5db0b0a1cdcda24d526e03d0b5500c3a12271f60aa45372d59b9eb1d8
+  project_id: 53d286537af2010089c32c22d6fb74e7
+  pull:
+    targets:
+    - file: src/assets/i18n/<locale_name>.json
+      params:
+        file_format: simple_json

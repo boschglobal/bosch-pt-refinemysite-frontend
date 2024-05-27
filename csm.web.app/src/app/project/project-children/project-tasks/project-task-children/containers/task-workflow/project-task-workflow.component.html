@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-project-task-workflow">
+    <header ssSticky
+            [stickyId]="'task-workflow'"
+            [stickyTop]="54"
+            [stickyUntil]="stickyBreakpointValue">
+        <ss-navigation-tabs [outlet]="outlet" [routes]="routes"></ss-navigation-tabs>
+    </header>
+    <div class="ss-project-task-workflow__main"
+         ssSticky
+         [stickyId]="'task-workflow-content'"
+         [stickyBottom]="16"
+         [stickyTop]="102"
+         [stickyUntil]="stickyBreakpointValue"
+         [stickyIndex]="1">
+        <router-outlet name="task-workflow"></router-outlet>
+    </div>
+</section>

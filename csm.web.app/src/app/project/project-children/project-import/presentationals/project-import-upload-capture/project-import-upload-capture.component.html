@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-files
+        [maxSize]="maxFileSize"
+        [multiple]="false"
+        [accept]="fileTypeRegex"
+        [automationAttr]="'file'"
+        [name]="'file'"
+        [label]="'Generic_ClickOrDrag' | translate"
+        [secondaryLabel]="'Project_Import_UploadSecondaryLabel' | translate:{maxFileSize: maxFileSizeInMb}"
+        [singleErrorMessageKey]="'Project_Import_InvalidFileUpload'"
+        [errorMessageParams]="{maxFileSize: maxFileSizeInMb}"
+        [control]="formGroup.get('file')"
+        formControlName="file">
+    </ss-input-files>
+</form>

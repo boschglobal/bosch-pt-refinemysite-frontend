@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-tab-panels>
+    <ss-tab-panel *ngFor="let tab of tabs"
+                  [id]="tab.id"
+                  [title]="tab.title"
+                  [active]="tab.active"
+                  [icon]="tab.icon"
+                  [alignment]="tab.alignment"
+                  [disabled]="tab.disabled">
+        <span>{{tab.title}}</span>
+    </ss-tab-panel>
+</ss-tab-panels>

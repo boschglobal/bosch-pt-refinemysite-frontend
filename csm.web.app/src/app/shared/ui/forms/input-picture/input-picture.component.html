@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input-picture">
+    <label class="ss-input-picture__label"
+           [ngClass]="getInputClasses()"
+           [attr.data-automation]="automationAttr + '-label'"
+           (dragover)="handleDragOver()"
+           (dragenter)="handleDragEnter()"
+           (dragleave)="handleDragLeave()"
+           (drop)="handleDrop($event)">
+        <input #inputPicture
+               type="file"
+               class="ss-input-picture__input"
+               [accept]="accept"
+               [attr.data-automation]="automationAttr"
+               [name]="name"
+               (change)="handleInputChange($event)">
+        <div class="ss-input-picture__preview" [ngStyle]="{'background-image': 'url(' + displayPicture + ')'}"></div>
+        <span *ngIf="isInvalid()"
+              class="ss-input-picture__invalid"
+              [attr.data-automation]="automationAttr + '-invalid'">
+            {{getErrorMessageKey() | translate:getErrorParams()}}
+        </span>
+        <div class="ss-input-picture__icon ss-input-picture__icon--edit">
+            <ss-icon [name]="'edit'" [color]="iconColor"></ss-icon>
+        </div>
+    </label>
+    <div *ngIf="isFilled || isInvalid()"
+         class="ss-input-picture__icon ss-input-picture__icon--delete"
+         [attr.data-automation]="automationAttr + '-delete'"
+         (click)="handleDeletePicture($event)">
+        <ss-icon [name]="'delete'" [color]="iconColor"></ss-icon>
+    </div>
+</div>

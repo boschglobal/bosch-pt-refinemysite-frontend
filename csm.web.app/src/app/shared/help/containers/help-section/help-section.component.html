@@ -1,0 +1,85 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-help-section">
+    <button ss-button
+        [buttonStyle]="'tertiary-grey'"
+        [buttonNoPadding]="true"
+        [buttonActive]="isPanelOpen"
+        [ssMonitorClickAction]="'Help Section - Toogle'"
+        [ssMonitorClickActionContext]="{hasUnreadArticles, isPanelOpen}"
+        (click)="togglePanel()"
+        [attr.data-automation]="'help-button'">
+        <ss-icon [name]="'question-mark'"
+                 [badge]="hasUnreadArticles"></ss-icon>
+    </button>
+
+    <div *ngIf="isPanelOpen"
+        class="ss-help-section__panel"
+        [attr.data-automation]="'help-panel'">
+
+        <header class="ss-help-section__header">
+            <span class="ss-help-section__title">{{'Generic_Help' | translate}}</span>
+        </header>
+
+        <div class="ss-help-section__container">
+
+            <section class="ss-help-section__container__section">
+                <a class="ss-help-section__link"
+                    [href]="'Generic_UserGuide_Link' | translate"
+                    [target]="'_blank'"
+                    ss-button
+                    [buttonStyle]="'tertiary-black'"
+                    [buttonSize]="'small'"
+                    [ssMonitorClickAction]="'Help Section - click on User Guide'"
+                    [attr.aria-label]="'Generic_UserGuide' | translate"
+                    [attr.data-automation]="'help-panel-user-guide'">
+                    <ss-icon [name]="'question-mark'"></ss-icon>
+                    <span>{{'Generic_UserGuide' | translate}}</span>
+                </a>
+
+                <a class="ss-help-section__link"
+                    [href]="contactSupport()"
+                    ss-button
+                    [buttonStyle]="'tertiary-black'"
+                    [buttonSize]="'small'"
+                    [ssMonitorClickAction]="'Help Section - click on Customer Support'"
+                    [attr.aria-label]="'Generic_CustomerSupport' | translate"
+                    [attr.data-automation]="'help-panel-customer-support'">
+                    <ss-icon [name]="'letter'"></ss-icon>
+                    <span>{{'Generic_CustomerSupport' | translate}}</span>
+                </a>
+            </section>
+
+            <section class="ss-help-section__container__section">
+                <header class="ss-help-section__sub-header"
+                    [attr.data-automation]="'help-panel-whats-new-title'">
+                    <ss-icon [name]="'newspaper'"></ss-icon>
+                    <span>{{'Generic_WhatsNew' | translate}}</span>
+                </header>
+
+                <div class="ss-help-section__whats-new"
+                     *ngFor="let whatsNewArticle of whatsNewArticles; trackBy: trackByFn">
+
+                    <ss-news-article [articleId]="whatsNewArticle.id"
+                        [articleTitle]="whatsNewArticle.title"
+                        [articleDate]="whatsNewArticle.date">
+
+                        <ss-text-image-article [textContent]="whatsNewArticle.textContent | translate"
+                                               [textMaxSize]="showMoreMaxLength">
+                        </ss-text-image-article>
+
+                        <img *ngIf="whatsNewArticle.image"
+                             [src]="whatsNewArticle.image.path"
+                             [alt]="whatsNewArticle.image.alt"/>
+                    </ss-news-article>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

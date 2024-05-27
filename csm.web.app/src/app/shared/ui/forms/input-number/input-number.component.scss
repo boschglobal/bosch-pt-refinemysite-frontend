@@ -1,0 +1,63 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "../input.base";
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+$input-height-widthout-border: calc(#{$base-dimension--x6} - 1px);
+
+.ss-input__input {
+    padding-right: calc(#{$base-dimension--x6} * 2);
+}
+
+.ss-input-number {
+    &__arrows {
+        display: flex;
+        position: absolute;
+        top: 20px;
+        right: 0;
+        background: $white;
+    }
+
+    &__arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: $base-dimension--x6;
+        height: $input-height-widthout-border;
+        cursor: pointer;
+        fill: $black;
+
+        &--disabled {
+            fill: $light_grey;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        left: 12px;
+        display: flex;
+        align-items: center;
+        height: $input-height-widthout-border;
+        fill: $dark_grey_75;
+    }
+
+    &--icon input {
+        padding-left: 44px;
+    }
+}

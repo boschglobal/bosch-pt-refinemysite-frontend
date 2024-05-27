@@ -1,0 +1,69 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-crafts-capture" [ngClass]="getElementStyles('capture')">
+    <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+        <div class="row">
+            <div [ngClass]="getElementStyles('input')">
+                <div class="ss-project-crafts-capture__inputs-wrapper">
+                    <div *ngIf="isUpdateMode"
+                         class="ss-project-crafts-capture__inputs--edit-index"
+                         [attr.data-automation]="'project-crafts-capture-position'">
+                        {{position}}.
+                    </div>
+                    <ss-input-colorpicker [automationAttr]="'colorpicker'"
+                                          [name]="'color'"
+                                          [isRequired]="true"
+                                          [options]="craftColors"
+                                          [modalTitle]="'Generic_Color' | translate"
+                                          [control]="form.controls.color"
+                                          [formControl]="form.controls.color">
+                    </ss-input-colorpicker>
+                    <ss-input-autocomplete #craftInput
+                                           [automationAttr]="'name'"
+                                           [name]="'name'"
+                                           [label]="'Generic_Craft' | translate"
+                                           [isRequired]="true"
+                                           [maxCharacter]="validations.name.maxLength"
+                                           [control]="form.controls.name"
+                                           [list]="crafts"
+                                           [formControl]="form.controls.name"
+                                           [autofocus]="true">
+                    </ss-input-autocomplete>
+                </div>
+                <ss-input-number
+                    *ngIf="!isUpdateMode"
+                    [automationAttr]="'position'"
+                    [name]="'position'"
+                    [label]="'Generic_Position' | translate"
+                    [isRequired]="true"
+                    [min]="minStep"
+                    [max]="position"
+                    [control]="form.controls.position"
+                    [formControl]="form.controls.position"
+                    [attr.data-automation]="'project-crafts-capture-input-position-number'">
+                </ss-input-number>
+            </div>
+            <div [ngClass]="getElementStyles('button')">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="submit"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'add'"
+                        [disabled]="!isFormValid()">
+                    {{getSubmitKey() | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,134 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+/* autoprefixer grid: autoplace */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/mixins";
+
+.ss-project-dashboard {
+    padding: $base-dimension;
+    display: grid;
+    grid-gap: $base-dimension;
+    grid-template-columns: repeat(1, 1fr);
+
+    @include media-breakpoint-up(sm) {
+        grid-template-columns: repeat(2, 1fr);
+
+        ss-generic-dashboard-tile:nth-child(3) {
+            grid-row: 2 / 5;
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+        padding: $base-dimension--x2;
+    }
+
+    @include media-breakpoint-up(lg) {
+        grid-template-columns: repeat(3, 1fr);
+
+        ss-generic-dashboard-tile:nth-child(3) {
+            grid-row: inherit;
+        }
+    }
+
+    &__import-tooltip {
+        @include caption-2();
+        white-space: pre-line;
+        word-wrap: break-word;
+    }
+
+    ss-generic-banner,
+    ss-generic-dashboard-tile {
+        display: block;
+    }
+
+    ::ng-deep .ss-generic-dashboard-tile {
+        height: 100%;
+        min-height: 150px;
+    }
+
+    ::ng-deep .ss-generic-banner {
+        background-size: inherit;
+    }
+
+    &__chart {
+        display: inline-flex;
+        margin-bottom: $base-dimension--x3;
+    }
+
+    &__tile-task-holder {
+        position: relative;
+        display: inline-flex;
+        flex-wrap: wrap;
+        width: 100%;
+        margin: $base-dimension 0 $base-dimension--x4;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            height: 47px;
+            min-width: 128px;
+            width: 100%;
+
+            &-labels {
+                @include body-2($dark_grey_50);
+
+                display: flex;
+                flex: 1;
+                justify-content: space-between;
+                flex-direction: row;
+                align-items: center;
+                margin-left: $base-dimension--x2;
+
+                & span:last-child {
+                    @include body-1($dark_grey);
+                    margin-left: 8px;
+                }
+            }
+
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        ::ng-deep .ss-generic-dashboard-tile__main {
+            display: flex;
+            align-items: center;
+            align-content: center;
+        }
+
+        &__tile-task-holder {
+            width: 60%;
+            margin-left: $base-dimension--x4;
+        }
+    }
+
+    @include media-breakpoint-down(sm) {
+        &__tile-task-holder {
+            width: 100%;
+            margin-left: 0px;
+        }
+
+        &__chart {
+            display: none;
+            margin-bottom: $base-dimension--x3;
+        }
+    }
+
+    @include media-breakpoint-up(md) {
+        ::ng-deep .ss-generic-banner {
+            background-size: cover;
+        }
+    }
+}
+
+ss-project-export, ss-project-copy {
+    width: 100%;
+}

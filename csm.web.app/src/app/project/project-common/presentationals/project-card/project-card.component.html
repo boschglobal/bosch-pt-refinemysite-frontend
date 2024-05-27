@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-panel ss-panel--background">
+    <div class="ss-panel__title">
+        <h1 [attr.data-automation]="'project-card-title'">{{title | translate}}</h1>
+    </div>
+    <div class="ss-panel__content">
+        <div class="row">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

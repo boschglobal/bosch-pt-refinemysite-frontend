@@ -1,0 +1,66 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-table *ssIfMediaQuery="['xs', 'sm', 'md']"
+          class="ss-pat-list"
+          [records]="patsList"
+          [settings]="settingsSmall"
+          [attr.data-automation]="'pat-list-table-small'">
+    <ss-table-cell [field]="'description'"></ss-table-cell>
+    <ss-table-cell [field]="'id'"></ss-table-cell>
+    <ss-table-cell [field]="'options'">
+        <ng-template let-id>
+            <ng-template *ngTemplateOutlet="ssPatListButtons context: {$implicit: id}"></ng-template>
+        </ng-template>
+    </ss-table-cell>
+</ss-table>
+
+<ss-table *ssIfMediaQuery="['lg', 'xl']"
+          class="ss-pat-list"
+          [records]="patsList"
+          [settings]="settings"
+          [attr.data-automation]="'pat-list-table-large'">
+    <ss-table-cell [field]="'description'" [showTooltip]="true"></ss-table-cell>
+    <ss-table-cell [field]="'scopes'" [showTooltip]="true"></ss-table-cell>
+    <ss-table-cell [field]="'id'" [showTooltip]="true"></ss-table-cell>
+    <ss-table-cell [field]="'expiresAt'">
+        <ng-template let-expiresAt>
+            <span [title]="expiresAt">{{expiresAt}}</span>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'options'">
+        <ng-template let-id>
+            <ng-template *ngTemplateOutlet="ssPatListButtons context: {$implicit: id}"></ng-template>
+        </ng-template>
+    </ss-table-cell>
+</ss-table>
+
+<ng-template #ssPatListButtons let-id>
+    <div class="ss-pat-list-buttons">
+        <button
+            ss-button
+            [buttonStyle]="'tertiary-light-blue'"
+            [buttonNoPadding]="true"
+            (click)="onClickEdit(id)">
+            <ss-icon class="ss-pat-list-edit-button__icon"
+                     [name]="'edit'">
+            </ss-icon>
+        </button>
+        <button
+            ss-button
+            [buttonStyle]="'tertiary-red'"
+            [buttonNoPadding]="true"
+            (click)="onClickDelete(id)">
+            <ss-icon class="ss-pat-list-delete-button__icon"
+                     [name]="'delete'">
+            </ss-icon>
+        </button>
+    </div>
+</ng-template>
+
+

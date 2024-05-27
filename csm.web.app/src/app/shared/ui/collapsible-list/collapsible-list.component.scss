@@ -1,0 +1,171 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+
+$arrow-width: 48px;
+$selected: rgba(23, 99, 154, 0.30);
+$selected--hover: rgba(23, 99, 154, 0.50);
+$checkbox-dimension: 20px;
+
+.ss-collapsible-list {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    &__arrow-wrapper {
+        min-width: $arrow-width;
+        cursor: pointer;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        ::ng-deep .ss-icon {
+            fill: $dark_grey;
+        }
+    }
+
+    &__primary-wrapper,
+    &__secondary-wrapper,
+    &__primary-template {
+        width: 100%;
+        @include ellipsis();
+        white-space: break-spaces;
+    }
+
+    &__primary-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__secondary-wrapper {
+        padding-right: $arrow-width;
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        border-bottom: 1px solid $light_grey_50;
+        background: #ffffff;
+        padding: $base-dimension--x2;
+        overflow: hidden;
+
+        &:hover,
+        &--uncollapsed {
+            background: $light_grey_12_5;
+        }
+
+        &--selectable {
+            cursor: pointer;
+            background: $light_grey_25;
+
+            &:hover {
+                background: $light_grey_50;
+            }
+        }
+
+        &--not-selectable {
+            opacity: 0.5;
+            cursor: not-allowed !important;
+
+            &:hover {
+                background: $white;
+            }
+        }
+
+        &--selected {
+            background: $selected;
+
+            &:hover {
+                background: $selected--hover;
+            }
+        }
+
+        &--has-marker {
+            position: relative;
+
+            &:before {
+                @include marker-line();
+            }
+
+            &-neutral, &-error, &-success, &-warning {
+                &:before {
+                    top: 0;
+                    height: 100%;
+                }
+            }
+
+            &-neutral:before {
+                background-color: $light_blue;
+            }
+
+            &-error:before {
+                background-color: $red;
+            }
+
+            &-success:before {
+                background-color: $light_green;
+            }
+
+            &-warning:before {
+                background-color: $yellow;
+            }
+        }
+
+        &--feedback {
+            border: none;
+            color: $dark_grey_50;
+
+            &:hover {
+                background: none;
+            }
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+    &__checkbox {
+        display: inline-flex;
+        vertical-align: top;
+        min-width: 36px;
+        cursor: pointer;
+
+        &--disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: $checkbox-dimension;
+            height: $checkbox-dimension;
+            background: $light_grey_12_5;
+            border: none;
+            padding: 0;
+            border-bottom: 2px solid $light_grey;
+            margin-right: $base-dimension--x2;
+        }
+
+        button:disabled {
+            background: $light_grey_50;
+            cursor: inherit;
+        }
+    }
+
+    &__select-all-wrapper {
+        padding: 0 0 $base-dimension $base-dimension--x2;
+    }
+}

@@ -1,0 +1,33 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="showPreview"
+     [ngSwitch]="tasksPreviewMode"
+     [attr.data-automation]="'tasks-preview'"
+     class="ss-tasks-preview">
+    <div class="ss-tasks-preview__shift-amount"> {{ shiftAmount |  ssTaskShiftAmount: shiftMode: shiftUnit}} </div>
+
+    <ss-tasks-stacked-preview
+        *ngSwitchCase="TasksPreviewModeEnum.Stacked"
+        [attr.data-automation]="'tasks-stacked-preview'"
+        [topCard]="mainTask"
+        [backgroundCard]="backgroundTask"
+        [cardCount]="tasksCount"
+    ></ss-tasks-stacked-preview>
+
+    <ss-tasks-card-preview
+        class="ss-tasks-preview__card-preview"
+        *ngSwitchCase="TasksPreviewModeEnum.Simple"
+        [attr.data-automation]="'tasks-card-preview'"
+        [task]="mainTask"
+        [predecessorRelations]="predecessorRelations"
+        [successorRelations]="successorRelations"
+        [hasNews]="!!news.length && showUnreadNews"
+    ></ss-tasks-card-preview>
+
+</div>

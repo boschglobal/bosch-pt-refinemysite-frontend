@@ -1,0 +1,319 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+$base-button-class: '.ss-buttons';
+$button-transition: 200ms;
+$button-tiny-size: 32px;
+$button-small-size: 40px;
+$button-normal-size: 48px;
+$button-large-size: 60px;
+
+@mixin primary-button($bg-color, $hover-bg-color, $active-bg-color) {
+    background: $bg-color;
+    color: $white;
+
+    ::ng-deep .ss-icon {
+        fill: $white;
+    }
+
+    &#{$base-button-class}--active,
+    &.ss-flyout--open {
+        background: $active-bg-color;
+    }
+
+    &:hover,
+    &:focus-visible:not(#{$base-button-class}--active):not(.ss-flyout--open) {
+        background: $hover-bg-color;
+    }
+
+    &:disabled {
+        background: $light_grey;
+    }
+}
+
+@mixin secondary-button($main-color, $hover-main-color, $active-main-color, $active-bg-color) {
+    background: transparent;
+    color: $main-color;
+    border: 1px solid $light_grey_75;
+
+    ::ng-deep .ss-icon {
+        fill: $main-color;
+    }
+
+    &#{$base-button-class}--active,
+    &.ss-flyout--open {
+        background: $active-bg-color;
+        color: $active-main-color;
+        border-color: $active-bg-color;
+
+        ::ng-deep .ss-icon {
+            fill: $active-main-color;
+        }
+    }
+
+    &:hover,
+    &:focus-visible:not(#{$base-button-class}--active):not(.ss-flyout--open) {
+        background: $light_grey_25;
+        color: $hover-main-color;
+        border-color: $light_grey;
+
+        ::ng-deep .ss-icon {
+            fill: $hover-main-color;
+        }
+    }
+
+    &:disabled {
+        border-color: $light_grey_50;
+        color: $light_grey;
+
+        ::ng-deep .ss-icon {
+            fill: $light_grey;
+        }
+    }
+}
+
+@mixin tertiary-button($main-color, $hover-main-color, $active-main-color, $active-bg-color) {
+    background: transparent;
+    color: $main-color;
+
+    ::ng-deep .ss-icon {
+        fill: $main-color;
+    }
+
+    &#{$base-button-class}--active,
+    &.ss-flyout--open {
+        background: $active-bg-color;
+        color: $active-main-color;
+
+        ::ng-deep .ss-icon {
+            fill: $active-main-color;
+        }
+    }
+
+    &:hover,
+    &:focus-visible:not(#{$base-button-class}--active):not(.ss-flyout--open) {
+        background: $light_grey_25;
+        color: $hover-main-color;
+
+        ::ng-deep .ss-icon {
+            fill: $hover-main-color;
+        }
+    }
+
+    &:disabled {
+        color: $light_grey;
+
+        ::ng-deep .ss-icon {
+            fill: $light_grey;
+        }
+    }
+}
+
+@mixin integrated-button($main-color, $hover-color) {
+    background: transparent;
+    color: $main-color;
+
+    ::ng-deep .ss-icon {
+        fill: $main-color;
+    }
+
+    &:hover,
+    &:focus-visible:not(#{$base-button-class}--active):not(.ss-flyout--open) {
+        color: $hover-color;
+
+        ::ng-deep .ss-icon {
+            fill: $hover-color;
+        }
+    }
+
+    &:disabled {
+        color: $light_grey;
+
+        ::ng-deep .ss-icon {
+            fill: $light_grey;
+        }
+    }
+}
+
+@mixin inverted-button($main-color) {
+    background: transparent;
+    color: $main-color;
+
+    ::ng-deep .ss-icon {
+        fill: $main-color;
+    }
+
+    &#{$base-button-class}--active,
+    &.ss-flyout--open {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &:hover,
+    &:focus-visible:not(#{$base-button-class}--active):not(.ss-flyout--open) {
+        opacity: 0.75;
+    }
+
+    &:disabled {
+        opacity: 0.25;
+    }
+}
+
+@mixin button-size($font-size, $button-size, $side-padding) {
+    font-size: $font-size !important;
+    height: $button-size;
+    min-width: $button-size;
+    padding: 0 $side-padding;
+}
+
+:host {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition-property: background, border, color;
+    transition-timing-function: ease-in-out;
+    transition-duration: $button-transition;
+
+    ::ng-deep .ss-icon {
+        transition-property: fill;
+        transition-timing-function: ease-in-out;
+        transition-duration: $button-transition;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &#{$base-button-class} {
+        &--primary {
+            @include primary-button($dark_blue, $light_blue, $dark_blue_125);
+        }
+
+        &--primary-light-blue {
+            @include primary-button($light_blue, $light_blue_50, $dark_blue);
+        }
+
+        &--primary-red {
+            @include primary-button($red, $red_50, $red);
+        }
+
+        &--secondary {
+            @include secondary-button($dark_blue, $dark_blue, $dark_blue, $dark_blue_12_5);
+        }
+
+        &--secondary-black {
+            @include secondary-button($black, $black, $black, $light_grey_50);
+        }
+
+        &--secondary-grey {
+            @include secondary-button($dark_grey_75, $black, $black, $light_grey_50);
+        }
+
+        &--secondary-light-blue {
+            @include secondary-button($light_blue, $light_blue, $light_blue, $light_blue_12_5);
+        }
+
+        &--secondary-light-green {
+            @include secondary-button($light_green, $light_green, $light_green, $light_green_12_5);
+        }
+
+        &--secondary-red {
+            @include secondary-button($red, $red, $red, $red_12_5);
+        }
+
+        &--tertiary {
+            @include tertiary-button($dark_blue, $dark_blue, $dark_blue, $dark_blue_12_5);
+        }
+
+        &--tertiary-black {
+            @include tertiary-button($black, $black, $black, $light_grey_50);
+        }
+
+        &--tertiary-grey {
+            @include tertiary-button($dark_grey_75, $black, $black, $light_grey_50);
+        }
+
+        &--tertiary-light-blue {
+            @include tertiary-button($light_blue, $light_blue, $light_blue, $light_blue_12_5);
+        }
+
+        &--tertiary-light-green {
+            @include tertiary-button($light_green, $light_green, $light_green, $light_green_12_5);
+        }
+
+        &--tertiary-red {
+            @include tertiary-button($red, $red, $red, $red_12_5);
+        }
+
+        &--integrated {
+            @include integrated-button($dark_blue, $black);
+        }
+
+        &--integrated-black {
+            @include integrated-button($black, $dark_blue);
+        }
+
+        &--integrated-grey {
+            @include integrated-button($dark_grey_75, $black);
+        }
+
+        &--inverted {
+            @include inverted-button($white);
+        }
+
+        &--inverted-grey {
+            @include inverted-button($dark_grey_75);
+        }
+
+        &--large {
+            @include button-size($font-size-md, $button-large-size, $base-dimension--x3);
+        }
+
+        &--normal {
+            @include button-size($font-size-base, $button-normal-size, $base-dimension--x2);
+        }
+
+        &--small {
+            @include button-size($font-size-sm, $button-small-size, $base-dimension + $base-dimension--x05);
+        }
+
+        &--tiny {
+            @include button-size($font-size-sm, $button-tiny-size, $base-dimension + $base-dimension--x05);
+        }
+
+        &--auto {
+            height: auto;
+        }
+
+        &--no-padding {
+            padding: 0;
+        }
+
+        &--proportional {
+            min-width: 150px;
+        }
+
+        &--circular {
+            border-radius: 50%;
+            padding: 0px;
+        }
+    }
+
+    ::ng-deep ss-icon + *,
+    ::ng-deep * + ss-icon {
+        margin-left: $base-dimension;
+    }
+}

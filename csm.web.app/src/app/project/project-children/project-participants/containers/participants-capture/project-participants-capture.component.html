@@ -1,0 +1,62 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-participants-capture">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <form [formGroup]="participantsCaptureForm">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <ss-input-text
+                    #emailInput
+                    [type]="'email'"
+                    [automationAttr]="'email'"
+                    [name]="'email'"
+                    [label]="('Generic_EmailAddress' | translate)"
+                    [isRequired]="true"
+                    [maxCharacter]="validations.email.maxLength"
+                    [showCounter]="false"
+                    [control]="participantsCaptureForm.get('email')"
+                    [autofocus]="true"
+                    formControlName="email">
+                </ss-input-text>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <ss-input-select-dropdown
+                    [automationAttr]="'role'"
+                    [name]="'role'"
+                    [label]="'Generic_Role' | translate"
+                    [control]="participantsCaptureForm.get('role')"
+                    [options]="roleList"
+                    [translateLabel]="true"
+                    [isRequired]="true"
+                    formControlName="role">
+                </ss-input-select-dropdown>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="ss-button-group">
+                    <button type="button"
+                            class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                            [attr.data-automation]="'cancel-invite'"
+                            (click)="handleCancel()">
+                        {{'Generic_Cancel' | translate}}
+                    </button>
+                    <button type="button"
+                            ss-button
+                            [buttonProportional]="true"
+                            [attr.data-automation]="'submit-invite'"
+                            [disabled]="!isFormValid()"
+                            (click)="onSubmitForm()">
+                        {{'Participant_Submit_InvitationMessage' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

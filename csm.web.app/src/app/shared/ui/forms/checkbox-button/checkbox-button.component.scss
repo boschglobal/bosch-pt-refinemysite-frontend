@@ -1,0 +1,100 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+$checkbox-size: $base-dimension--x3;
+
+.ss-checkbox-button {
+    $this: &;
+
+    &--normal {
+        min-height: $base-dimension--x6;
+        font-size: $font-size-base;
+
+        #{$this}__span {
+            padding-bottom: $base-dimension;
+        }
+    }
+
+    &--small {
+        min-height: $base-dimension--x5;
+        font-size: $font-size-sm;
+    }
+
+    &--tiny {
+        min-height: $base-dimension--x4;
+        font-size: $font-size-sm;
+    }
+
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    ::selection {
+        background: none;
+    }
+
+    &__checkbox {
+        flex-shrink: 0;
+        width: $checkbox-size;
+        height: $checkbox-size;
+        margin-right: $form-input-label-check-spacing;
+        background: $light_grey_50;
+        transition: background ease .25s;
+
+        ss-icon {
+            fill: $white
+        }
+    }
+
+    &__input {
+        display: none;
+        position: absolute;
+    }
+
+    &__label {
+        display: flex !important;
+        cursor: pointer;
+        margin: 0;
+
+        &:hover {
+            .ss-checkbox-button__checkbox {
+                background: $light_grey;
+            }
+        }
+    }
+
+    &__span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $black;
+        word-break: break-word;
+    }
+
+    &--checked, &--indeterminate {
+        .ss-checkbox-button__checkbox {
+            background: $dark_blue;
+        }
+    }
+
+    &--disabled {
+        .ss-checkbox-button__checkbox {
+            background: $light_grey_50;
+        }
+
+        .ss-checkbox-button__label:hover .ss-checkbox-button__checkbox {
+            background: $light_grey_50;
+        }
+
+        .ss-checkbox-button__span {
+            color: $light_grey;
+        }
+    }
+}

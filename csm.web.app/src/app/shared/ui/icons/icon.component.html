@@ -1,0 +1,31 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<svg *ngIf="!animated"
+     class="ss-icon"
+     xmlns="http://www.w3.org/2000/svg"
+     [attr.viewBox]="'0 0 96 96'"
+     [attr.width]="dimensionInPx"
+     [attr.height]="dimensionInPx"
+     [attr.fill]="color"
+     [attr.style]="iconStyles"
+     [attr.data-automation]="'ss-icon'">
+    <use [attr.xlink:href]="icon"/>
+    <circle class="ss-icon__badge" cx="80%" cy="20%" r="0px"
+            [@bulgeBadge]="badge ? 'bulgeBadgeIn' : 'bulgeBadgeOut'"
+            [attr.fill]="badgeFillColor"
+            [attr.stroke]="badgeStrokeColor"
+            [attr.data-automation]="'ss-icon-badge'">
+    </circle>
+</svg>
+<ng-lottie *ngIf="animated"
+           [containerClass]="'ss-icon'"
+           [options]="animatedIcon"
+           [height]="dimensionInPx"
+           [width]="dimensionInPx">
+</ng-lottie>

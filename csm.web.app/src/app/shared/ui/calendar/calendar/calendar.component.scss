@@ -1,0 +1,409 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+@import "../contants/calendar.contants";
+
+$expandedFlexValue: 8;
+$slot-preview-border-color: $light_blue;
+$slot-preview-background-color: $light_blue_a10;
+$loader-index: 7;
+$header-index: 6;
+$workareas-index-xl: 6;
+$milestone-placeholder-index-xl: 6;
+$dependencies-artboard-index-lg: 5;
+$workareas-index: 4;
+$dependencies-artboard-index-xl: 3;
+$drag-row-index: 1;
+$easing-animation: 250ms width ease-in-out, 250ms min-width ease-in-out, 250ms max-width ease-in-out;
+$year-placeholder-height: $header-height + 15;
+
+:host {
+    display: block;
+    transform: scale(1);
+}
+
+.ss-calendar {
+    $this: &;
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: relative;
+    user-select: none;
+    overflow: auto;
+
+    &-dependencies {
+        position: absolute;
+        width: 100%;
+        height: calc(100% - #{$header-height});
+        top: $header-height;
+        z-index: $dependencies-artboard-index-lg;
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 200ms ease-in-out;
+
+        @include media-breakpoint-up(xl) {
+            left: $left-column-width;
+            width: calc(100% - #{$left-column-width});
+            z-index: $dependencies-artboard-index-xl;
+        }
+
+        &--hidden {
+            opacity: 0;
+            transition: opacity 0ms ease-in-out;
+        }
+    }
+
+    &-wrapper {
+        position: relative;
+        display: inline-flex;
+        flex-direction: column;
+        vertical-align: top;
+        min-width: 100%;
+    }
+
+    &-loader ::ng-deep .ss-loader {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: $loader-index;
+    }
+
+    &-row {
+        display: flex;
+        min-height: $base-dimension--x5;
+        background: $light_grey_25;
+
+        &#{$this}-header div {
+            transition: $easing-animation;
+        }
+
+        &--expand {
+            width: $expanded-week-width !important;
+            min-width: $expanded-week-width !important;
+        }
+    }
+
+    &-milestones {
+        display: flex;
+
+        &__placeholder {
+            @include media-breakpoint-up(xl) {
+                position: sticky;
+                left: 0;
+                min-width: $left-column-width;
+                z-index: $milestone-placeholder-index-xl;
+                background: $white;
+            }
+        }
+
+        &__creation-slots {
+            display: flex;
+
+            &--row {
+                margin-top: $base-dimension--x025;
+            }
+
+            &-wrapper {
+                min-height: $milestone-creation-slots-height;
+            }
+
+            &-week {
+                width: 100%;
+                min-width: $week-width;
+                margin: 0 $base-dimension;
+                transition: $easing-animation;
+            }
+        }
+
+        &__slots {
+            display: block;
+
+            &--row {
+                margin-bottom: -$base-dimension--x05;
+            }
+        }
+    }
+
+    &-header {
+        background: $white;
+        position: sticky;
+        top: 0;
+        z-index: $header-index;
+
+        &-cells {
+            display: flex;
+            width: inherit;
+
+            @include media-breakpoint-up(xl) {
+                position: relative;
+                left: $left-column-width;
+                min-width: calc(100% - #{$left-column-width});
+            }
+        }
+
+        &-cell {
+            min-width: $week-width;
+            margin: 0 $base-dimension;
+
+            &__year {
+                @include subtitle-1();
+                margin: 0;
+                padding-left: $base-dimension--x2;
+                padding-top: $base-dimension--x05 + $base-dimension--x025;
+            }
+        }
+    }
+
+    &-year-placeholder {
+        display: none;
+
+        @include media-breakpoint-up(xl) {
+            position: fixed;
+            min-height: $year-placeholder-height;
+            z-index: $loader-index;
+            background: $white;
+            max-width: $left-column-width !important;
+            min-width: $left-column-width !important;
+            margin: 0;
+            display: flex;
+        }
+
+        &__title {
+            @include subtitle-1();
+            margin: 0;
+            padding-left: $base-dimension--x2;
+            padding-top: $base-dimension--x05 + $base-dimension--x025;
+        }
+    }
+
+    &-body {
+        .ss-calendar-row {
+            flex-direction: column;
+
+            @include media-breakpoint-up(xl) {
+                flex-direction: row;
+            }
+        }
+
+        &-cell {
+            margin: $base-dimension--x05 $base-dimension;
+
+            &--ghost {
+                opacity: 0.2;
+            }
+
+            &--dragging {
+                position: fixed;
+                visibility: hidden;
+                top: -9000px;
+                left: -9000px;
+            }
+        }
+    }
+
+    &-drag-row {
+        display: flex;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: $drag-row-index;
+        top: 0;
+        left: 0;
+        background: none;
+
+        &--hidden {
+            visibility: hidden;
+        }
+    }
+
+    &-week-column {
+        margin: 0 $base-dimension;
+        min-width: $week-width;
+
+        &--day-grid {
+            display: flex;
+
+            #{$this}-drag-slot {
+                flex-grow: 1;
+            }
+        }
+    }
+
+    &-drag-slot {
+        position: relative;
+
+        &__preview {
+            position: absolute;
+            height: 100%;
+            border: 2px dashed $slot-preview-border-color;
+            background: $slot-preview-background-color;
+            z-index: -1;
+            pointer-events: none;
+        }
+    }
+
+    &__lines,
+    &-column {
+        background: $light_grey_25;
+        border-top: 2px solid $light_grey_50;
+    }
+
+    &-column {
+        min-width: $left-column-width;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: $base-dimension--x3;
+        font-family: RmS-Medium, sans-serif;
+        font-size: 0.875rem;
+        color: $dark_grey;
+        padding: $base-dimension $base-dimension--x2;
+        position: sticky;
+        top: $base-dimension--x7 - $base-dimension--x025;
+        left: 0px;
+        z-index: $workareas-index;
+
+        ::ng-deep ss-calendar-workarea-row-header {
+            width: 100%;
+        }
+
+        @include media-breakpoint-up(xl) {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: $left-column-width;
+            padding: 0 $base-dimension 0 $base-dimension--x2;
+            z-index: $workareas-index-xl;
+
+            ::ng-deep ss-calendar-workarea-row-header {
+                position: sticky;
+                top: 58px;
+                padding: $base-dimension 0;
+            }
+
+            ::ng-deep .ss-calendar-workarea-row-header__title,
+            ::ng-deep .ss-calendar-workarea-row-header__toggle {
+                position: static;
+            }
+        }
+    }
+
+    &__lines {
+        padding-bottom: $base-dimension--x05;
+        width: 100%;
+
+        &-wrapper {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+        }
+    }
+
+    &__line {
+        display: flex;
+        margin: 0;
+
+        &-add {
+            display: flex;
+            flex: 1 1 auto !important; // Fix for IE
+            max-height: 36px;
+            margin: $base-dimension--x05 0;
+
+            &--hidden {
+                visibility: hidden;
+            }
+
+            button {
+                height: 36px;
+                margin: 0 $base-dimension;
+                min-width: $week-width;
+
+                &:hover {
+                    background: $light_grey_50;
+                }
+            }
+        }
+
+        &--expanded {
+            flex-basis: auto !important; // Fix for IE
+        }
+    }
+
+    &--hide-scroll {
+        overflow: hidden;
+    }
+
+    &-dependency {
+        color: $black;
+
+        &--dimmed-out {
+            color: $light_grey_125;
+        }
+
+        &--critical {
+            color: $red;
+            stroke-width: 2;
+        }
+
+        &__line {
+            fill: none;
+            stroke: currentColor;
+            filter: drop-shadow(1px 0px 0px #fff7);
+        }
+
+        &__arrow-head {
+            fill: currentColor;
+            stroke: none;
+        }
+
+    }
+
+    &-out-of-scope-indicator {
+        &__line {
+            fill: none;
+            stroke: $black;
+            stroke-width: 1;
+            filter: drop-shadow(1px 0px 0px #fff7);
+
+            &--dimmed-out {
+                stroke: $light_grey_125;
+            }
+
+            &--critical {
+                stroke: $red;
+                stroke-width: 2;
+            }
+
+        }
+
+        &__circle {
+            fill: $black;
+            stroke: $white;
+            stroke-width: 1;
+
+            &--dimmed-out {
+                fill: $light_grey_125;
+            }
+
+            &--has-critical-dependencies {
+                fill: $red;
+            }
+        }
+
+        &__text {
+            font-family: RmS-Bold, sans-serif;
+            font-size: 9px;
+            fill: $white;
+            text-anchor: middle;
+            alignment-baseline: middle;
+        }
+    }
+}

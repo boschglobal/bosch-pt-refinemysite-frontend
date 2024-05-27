@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-announcement-list">
+    <ss-callout *ngIf="announcement"
+                [type]="announcement.type"
+                [message]="announcement.message"
+                [isCloseable]="true"
+                (calloutClosed)="handleCloseAnnouncement(announcement)"
+                [attr.data-automation]="'announcement-list-announcement'">
+    </ss-callout>
+    <ss-callout *ngIf="!announcement && isDeprecatedBrowser"
+                [type]="'warning'"
+                [message]="'DeprecatedBrowser_Warning_Message' | translate"
+                [attr.data-automation]="'announcement-list-deprecated-browser'">
+    </ss-callout>
+</div>

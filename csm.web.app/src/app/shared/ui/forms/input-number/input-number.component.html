@@ -1,0 +1,54 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-number"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <div *ngIf="hasIcon()"
+         class="ss-input-number__icon"
+         [attr.data-automation]="automationAttr + '-icon'">
+        <ss-icon [name]="icon"></ss-icon>
+    </div>
+    <!-- // TODO: https://github.com/angular/angular/issues/12316 -->
+    <input #inputNumber
+           class="ss-input__input"
+           [type]="'number'"
+           [attr.data-automation]="automationAttr"
+           [name]="name"
+           [disabled]="isDisabled"
+           [readonly]="isReadOnly"
+           (input)="onInputChange($event)"
+           (focus)="onInputFocus($event)"
+           (blur)="onInputBlur($event)"
+           [(ngModel)]="value">
+    <div class="ss-input-number__arrows">
+        <div class="ss-input-number__arrow"
+             (click)="handleDecrement()"
+             [ngClass]="getDecrementArrowClasses()"
+             [attr.data-automation]="automationAttr + '-decrement'">
+            <ss-icon [name]="'arrow'" [rotate]="-90"></ss-icon>
+        </div>
+        <div class="ss-input-number__arrow"
+             (click)="handleIncrement()"
+             [ngClass]="getIncrementArrowClasses()"
+             [attr.data-automation]="automationAttr + '-increment'">
+            <ss-icon [name]="'arrow'" [rotate]="90"></ss-icon>
+        </div>
+    </div>
+    <label *ngIf="label"
+           class="ss-input__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span *ngIf="isInvalid()"
+          [ngClass]="getErrorClasses()"
+          class="ss-input__invalid"
+          [attr.data-automation]="automationAttr + '-invalid'">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>

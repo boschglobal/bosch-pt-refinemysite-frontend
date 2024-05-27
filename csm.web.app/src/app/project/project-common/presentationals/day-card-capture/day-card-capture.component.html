@@ -1,0 +1,85 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-day-card-capture">
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-12">
+                <ss-input-text
+                    #titleInput
+                    [automationAttr]="'title'"
+                    [name]="'title'"
+                    [label]="'Generic_Title' | translate"
+                    [isRequired]="true"
+                    [maxCharacter]="validations.title.maxLength"
+                    [control]="form.get('title')"
+                    formControlName="title">
+                </ss-input-text>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <ss-input-datepicker
+                    [automationAttr]="'date'"
+                    [name]="'date'"
+                    [label]="'Generic_Date' | translate"
+                    [disabledDates]="dateConfig.disabledDates"
+                    [max]="dateConfig.max"
+                    [min]="dateConfig.min"
+                    [displayErrors]="true"
+                    [isRequired]="true"
+                    [control]="form.get('date')"
+                    formControlName="date">
+                </ss-input-datepicker>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <ss-input-number
+                    [automationAttr]="'manpower'"
+                    [name]="'manpower'"
+                    [label]="'Calendar_NumberWorkers_Label' | translate"
+                    [isRequired]="true"
+                    [min]="minManpower"
+                    [max]="maxManpower"
+                    [step]="step"
+                    [control]="form.get('manpower')"
+                    [formControl]="form.get('manpower')">
+                </ss-input-number>
+            </div>
+            <div class="col-12">
+                <ss-input-textarea
+                    #notesInput
+                    [automationAttr]="'notes'"
+                    [name]="'notes'"
+                    [label]="'Generic_Note' | translate"
+                    [maxCharacter]="validations.notes.maxLength"
+                    [control]="form.get('notes')"
+                    formControlName="notes">
+                </ss-input-textarea>
+            </div>
+            <span class="ss-day-card-capture__required-info col-12">
+                    * {{'Generic_SaveCondition' | translate}}
+                </span>
+        </div>
+        <div class="ss-day-card-capture__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'create'"
+                        [disabled]="!isFormValid()"
+                        (click)="handleSubmit()">
+                    {{getMode() === 'create' ? ('Generic_Create' | translate) : ('Generic_Update' | translate)}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

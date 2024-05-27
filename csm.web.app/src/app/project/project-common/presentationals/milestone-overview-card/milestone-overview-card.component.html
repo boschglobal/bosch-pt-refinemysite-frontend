@@ -1,0 +1,57 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="milestone; else skeleton"
+     class="ss-milestone-overview-card"
+     [ngClass]="{
+        'ss-milestone-overview-card--critical': isCritical,
+        'ss-milestone-overview-card--fallback-has': useCssHasFallback}"
+     [attr.data-automation]="'milestone-overview-card'">
+    <button class="ss-milestone-overview-card__button"
+        [attr.data-automation]="'milestone-overview-card-button'"
+        (click)="handleContentClicked()">
+        <div class="ss-milestone-overview-card__icon">
+            <ss-milestone-marker [milestoneMarker]="milestoneMarker"></ss-milestone-marker>
+        </div>
+        <div class="ss-milestone-overview-card__content">
+            <span class="ss-milestone-overview-card__content-name"
+                  [attr.data-automation]="'milestone-overview-card-name'">{{ milestone.name }}</span>
+            <span class="ss-milestone-overview-card__content-date"
+                  [attr.data-automation]="'milestone-overview-card-date'">{{ formattedDate }}</span>
+            <span class="ss-milestone-overview-card__content-location"
+                  [attr.data-automation]="'milestone-overview-card-location'">
+                <ng-container *ngIf="milestone.header">{{ 'Generic_TopRow' | translate }}</ng-container>
+                <ng-container *ngIf="milestone.workArea">{{ milestone.workArea.displayName }}</ng-container>
+                <ng-container *ngIf="!milestone.header && !milestone.workArea">{{ 'Generic_WithoutArea' | translate }}</ng-container>
+            </span>
+        </div>
+    </button>
+
+    <div *ngIf="!!actions?.length"
+         class="ss-milestone-overview-card__actions"
+         [attr.data-automation]="'milestone-overview-card-actions'">
+        <ss-dropdown-menu
+            [buttonStyle]="'tertiary-black'"
+            [icon]="'options'"
+            [items]="actions"
+            (itemClicked)="handleDropdownItemClicked($event)">
+        </ss-dropdown-menu>
+    </div>
+</div>
+
+<ng-template #skeleton>
+    <div class="ss-milestone-overview-card"
+         [attr.data-automation]="'milestone-overview-card-skeleton'">
+        <div class="ss-milestone-overview-card__icon--skeleton"></div>
+        <div class="ss-milestone-overview-card__content">
+            <span class="ss-milestone-overview-card__content-name--skeleton"></span>
+            <span class="ss-milestone-overview-card__content-date--skeleton"></span>
+            <span class="ss-milestone-overview-card__content-location--skeleton"></span>
+        </div>
+    </div>
+</ng-template>

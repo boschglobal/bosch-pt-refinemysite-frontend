@@ -1,0 +1,143 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-user-capture">
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <div class="ss-user-capture__banner">
+            <div class="row">
+                <div class="col-12">
+                    <span class="ss-user-capture__banner-mandatory">* {{'Generic_SaveCondition' | translate}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 ss-user-capture__banner-first">
+                    <ss-input-picture
+                        [control]="form.get('picture')"
+                        [accept]="picturePattern"
+                        [automationAttr]="'picture'"
+                        [defaultPicture]="profileDefaultPicture"
+                        (onChange)="onChangePicture($event)"
+                        formControlName="picture">
+                    </ss-input-picture>
+                    <div class="ss-user-capture__banner-first-picture-info">
+                        {{'Generic_AttachmentUploadCondition' | translate: {maxFileSizeInMb: validations?.picture.maxSizeInMb} }}
+                    </div>
+                    <div class="ss-user-capture__banner-first-name">
+                        <ss-input-text
+                            [automationAttr]="'firstName'"
+                            [name]="'firstName'"
+                            [label]="'User_FirstName_Label' | translate"
+                            [isRequired]="true"
+                            [maxCharacter]="validations.name.maxLength"
+                            [showCounter]="false"
+                            [control]="form.get('firstName')"
+                            formControlName="firstName">
+                        </ss-input-text>
+                        <ss-input-text
+                            [automationAttr]="'lastName'"
+                            [name]="'lastName'"
+                            [label]="'User_LastName_Label' | translate"
+                            [isRequired]="true"
+                            [maxCharacter]="validations.name.maxLength"
+                            [showCounter]="false"
+                            [control]="form.get('lastName')"
+                            formControlName="lastName">
+                        </ss-input-text>
+                    </div>
+                </div>
+                <div class="col-lg-6 ss-user-capture__banner-second">
+                    <ss-input-text
+                        [automationAttr]="'position'"
+                        [name]="'position'"
+                        [label]="'User_Position_Label' | translate"
+                        [isRequired]="false"
+                        [maxCharacter]="validations.position.maxLength"
+                        [showCounter]="false"
+                        [control]="form.get('position')"
+                        formControlName="position">
+                    </ss-input-text>
+                    <ss-input-select-dropdown
+                        [attr.data-automation]="'crafts'"
+                        [name]="'crafts'"
+                        [label]="'User_Crafts_Label' | translate"
+                        [multiple]="true"
+                        [control]="form.get('crafts')"
+                        [options]="crafts"
+                        formControlName="crafts">
+                    </ss-input-select-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="ss-user-capture__panel">
+            <div class="ss-panel ss-user-capture__panel-language">
+                <div class="ss-panel__title">
+                    <h1>{{'Generic_LanguageAndCountry' | translate}}</h1>
+                </div>
+                <div class="ss-panel__content">
+                    <div class="ss-panel__content-row">
+                        <ss-input-select-dropdown
+                            #languageInput
+                            [automationAttr]="'language'"
+                            [name]="'language'"
+                            [isRequired]="true"
+                            [label]="'Generic_Language' | translate"
+                            [control]="form.get('language')"
+                            [options]="languages"
+                            [translateLabel]="true"
+                            formControlName="language">
+                        </ss-input-select-dropdown>
+                    </div>
+                    <div class="ss-panel__content-row">
+                        <ss-input-autocomplete
+                            #countryInput
+                            [automationAttr]="'country'"
+                            [name]="'country'"
+                            [label]="'Generic_Country' | translate"
+                            [isRequired]="true"
+                            [control]="form.get('country')"
+                            [list]="countryLabels"
+                            [alwaysShowOptions]="true"
+                            [formControl]="form.get('country')"
+                            [autofocus]="true">
+                        </ss-input-autocomplete>
+                    </div>
+                </div>
+            </div>
+            <div class="ss-panel ss-user-capture__panel-contacts">
+                <div class="ss-panel__title">
+                    <h1>{{'Generic_Contacts' | translate}}</h1>
+                </div>
+                <div class="ss-panel__content">
+                    <div class="ss-panel__content-row">
+                        <ss-form-group-phone
+                            [defaultPhones]="userCaptureModel.phoneNumbers"
+                            (onChange)="onChangePhones($event)">
+                        </ss-form-group-phone>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="onCancelForm()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="submit"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'submit'"
+                        [disabled]="!isFormValid()">
+                    {{'Generic_Save' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,14 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-input-checkbox-nested [options]="options" [form]="form" [optionTemplate]="optionTemplate">
+</ss-input-checkbox-nested>
+
+<ng-template #optionTemplate>
+    <div [attr.data-automation]="'custom-option-template'"></div>
+</ng-template>

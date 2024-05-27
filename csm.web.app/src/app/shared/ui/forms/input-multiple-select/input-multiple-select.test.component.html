@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-multiple-select
+        [name]="defaultInputState.name"
+        [label]="defaultInputState.label"
+        [options]="defaultInputState.options"
+        [hasSelectAllOption]="defaultInputState.hasSelectAllOption"
+        [control]="formGroup.get(defaultInputState.controlName)"
+        [formControlName]="defaultInputState.controlName"
+        [isRequired]="defaultInputState.isRequired"
+        [isDisabled]="defaultInputState.isDisabled"
+        [automationAttr]="defaultInputState.automationAttr">
+    </ss-input-multiple-select>
+</form>

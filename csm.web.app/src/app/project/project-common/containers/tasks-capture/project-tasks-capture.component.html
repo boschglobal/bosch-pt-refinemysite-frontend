@@ -1,0 +1,178 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-capture">
+    <form [formGroup]="form">
+        <div class="ss-project-tasks-capture__line">
+            <div class="row ss-project-tasks-capture__line-holder">
+                <div class="col-lg-3">
+                    <ss-input-text
+                        #nameInput
+                        [automationAttr]="'name'"
+                        [name]="'name'"
+                        [label]="'Task_Title_Label' | translate"
+                        [isRequired]="true"
+                        [maxCharacter]="validations.name.maxLength"
+                        [control]="form.get('name')"
+                        formControlName="name">
+                    </ss-input-text>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <ss-input-select-dropdown
+                        [automationAttr]="'craft'"
+                        [control]="form.get('craft')"
+                        [emptyOptionMessageKey]="getMode() === 'create' ? 'Generic_NoSelection' : null"
+                        [isRequired]="true"
+                        [label]="'Generic_Craft' | translate"
+                        [name]="'craft'"
+                        [optionTemplate]="craftOptionTemplate"
+                        [options]="craftList"
+                        formControlName="craft">
+                        <ng-template #craftOptionTemplate let-data>
+                            <div class="craft" [ngStyle]="{'background-color': data.value.color}"></div>
+                        </ng-template>
+                    </ss-input-select-dropdown>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                    <ss-input-datepicker
+                        #dateRangeInput
+                        [selectRange]="true"
+                        [automationAttr]="'range'"
+                        [name]="'range'"
+                        [rangeLabel]="{start: 'Generic_StartTaskLabel' | translate, end: 'Task_End_Label' | translate}"
+                        [displayErrors]="true"
+                        [control]="form.get('range')"
+                        formControlName="range">
+                    </ss-input-datepicker>
+                </div>
+            </div>
+        </div>
+        <div class="ss-project-tasks-capture__line">
+            <div class="row ss-project-tasks-capture__line-holder">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <ss-input-select-dropdown
+                        #workareaInput
+                        [automationAttr]="'workarea'"
+                        [name]="'workarea'"
+                        [label]="'Generic_WorkingArea' | translate"
+                        [control]="form.get('workarea')"
+                        [options]="workAreaList"
+                        [emptyOptionMessageKey]="'Generic_NoSelection'"
+                        formControlName="workarea">
+                    </ss-input-select-dropdown>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <ss-input-text
+                        [automationAttr]="'location'"
+                        [name]="'location'"
+                        [label]="'Generic_Location' | translate"
+                        [maxCharacter]="validations.location.maxLength"
+                        [control]="form.get('location')"
+                        formControlName="location">
+                    </ss-input-text>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <ss-input-select-dropdown
+                        #companyInput
+                        [automationAttr]="'company'"
+                        [name]="'company'"
+                        [label]="'Generic_Company' | translate"
+                        [control]="form.get('company')"
+                        [options]="companyList"
+                        [isRequired]="isAssignmentRequired()"
+                        [emptyOptionMessageKey]="isAssignmentRequired() ? null : 'Generic_NoCompany' "
+                        formControlName="company">
+                    </ss-input-select-dropdown>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <ss-input-select-dropdown
+                        [automationAttr]="'person'"
+                        [control]="form.get('person')"
+                        [emptyOptionMessageKey]="isAssignmentRequired() ? null : 'Generic_NoSelection'"
+                        [isRequired]="isAssignmentRequired()"
+                        [label]="'Task_Person_Label' | translate"
+                        [name]="'person'"
+                        [optionTemplate]="participantOptionTemplate"
+                        [options]="personList"
+                        formControlName="person">
+                        <ng-template #participantOptionTemplate let-option>
+                            <div class="participant" [ssBackgroundImage]="option.value.picture"></div>
+                        </ng-template>
+                    </ss-input-select-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="ss-project-tasks-capture__line">
+            <div class="row ss-project-tasks-capture__line-holder">
+                <div class="col-lg-6">
+                    <ss-input-textarea
+                        #description
+                        [automationAttr]="'task-description'"
+                        [name]="'description'"
+                        [label]="'Generic_Description' | translate"
+                        [maxCharacter]="validations.description.maxLength"
+                        [control]="form.get('description')"
+                        formControlName="description">
+                    </ss-input-textarea>
+                </div>
+                <div class="col-lg-6">
+                    <ss-input-files
+                        [maxSize]="imageMaxSize"
+                        [accept]="acceptedPattern"
+                        [automationAttr]="'files'"
+                        [name]="'files'"
+                        [label]="'Task_DragAndDropFiles_Label' | translate"
+                        [secondaryLabel]="'Task_DragAndDropFiles_SecondaryLabel' | translate:{imageMaxSize: imageMaxSizeInMb}"
+                        [control]="form.get('files')"
+                        formControlName="files">
+                    </ss-input-files>
+                </div>
+                <span class="ss-project-tasks-capture__required-info col-12">
+                    * {{'Generic_SaveCondition' | translate}}
+                </span>
+            </div>
+        </div>
+        <div class="ss-project-tasks-capture__buttons">
+            <div class="ss-button-group">
+                <button *ngIf="getMode() !== 'create' && !isTaskInDraftStatus()"
+                        type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button *ngIf="getMode() === 'create' || isTaskInDraftStatus()"
+                        type="button"
+                        class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                        [attr.data-automation]="'draft'"
+                        [disabled]="!isFormValid()"
+                        (click)="onSaveAsDraft()">
+                    {{'Task_Save_DraftMessage' | translate}}
+                </button>
+                <button *ngIf="getMode() === 'create' || isTaskInDraftStatus()"
+                        type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'assign'"
+                        [disabled]="!isFormAssignable()"
+                        (click)="onAssignAndSend()">
+                    {{'Task_AssignAndSend_Label' | translate}}
+                </button>
+                <button *ngIf="getMode() === 'update' && !isTaskInDraftStatus()"
+                        type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'update'"
+                        [disabled]="!isFormValid()"
+                        (click)="onClickUpdate()">
+                    {{'Generic_Update' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

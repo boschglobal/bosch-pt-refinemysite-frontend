@@ -1,0 +1,32 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<article class="ss-text-image-article">
+    <ss-text-link *ngIf="textContent"
+                  class="ss-text-image-article__text"
+                  [text]="textContent"
+                  [maxLength]="maxLength"
+                  (truncatedTextLength)="handleTextLengthChanged($event)"
+                  [attr.data-automation]="'ss-text-image-article-text'">
+    </ss-text-link>
+    <ss-show-more
+        *ngIf="canShowMore"
+        (showMoreEnabled)="onShowMoreChange()"
+        [attr.data-automation]="'ss-text-image-article-show-more'">
+    </ss-show-more>
+    <div *ngIf="hasImages"
+         class="ss-text-image-article__images"
+         [attr.data-automation]="'ss-text-image-article-images'">
+        <ss-thumbnail-gallery
+            [links]="pictureLinks"
+            [itemsPerRow]="picturePerRow"
+            [limit]="picturePerRow"
+            (clickThumbnail)="clickThumbnail.emit($event)">
+        </ss-thumbnail-gallery>
+    </div>
+</article>

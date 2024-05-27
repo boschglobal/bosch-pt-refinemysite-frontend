@@ -1,0 +1,392 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+$icon-margin: 8px;
+$button-transition: 200ms;
+$base-class: '.ss-button';
+
+button#{$base-class},
+a:link#{$base-class},
+a:visited#{$base-class} {
+    font-family: RmS-Regular, sans-serif !important;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition-property: background, border, color;
+    transition-timing-function: ease-in-out;
+    transition-duration: $button-transition;
+
+    &:disabled,
+    &--disabled {
+        cursor: not-allowed;
+    }
+
+    .ss-icon {
+        transition-property: fill;
+        transition-timing-function: ease-in-out;
+        transition-duration: $button-transition;
+    }
+
+    &--primary {
+        color: $white;
+        background: $dark_blue;
+
+        &:hover,
+        &:focus {
+            background: $light_blue;
+        }
+
+        &:disabled {
+            background: $light_grey;
+        }
+
+        .ss-icon {
+            margin-right: $base-dimension;
+        }
+    }
+
+    &--primary-red {
+        color: $white;
+        background: $red;
+
+        &:hover,
+        &:focus {
+            background: $red_50;
+        }
+
+        &:disabled {
+            background: $light_grey;
+        }
+
+        .ss-icon {
+            margin-right: $base-dimension;
+        }
+    }
+
+    &--secondary {
+        &-filled {
+            color: $white;
+            background: $light_blue;
+
+            &:hover,
+            &:focus {
+                background: $light_blue_50;
+            }
+
+            &:disabled {
+                background: $light_grey;
+            }
+
+            .ss-icon {
+                fill: $white;
+            }
+        }
+
+        &-ghost-blue {
+            border: 1px solid $dark_blue;
+            background: transparent;
+            color: $dark_blue;
+
+            .ss-icon {
+                fill: $dark_blue;
+            }
+
+            &:hover,
+            &:focus {
+                border-color: #33a4d8;
+                color: #33a4d8;
+
+                .ss-icon {
+                    fill: #33a4d8;
+                }
+            }
+
+            &:disabled {
+                border-color: $light_grey;
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-ghost-black {
+            border: 1px solid $light_grey_75;
+            background: transparent;
+            color: $black;
+
+            .ss-icon {
+                fill: $black;
+            }
+
+            &:hover,
+            &:focus {
+                border-color: $black;
+            }
+
+            &:disabled {
+                border-color: $light_grey;
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-ghost-grey {
+            border: 1px solid $light_grey_75;
+            background: transparent;
+            color: $dark_grey;
+
+            .ss-icon {
+                fill: $dark_grey;
+            }
+
+            &:hover,
+            &:focus {
+                border-color: $light_grey_125;
+                color: $black;
+
+                .ss-icon {
+                    fill: $black;
+                }
+            }
+
+            &:disabled {
+                border-color: $light_grey;
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-clear-blue {
+            background: transparent;
+            color: $dark_blue;
+
+            .ss-icon {
+                fill: $dark_blue;
+            }
+
+            &:hover,
+            &:focus {
+                color: #33a4d8;
+                fill: #33a4d8;
+
+                .ss-icon {
+                    fill: #33a4d8;
+                }
+            }
+
+            &:disabled {
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-clear-grey {
+            background: transparent;
+            color: $dark_grey;
+
+            .ss-icon {
+                fill: $dark_grey-75;
+            }
+
+            &:hover,
+            &:focus {
+                color: $black;
+
+                .ss-icon {
+                    fill: $black;
+                }
+            }
+
+            &:disabled {
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-clear-red {
+            background: transparent;
+            color: $red;
+
+            .ss-icon {
+                fill: $red;
+            }
+
+            &:hover,
+            &:focus {
+                color: $red_50;
+
+                .ss-icon {
+                    fill: $red_50;
+                }
+            }
+
+            &:disabled {
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-clear-green {
+            background: transparent;
+            color: $light_green;
+
+            .ss-icon {
+                fill: $light_green;
+            }
+
+            &:hover,
+            &:focus {
+                color: $light_green_50;
+
+                .ss-icon {
+                    fill: $light_green_50;
+                }
+            }
+
+            &:disabled {
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+
+        &-clear-black {
+            background: transparent;
+            color: $black;
+
+            .ss-icon {
+                fill: $black;
+            }
+
+            &:hover,
+            &:focus {
+                color: $dark_blue;
+
+                .ss-icon {
+                    fill: $dark_blue;
+                }
+            }
+
+            &:disabled {
+                color: $light_grey;
+
+                .ss-icon {
+                    fill: $light_grey;
+                }
+            }
+        }
+    }
+
+    ss-icon + span,
+    span + ss-icon {
+        margin-left: $base-dimension;
+    }
+
+    &--large {
+        font-size: $font-size-md !important;
+        height: 60px;
+        padding: 0 $base-dimension--x3;
+    }
+
+    &--normal {
+        font-size: $font-size-base !important;
+        height: $base-dimension--x6;
+        padding: 0 $base-dimension--x2;
+        min-width: 150px;
+    }
+
+    &--small {
+        font-size: $font-size-sm !important;
+        height: $base-dimension--x5;
+        padding: 0 12px;
+    }
+
+    &--tiny {
+        font-size: $font-size-sm !important;
+        height: $base-dimension--x4;
+        padding: 0 12px;
+    }
+
+    &--responsive {
+        width: 100%;
+
+        @include media-breakpoint-up(sm) {
+            width: auto;
+        }
+    }
+
+    &--fit {
+        min-width: $base-dimension--x6;
+        padding: 0 $base-dimension--x2;
+    }
+
+    &--no-padding {
+        min-width: $base-dimension--x6;
+        padding: 0;
+    }
+
+    &--small#{$base-class}--no-padding {
+        min-width: $base-dimension--x5;
+    }
+
+    &--tiny#{$base-class}--no-padding {
+        min-width: $base-dimension--x4;
+    }
+}
+
+.ss-button-group {
+    display: flex;
+    flex-flow: column-reverse;
+    font-size: 0;
+    margin: $base-dimension -#{$base-dimension} -#{$base-dimension} -#{$base-dimension};
+    box-sizing: content-box !important;
+
+    button {
+        box-sizing: border-box;
+        margin: $base-dimension !important;
+    }
+
+    @include media-breakpoint-up(sm) {
+        flex-direction: row;
+        flex-wrap: wrap-reverse;
+
+        button {
+            width: auto;
+        }
+    }
+
+    &--space-between {
+        justify-content: space-between;
+    }
+}

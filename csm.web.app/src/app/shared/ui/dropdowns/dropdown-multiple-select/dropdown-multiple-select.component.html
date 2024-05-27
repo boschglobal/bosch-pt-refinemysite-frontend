@@ -1,0 +1,50 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<button *ngIf="internalOptions"
+    class="ss-dropdown-multiple-select"
+    ss-button
+    [buttonSize]="size"
+    [buttonStyle]="buttonStyle"
+    [buttonNoPadding]="false"
+    ssFlyout
+    [flyoutId]="flyoutId"
+    [flyoutAlignment]="itemsAlignment"
+    [flyoutTemplate]="flyoutTemplate"
+    [flyoutShowOverlay]="false"
+    [flyoutUseTriggerWidth]="true"
+    [attr.data-automation]="'ss-dropdown-multiple-select-button'">
+    <div class="ss-dropdown-multiple-select__label"
+        [attr.data-automation]="'ss-dropdown-multiple-select-label'">
+        <ss-icon *ngIf="icon"
+            [dimension]="'small'"
+            [name]="icon"
+            [attr.data-automation]="'ss-dropdown-multiple-select-label-icon'">
+        </ss-icon>
+        <span class="ss-dropdown-multiple-select__label-text"
+            [attr.data-automation]="'ss-dropdown-multiple-select-label-text'">{{label | translate}}</span>
+        <span *ngIf="showBadge && selectedNumber > 0"
+            [ngClass]="selectedNumber >= 10 ?
+                'ss-dropdown-multiple-select__label-badge-multiple-number' : 'ss-dropdown-multiple-select__label-badge-single-number'"
+            [attr.data-automation]="'ss-dropdown-multiple-select-label-badge-number'">{{selectedNumber}}</span>
+    </div>
+    <ss-icon [dimension]="'small'"
+        [name]="'arrow'"
+        [rotate]="iconRotation">
+    </ss-icon>
+</button>
+
+<ng-template #flyoutTemplate>
+    <div class="ss-dropdown-multiple-select__options">
+        <ss-input-checkbox-nested [options]="internalOptions"
+            [form]="flyoutOptionsForm"
+            (optionValueChanged)="handleOptionChange($event)"
+            [attr.data-automation]="'ss-dropdown-multiple-select-options'">
+        </ss-input-checkbox-nested>
+    </div>
+</ng-template>

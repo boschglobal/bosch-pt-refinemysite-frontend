@@ -1,0 +1,70 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-task-topic-capture"
+     [ngClass]="{'ss-project-task-topic-capture--expanded': !isCollapsed}">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmitForm()">
+        <ss-input-textarea-user
+            [user]="user"
+            [isCollapsed]="isCollapsed"
+            [isScrollable]="true"
+            [automationAttr]="'description'"
+            [name]="'description'"
+            [label]="'Topic_Create_Label' | translate"
+            [expandedLabel]="'Generic_DescribeYourTopic' | translate"
+            [maxCharacter]="maxCharacters"
+            [showCounter]="!isCollapsed"
+            [textareaMinHeight]="120"
+            [textareaMaxHeight]="120"
+            [control]="form.get('description')"
+            (onFocus)="handleFocus()"
+            formControlName="description">
+        </ss-input-textarea-user>
+        <ng-container
+            *ngIf="!isCollapsed">
+            <ss-input-files
+                class="ss-project-task-topic-capture__file-input"
+                [maxSize]="imageMaxSize"
+                [accept]="acceptedPattern"
+                [automationAttr]="'files'"
+                [name]="'files'"
+                [label]="'Task_DragAndDropFiles_Label' | translate"
+                [secondaryLabel]="'Task_DragAndDropFiles_SecondaryLabel' | translate:{imageMaxSize: imageMaxSizeInMb}"
+                [control]="form.get('files')"
+                formControlName="files">
+            </ss-input-files>
+            <ss-switch-button
+                [icon]="'critical'"
+                [automationAttr]="'criticality'"
+                formControlName="criticality">
+                {{'Generic_CriticalTopic' | translate}}
+            </ss-switch-button>
+            <div class="ss-project-task-topic-capture__buttons">
+                <button
+                    type="button"
+                    ss-button
+                    [buttonStyle]="'secondary-grey'"
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'cancel'"
+                    (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button
+                    type="submit"
+                    ss-button
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'create'"
+                    [disabled]="form.invalid">
+                    {{'Generic_Create' | translate}}
+                </button>
+            </div>
+        </ng-container>
+    </form>
+</div>

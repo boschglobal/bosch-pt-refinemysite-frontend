@@ -1,0 +1,54 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-constraints-capture">
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <div>
+            <h6 class="ss-task-constraints-capture__title">{{'Constraint_Select_DialogSubTitle' | translate}}</h6>
+            <div *ngIf="!!mismatchedConstraints.length"
+                 class="ss-task-constraints-capture__warning"
+                 [attr.data-automation]="'constraint-disabled-warning'">
+                <ss-callout
+                    [type]="'neutral'"
+                    [message]="'Constraint_Mismatch_AlertMessage' | translate: {items: mismatchedConstraints}">
+                </ss-callout>
+            </div>
+            <ul class="ss-task-constraints-capture__list"
+                [attr.data-automation]="'ss-task-constraints-capture__list'"
+                formGroupName="constraints">
+                <li *ngFor="let constraint of projectActiveConstraints"
+                    class="ss-task-constraints-capture__list-item">
+                    <ss-checkbox-button
+                        [automationAttr]="constraint.key"
+                        [name]="constraint.name"
+                        [checkedIcon]="'close'"
+                        [control]="form.get('constraints').get(constraint.key)"
+                        [formControlName]="constraint.key">
+                        {{constraint.name}}
+                    </ss-checkbox-button>
+                </li>
+            </ul>
+        </div>
+        <div class="ss-task-constraints-capture__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="submit"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'create'">
+                    {{'Generic_Ok' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

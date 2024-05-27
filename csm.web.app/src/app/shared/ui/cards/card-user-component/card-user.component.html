@@ -1,0 +1,76 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-card-user">
+    <div *ngIf="isUserActive" class="ss-card-user__personal ss-card-user--active">
+        <div class="ss-card-user__picture"
+             [ssBackgroundImage]="user.picture"
+             [ngClass]="getCssClassModifier('ss-card-user__picture')"
+             [ngStyle]="imgStyle"
+             [attr.data-automation]="'card-picture'"></div>
+        <div class="ss-card-user__information"
+             [ngClass]="getCssClassModifier('ss-card-user__information')"
+             [attr.data-automation]="'card-information'">
+            <span class="ss-card-user__information-title"
+                  [ngStyle]="titleStyle"
+                  [attr.data-automation]="'card-title'">
+                {{getTitle()}}
+            </span>
+            <span *ngIf="getDescription()"
+                  class="ss-card-user__information-description"
+                  [ngStyle]="descriptionStyle"
+                  [attr.data-automation]="'card-description'">
+                {{getDescription()}}
+            </span>
+        </div>
+    </div>
+    <div *ngIf="!isUserActive" class="ss-card-user__personal">
+        <ss-icon class="ss-card-user__picture ss-card-user__picture--default"
+                 [name]="'user-not-active'"
+                 [attr.data-automation]="'card-picture-not-active'"
+                 [dimension]="30">
+        </ss-icon>
+        <div class="ss-card-user__information ss-card-user__information--special-status"
+             [ngClass]="getCssClassModifier('ss-card-user__information')"
+             [attr.data-automation]="'card-information'">
+            <span class="ss-card-user__information-status"
+                  [ngStyle]="titleStyle"
+                  [attr.data-automation]="'alternative-card-title'">
+                {{getStatusKey | translate}}
+            </span>
+            <button *ngIf="isUserInValidation || isUserInvited"
+                    class="ss-button ss-button--tiny ss-button--no-padding"
+                    ssFlyout
+                    (click)="openFlyout($event, flyoutTooltipId)"
+                    [flyoutId]="flyoutTooltipId"
+                    [flyoutAlignment]="'start'"
+                    [flyoutTemplate]="ssUserStatusTooltip"
+                    [attr.data-automation]="'card-tooltip-info-button'">
+                <ss-icon [name]="'info-marker'"
+                         [color]="iconInfoMarker"
+                         [dimension]="18">
+                </ss-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="showContacts()" class="ss-card-user__contact" [attr.data-automation]="'card-contact'">
+        <span *ngIf="phone" class="ss-card-user__contact-phone" [attr.data-automation]="'card-contact-phone'">
+            <ss-phone-link [phone]="phone" [showIcon]="true"></ss-phone-link>
+        </span>
+        <span *ngIf="email" class="ss-card-user__contact-email" [attr.data-automation]="'card-contact-email'">
+            <ss-mail-link [email]="email" [showIcon]="true"></ss-mail-link>
+        </span>
+    </div>
+</div>
+
+<ng-template #ssUserStatusTooltip>
+    <ss-flyout-tooltip>
+            <span *ngIf="isUserInValidation">{{ validationStatusTooltipMessage | translate }}</span>
+            <span *ngIf="isUserInvited">{{ invitedStatusTooltipMessage | translate }}</span>
+    </ss-flyout-tooltip>
+</ng-template>

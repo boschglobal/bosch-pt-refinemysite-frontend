@@ -1,0 +1,95 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+
+<ss-drawer class="ss-project-reschedule-drawer">
+    <ng-template #header>
+        <div class="ss-project-reschedule-drawer__header">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleClose()"
+                [attr.data-automation]="'project-reschedule-drawer-close-button'">
+                <ss-icon [name]="'close'"></ss-icon>
+            </button>
+            <span class="ss-project-reschedule-drawer__header-title">{{'Generic_Reschedule' | translate}}</span>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-project-reschedule-drawer__body"
+             [ngSwitch]="activeStep">
+            <ng-container *ngSwitchCase="'filter'" [ngTemplateOutlet]="filterStep"></ng-container>
+            <ng-container *ngSwitchCase="'planning'" [ngTemplateOutlet]="planningStep"></ng-container>
+            <ng-container *ngSwitchCase="'review'" [ngTemplateOutlet]="reviewStep"></ng-container>
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <div class="ss-project-reschedule-drawer__footer">
+            <button
+                *ngIf="activeStep != 'filter'"
+                ss-button
+                [buttonStyle]="'secondary-black'"
+                [buttonSize]="'small'"
+                (click)="handleBack()"
+                [attr.data-automation]="'project-reschedule-drawer-back-button'">
+                {{'Generic_Back' | translate}}
+            </button>
+            <button
+                ss-button
+                [buttonStyle]="'primary'"
+                [buttonSize]="'small'"
+                [disabled]="!canClickNext[activeStep]"
+                (click)="handleNext()"
+                [attr.data-automation]="'project-reschedule-drawer-next-button'">
+                {{ (activeStep === 'review' ? 'Generic_Reschedule' : 'Generic_Next') | translate}}
+            </button>
+        </div>
+    </ng-template>
+</ss-drawer>
+
+<ng-template #filterStep>
+    <ss-project-filter-capture
+        #projectFilterCapture
+        [context]="context"
+        [taskFilters]="projectTaskFilters"
+        [milestoneFilters]="milestoneFilters"
+        [wholeProjectDuration]="wholeProjectDuration"
+        [emitValueChanged]="true"
+        (formValidity)="handleFilterFormValidityChange($event)"
+        (valueChanged)="filterFormValuesChangedSubject.next()"
+        [attr.data-automation]="'project-reschedule-drawer-filter-step'">
+    </ss-project-filter-capture>
+</ng-template>
+
+<ng-template #planningStep>
+    <div class="ss-project-reschedule-drawer__planning"
+         [attr.data-automation]="'project-reschedule-drawer-planning-step'">
+        <ss-project-filter-chips
+            [milestoneFiltersCriteria]="milestoneFilters.criteria"
+            [taskFiltersCriteria]="projectTaskFilters.criteria"
+            [listLabel]="'Reschedule_Chips_Title'"
+            [showRemoveAll]="false"
+            (milestoneFiltersCriteriaChanged)="handleMilestoneChipsChange($event)"
+            (taskFiltersCriteriaChanged)="handleTaskChipsChange($event)">
+        </ss-project-filter-chips>
+        <ss-project-reschedule-shift-capture
+            class="ss-project-reschedule-drawer__planning-shift"
+            [defaultValues]="shiftFormData"
+            (valueChanged)="handleShiftFormValueChange($event)"
+            (formValidityChanged)="handleShiftFormValidityChange($event)">
+        </ss-project-reschedule-shift-capture>
+    </div>
+</ng-template>
+
+<ng-template #reviewStep>
+    <ss-project-reschedule-review
+        class="ss-project-reschedule-drawer__review"
+        [attr.data-automation]="'project-reschedule-drawer-review-step'">
+    </ss-project-reschedule-review>
+</ng-template>

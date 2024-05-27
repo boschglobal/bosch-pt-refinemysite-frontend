@@ -1,0 +1,93 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$collapsed-button-min-width: $base-dimension * 23;
+
+.ss-collapsible-button-list {
+    display: flex;
+
+    &__dropdown-button {
+        &:focus {
+            background: rgba(0, 0, 0, 0.05);
+
+            ::ng-deep .ss-icon {
+                fill: $black;
+            }
+        }
+
+        &--inverted {
+            ::ng-deep .ss-icon {
+                fill: $white;
+            }
+
+            &:hover {
+                opacity: 0.75;
+            }
+
+            &:focus {
+                ::ng-deep .ss-icon {
+                    fill: $white;
+                }
+            }
+        }
+    }
+
+    &__inline-buttons ::ng-deep > div > * {
+
+        @include media-breakpoint-down(xs) {
+            &:nth-child(n +2) {
+                display: none;
+            }
+        }
+
+        @include media-breakpoint-down(sm) {
+            &:nth-child(n +3) {
+                display: none;
+            }
+        }
+        @include media-breakpoint-down(md) {
+            &:nth-child(n +5) {
+                display: none;
+            }
+        }
+
+    }
+}
+
+::ng-deep .ss-collapsible-button-list__collapsed-buttons div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: $collapsed-button-min-width;
+    background-color: $white;
+
+    > * {
+        width: 100%;
+        justify-content: flex-start;
+
+        @include media-breakpoint-up(xs) {
+            &:nth-child(-n +1) {
+                display: none;
+            }
+        }
+
+        @include media-breakpoint-up(sm) {
+            &:nth-child(-n +2) {
+                display: none;
+            }
+        }
+        @include media-breakpoint-up(md) {
+            &:nth-child(-n +4) {
+                display: none;
+            }
+        }
+    }
+}

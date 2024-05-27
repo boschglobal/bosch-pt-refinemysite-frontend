@@ -1,0 +1,68 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-rfv-list"
+     [ngClass]="{'ss-project-rfv-list--loading': isLoading}"
+     [attr.data-automation]="'rfv-list'">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-project-rfv-info-header
+        [totalItems]="rfvListTotalItems"
+        [activeItems]="activeRfvListTotalItems">
+    </ss-project-rfv-info-header>
+    <ul>
+        <li *ngFor="let rfv of rfvList; trackBy: trackByFn; let i = index;"
+            class="ss-project-rfv-list__item"
+            [ngClass]="getRfvItemStyles(rfv)"
+            [attr.data-automation]="'rfv-list-item'">
+            <div>
+                <span [attr.data-automation]="'rfv-list-item-number'">{{ i + 1 }}.</span>
+                <span *ngIf="!isEditingRfv(rfv)"
+                      class="ss-project-rfv-list__item-name"
+                      [attr.data-automation]="'rfv-list-item-name'">{{rfv.name}}</span>
+            </div>
+            <ss-project-rfv-capture [hidden]="!isEditingRfv(rfv)"
+                                    [defaultValue]="rfv.name"
+                                    [mode]="updateCaptureMode"
+                                    (submitForm)="updateRfvName($event, rfv)"
+                                    (cancelForm)="cancelRfvEdit()">
+            </ss-project-rfv-capture>
+            <div *ngIf="!isEditingRfv(rfv)"
+                 class="ss-project-rfv-list__item-actions"
+                 [attr.data-automation]="'rfv-list-item-actions'">
+                <ng-container *ngIf="isRfvLoading(rfv)">
+                    <ss-tiny-loader></ss-tiny-loader>
+                </ng-container>
+                <ng-container *ngIf="!isRfvLoading(rfv)">
+                    <ul>
+                        <li *ngIf="rfv.permissions.canUpdate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="updateRfv(i, rfv)"
+                                    [attr.data-automation]="'rfv-list-item-update-button'">
+                                <ss-icon [name]="'edit'"></ss-icon>
+                            </button>
+                        </li>
+                        <li *ngIf="rfv.permissions.canActivate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="activateRfv(rfv)"
+                                    [attr.data-automation]="'rfv-list-item-activate-button'">
+                                <ss-icon [name]="'eye-off'"></ss-icon>
+                            </button>
+                        </li>
+                        <li *ngIf="rfv.permissions.canDeactivate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="deactiveRfv(rfv)"
+                                    [attr.data-automation]="'rfv-list-item-deactivate-button'">
+                                <ss-icon [name]="'eye-on'"></ss-icon>
+                            </button>
+                        </li>
+                    </ul>
+                </ng-container>
+            </div>
+        </li>
+    </ul>
+</div>

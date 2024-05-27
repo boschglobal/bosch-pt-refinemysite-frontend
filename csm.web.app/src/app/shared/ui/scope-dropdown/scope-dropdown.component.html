@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<button class="ss-scope-dropdown ss-button ss-button--small ss-button--no-padding"
+        [ngClass]="buttonClasses"
+        ssFlyout
+        [flyoutId]="flyoutId"
+        [flyoutAlignment]="'start'"
+        [flyoutTemplate]="ssScopeDropdownCalendar"
+        [attr.data-automation]="'scope-dropdown'">
+    <span [attr.data-automation]="'scope-dropdown-label'">{{displayValue}}</span>
+    <ss-icon [name]="'arrow'"
+             [dimension]="'small'"
+             [rotate]="iconRotation">
+    </ss-icon>
+</button>
+<ng-template #ssScopeDropdownCalendar>
+    <ss-datepicker-calendar [selection]="scopeStart"
+                            (pick)="handleScopeStartChange($event)">
+    </ss-datepicker-calendar>
+</ng-template>

@@ -1,0 +1,72 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-collapsible-list">
+    <li *ngIf="showSelectAllCheckbox"
+        class="ss-collapsible-list__select-all-wrapper"
+        [attr.data-automation]="'collapsible-list-select-all-wrapper'">
+        <div class="ss-collapsible-list__checkbox"
+             [ngClass]="{'ss-collapsible-list__checkbox--disabled': isSelectAllCheckboxDisabled}"
+             (click)="handleSelectAll(!isSelectAllToggled)"
+             [attr.data-automation]="'collapsible-list-select-all-checkbox'">
+            <button class="ss-collapsible-list__checkbox-wrapper"
+                    [disabled]="isSelectAllCheckboxDisabled">
+                <ss-icon *ngIf="isSelectAllToggled"
+                         [name]="'check'"
+                         [dimension]="'small'"
+                         [color]="iconCheckColor"
+                         [attr.data-automation]="'collapsible-list-check-icon'">
+                </ss-icon>
+                <ss-icon *ngIf="isIndeterminate"
+                         [name]="'minimize'"
+                         [dimension]="'small'"
+                         [attr.data-automation]="'collapsible-list-indeterminate-icon'">
+                </ss-icon>
+            </button>
+            <span>{{ 'Generic_SelectAll' | translate }}</span>
+        </div>
+    </li>
+    <li *ngFor="let record of records; trackBy: trackByFn; let rowIndex = index;"
+        class="ss-collapsible-list__row"
+        [ngClass]="getRowClasses(record, rowIndex)"
+        (click)="handleClickRow(record)"
+        [attr.data-automation]="getAttrDataAutomation('row', rowIndex)">
+        <div class="ss-collapsible-list__primary-wrapper">
+            <div *ngIf="isSelecting"
+                 class="ss-collapsible-list__checkbox">
+                <button class="ss-collapsible-list__checkbox-wrapper"
+                        [disabled]="!isRowSelectable(record)">
+                    <ss-icon *ngIf="isRowSelected(record)"
+                             [name]="'check'"
+                             [dimension]="'small'"
+                             [color]="iconCheckColor">
+                    </ss-icon>
+                </button>
+            </div>
+            <div class="ss-collapsible-list__primary-template">
+                <ng-container *ngTemplateOutlet="primaryTemplate; context: {$implicit: record};"></ng-container>
+            </div>
+            <div *ngIf="!record.notCollapsible"
+                class="ss-collapsible-list__arrow-wrapper"
+                (click)="toggleVisibility($event, rowIndex)"
+                [attr.data-automation]="getAttrDataAutomation('arrow', rowIndex)">
+                <ss-icon [name]="'arrow'"
+                         [rotate]="isRowCollapsed(rowIndex) ? 90 : 270">
+                </ss-icon>
+            </div>
+            <div class="ss-collapsible-list__actions-wrapper">
+                <ng-container *ngTemplateOutlet="actionsTemplate; context: {$implicit: record};"></ng-container>
+            </div>
+        </div>
+        <div class="ss-collapsible-list__secondary-wrapper">
+            <ng-container *ngIf="isRowCollapsed(rowIndex)">
+                <ng-container *ngTemplateOutlet="secondaryTemplate; context: {$implicit: record};"></ng-container>
+            </ng-container>
+        </div>
+    </li>
+</ul>

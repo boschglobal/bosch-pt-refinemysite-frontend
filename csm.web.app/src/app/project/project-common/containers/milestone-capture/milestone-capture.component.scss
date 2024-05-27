@@ -1,0 +1,74 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-milestone-capture {
+    padding: $base-dimension--x2;
+    display: grid;
+    grid-column-gap: $base-dimension--x2;
+    grid-template:
+        "title" auto
+        "type" auto
+        "date" auto
+        "location" auto
+        "description" auto
+        "required-info" auto
+        "buttons" auto
+        / 1fr;
+
+    @include media-breakpoint-up(sm) {
+        grid-template:
+        "title type" auto
+        "date location" auto
+        "description description" auto
+        "required-info required-info" auto
+        "buttons buttons" auto
+        / 1fr 1fr;
+    }
+
+    &__title {
+        grid-area: title;
+    }
+
+    &__type {
+        grid-area: type;
+    }
+
+    &__date {
+        grid-area: date;
+    }
+
+    &__location {
+        grid-area: location;
+    }
+
+    &__description {
+        grid-area: description;
+    }
+
+    &__required-info {
+        grid-area: required-info;
+        @include caption-2($dark_grey_75);
+        text-align: right;
+    }
+
+    &__buttons {
+        grid-area: buttons;
+    }
+
+    ::ng-deep .ss-input-textarea__input {
+        min-height: 104px;
+    }
+
+    .ss-button-group {
+        justify-content: flex-end;
+    }
+}

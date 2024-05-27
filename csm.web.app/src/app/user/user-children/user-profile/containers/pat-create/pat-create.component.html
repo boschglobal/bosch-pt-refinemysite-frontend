@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-pat-create">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-pat-capture *ngIf="!token"
+                    [mode]="modalType"
+                    (canceled)="handleClose()"
+                    (submitted)="handleSubmit($event)">
+    </ss-pat-capture>
+    <ss-pat-token *ngIf="token"
+                  [defaultValue]="token"
+                  [attr.data-automation]="'token'"
+                  (copiedToClipboard)="handleCopyToken()">
+    </ss-pat-token>
+</div>

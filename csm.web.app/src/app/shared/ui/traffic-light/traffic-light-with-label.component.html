@@ -1,0 +1,12 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-traffic-light-with-label">
+    <ss-traffic-light [value]="value" [settings]="settings"></ss-traffic-light>
+    <span class="ss-traffic-lights-with-label__value" [attr.data-automation]="'ss-traffic-light-with-label-value'">{{ getValue() }}</span>
+</div>

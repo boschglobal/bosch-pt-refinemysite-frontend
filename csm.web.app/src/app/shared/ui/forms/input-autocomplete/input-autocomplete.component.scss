@@ -1,0 +1,29 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "../input.base";
+
+.ss-input-autocomplete {
+
+    &__autocomplete {
+        color: $form-label;
+        pointer-events: none;
+    }
+
+    &__input {
+        position: absolute;
+        top: $input-spacing-top;
+        left: 0;
+        width: 100%;
+        box-shadow: none !important;
+        background: transparent;
+    }
+
+    &__options > ss-menu-list {
+        max-height: $input-flyout-max-height;
+    }
+}

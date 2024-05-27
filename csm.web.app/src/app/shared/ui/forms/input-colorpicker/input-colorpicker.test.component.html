@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-colorpicker
+        [automationAttr]="defaultInputState.colorpicker.automationAttr"
+        [name]="defaultInputState.colorpicker.name"
+        [options]="defaultInputState.colorpicker.options"
+        [isRequired]="defaultInputState.colorpicker.isRequired"
+        [isDisabled]="defaultInputState.colorpicker.isDisabled"
+        [control]="formGroup.get(defaultInputState.colorpicker.controlName)"
+        [formControl]="formGroup.get(defaultInputState.colorpicker.controlName)">
+    </ss-input-colorpicker>
+</form>

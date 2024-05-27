@@ -1,0 +1,27 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+
+.ss-description-label {
+    &__title {
+        @include subtitle-2();
+        margin-bottom: $base-dimension;
+    }
+
+    &__content {
+        @include body-2();
+        display: flex;
+    }
+
+    &__icon {
+        fill: $dark_grey_75;
+        margin-right: $base-dimension--x3;
+    }
+}

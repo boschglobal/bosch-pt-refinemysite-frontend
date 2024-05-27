@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-select-list">
+    <ul>
+        <li *ngFor="let option of options; let i = index; trackBy: trackByFn;">
+            <button class="ss-select-list__option ss-button ss-button--secondary-ghost-grey ss-button--tiny"
+                    (click)="select(option)"
+                    [ngClass]="getButtonClasses(option)"
+                    [attr.data-automation]="'select-list-option-'+ option.id || i">
+                <span class="ss-select-list__option-label">{{ option.displayName | translate }}</span>
+            </button>
+        </li>
+    </ul>
+</div>

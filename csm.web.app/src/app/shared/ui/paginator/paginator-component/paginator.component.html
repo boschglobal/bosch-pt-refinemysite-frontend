@@ -1,0 +1,35 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-paginator"
+     [ngClass]="{'ss-paginator--too-many-pages': paginatorData.entries / paginatorData.items > 2 }">
+    <div class="ss-paginator__items">
+        <ss-paginator-items
+                [items]="pageSizes"
+                [currentItem]="paginatorData.items"
+                [totalItems]="paginatorData.entries"
+                (change)="onPaginatorItemsChange($event)">
+        </ss-paginator-items>
+    </div>
+    <div class="ss-paginator__pages"
+         [ngClass]="{'ss-paginator__pages--hidden': paginatorData.entries <= paginatorData.items}">
+        <ss-paginator-pages
+                [currentPage]="paginatorData.page"
+                [itemsPerPage]="paginatorData.items"
+                [totalItems]="paginatorData.entries"
+                (changePage)="onPaginatorPagesChange($event)">
+        </ss-paginator-pages>
+    </div>
+    <div class="ss-paginator__entries">
+        <ss-paginator-entries
+                [totalEntries]="paginatorData.entries"
+                [entriesPerPage]="paginatorData.items"
+                [currentPage]="paginatorData.page">
+        </ss-paginator-entries>
+    </div>
+</div>

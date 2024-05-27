@@ -1,0 +1,89 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+<div class="ss-project-task-reply-capture"
+     [class.ss-project-task-reply-capture--focused]="focused">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+        <div class="ss-project-task-reply-capture__layout">
+            <div>
+                <ss-input-textarea-user
+                    #inputTextareaUser
+                    class="ss-project-task-reply-capture__input-text"
+                    [user]="user"
+                    [size]="'small'"
+                    [showCounter]="false"
+                    [isScrollable]="false"
+                    [automationAttr]="'create-reply-input'"
+                    [name]="'content'"
+                    [label]="'Reply_Message_Label' | translate"
+                    [maxCharacter]="maxCharacters"
+                    [control]="form.get('content')"
+                    [formControlName]="'content'"
+                    (onFocus)="onFocus()"
+                    (onBlur)="onBlur()">
+                </ss-input-textarea-user>
+                <ss-input-files
+                    #inputFiles
+                    id="input-files"
+                    class="ss-project-task-reply-capture__input-files"
+                    [hidden]="!isInputFilesVisible"
+                    [size]="inputFilesSize"
+                    [maxSize]="imageMaxSize"
+                    [accept]="acceptedPattern"
+                    [automationAttr]="'input-files'"
+                    [name]="'files'"
+                    [label]="'Task_DragAndDropFiles_Label' | translate"
+                    [secondaryLabel]="'Task_DragAndDropFiles_SecondaryLabel' | translate:{imageMaxSize: imageMaxSizeInMb}"
+                    [canAddFiles]="false"
+                    [control]="form.get('files')"
+                    [formControlName]="'files'"
+                    (onChange)="onChangeFiles($event)">
+                </ss-input-files>
+            </div>
+            <ul class="ss-project-task-reply-capture__action-list" role="list">
+                <li class="ss-project-task-reply-capture__action-list-item">
+                    <button
+                        type="button"
+                        ss-button
+                        [buttonSize]="'small'"
+                        [buttonStyle]="'tertiary'"
+                        [buttonNoPadding]="true"
+                        [attr.data-automation]="'button-toggle-input-files'"
+                        (click)="openFinder()">
+                        <ss-icon
+                            aria-hidden="true"
+                            name="picture">
+                        </ss-icon>
+                        <div class="ss-project-task-reply-capture__button-label">
+                            {{ 'Task_Attachments_Label' | translate }}
+                        </div>
+                    </button>
+
+                </li>
+                <li class="ss-project-task-reply-capture__action-list-item">
+                    <button
+                        type="submit"
+                        ss-button
+                        [buttonSize]="'small'"
+                        [buttonStyle]="'tertiary'"
+                        [buttonNoPadding]="true"
+                        [attr.data-automation]="'button-submit'"
+                        [disabled]="form.invalid">
+                        <ss-icon
+                            aria-hidden="true"
+                            name="send">
+                        </ss-icon>
+                        <div class="ss-project-task-reply-capture__button-label">
+                            {{ 'Reply_Submit_Label' | translate }}
+                        </div>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </form>
+</div>

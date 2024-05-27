@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+-->
+
+<div class="ss-news-article">
+    <time class="ss-news-article__date"
+        [attr.data-automation]="'ss-news-article-date'">{{newsArticleFormattedDate}}</time>
+
+    <span class="ss-news-article__title"
+        [attr.data-automation]="'ss-news-article-title'">{{articleTitle | translate}}</span>
+
+    <div class="ss-news-article__content">
+        <ng-content></ng-content>
+    </div>
+</div>

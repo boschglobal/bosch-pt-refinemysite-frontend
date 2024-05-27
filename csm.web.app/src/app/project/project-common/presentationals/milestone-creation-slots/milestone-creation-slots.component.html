@@ -1,0 +1,45 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-milestone-creation-slots">
+    <li *ngFor="let day of days; let i = index; trackBy: trackByFn;"
+        class="ss-milestone-creation-slots__slot"
+        [ngClass]="{'ss-milestone-creation-slots__slot--selected': i === selectedDayIndex}"
+        ssFlyout
+        [flyoutId]="getFlyoutId(i, 'type')"
+        [flyoutShowOverlay]="false"
+        [flyoutTrigger]="[]"
+        [flyoutAlignment]="'start'"
+        [flyoutTemplate]="milestoneTypeTemplate"
+        (click)="handleSelectIndex(i)"
+        [attr.data-automation]="'milestone-creation-slot-' + i">
+        <div *ngIf="i === selectedDayIndex"
+             class="ss-milestone-creation-slots__slot-marker"
+             ssFlyout
+             [flyoutId]="getFlyoutId(i, 'title')"
+             [flyoutShowOverlay]="false"
+             [flyoutTrigger]="[]"
+             [flyoutAlignment]="'start'"
+             [flyoutTemplate]="milestoneCapture">
+            <ss-milestone-marker [milestoneMarker]="marker"
+                                 [attr.data-automation]="'milestone-creation-slot-marker-' + i">
+            </ss-milestone-marker>
+        </div>
+    </li>
+</ul>
+
+<ng-template #milestoneTypeTemplate>
+    <ss-milestone-type-options (selectOption)="handleSelectOption($event)"
+                               [attr.data-automation]="'milestone-type-options'">
+    </ss-milestone-type-options>
+</ng-template>
+<ng-template #milestoneCapture>
+    <ss-milestone-title-capture (submitTitle)="handleAddMilestone($event)"
+                                [attr.data-automation]="'milestone-title-capture'">
+    </ss-milestone-title-capture>
+</ng-template>

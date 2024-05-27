@@ -1,0 +1,95 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "../input.base";
+@import "assets/styles/constants/index";
+
+.ss-input-multiple-select {
+    $this: &;
+
+    &.ss-input {
+        &--focused {
+            #{$this}__content,
+            #{$this}__search-input {
+                background-color: $form-focus;
+                box-shadow: inset 0 -10px $form-focus;
+            }
+        }
+
+        &--disabled {
+            #{$this}__content,
+            #{$this}__search-input {
+                cursor: not-allowed;
+                background-color: $light_grey_50;
+            }
+        }
+    }
+
+    .ss-input {
+        &__input {
+            padding: 0;
+            height: auto;
+            max-height: 160px;
+            overflow: auto;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        background: $white;
+        min-height: $base-dimension--x6;
+        padding: $base-dimension--x05 + $base-dimension--x025;
+    }
+
+    &__search-input {
+        border: none;
+        color: $black;
+    }
+
+    &__search-input,
+    &__content ::ng-deep ss-chip {
+        margin: $base-dimension--x025;
+        max-width: calc(50% - #{$base-dimension--x05});
+    }
+}
+
+::ng-deep {
+    ul {
+        margin: 0;
+    }
+
+    ss-input-checkbox-nested#flyout {
+        display: block;
+        max-height: 200px !important;
+        overflow: auto !important;
+        background-color: $white;
+
+        > .ss-input-checkbox-nested {
+            display: block;
+            margin: $base-dimension 0;
+        }
+
+        .ss-checkbox-button {
+            background-color: $white;
+
+            &:hover {
+                background-color: $light_grey_25;
+            }
+
+            &__label {
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                padding: 0 $base-dimension--x2;
+            }
+        }
+    }
+}

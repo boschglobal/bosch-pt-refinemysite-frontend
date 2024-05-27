@@ -1,0 +1,87 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "../constants/font";
+@import "../constants/dimensions";
+@import "../constants/colors";
+
+@mixin heading($font-family, $color: $black, $font-size: $font-size-base, $line-height: 1.5) {
+    font-family: $font-family, sans-serif;
+    font-size: $font-size;
+    line-height: $line-height;
+    color: $color;
+}
+
+@mixin heading-1($color: $black) {
+    @include heading(RmS-Regular, $color, $font-size-xxl, $base-dimension--x5);
+}
+
+@mixin heading-2($color: $black) {
+    @include heading(RmS-Bold, $color, $font-size-lg, 1.2);
+}
+
+@mixin heading-3($color: $black) {
+    @include heading(RmS-Regular, $color, $font-size-lg, 1.2);
+}
+
+@mixin heading-4($color: $black) {
+    @include heading(RmS-Bold, $color);
+}
+
+@mixin heading-5($color: $black) {
+    @include heading(RmS-Medium, $color);
+}
+
+@mixin body($font-family, $color, $font-size: $font-size-sm) {
+    font-family: $font-family, sans-serif;
+    font-size: $font-size;
+    line-height: 1.5;
+    color: $color;
+}
+
+@mixin body-1($color: $black) {
+    @include body(RmS-Regular, $color, $font-size-base);
+}
+
+@mixin body-2($color: $black) {
+    @include body(RmS-Regular, $color);
+}
+
+@mixin subtitle($font-family, $color: $black) {
+    font-family: $font-family, sans-serif;
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    color: $color;
+}
+
+@mixin subtitle-1($color: $black) {
+    @include subtitle(RmS-Bold, $color);
+}
+
+@mixin subtitle-2($color: $black) {
+    @include subtitle(RmS-Medium, $color);
+}
+
+@mixin caption($font-family, $color: $black) {
+    font-family: $font-family, sans-serif;
+    font-size: $font-size-xs;
+    line-height: 1.5;
+    color: $color;
+}
+
+@mixin caption-1($color: $black) {
+    @include caption(RmS-Medium, $color);
+}
+
+@mixin caption-2($color: $black) {
+    @include caption(RmS-Regular, $color);
+}
+
+@mixin caption-3($color: $black) {
+    @include caption(RmS-Bold, $color);
+}

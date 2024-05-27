@@ -1,0 +1,35 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+  <div class="ss-checkbox-button"
+  [attr.data-automation]="automationAttr + '-wrapper'"
+  [ngClass]="inputClasses">
+  <label class="ss-checkbox-button__label"
+          [for]="name"
+          [attr.data-automation]="automationAttr + '-label'">
+      <div class="ss-checkbox-button__checkbox"
+           [attr.data-automation]="automationAttr + '-checkbox'">
+          <ss-icon *ngIf="isChecked" [name]="checkedIcon"></ss-icon>
+          <ss-icon *ngIf="isIndeterminate && !isChecked" [name]="indeterminateIcon"></ss-icon>
+      </div>
+      <input type="checkbox"
+              class="ss-checkbox-button__input"
+              [attr.data-automation]="automationAttr"
+              [id]="id"
+              [name]="name"
+              [value]="isChecked"
+              [disabled]="isDisabled"
+              [indeterminate]="isIndeterminate"
+              [readonly]="isReadOnly"
+              [checked]="isChecked"
+              (click)="onInputChange()">
+      <span class="ss-checkbox-button__span">
+          <ng-content></ng-content>
+      </span>
+  </label>
+</div>

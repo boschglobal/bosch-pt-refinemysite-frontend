@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="chips.length"
+     class="ss-project-filter-chips"
+     [attr.data-automation]="'ss-project-filter-chips'">
+    <ss-chip-list
+        class="ss-project-filter-chips__list"
+        [items]="chips"
+        [listLabel]="listLabel | translate"
+        [maxChipsToShow]="maxChipsToShow"
+        [removeAllLabel]="'Generic_ClearAll' | translate"
+        [showRemoveAll]="showRemoveAll"
+        (removeAll)="handleRemoveAllChips()"
+        (remove)="handleRemoveChip($event)">
+    </ss-chip-list>
+</div>
+<ng-template #craftOptionsTemplate let-data>
+    <div class="ss-project-filter-chips__craft-chip" [ngStyle]="{'background-color': data.craftColor}"></div>
+</ng-template>
+
+<ng-template #milestoneMarkerTemplate let-data>
+    <ss-milestone-marker class="ss-project-filter-chips__milestone-type-chip" [milestoneMarker]="data"></ss-milestone-marker>
+</ng-template>

@@ -1,0 +1,79 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="theaterCanBeShown()" class="ss-theater">
+    <header>
+        <span class="ss-theater__title">
+            <ss-icon [name]="'image-full'"
+                     [dimension]="'small'"></ss-icon>
+            <span class="ss-theater__title-text">{{currentAttachment.fileName}}</span>
+        </span>
+        <ul class="ss-theater__actions">
+            <li *ngIf="canDelete"
+                (click)="handleDelete()"
+                [attr.data-automation]="'attachment-delete-option'"
+                class="ss-theater__action">
+                <ss-icon [name]="'delete'"></ss-icon>
+            </li>
+            <li class="ss-theater__action"
+                ssDownloadFile
+                [downloadSubscriptionFn]="handleDownload()"
+                [attr.data-automation]="'attachment-download-option'">
+                <ss-icon [name]="'download'"></ss-icon>
+            </li>
+            <li (click)="toggleInformationPanel()"
+                class="ss-theater__action"
+                [ngClass]="{'ss-theater__action--active': isInformationPanelOpen}">
+                <ss-icon [name]="'info-marker'"></ss-icon>
+            </li>
+            <li (click)="handleClose()"
+                class="ss-theater__action">
+                <ss-icon [name]="'close'"></ss-icon>
+            </li>
+        </ul>
+    </header>
+    <div class="ss-theater__body" [attr.data-automation]="'theater'">
+        <div class="ss-theater__main">
+            <div class="ss-theater__attachment-container">
+                <div class="ss-theater__attachment-container-dummy"
+                     [ngClass]="{'ss-theater__attachment-container-dummy-active': isInformationPanelOpen}"></div>
+                <div class="ss-theater__attachment-container-holder">
+                    <img [src]="currentCompressedAttachmentUrl" alt=""/>
+                </div>
+            </div>
+            <nav *ngIf="attachments.length > 1"
+                 [ngClass]="{'ss-theater__nav-info-open': !isInformationPanelOpen}">
+                <button (click)="previousAttachment()">
+                    <ss-icon [name]="'arrow'"
+                             [dimension]="'large'">
+                    </ss-icon>
+                </button>
+                <button (click)="nextAttachment()">
+                    <ss-icon [name]="'arrow'"
+                             [dimension]="'large'"
+                             [rotate]="180">
+                    </ss-icon>
+                </button>
+            </nav>
+            <ss-loader [isLoading]="isLoading"></ss-loader>
+        </div>
+        <aside class="ss-theater__information"
+               [ngClass]="{'ss-theater__information--active': isInformationPanelOpen}">
+            <p class="ss-theater__information__name">{{currentAttachment.fileName}}</p>
+            <ul class="ss-theater__information__list">
+                <li *ngFor="let entry of currentAttachmentMetadata">
+                    <h6>{{entry.label | translate}}</h6>
+                    <span>{{entry.value}}</span>
+                </li>
+            </ul>
+        </aside>
+    </div>
+    <footer>
+        <span class="ss-theater__attachment-counter">{{currentAttachmentIndex + 1}} / {{attachments.length}}</span>
+    </footer>
+</section>

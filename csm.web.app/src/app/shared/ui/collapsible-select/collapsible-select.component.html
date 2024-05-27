@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<article class="ss-collapsible-select"
+    [attr.aria-label]="label">
+    <header class="ss-collapsible-select__header">
+        <ss-checkbox-button
+            class="ss-collapsible-select__checkbox"
+            [attr.data-automation]="'top-checkbox'"
+            [dimension]="'small'"
+            [id]="checkboxId"
+            [name]="checkboxId"
+            [value]="checkboxValue"
+            [isIndeterminate]="checkboxIsIndeterminate"
+            (click)="handleClickCheckbox($event)">
+            {{ label }}
+        </ss-checkbox-button>
+        <button
+            ss-button
+            type="button"
+            class="ss-collapsible-select__button"
+            [attr.data-automation]="'button-toggle-section'"
+            [buttonStyle]="'integrated-black'"
+            [buttonSize]="'tiny'"
+            [attr.aria-controls]="sectionId"
+            [attr.aria-expanded]="expanded"
+            (click)="toggleSection()">
+            <ss-icon
+                [name]="'arrow'"
+                [rotate]="expanded ? 90 : 270">
+            </ss-icon>
+            <div class="ss-collapsible-select__button-text">
+                {{ (expanded ? 'Generic_Section_Hide' : 'Generic_Section_Show') | translate }}
+            </div>
+        </button>
+    </header>
+    <section [id]="sectionId">
+        <ng-container *ngIf="expanded">
+            <ng-content></ng-content>
+        </ng-container>
+    </section>
+</article>

@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<input type="text"
+       ssInputMask
+       [mask]="mask"
+       [maskPlaceholder]="maskPlaceholder"
+       [maskSpecialCharacters]="maskSpecialCharacters"
+       (maskValueChange)="handleMaskValueChange($event)"
+       [value]="value"
+       [attr.data-automation]="'input-mask-test-input'">

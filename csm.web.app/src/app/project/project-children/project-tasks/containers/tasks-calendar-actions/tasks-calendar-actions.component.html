@@ -1,0 +1,93 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-tasks-calendar-actions">
+    <ss-dropdown-menu
+        *ssIfMediaQuery="['sm', 'md', 'lg', 'xl']"
+        [buttonNoPadding]="false"
+        [buttonStyle]="'tertiary-light-blue'"
+        [icon]="'more'"
+        [items]="createDropdownItems"
+        [label]="'Generic_Create'"
+        (itemClicked)="handleCreateDropdownItemClicked($event)"
+        [attr.data-automation]="'calendar-create-button'">
+    </ss-dropdown-menu>
+    <ss-dropdown-menu
+        *ssIfMediaQuery="['xs']"
+        [buttonStyle]="'tertiary-light-blue'"
+        [icon]="'more'"
+        [items]="createDropdownItems"
+        [title]="'Generic_Create' | translate"
+        (itemClicked)="handleCreateDropdownItemClicked($event)"
+        [attr.data-automation]="'calendar-create-button'">
+    </ss-dropdown-menu>
+    <button
+        ss-button
+        [buttonNoPadding]="true"
+        [buttonActive]="isCherryPicking"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        [title]="'Generic_MultiSelect' | translate"
+        (click)="handleMultiSelectButtonClicked()">
+        <ss-icon [name]="'multi-select'"></ss-icon>
+    </button>
+    <button
+        ss-button
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        (click)="openCalendarExportModal()"
+        [title]="'Calendar_Export_Title' | translate"
+        [attr.data-automation]="'export-button'">
+        <ss-icon [name]="'document-download'"></ss-icon>
+    </button>
+    <button
+        ss-button
+        [buttonActive]="isFilterDrawerOpen"
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        [title]="'Generic_Filter' | translate"
+        (click)="handleToggleFilterDrawer()">
+        <ss-icon [badgeFillColor]="filterIconBadgeFillColor"
+                 [badgeStrokeColor]="filterIconBadgeStrokeColor"
+                 [badge]="hasFilters"
+                 [name]="'filter'"></ss-icon>
+    </button>
+    <button
+        ss-button
+        [buttonActive]="isQuickFilterDrawerOpen"
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        [title]="'Generic_QuickFilters' | translate"
+        (click)="handleToggleQuickFilterDrawer()">
+        <ss-icon [name]="'bookmark'"></ss-icon>
+    </button>
+    <ss-dropdown-menu
+        [icon]="'options'"
+        [items]="settingsDropdownItems"
+        [title]="'Generic_Options' | translate"
+        (itemClicked)="handleSettingsDropdownItemClicked($event)">
+    </ss-dropdown-menu>
+</div>
+<ss-modal
+    [title]="'Calendar_Export_Title' | translate"
+    [id]="calendarExportModalId"
+    [size]="'small'"
+    data-automation="calendar-export-modal">
+    <ng-template #body>
+        <ss-calendar-export
+            (closed)="closeModal()">
+        </ss-calendar-export>
+    </ng-template>
+</ss-modal>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>

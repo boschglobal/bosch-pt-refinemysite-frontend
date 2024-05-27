@@ -1,0 +1,32 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-constraint-info-header">
+    <button
+        class="ss-constraint-info-header__tooltip-button ss-button ss-button--small ss-button--secondary-clear-blue ss-button--no-padding"
+        ssFlyout
+        [flyoutAlignment]="'start'"
+        [flyoutTemplate]="ssConstraintInfoHeaderTooltipContent"
+        [attr.data-automation]="'constraint-info-header-tooltip-button'">
+        <ss-icon [name]="'info-marker'"
+                 [color]="iconColor">
+        </ss-icon>
+    </button>
+    <span class="ss-constraint-info-header__counter"
+          [attr.data-automation]="'constraint-info-header-counter'">
+        {{'Generic_Active' | translate}}: {{activeItems}}/{{totalItems}}
+    </span>
+</div>
+
+<ng-template #ssConstraintInfoHeaderTooltipContent>
+    <ss-flyout-tooltip
+        class="ss-constraint-info-header__tooltip-content"
+        [attr.data-automation]="'constraint-info-header-tooltip-content'">
+        <span>{{ 'ProjectSettings_ConstraintInfoHeader_TooltipDescription' | translate}}</span>
+    </ss-flyout-tooltip>
+</ng-template>

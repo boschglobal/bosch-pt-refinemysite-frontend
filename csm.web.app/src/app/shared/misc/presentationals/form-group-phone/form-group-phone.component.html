@@ -1,0 +1,80 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-form-group-phone">
+    <form [formGroup]="form">
+        <div formArrayName="phones">
+            <ng-container *ngFor="let phone of getPhoneControls; let i = index">
+                <div class="row">
+                    <div class="col-12 ss-form-group-phone-label">
+                        <span class="ss-label-group">{{'Generic_PhoneLabel' | translate}} {{i + 1}}</span>
+                        <a href=""
+                           [attr.data-automation]="'remove-phone'"
+                           (click)="removePhone($event, i)">{{'Generic_Remove' | translate}}</a>
+                    </div>
+                </div>
+                <div class="row ss-form-group-phone-inputs" [formGroup]="phone">
+                    <div class="col-md-4">
+                        <ss-input-select-dropdown
+                                [automationAttr]="'type-' + i"
+                                [name]="'type' + i"
+                                [label]="'Generic_PhoneTypeLabel' | translate"
+                                [options]="types"
+                                [translateLabel]="true"
+                                [isRequired]="showErrorMessage[i]"
+                                [control]="phone.get('type')"
+                                (onChange)="updateValidators(i)"
+                                formControlName="type">
+                        </ss-input-select-dropdown>
+                    </div>
+                    <div class="col-md-8">
+                        <ss-input-text
+                                class="ss-form-group-phone-inputs__country-code"
+                                [automationAttr]="'country-code-' + i"
+                                [name]="'country-code-' + i"
+                                [label]="null"
+                                [isRequired]="showErrorMessage[i]"
+                                [fixedValue]="'+'"
+                                [placeholder]="'+49'"
+                                [type]="'tel'"
+                                [maxCharacter]="5"
+                                [showCounter]="false"
+                                [control]="phone.get('countryCode')"
+                                (onChange)="updateValidators(i)"
+                                formControlName="countryCode">
+                        </ss-input-text>
+                        <ss-input-text
+                                class="ss-form-group-phone-inputs__number"
+                                [ngClass]="{'ss-form-group-phone-inputs__number--delete': getPhoneControls.length > 1}"
+                                [automationAttr]="'number-' + i"
+                                [name]="'number-' + i"
+                                [label]="('Generic_PhoneLabel' | translate)"
+                                [isRequired]="showErrorMessage[i]"
+                                [type]="'tel'"
+                                [maxCharacter]="25"
+                                [showCounter]="false"
+                                [control]="phone.get('number')"
+                                (onChange)="updateValidators(i)"
+                                formControlName="number">
+                        </ss-input-text>
+                    </div>
+                </div>
+            </ng-container>
+            <div *ngIf="getPhoneControls.length < 5" class="row">
+                <div class="col-12">
+                    <button type="button"
+                            [attr.data-automation]="'add-phone'"
+                            class="ss-button ss-button--secondary-ghost-grey ss-button--normal ss-button--responsive"
+                            (click)="addPhone()">
+                        {{'Generic_AddNumber' | translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

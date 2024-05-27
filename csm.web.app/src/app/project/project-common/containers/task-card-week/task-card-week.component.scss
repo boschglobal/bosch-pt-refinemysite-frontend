@@ -1,0 +1,548 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+@import "../../../../shared/ui/calendar/contants/calendar.contants";
+@import "assets/styles/typography/mixins";
+
+$card-height-large: $base-dimension--x6;
+$card-height-small: $base-dimension--x4;
+$arrow-height-large: $card-height-large*0.5;
+$arrow-height-small: $card-height-small*0.5;
+$arrow-width: $base-dimension;
+$card-width: 100%;
+$left-spacer: $left-column-width + $base-dimension--x4;
+$handle-width: $base-dimension;
+$shift-amount-height: 24px;
+$status-icon-width: $base-dimension--x3;
+// markers have dynamic z-index in order to be over the dependency lines but under work areas in all screen sizes
+$marker-index-lg: 5;
+$marker-index-xl: 3;
+
+.ss-task-card-week {
+    $this: &;
+    min-height: $card-height-small;
+    width: $card-width;
+    display: flex;
+    background: $light_grey_25;
+    position: relative;
+    container: task-card-week / inline-size;
+
+  &__shift-amount {
+    border: none !important;
+
+    &-label {
+      @include caption-1($white);
+      height: $shift-amount-height;
+      background-color: $black;
+      padding: $base-dimension--x025 $base-dimension;
+      border: 1px solid black;
+    }
+  }
+
+    &__handle {
+        position: absolute;
+        width: $handle-width;
+        height: $card-height-large;
+        cursor: ew-resize;
+        display: flex;
+        z-index: 2;
+        transform: translate3d(0, 0, 0) !important;
+
+        &::after {
+            content: '';
+            display: block;
+            width: $base-dimension--x025;
+            border-radius: 1px;
+            margin: $base-dimension--x05 0;
+            background-color: $white;
+            opacity: 0;
+            transition: opacity 250ms ease-in-out,
+            margin 250ms ease-in-out;
+        }
+
+        &--left {
+            left: 0;
+            justify-content: flex-start;
+
+            &::after {
+                margin-left: 0;
+            }
+        }
+
+        &--right {
+            right: 0;
+            justify-content: flex-end;
+
+            &::after {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &:hover,
+    &--focused,
+    &--resizing {
+        #{$this}__handle {
+
+            &--left {
+                &::after {
+                    opacity: 1;
+                    margin-left: $base-dimension--x05;
+                }
+            }
+
+            &--right {
+                &::after {
+                    opacity: 1;
+                    margin-right: $base-dimension--x05;
+                }
+            }
+        }
+    }
+
+    &--dimmed-out,
+    &--selected:hover,
+    &--focused {
+        #{$this}__handle::after {
+            background-color: $dark_grey_50;
+        }
+    }
+
+    &--movable {
+        #{$this}__details {
+            cursor: grab;
+        }
+    }
+
+    &--copying {
+        #{$this}__details {
+            cursor: copy;
+        }
+    }
+
+    &--not-selectable {
+        #{$this}__details {
+            cursor: not-allowed;
+        }
+    }
+
+    &__continues {
+        width: 0;
+        height: 0;
+        border-top: $arrow-height-large solid transparent;
+        border-bottom: $arrow-height-large solid transparent;
+
+        &--to-left {
+            border-right: $arrow-width solid;
+            margin-left: -$arrow-width;
+        }
+
+        &--to-right {
+            border-left: $arrow-width solid;
+            margin-right: -$arrow-width;
+        }
+    }
+
+    &--expanded {
+        #{$this}__continues {
+            border-top: $arrow-height-small solid transparent;
+            border-bottom: $arrow-height-small solid transparent;
+        }
+
+        #{$this}__handle {
+            height: $card-height-small;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        padding: $base-dimension--x05 0;
+        background: inherit;
+        cursor: pointer;
+
+        &-line {
+            display: flex;
+            background: inherit;
+        }
+    }
+
+    &:not(&--expanded) {
+        #{$this}__details {
+            min-height: $card-height-large;
+        }
+    }
+
+    &__left-sticky {
+        position: sticky;
+        left: 0;
+        background: inherit;
+        display: flex;
+        overflow: hidden;
+        padding-left: $base-dimension--x05;
+
+        @include media-breakpoint-up(xl) {
+            left: $left-column-width;
+        }
+
+        &--description {
+            left: -$status-icon-width;
+
+            @include media-breakpoint-up(xl) {
+                left: $left-column-width - $status-icon-width;
+            }
+        }
+    }
+
+    &__details-remain {
+        flex: 1 1 auto;
+        background: inherit;
+    }
+
+    &__right-sticky {
+        display: flex;
+        position: sticky;
+        padding-right: $base-dimension--x05;
+        right: 0;
+        background: inherit;
+    }
+
+    &__status-icon ::ng-deep .ss-icon {
+        fill: $white;
+    }
+
+    &__title {
+        font-family: RmS-Medium, sans-serif;
+        font-size: $font-size-sm;
+        line-height: $base-dimension--x3;
+        color: rgba(255, 255, 255, 0.75);
+        margin: 0;
+        padding: 0 $base-dimension 0 $base-dimension--x05;
+        @include ellipsis();
+    }
+
+    &__description {
+        font-family: RmS-Regular, sans-serif;
+        font-size: $font-size-xs;
+        line-height: $base-dimension--x2;
+        color: rgba(239, 239, 240, 0.75);
+        margin: 0;
+        padding: 0 $base-dimension 0 $base-dimension--x3 + $base-dimension--x05;
+        @include ellipsis();
+    }
+
+    &__icon-indicators {
+        align-self: center;
+        padding-right: $base-dimension--x05;
+    }
+
+    &__footer {
+        width: 100%;
+        background: $light_grey_25;
+        overflow: hidden;
+
+        ss-task-daycards {
+            display: block;
+        }
+    }
+
+    &__duration-indicator {
+        margin-top: 1px;
+        height: $base-dimension;
+    }
+
+    &--relevant {
+        #{$this}__title {
+            color: $white
+        }
+
+        #{$this}__description {
+            color: $light_grey_25;
+        }
+    }
+
+    &--resizing {
+        z-index: 3;
+
+        #{$this}__details,
+        #{$this}__details:hover {
+            @include shadow-1;
+            z-index: 1;
+        }
+
+        #{$this}__right-sticky {
+            position: static;
+        }
+    }
+
+    &--focused {
+        #{$this}__details {
+            padding: 3px 0;
+            border: 1px solid;
+        }
+
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $dark_grey_75 !important;
+        }
+
+        #{$this}__right-sticky {
+            padding-right: 3px;
+        }
+
+        #{$this}__left-sticky {
+            padding-left: 3px;
+        }
+    }
+
+    &--selected {
+        #{$this}__details {
+            background: $white !important;
+            padding: $base-dimension--x025 0;
+            border: $base-dimension--x025 solid;
+        }
+
+        #{$this}__title {
+            @include subtitle-1();
+            line-height: $base-dimension--x3;
+        }
+
+        #{$this}__right-sticky {
+            padding-right: $base-dimension--x025;
+        }
+
+        #{$this}__left-sticky {
+            padding-left: $base-dimension--x025;
+        }
+
+        #{$this}__loading {
+            mix-blend-mode: difference;
+            opacity: 0.3;
+        }
+    }
+
+    &--focused,
+    &--selected,
+    &--dimmed-out {
+        #{$this}__title,
+        #{$this}__description {
+            color: rgba(82, 95, 107, 0.75);
+        }
+    }
+
+    &--dimmed-out#{$this}--relevant {
+        #{$this}__title,
+        #{$this}__description {
+            color: $dark_grey;
+        }
+    }
+
+    &--focused#{$this}--relevant,
+    &--selected#{$this}--relevant {
+        #{$this}__title {
+            color: $black;
+        }
+
+        #{$this}__description {
+            color: $dark_grey;
+        }
+    }
+
+    &--focused#{$this}--relevant {
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $black !important;
+        }
+    }
+
+    &--dimmed-out {
+        #{$this}__details {
+            background: $light_grey_50 !important;
+        }
+
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $dark_grey !important;
+        }
+    }
+
+    &--dimmed-out:not(#{$this}--selected) {
+        #{$this}__details {
+            border-color: $light_grey_75 !important;
+            border: 1px solid;
+            padding: 3px 0;
+        }
+
+        #{$this}__continues {
+            &--to-left {
+                border-right-color: $light_grey_75 !important;
+            }
+
+            &--to-right {
+                border-left-color: $light_grey_75 !important;
+            }
+        }
+
+        #{$this}__right-sticky {
+            padding-right: 3px;
+        }
+
+        #{$this}__left-sticky {
+            padding-left: 3px;
+        }
+    }
+
+    &--focused#{$this}--dimmed-out {
+        #{$this}__details {
+            background: $light_grey_12_5 !important;
+            border-color: $light_grey_50 !important;
+        }
+
+        ss-icon,
+        #{$this}__status-icon ::ng-deep .ss-icon {
+            fill: $dark_grey !important;
+        }
+
+        #{$this}__continues {
+            &--to-left {
+                border-right-color: $light_grey_50 !important;
+            }
+
+            &--to-right {
+                border-left-color: $light_grey_50 !important;
+            }
+        }
+    }
+
+    &__marker {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        z-index: $marker-index-lg;
+
+        @include media-breakpoint-up(xl) {
+            z-index: $marker-index-xl;
+        }
+    }
+
+    @container task-card-week (width < 92px) {
+        &#{$this}--expanded {
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(1) {
+                display: none;
+            }
+
+            &:not(#{$this}--css-has-supported) #{$this}__icon-indicators {
+                display: none;
+            }
+        }
+    }
+
+    @container task-card-week (width < 72px) {
+        &#{$this}--expanded {
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(2)) ss-icon:nth-child(1),
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(2) {
+                display: none;
+            }
+        }
+
+        &:not(#{$this}--expanded) {
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(1) {
+                display: none;
+            }
+
+            &:not(#{$this}--css-has-supported) #{$this}__icon-indicators {
+                display: none;
+            }
+        }
+    }
+
+    @container task-card-week (width < 52px) {
+        #{$this}__details-line {
+            justify-content: center;
+        }
+
+        &#{$this}--expanded {
+            #{$this}__icon-indicators,
+            #{$this}__details-remain,
+            #{$this}__title {
+                display: none;
+            }
+
+            &#{$this}--loading {
+                #{$this}__left-sticky,
+                #{$this}__details-remain {
+                    display: none;
+                }
+
+                #{$this}__right-sticky {
+                    padding: 0 !important;
+                }
+            }
+        }
+
+        &:not(#{$this}--expanded) {
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(2)) ss-icon:nth-child(1),
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators:has(ss-icon:nth-child(3)) ss-icon:nth-child(2) {
+                display: none;
+            }
+
+            #{$this}__details-remain,
+            #{$this}__title,
+            #{$this}__left-sticky--description,
+            &#{$this}--loading #{$this}__status-icon,
+            &#{$this}--loading #{$this}__select-icon {
+                display: none;
+            }
+
+
+            #{$this}__left-sticky, #{$this}__icon-indicators, #{$this}__right-sticky {
+                padding: 0 !important;
+            }
+
+            #{$this}__icon-indicators ::ng-deep .ss-task-card-indicators {
+                ss-icon + ss-icon {
+                    margin-left: 0 !important;
+                }
+            }
+        }
+    }
+
+    @container task-card-week (width < 32px) {
+        &#{$this}--expanded {
+            #{$this}__left-sticky, #{$this}__icon-indicators, #{$this}__right-sticky {
+                padding: 0 !important;
+            }
+        }
+    }
+
+    @container task-card-week (width < 26px) {
+        &__status-icon ::ng-deep .ss-icon {
+            width: 22px;
+        }
+
+        &__select-icon ::ng-deep .ss-icon,
+        &__loading {
+            width: 20px;
+        }
+
+        &__select-icon ::ng-deep .ss-icon,
+        &--focused &__status-icon ::ng-deep .ss-icon {
+            margin-left: -1px;
+        }
+    }
+
+}

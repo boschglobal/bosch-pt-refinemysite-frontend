@@ -1,0 +1,43 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-wizard-step"
+     [ngClass]="{
+        'ss-wizard-step--active': active,
+        'ss-wizard-step--disabled': disabled
+     }"
+     [attr.data-automation]="'ss-wizard-step'">
+    <button
+        class="ss-wizard-step__button"
+        *ngIf="size === 'LARGE'"
+        ss-button
+        [buttonActive]="active"
+        [buttonSize]="'tiny'"
+        [buttonStyle]="'primary-light-blue'"
+        [disabled]="disabled"
+        [buttonNoPadding]="false"
+        [buttonCircular]="true"
+        [attr.data-automation]="'ss-wizard-step-button'">
+        <ng-content></ng-content>
+    </button>
+    <div *ngIf="size === 'SMALL'"
+        class="ss-wizard-step__dot"
+        [attr.data-automation]="'ss-wizard-step-dot'">
+    </div>
+    <div class="ss-wizard-step__line ss-wizard-step__line--left"
+        [ngClass]="getLeftLineClasses()"
+        [attr.data-automation]="'ss-wizard-step-line-left'">
+    </div>
+    <div class="ss-wizard-step__line ss-wizard-step__line--right"
+        [ngClass]="getRightLineClasses()"
+        [attr.data-automation]="'ss-wizard-step-line-right'">
+    </div>
+    <span *ngIf="label"
+        class="ss-wizard-step__label"
+        [attr.data-automation]="'ss-wizard-step-label'">{{label | translate}}</span>
+</div>

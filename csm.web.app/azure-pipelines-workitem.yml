@@ -1,0 +1,54 @@
+trigger: none
+
+resources:
+  repositories:
+    - repository: csm_templates
+      type: git
+      name: csm.azuredevops.pipelines
+      ref: refs/heads/master
+
+variables:
+  - name: isPullRequest
+    value: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
+  - name: pullRequestId
+    value: $[variables['System.PullRequest.PullRequestId']]
+  - template: /templates/variables/pipelines.yaml@csm_templates
+
+jobs:
+  - job:
+    displayName: Create Work Item and link to Pull Request
+    condition: eq(variables.isPullRequest, true)
+    pool:
+      vmImage: ${{ variables.webImage }}
+    steps:
+      - bash: |
+          az extension add --name azure-devops
+          az devops configure --defaults organization=$(System.CollectionUri) project=$(System.TeamProject)
+        displayName: Install and configure Azure DevOps Extension
+
+      - bash: |
+          workItemId=$(az repos pr work-item list --id $(pullRequestId) --query "[0].id" -o tsv)
+          echo "##vso[task.setvariable variable=workItemId]$workItemId"
+        displayName: Get linked Work Item
+        env:
+          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+        failOnStderr: true
+
+      - bash: |
+          workItemId=$(az boards work-item create --title "New Work Item" --type Task --assigned-to $(Build.RequestedForEmail) --query "id" -o tsv)
+          az repos pr work-item add --id $(pullRequestId) --work-items $workItemId
+          echo "##vso[task.setvariable variable=workItemId]$workItemId"
+        displayName: Create Work Item
+        condition: eq(variables.workItemId, '')
+        env:
+          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+        failOnStderr: true
+
+      - bash: |
+          pullRequestTitle=$(az repos pr show --id $(pullRequestId) --query "title" -o tsv)
+          az boards work-item update --id $(workItemId) --title "$pullRequestTitle" --state "Active"
+        displayName: Update Work Item
+        condition: ne(variables.workItemId, '')
+        env:
+          AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
+        failOnStderr: true

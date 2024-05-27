@@ -1,0 +1,23 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-calendar-workarea-row-header {
+    position: sticky;
+    left: $base-dimension;
+    display: inline-flex;
+    align-items: center;
+    gap: $base-dimension--x2;
+
+    @include media-breakpoint-up(xl) {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

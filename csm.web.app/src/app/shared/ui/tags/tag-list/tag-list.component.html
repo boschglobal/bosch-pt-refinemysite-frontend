@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-tag-list" *ngIf="items?.length">
+    <ul class="ss-tag-list__tags" [attr.data-automation]="'tag-list-items'">
+        <li *ngFor="let item of items">
+            <ss-tag [item]="item" (onRemoveTag)="onRemoveTag.emit($event)"></ss-tag>
+        </li>
+    </ul>
+    <div class="ss-tag-list__clear-wrapper">
+        <button class="ss-button ss-button--small ss-button--secondary-ghost-black ss-tag-list__clear ss-button--responsive"
+                (click)="onRemoveAllTags.emit()"
+                [attr.data-automation]="'tag-closeall'">
+            {{'Generic_ClearFilters' | translate}}
+        </button>
+    </div>
+</section>

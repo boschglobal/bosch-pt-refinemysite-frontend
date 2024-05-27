@@ -1,0 +1,67 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="form"
+      class="ss-pat-capture">
+    <ss-input-text
+        #nameInput
+        class="ss-pat-capture__description"
+        [automationAttr]="'description'"
+        [name]="'description'"
+        [label]="'Generic_Name' | translate"
+        [maxCharacter]="validations.description.maxLength"
+        [isRequired]="true"
+        [displayErrors]="true"
+        [control]="form.controls.description"
+        [formControlName]="'description'">
+    </ss-input-text>
+    <ss-input-select-dropdown
+        class="ss-pat-capture__expiresAt"
+        [automationAttr]="'expiresAt'"
+        [name]="'type'"
+        [label]="'Generic_ExpirationTime' | translate"
+        [control]="form.controls.expiresAt"
+        [options]="expiresAtList"
+        [isRequired]="true"
+        [translateLabel]="true"
+        [displayErrors]="true"
+        [formControlName]="'expiresAt'">
+    </ss-input-select-dropdown>
+    <ss-input-multiple-select
+        class="ss-pat-capture__scope"
+        [name]="'scope'"
+        [options]="scopeList"
+        [label]="'Generic_Scope' | translate"
+        [control]="form.controls.scope"
+        [isRequired]="true"
+        [displayErrors]="true"
+        [formControlName]="'scope'">
+    </ss-input-multiple-select>
+    <span class="ss-pat-capture__required-info">
+        * {{'Generic_SaveCondition' | translate}}
+    </span>
+    <div class="ss-pat-capture__buttons">
+        <div class="ss-button-group">
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [buttonStyle]="'secondary-black'"
+                    (click)="handleCancel()">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [disabled]="!form.valid"
+                    (click)="handleSubmit()"
+                    [attr.data-automation]="'submit'">
+                {{submitButtonLabel | translate}}
+            </button>
+        </div>
+    </div>
+</form>

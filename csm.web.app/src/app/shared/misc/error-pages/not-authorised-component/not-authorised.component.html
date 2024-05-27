@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2024
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-not-authorized">
+    <ss-supergraphic class="ss-supergraphic__header"></ss-supergraphic>
+    <div class="ss-not-authorized__logo" [attr.data-automation]="'not-authorized-logo'" (click)="routeToStartPage()">
+        <img src="../../assets/images/logo/rms_logo.svg" class="ss-not-authorized__logo-image" alt="bosch logo">
+    </div>
+    <div class="ss-not-authorized__main-content">
+        <img src="../../assets/images/errors/error-403.png" class="ss-not-authorized__main-image" alt="unauthorized logo">
+        <ss-no-items
+            [attr.data-automation]="'not-authorized-no-records'"
+            [buttonText]="'Generic_BackToProjects' | translate"
+            [buttonStyle]="'primary'"
+            [description]="'Unauthorized_Ongoing_Description' | translate"
+            [showButton]="true"
+            [title]="'Unauthorized_Ongoing_Title' | translate"
+            (clickButton)="routeToStartPage()">
+        </ss-no-items>
+    </div>
+</div>
+
+
+

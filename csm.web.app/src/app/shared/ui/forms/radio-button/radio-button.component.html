@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-radio-button" [attr.data-automation]="automationAttr" [ngClass]="inputClasses">
+    <div class="ss-radio-button__wrapper">
+        <input type="radio"
+                class="ss-radio-button__input"
+                [attr.data-automation]="'radio-button-input'"
+                [id]="name + value"
+                [name]="name"
+                [value]="value"
+                [disabled]="isDisabled"
+                [readonly]="isReadOnly"
+                [checked]="isChecked"
+                (click)="onInputSelect()">
+        <label class="ss-radio-button__label"
+                [for]="name + value"
+                [attr.data-automation]="'radio-button-label'">
+            <span class="ss-radio-button__span">
+                <ng-content></ng-content>
+            </span>
+        </label>
+    </div>
+</div>

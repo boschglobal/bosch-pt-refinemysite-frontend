@@ -1,0 +1,17 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+//IMPORTS NORMALIZE AND OTHER USEFUL RESET THAT SHOULD BE APPLIED WHEN THE REFACTOR GETS IN
+@import "override-variables";
+
+@import "node_modules/bootstrap/scss/bootstrap-reboot";
+@import "node_modules/bootstrap/scss/bootstrap-grid";
+@import "node_modules/bootstrap/scss/utilities/spacing";
+@import "node_modules/bootstrap/scss/utilities/screenreaders";
+
+@import "override";

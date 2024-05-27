@@ -1,0 +1,45 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<button
+    *ngIf="items.length"
+    ss-button
+    [buttonSize]="buttonSize"
+    [buttonStyle]="buttonStyle"
+    [buttonNoPadding]="buttonNoPadding"
+    ssFlyout
+    [flyoutId]="flyoutId"
+    [flyoutAlignment]="itemsAlignment"
+    [flyoutTemplate]="flyoutTemplate"
+    [title]="title"
+    [attr.data-automation]="'ss-dropdown-menu-button'">
+    <ss-icon
+        *ngIf="icon"
+        [name]="icon"
+        [attr.data-automation]="'ss-dropdown-menu-icon'">
+    </ss-icon>
+    <div class="ss-dropdown-menu__custom-content"
+         [attr.data-automation]="'ss-dropdown-menu-custom-content'">
+        <ng-content></ng-content>
+    </div>
+    <span *ngIf="label"
+          class="ss-dropdown-menu__label"
+          [attr.data-automation]="'ss-dropdown-menu-label'">
+        {{label | translate}}
+    </span>
+</button>
+
+<ng-template #flyoutTemplate>
+    <ss-menu-list
+        class="ss-dropdown-menu__menu-list"
+        [itemsList]="items"
+        [size]="menuItemSize"
+        (itemClicked)="handleItemClicked($event)"
+        (itemsListChange)="handleItemsListChange($event)">
+    </ss-menu-list>
+</ng-template>

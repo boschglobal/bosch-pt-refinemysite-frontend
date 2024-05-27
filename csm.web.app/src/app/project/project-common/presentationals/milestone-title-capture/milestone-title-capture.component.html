@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="form"
+      (ngSubmit)="handleSubmit()"
+      class="ss-milestone-title-capture">
+    <input #input
+           type="text"
+           formControlName="title"
+           [placeholder]="'Milestone_Create_TitlePlaceholder' | translate"
+           [maxLength]="maxLength"
+           [attr.data-automation]="'milestone-title-input'">
+    <button type="submit"
+            ss-button
+            [buttonSize]="'small'"
+            [buttonNoPadding]="true"
+            [disabled]="form.invalid"
+            (click)="handleSubmit()"
+            [attr.data-automation]="'milestone-title-button'">
+        <ss-icon [name]="'check'"
+                 [color]="'white'">
+        </ss-icon>
+    </button>
+</form>

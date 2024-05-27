@@ -1,0 +1,45 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-status-transition">
+    <div class="ss-status-transition__icon" [ngSwitch]="status">
+        <div *ngSwitchCase="isLoading"
+             class="ss-status-transition__icon--progress"
+             [@statusIconAnimation]>
+            <ss-loader [isLoading]="true"
+                       [attr.data-automation]="'status-loader'">
+            </ss-loader>
+        </div>
+        <div *ngSwitchCase="isCompleted"
+             [@statusIconAnimation]
+             [attr.data-automation]="'status-completed'">
+            <ss-icon [name]="'check-frame'" [dimension]="'large'" [color]="statusInProgressIconColor"></ss-icon>
+        </div>
+        <div *ngSwitchCase="isError"
+             [@statusIconAnimation]
+             [attr.data-automation]="'status-error'">
+            <ss-icon [name]="'error'" [dimension]="'large'" [color]="statusErrorIconColor"></ss-icon>
+        </div>
+    </div>
+
+    <h5 class="ss-status-transition__title"
+        [attr.data-automation]="'status-title'">{{translateTitle ? (title | translate) : title }}</h5>
+    <span class="ss-status-transition__description"
+          [attr.data-automation]="'status-description'">{{description}}
+        <button *ngIf="showCancelButton"
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                [buttonSize]="'tiny'"
+                (click)="handleCancel()"
+                [attr.data-automation]="'cancel-btn'">
+            <ss-icon [name]="'close'"
+                     [dimension]="'small'"></ss-icon>
+        </button>
+    </span>
+</section>

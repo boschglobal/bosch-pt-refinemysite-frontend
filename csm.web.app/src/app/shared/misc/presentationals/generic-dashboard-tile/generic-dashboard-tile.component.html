@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-generic-dashboard-tile"
+         (click)="tileClick.emit()"
+         [attr.data-automation]="'generic-dashboard-tile'">
+    <header>
+        <h3>{{title}}</h3>
+    </header>
+    <div class="ss-generic-dashboard-tile__main">
+        <ng-content></ng-content>
+    </div>
+    <footer>
+        <div class="ss-generic-dashboard-tile__statistic"
+             (click)="statisticClick.emit()"
+             [attr.data-automation]="'generic-dashboard-tile-statistic'">
+            <div>{{statistic}}</div>
+            <span>{{statisticLabel}}</span>
+        </div>
+        <ss-icon [name]="icon" [dimension]="96"></ss-icon>
+    </footer>
+</section>

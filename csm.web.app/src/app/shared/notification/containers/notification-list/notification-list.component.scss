@@ -1,0 +1,101 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/mixins";
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/index";
+
+$notification-list-width: 360px;
+$notification-list-max-height: 400px;
+
+.ss-notification-list {
+
+    &__panel {
+        @include shadow-2;
+        display: flex;
+        background: $white;
+        border: 1px solid $light_grey_50;
+        position: fixed;
+        flex-direction: column;
+        z-index: $z-index_1000;
+        right: auto;
+        width: 100%;
+        max-height: 100%;
+        left: 0;
+        top: $supergraphic-height;
+        bottom: 0;
+
+        @include media-breakpoint-up(sm) {
+            right: $base-dimension;
+            width: $notification-list-width;
+            max-height: $notification-list-max-height;
+            left: initial;
+            top: initial;
+            bottom: initial;
+        }
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        flex-direction: row;
+        border-bottom: 1px solid $light_grey_25;
+        height: 48px;
+    }
+
+    &__close-button {
+
+        @include media-breakpoint-up(sm) {
+            display: none;
+        }
+    }
+
+    &__title {
+        @include subtitle-2();
+        padding-left: $base-dimension;
+
+        @include media-breakpoint-up(sm) {
+            padding-left: $base-dimension--x2;
+        }
+    }
+
+    &__no-items {
+        display: flex;
+        height: $notification-list-width;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__list-container {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    &__list-wrapper {
+        margin: 0;
+    }
+
+    &__loader {
+        height: auto;
+    }
+
+    &__header + &__loader {
+        height: $notification-list-width;
+    }
+
+    &__load-button {
+        box-shadow: inset 0px -1px 0px 0px $light_grey_12_5;
+        width: 100%;
+
+        &-icon {
+            margin-right: $base-dimension;
+        }
+    }
+}

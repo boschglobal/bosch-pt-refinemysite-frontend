@@ -1,0 +1,166 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "../../../../shared/ui/calendar/contants/calendar.contants";
+
+$slotWidth: $daycard-width;
+$slot-preview-background-color--valid: $light_blue_a10;
+$slot-preview-background-color--invalid: rgba(226, 0, 21, 0.1);
+$slot-preview-border-color--valid: $light_blue;
+$slot-preview-border-color--invalid: $red;
+
+
+.ss-task-daycards {
+    $this: &;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+
+    &__week {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding-right: $week-spacer;
+
+        &--expanded {
+            min-width: $expanded-week-width;
+            max-width: $expanded-week-width;
+        }
+    }
+
+    &__indicators {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &__indicator {
+        background: $white;
+        box-shadow: inset 0 -1px 0 0 $light_grey;
+
+        &--out-of-scope {
+            flex-basis: 100%;
+        }
+    }
+
+    ss-day-card-indicator:first-of-type {
+        box-shadow: inset 1px 0 0 0 $light_grey,
+        inset 0 -1px 0 0 $light_grey;
+    }
+
+    ss-day-card-indicator:last-of-type {
+        box-shadow: inset -1px 0 0 0 $light_grey,
+        inset 0 -1px 0 0 $light_grey;
+    }
+
+    ss-day-card-indicator:first-of-type:last-of-type {
+        box-shadow: inset -1px 0 0 0 $light_grey,
+        inset 1px 0 0 0 $light_grey,
+        inset 0 -1px 0 0 $light_grey;
+    }
+
+    &__daycard {
+        display: inline-flex;
+        width: $slotWidth;
+        height: $slotWidth;
+        background: $white;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid;
+        border-color: $light_grey_25 $light_grey_25 $light_grey_75 $light_grey_25;
+
+        &--out-of-scope {
+            border: none;
+        }
+
+        &--cant-create,
+        &--out-of-scope {
+            background: transparent;
+            border-color: $light_grey_50;
+        }
+
+        &--can-create {
+            background: $white;
+            border-color: $light_grey_12_5;
+            transition: background ease-in-out 150ms;
+
+            #{$this}:not(#{$this}--dragging) &:hover {
+                background: $light_grey_25;
+            }
+        }
+
+        &--can-create#{&}--is-non-working-day {
+            background: $light_grey_50;
+
+            #{$this}:not(#{$this}--dragging) &:hover {
+                background: $light_grey_75;
+            }
+        }
+
+        &--is-selected {
+            border-color: $light_blue_50;
+        }
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    &__placeholder {
+        position: absolute;
+        border: 2px dashed;
+        width: 100%;
+        height: 100%;
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        z-index: $z-index_1;
+
+        &--valid {
+            background: $slot-preview-background-color--valid;
+            border-color: $slot-preview-border-color--valid;
+        }
+
+        &--invalid {
+            background: $slot-preview-background-color--invalid;
+            border-color: $slot-preview-border-color--invalid;
+        }
+
+        &--copying {
+            cursor: copy;
+        }
+    }
+
+    &--ghost {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0.4 !important;
+        pointer-events: none;
+    }
+}
+
+.cdk-drag-preview {
+    @include dragging-shadow;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.ss-task-daycards.cdk-drop-list-dragging .ss-task-daycards__daycard:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

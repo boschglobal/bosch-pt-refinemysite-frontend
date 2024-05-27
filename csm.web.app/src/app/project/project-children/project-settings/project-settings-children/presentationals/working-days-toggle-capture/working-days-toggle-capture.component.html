@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-working-days-toggle-capture">
+    <h4 class="ss-working-days-toggle-capture__title">{{'WorkingDays_WorkOnNonWorkingDays_Title' | translate}}</h4>
+    <p class="ss-working-days-toggle-capture__description">{{'WorkingDays_WorkOnNonWorkingDays_Description' | translate}}</p>
+    <form [formGroup]="form">
+        <ss-switch-button
+            [type]="'normal'"
+            [contentInverted]="true"
+            [formControlName]="'allowWorkOnNonWorkingDays'"
+            (onSwitch)="handleSwitch($event)"
+            [ssMonitorClickAction]="monitoringClickActionName"
+            [ssMonitorClickActionContext]="{allowWorkOnNonWorkingDays: !form.controls.allowWorkOnNonWorkingDays.value}"
+            [attr.data-automation]="'toggle'">
+            {{'WorkingDays_WorkOnNonWorkingDays_Switch_Label' | translate}}
+        </ss-switch-button>
+    </form>
+</div>

@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+<div [formGroup]="form"
+     class="ss-quick-filter-capture">
+        <ss-input-text
+            #nameInput
+            [automationAttr]="'name'"
+            [name]="'name'"
+            [label]="'Generic_FilterName' | translate"
+            [maxCharacter]="100"
+            [isRequired]="true"
+            [control]="form.controls.name"
+            [formControlName]="'name'">
+        </ss-input-text>
+</div>
+
+<ss-project-filter-capture #filterCapture
+    [milestoneFilters]="milestoneFilters"
+    [taskFilters]="taskFilters"
+    [context]="context"
+    (formValidity)="handleFilterCaptureFormValidityChange($event)">
+</ss-project-filter-capture>

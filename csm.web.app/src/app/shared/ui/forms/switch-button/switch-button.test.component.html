@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-switch-button
+            [automationAttr]="defaultInputState.switch.automationAttr"
+            [icon]="defaultInputState.switch.icon"
+            [control]="formGroup.get(defaultInputState.switch.controlName)"
+            formControlName="switch">
+    </ss-switch-button>
+</form>

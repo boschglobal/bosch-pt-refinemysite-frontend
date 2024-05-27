@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-milestone
+    [isDimmedOut]="isDimmedOut"
+    [canDragMilestone]="canDragMilestone"
+    [canSelectMilestone]="canSelectMilestone"
+    [focusedMilestoneId]="focusedMilestoneId"
+    [milestone]="milestone"
+    [selectedMilestoneIds]="selectedMilestoneIds"
+    (selectMilestone)="handleSelect($event)">
+</ss-milestone>

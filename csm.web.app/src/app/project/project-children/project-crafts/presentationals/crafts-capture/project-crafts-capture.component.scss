@@ -1,0 +1,88 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-project-crafts-capture {
+    padding: $base-dimension--x2;
+
+    &--edit {
+        padding: 0;
+    }
+
+    &__buttons--edit {
+        @include media-breakpoint-up(lg) {
+            margin-top: 12px;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
+        }
+    }
+
+    &__inputs,
+    &__inputs--edit {
+        display: flex;
+        flex-direction: column;
+
+        &-wrapper {
+            display: flex;
+            width: 100%;
+
+            & ss-input-text {
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
+        & ss-input-colorpicker {
+            margin-right: $base-dimension--x2;
+        }
+
+        & ss-input-number {
+            min-width: 180px;
+        }
+
+        & ss-input-autocomplete {
+            width: 100%;
+
+            @include media-breakpoint-up(sm) {
+                min-width: 240px;
+                width: calc(100% - #{$base-dimension--x8});
+            }
+        }
+
+        @include media-breakpoint-up(md) {
+            width: 100%;
+        }
+
+        @include media-breakpoint-up(sm) {
+            flex-direction: row;
+        }
+
+        &-index {
+            margin-right: $base-dimension;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__inputs-wrapper {
+        @include media-breakpoint-up(sm) {
+            margin-right: $base-dimension--x2;
+        }
+    }
+
+    &__buttons--edit,
+    &__inputs--edit {
+        width: 100%;
+
+        @include media-breakpoint-up(md) {
+            width: auto;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-multiple-selection-toolbar-confirmation">
+    <button class="ss-button ss-button--small ss-button--no-padding ss-button--secondary-clear-grey"
+            (click)="handleDismiss()">
+        <ss-icon name="close"></ss-icon>
+    </button>
+    <div class="ss-multiple-selection-toolbar-confirmation__items-label">
+        <span *ngIf="!hasItems && !hadItemsBefore"
+              class="ss-multiple-selection-toolbar-confirmation__items-label--empty"
+              [attr.data-automation]="'ss-multiple-selection-toolbar-items-label-empty'">
+            {{ emptyItemsLabel | translate }}
+        </span>
+        <span *ngIf="hasItems || hadItemsBefore"
+              class="ss-multiple-selection-toolbar-confirmation__items-label--selected"
+              [attr.data-automation]="'ss-multiple-selection-toolbar-items-label-selected'">
+                        {{ (isSingularItemsLabel ? selectedItemLabel : selectedItemsLabel) | translate:{itemsCount: itemsCount} }}
+        </span>
+    </div>
+    <button
+        ss-button
+        [buttonSize]="'small'"
+        [buttonNoPadding]="true"
+        (click)="handleSubmit()"
+        [disabled]="!hasItems && !hadItemsBefore"
+        [attr.data-automation]="'ss-multiple-selection-toolbar-submit-btn'">
+        <ss-icon [name]="'check'"
+                 [color]="'white'">
+        </ss-icon>
+    </button>
+</div>

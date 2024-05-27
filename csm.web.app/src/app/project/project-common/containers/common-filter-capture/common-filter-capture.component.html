@@ -1,0 +1,50 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-common-filter-capture"
+     [formGroup]="form">
+    <span class="ss-common-filter-capture__title">{{'Task_TimePeriod_Label' | translate}}</span>
+    <div *ngIf="showWholeProjectDurationOption"
+         class="ss-common-filter-capture__whole-duration"
+         [attr.data-automation]="'common-filter-capture-whole-duration'">
+        <ss-radio-button
+            [name]="'wholeProjectDuration'"
+            [value]="true"
+            [dimension]="'small'"
+            [control]="form.controls.wholeProjectDuration"
+            [formControlName]="'wholeProjectDuration'">
+            {{'Project_Filter_EntireProject' | translate }}
+        </ss-radio-button>
+        <ss-radio-button
+            [name]="'wholeProjectDuration'"
+            [value]="false"
+            [dimension]="'small'"
+            [control]="form.controls.wholeProjectDuration"
+            [formControlName]="'wholeProjectDuration'">
+            {{'Project_Filter_CustomTimeRange' | translate }}
+        </ss-radio-button>
+    </div>
+    <ss-input-datepicker
+        [selectRange]="true"
+        [automationAttr]="'range'"
+        [name]="'range'"
+        [rangeLabel]="{start: 'Generic_From' | translate, end: 'Generic_To' | translate}"
+        [displayErrors]="true"
+        [isDisabled]="form.controls.range.disabled"
+        [control]="form.controls.range"
+        [formControlName]="'range'">
+    </ss-input-datepicker>
+    <ss-input-multiple-select
+        [name]="'workarea'"
+        [options]="workAreaList"
+        [hasSelectAllOption]="true"
+        [label]="'Generic_WorkingArea' | translate"
+        [control]="form.controls.workAreaIds"
+        [formControlName]="'workAreaIds'">
+    </ss-input-multiple-select>
+</div>

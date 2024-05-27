@@ -1,0 +1,31 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-collapsible-select
+    [attr.data-automation]="'collapsible-select'"
+    [label]="label"
+    [value]="value"
+    (selectAll)="handleSelectAll($event)"
+    (deselectAll)="handleDeselectAll($event)">
+    <p>Collapsible dummy content</p>
+
+    <ss-checkbox-button
+        [name]="'checkbox1'"
+        [value]="checkbox1"
+        (onChange)="toggleCheckbox1($event)">
+        Checkbox 1
+    </ss-checkbox-button>
+    <ss-checkbox-button
+        [attr.data-automation]="'test-checkbox'"
+        [name]="'checkbox2'"
+        [value]="checkbox2"
+        (onChange)="toggleCheckbox2($event)"
+        >
+        Checkbox 2
+    </ss-checkbox-button>
+</ss-collapsible-select>

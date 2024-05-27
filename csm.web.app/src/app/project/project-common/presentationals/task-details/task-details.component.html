@@ -1,0 +1,37 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="canShowDetails"
+         class="ss-task-details"
+         [attr.data-automation]="'task-details'">
+    <h6 class="ss-task-details__title">{{ 'Generic_Description' | translate }}</h6>
+    <div class="ss-task-details__content">
+        <ss-icon class="ss-task-details__icon"
+                 [name]="'notes-frame'"
+                 [dimension]="'normal'">
+        </ss-icon>
+        <div class="ss-task-details__content__wrapper">
+            <button *ngIf="!hasDescription && canUpdate"
+                    class="ss-button ss-button--secondary-clear-blue ss-task-details__button"
+                    (click)="openEditTaskModal()"
+                    [attr.data-automation]="'task-details-button-add-description'">
+                <span>{{ 'Generic_AddDescription' | translate }}</span>
+            </button>
+            <div *ngIf="hasDescription || hasPictures"
+                 class="ss-task-details__content__details"
+                 [attr.data-automation]="'task-details-text-image-article'">
+                <ss-text-image-article
+                    [picturePerRow]="picturesPerRow"
+                    [pictureLinks]="pictureLinks"
+                    [textContent]="task.description"
+                    [textMaxSize]="textMaxSize"
+                    (clickThumbnail)="openTheater($event)"></ss-text-image-article>
+            </div>
+        </div>
+    </div>
+</section>

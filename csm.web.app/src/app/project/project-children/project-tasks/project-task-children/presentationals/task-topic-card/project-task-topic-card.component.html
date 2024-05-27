@@ -1,0 +1,67 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<article class="ss-project-task-topic-card"
+         [attr.data-automation]="'project-task-topic-card'">
+    <div *ngIf="topic"
+        class="ss-project-task-topic-card__topic">
+        <header>
+            <div class="ss-project-task-topic-card__info">
+                <ss-marker
+                    class="ss-project-task-topic-card__marker"
+                    [isVisible]="topic.isNew"
+                    [isCritical]="topic.isCritical"
+                    [triggerAnimation]="false"
+                    [attr.data-automation]="'project-task-topic-card-marker'">
+                </ss-marker>
+                <ss-card-user class="ss-project-task-topic-card__user-card"
+                    [size]="'small'"
+                    [user]="topic.createdBy"
+                    [description]="topic.creationDate"
+                    [attr.data-automation]="'project-task-topic-card-user'">
+                </ss-card-user>
+            </div>
+            <div class="ss-project-task-topic-card__topic-actions">
+                <ss-icon *ngIf="topic.isCritical"
+                    [name]="'critical'"
+                    [color]="criticalityColor"
+                    [attr.data-automation]="'project-task-topic-criticality-icon'">
+                </ss-icon>
+                <ss-dropdown-menu
+                    [buttonSize]="'small'"
+                    [icon]="'options'"
+                    [items]="dropdownItems"
+                    (itemClicked)="handleDropdownItemClicked($event)"
+                    [attr.data-automation]="'project-task-topic-card-options'">
+                </ss-dropdown-menu>
+            </div>
+        </header>
+        <div class="ss-project-task-topic-card__topic-content">
+            <ss-text-image-article
+                [picturePerRow]="picturePerRow"
+                [textMaxSize]="textMaxSize"
+                [pictureLinks]="pictureLinks"
+                [textContent]="topic.description"
+                (clickThumbnail)="openTheater($event)">
+            </ss-text-image-article>
+        </div>
+        <div class="ss-project-task-topic-card__topic-replies">
+            <ss-reply-actions
+                [isReplyListOpen]="isReplyListCollapsed"
+                [replyAmount]="topic.replyAmount"
+                [hasMarker]="topic.hasNewReplies"
+                (clickedReply)="clickedReplies()">
+            </ss-reply-actions>
+        </div>
+    </div>
+    <ss-project-task-message-list
+        *ngIf="!isReplyListCollapsed"
+        [inputFilesSize]="inputFilesSize"
+        [topicId]="topic.id"
+        [textMaxSize]="textMaxSize"></ss-project-task-message-list>
+</article>

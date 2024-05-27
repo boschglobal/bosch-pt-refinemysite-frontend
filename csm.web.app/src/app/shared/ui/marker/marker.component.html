@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div
+    class="ss-marker"
+    aria-hidden="true"
+    [attr.data-automation]="'marker'"
+    [ngClass]="{
+        'ss-marker--critical': isCritical,
+        'ss-marker--small': size === 'small',
+        'ss-marker--with-border': withBorder
+        }"
+    [@.disabled]="!triggerAnimation"
+    [@bulgeInOut]="isVisible ? 'bulge-in' : 'bulge-out'">
+</div>

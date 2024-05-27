@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-constraints">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-task-constraints-capture
+        [projectActiveConstraints]="projectActiveConstraints"
+        [mismatchedConstraints]="mismatchedConstraints"
+        [taskConstraints]="taskConstraints"
+        (closeCapture)="handleCancel()"
+        (submitCapture)="handleSubmit($event)">
+    </ss-task-constraints-capture>
+</div>

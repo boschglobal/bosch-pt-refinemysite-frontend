@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="pages?.length > 0"
+     class="ss-paginator-pages">
+    <div class="ss-paginator-pages__shortcut ss-paginator-pages__shortcut--left">
+        <ss-icon (click)="selectPage(currentPage - 1, $event)"
+                 [name]="'arrow'"
+                 [dimension]="'small'"
+                 class="ss-paginator-pages__shortcut--previous"
+                 [class.ss-paginator-pages__shortcut--disabled]="currentPage === 0">
+        </ss-icon>
+        <span *ngIf="hasFirstPage"
+              class="ss-paginator-pages__shortcut--first ss-paginator-pages__page"
+              (click)="selectPage(0, $event)">1</span>
+    </div>
+    <div *ngIf="hasLeftEllipsis" class="ss-paginator-pages__points ss-paginator-pages__points--left">
+        <span>...</span>
+    </div>
+    <div class="ss-paginator-pages__page-wrapper">
+        <span *ngFor="let page of pages"
+              (click)="selectPage(page, $event)"
+              [class.ss-paginator-pages__page--active]="page === currentPage"
+              [attr.data-automation]="'paginator-page-' + page"
+              class="ss-paginator-pages__page">{{page + 1}}</span>
+    </div>
+    <div *ngIf="hasRightEllipsis" class="ss-paginator-pages__points ss-paginator-pages__points--right">
+        <span>...</span>
+    </div>
+    <div class="ss-paginator-pages__shortcut ss-paginator-pages__shortcut--right">
+        <span *ngIf="hasLastPage"
+              class="ss-paginator-pages__shortcut ss-paginator-pages__page"
+              (click)="selectPage(totalPages - 1, $event)">{{totalPages}}</span>
+        <ss-icon (click)="selectPage(currentPage + 1, $event)"
+                 [name]="'arrow'"
+                 [dimension]="'small'"
+                 [rotate]="180"
+                 class="ss-paginator-pages__shortcut ss-paginator-pages__shortcut--next"
+                 [class.ss-paginator-pages__shortcut--disabled]="currentPage === totalPages - 1">
+        </ss-icon>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="canShowDayCard"
+     class="ss-day-card-status">
+    <div class="ss-day-card-status__information">
+        <ss-icon [name]="dayCardStatusIcon.name"
+                 [color]="dayCardStatusIcon.color"></ss-icon>
+        <div>
+            <p class="ss-day-card-status__information-label">
+                {{dayCardStatusLabel | translate}}
+            </p>
+            <p *ngIf="dayCardStatusReason"
+               class="ss-day-card-status__information-reason"
+               [attr.data-automation]="getDataAutomationAttr('reason')">
+                {{dayCardStatusReason | translate}}
+            </p>
+            <p *ngIf="canShowMetaInformation"
+               class="ss-day-card-status__information-meta"
+               [attr.data-automation]="getDataAutomationAttr('meta-information')">
+                {{dayCardStatusDate}}, {{dayCardStatusActor}}
+            </p>
+            <button *ngIf="canReset"
+                    (click)="handleReset()"
+                    class="ss-button ss-button--secondary-clear-blue ss-day-card-status__reset"
+                    [attr.data-automation]="getDataAutomationAttr('reset')">
+                {{'Generic_Reset' | translate}}
+            </button>
+        </div>
+    </div>
+    <div class="ss-day-card-status__actions"
+         *ngIf="canCancel || canComplete || canApprove">
+        <button *ngIf="canCancel"
+                (click)="handleCancel()"
+                class="ss-button ss-button--small ss-button--secondary-ghost-grey ss-day-card-status__cancel"
+                [attr.data-automation]="getDataAutomationAttr('cancel')">
+            <ss-icon [name]="getStatusIcon('NOTDONE').name"></ss-icon>
+            <span>{{getStatusLabel('NOTDONE') | translate}}</span>
+        </button>
+        <button *ngIf="canComplete"
+                (click)="handleComplete()"
+                class="ss-button ss-button--small ss-button--secondary-ghost-grey ss-day-card-status__complete"
+                [attr.data-automation]="getDataAutomationAttr('complete')">
+            <ss-icon [name]="getStatusIcon('DONE').name"></ss-icon>
+            <span>{{getStatusLabel('DONE') | translate}}</span>
+        </button>
+        <button *ngIf="canApprove"
+                (click)="handleApprove()"
+                class="ss-button ss-button--small ss-button--secondary-ghost-grey ss-day-card-status__approve"
+                [attr.data-automation]="getDataAutomationAttr('approve')">
+            <ss-icon [name]="getStatusIcon('APPROVED').name"></ss-icon>
+            <span>{{getStatusLabel('APPROVED') | translate}}</span>
+        </button>
+    </div>
+</div>

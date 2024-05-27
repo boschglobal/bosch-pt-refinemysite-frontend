@@ -1,0 +1,33 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-milestone-filter-capture"
+     [formGroup]="form">
+    <ss-collapsible-select
+        [value]="collapsibleSelectValue"
+        [expanded]="true"
+        [label]="'Generic_Milestones' | translate"
+        [attr.data-automation]="'collapsible-select'"
+        (selectAll)="handleSelect(true)"
+        (deselectAll)="handleSelect(false)">
+        <ss-input-multiple-select
+            class="ss-milestone-filter-capture__input"
+            [name]="'milestone-type'"
+            [options]="options"
+            [hasSelectAllOption]="true"
+            [label]="'Milestone_Type' | translate"
+            [control]="form.controls.selectedIds"
+            [formControlName]="'selectedIds'"
+            [attr.data-automation]="'input-multi-select'">
+        </ss-input-multiple-select>
+    </ss-collapsible-select>
+</div>
+
+<ng-template #milestoneMarker let-data>
+    <ss-milestone-marker class="ss-milestone-filter-capture__marker" [milestoneMarker]="data"></ss-milestone-marker>
+</ng-template>

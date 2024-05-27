@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-modal [id]="privacySettingsModalId"
+          [size]="'medium'"
+          [closeable]="false">
+    <ng-template #body>
+        <ss-privacy-settings
+            [privacySettings]="privacySettings"
+            (savePrivacySettings)="handleSave($event)">
+        </ss-privacy-settings>
+    </ng-template>
+</ss-modal>

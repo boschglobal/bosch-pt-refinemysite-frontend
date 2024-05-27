@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-kpis-time-filters">
+    <span class="ss-project-kpis-time-filters__label">{{ 'Generic_Week' | translate }} {{ currentTimeFiltersInWeeks }}</span>
+    <div class="ss-project-kpis-time-filters__filter"
+         *ssIfMediaQuery="['lg', 'xl', 'sm', 'md']">
+        <ss-dropdown-select
+            [items]="kpisTimeFiltersDurationList"
+            (itemClicked)="timeFiltersOptionChange($event)"
+            [attr.data-automation]="'project-kpis-time-filters__dropdown-select'">
+        </ss-dropdown-select>
+    </div>
+    <ng-container *ssIfMediaQuery="['xs']">
+        <span class="ss-project-kpis-time-filters__option-label"
+              [attr.data-automation]="'project-kpis-time-filters__option-label'">{{ timeFiltersCurrentOption.label | translate }}</span>
+    </ng-container>
+</div>

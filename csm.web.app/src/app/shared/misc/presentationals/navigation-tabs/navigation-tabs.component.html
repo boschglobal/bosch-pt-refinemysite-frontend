@@ -1,0 +1,24 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-navigation-tabs" [attr.data-automation]="'navigation-tabs'">
+    <li *ngFor="let route of routes; let i = index"
+        [ngClass]="{'ss-navigation-tabs__tab--disabled': route.disabled}"
+        class="ss-navigation-tabs__tab"
+        [attr.data-automation]="'tab-wrapper-' + i">
+        <a [routerLink]="getNavigationPath(route)"
+           [queryParams]="route.queryParams"
+           routerLinkActive="ss-navigation-tabs__tab--active"
+           [attr.data-automation]="'tab-' + i">
+            <span *ngIf="route.hasMarker"
+                  [attr.data-automation]="'tab-with-marker'"
+                  class="ss-navigation-tabs__marker"></span>
+            <span>{{route.label | translate}}</span>
+        </a>
+    </li>
+</ul>

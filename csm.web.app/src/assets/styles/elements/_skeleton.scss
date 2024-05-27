@@ -1,0 +1,13 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/mixins";
+
+.ss-skeleton {
+    @include skeleton-loading();
+}

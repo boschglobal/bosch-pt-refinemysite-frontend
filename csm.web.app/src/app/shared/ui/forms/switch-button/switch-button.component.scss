@@ -1,0 +1,123 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+
+$disabled-color: $light_grey_75;
+$normal-color: $dark_blue;
+$critical-color: $red;
+$size: 60px;
+$border: 2px;
+
+.ss-switch-button {
+    $this: &;
+    display: inline-block;
+
+    &__input {
+        display: none;
+    }
+
+    &__label {
+        display: inline-flex;
+        height: ($size * 0.5) + $border;
+        margin-bottom: 0 !important;
+    }
+
+    &__content:not(:empty) {
+        @include body-2();
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        word-break: break-word;
+        margin-left: $base-dimension--x2;
+    }
+
+    &--inverted-content {
+        display: flex;
+        flex-direction: column;
+
+        #{$this}__content {
+            margin-right: $base-dimension--x2;
+            margin-left: 0;
+            order: -1;
+        }
+    }
+
+    &__button {
+        position: relative;
+        display: block;
+        width: $size;
+        height: ($size * 0.5) + $border;
+        background-color: $light_grey_75;
+        border-radius: $size;
+        cursor: pointer;
+
+        &:before, &:after {
+            position: absolute;
+            top: $border * 0.5;
+            left: $border * 0.5;
+            display: block;
+            width: $size * 0.5;
+            height: $size * 0.5;
+            content: " ";
+            border-radius: $size;
+            transition: all .25s ease-in-out;
+        }
+
+        &:after {
+            left: $border;
+            background: $white;
+            width: ($size * 0.5) - $border;
+            height: ($size * 0.5) - $border;
+            margin: ($border * 0.5) 0;
+        }
+
+        ss-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            right: auto;
+            transform: translateY(-50%);
+            fill: $white;
+        }
+    }
+
+
+    &__input:checked + #{$this}__button {
+        &:before {
+            width: $size - $border;
+        }
+
+        &:after {
+            left: $size * 0.5;
+        }
+
+        ss-icon {
+            right: 50%;
+            left: auto;
+        }
+    }
+
+    &--normal &__input:checked + #{$this}__button {
+        background-color: $normal-color;
+
+        &:before {
+            background-color: $normal-color;
+        }
+    }
+
+    &--critical &__input:checked + #{$this}__button {
+        background-color: $critical-color;
+
+        &:before {
+            background-color: $critical-color;
+        }
+    }
+}

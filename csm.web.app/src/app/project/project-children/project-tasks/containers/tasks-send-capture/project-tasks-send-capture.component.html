@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-send-capture">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <span>{{'Task_Send_Message' | translate}}</span>
+    <div class="row">
+        <div class="col-12 ss-button-group">
+            <button type="button"
+                    (click)="handleCancel()"
+                    class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                    [attr.data-automation]="'cancel'">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'submit'"
+                    [disabled]="!selectedTasksNumber"
+                    (click)="onSubmitForm()">
+                {{'Generic_Send' | translate}} ({{selectedTasksNumber}})
+            </button>
+        </div>
+    </div>
+</div>

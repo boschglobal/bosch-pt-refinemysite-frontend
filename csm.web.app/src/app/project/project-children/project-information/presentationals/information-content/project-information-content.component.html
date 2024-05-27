@@ -1,0 +1,37 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section *ngIf="project">
+    <ss-generic-banner
+        [title]="project.title"
+        [subtitle]="project.projectNumber"
+        [description]="project.description"
+        [picture]="getProjectPicture"
+        [showFullDescription]="true">
+    </ss-generic-banner>
+    <div class="ss-project-information row container-fluid">
+        <div class="col-md-6">
+            <ss-project-card [title]="'Generic_Details'">
+                <div *ngFor="let row of projectDetailsInformation" class="col-lg-6">
+                    <div class="ss-panel__content-row" [attr.data-automation]="'project-card-row'">
+                        <h6>{{row.label | translate}}</h6>
+                        <span *ngIf="!row.translate">
+                            {{row.description ? row.description : '-'}}
+                        </span>
+                        <span *ngIf="row.translate">
+                            {{row.description ? (row.description | translate) : '-'}}
+                        </span>
+                    </div>
+                </div>
+            </ss-project-card>
+        </div>
+        <div *ngIf="contacts.length > 0" class="col-md-6">
+            <ss-project-card-contact [contacts]="contacts" (contactClicked)="navigateToUserProfile($event)"></ss-project-card-contact>
+        </div>
+    </div>
+</section>

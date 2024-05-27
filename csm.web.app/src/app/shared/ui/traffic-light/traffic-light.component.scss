@@ -1,0 +1,31 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+.ss-traffic-light {
+
+    svg {
+        display: block;
+    }
+
+    &--empty {
+        padding: $base-dimension--x025 * 0.5;
+
+        svg {
+            overflow: visible;
+
+            circle {
+                fill: $white;
+                stroke: $light_grey_50;
+                stroke-width: $base-dimension--x025;
+                vector-effect: non-scaling-stroke;
+            }
+        }
+    }
+
+}

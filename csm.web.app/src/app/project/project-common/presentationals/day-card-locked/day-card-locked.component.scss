@@ -1,0 +1,21 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+:host {
+    display: flex;
+    width: 100%;
+}
+
+.ss-day-card-locked {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $light_grey_50;
+    width: 100%;
+}

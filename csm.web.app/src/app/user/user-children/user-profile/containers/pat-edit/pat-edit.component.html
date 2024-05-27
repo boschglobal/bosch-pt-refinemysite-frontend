@@ -1,0 +1,16 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-pat-edit">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-pat-capture [defaultValue]="patFormData"
+                    [mode]="modalType"
+                    (canceled)="handleClose()"
+                    (submitted)="handleSubmit($event)">
+    </ss-pat-capture>
+</div>

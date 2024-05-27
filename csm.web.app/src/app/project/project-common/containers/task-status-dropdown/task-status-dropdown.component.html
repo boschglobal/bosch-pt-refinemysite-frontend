@@ -1,0 +1,43 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-status-dropdown"
+     [ngClass]="{'ss-task-status-dropdown--disabled': disabled}"
+     [attr.data-automation]="'ss-task-status-dropdown'">
+    <ss-dropdown-menu
+        *ngIf="dropdownItems.length"
+        class="ss-task-status-dropdown__dropdown"
+        [buttonSize]="'tiny'"
+        [menuItemSize]="'small'"
+        [buttonStyle]="'secondary'"
+        [buttonNoPadding]="false"
+        [itemsAlignment]="'start'"
+        [items]="dropdownItems"
+        (itemClicked)="handleDropdownItemClicked($event)"
+        (flyoutStateChange)="handleFlyoutStateChange($event)"
+        [attr.data-automation]="'ss-task-status-dropdown-dropdown'">
+        <span>{{label | translate}}</span>
+        <ss-icon
+            [dimension]="'small'"
+            [name]="'arrow'"
+            [rotate]="iconRotation">
+        </ss-icon>
+    </ss-dropdown-menu>
+    <span
+        *ngIf="!dropdownItems.length"
+        class="ss-task-status-dropdown__label"
+        [attr.data-automation]="'ss-task-status-dropdown-label'">{{label | translate}}</span>
+</div>
+
+<ng-template #taskStatusIconTemplate let-item>
+    <ss-task-status-icon [status]="item.value"></ss-task-status-icon>
+</ng-template>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>

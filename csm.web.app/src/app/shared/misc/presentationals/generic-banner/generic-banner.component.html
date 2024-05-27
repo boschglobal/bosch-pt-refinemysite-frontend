@@ -1,0 +1,39 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-generic-banner">
+    <div class="ss-generic-banner__picture"
+         [ngClass]="{'ss-generic-banner__picture-border': isPictureBorder}"
+         [attr.data-automation]="'generic-banner-picture'"
+         [ssBackgroundImage]="picture"></div>
+    <div class="ss-generic-banner__content-holder">
+        <div class="ss-generic-banner__content">
+            <h2 class="ss-generic-banner__title"
+                [attr.data-automation]="'generic-banner-title'">
+                {{title}}
+            </h2>
+            <h3 class="ss-generic-banner__subtitle"
+                [attr.data-automation]="'generic-banner-subtitle'">
+                {{subtitle}}
+            </h3>
+            <ss-text-link *ngIf="description"
+                          class="ss-generic-banner__description"
+                          [ngClass]="{'ss-generic-banner__description--short': !showFullDescription}"
+                          [attr.data-automation]="'generic-banner-description'"
+                          [text]="description"></ss-text-link>
+        </div>
+        <ss-button-link *ngIf="link"
+                        class="ss-generic-banner__link"
+                        [link]="link"
+                        [attr.data-automation]="'generic-banner-link'">
+        </ss-button-link>
+    </div>
+    <div class="ss-generic-banner__actions">
+        <ng-content select="[actions]"></ng-content>
+    </div>
+</section>

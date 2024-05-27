@@ -1,0 +1,150 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-profile">
+    <ss-toolbar *ngIf="showToolbar" [title]="'Generic_MyProfileLabel'" ssSticky [stickyTop]="54" [stickyId]="'toolbar'"
+                [stickyBorderBottom]="true">
+        <div actions>
+            <ss-collapsible-button-list>
+                <div inline>
+                    <button ss-button
+                            [buttonSize]="'small'"
+                            [buttonStyle]="'tertiary-black'"
+                            [buttonNoPadding]="true"
+                            [title]="'Generic_EditProfileLabel' | translate"
+                            [routerLink]="editProfilePageUrl"
+                            [attr.data-automation]="'edit-user-button'">
+                        <ss-icon [name]="'edit'" [dimension]="'normal'" [color]="toolbarInlineButtonsColor"></ss-icon>
+                    </button>
+                </div>
+            </ss-collapsible-button-list>
+        </div>
+    </ss-toolbar>
+    <ss-generic-banner [title]="profileModel.name"
+                       [subtitle]="profileModel.position ? profileModel.position : (profileModel.role ? (getRoleKey | translate) : null)"
+                       [description]="profileModel.crafts"
+                       [picture]="profileModel.picture"
+                       [isPictureBorder]="true"
+                       [showFullDescription]="true">
+    </ss-generic-banner>
+    <div class="ss-profile__panel"
+         [ngClass]="{'ss-profile__panel--own-profile': ownProfile}">
+        <div *ngIf="ownProfile"
+             class="ss-panel ss-profile__panel-language"
+             [attr.data-automation]="'profile-language-panel'">
+            <div class="ss-panel__title">
+                <h1>{{'Generic_LanguageAndCountry' | translate}}</h1>
+            </div>
+            <div class="ss-panel__content">
+                <div class="row">
+                    <div class="ss-panel__content-row">
+                        <h6>{{'Generic_Language' | translate}}</h6>
+                        <span *ngIf="profileModel.locale"
+                              [attr.data-automation]="'user-language'">
+                            {{getLanguageKey | translate}}</span>
+                        <a *ngIf="!profileModel.locale"
+                           class="ss-button ss-button--secondary-clear-blue"
+                           [routerLink]="editProfilePageUrl"
+                           [queryParams]="{focus: 'language'}"
+                           [attr.data-automation]="'set-language-button'">
+                            {{'Generic_SetLanguage' | translate}}
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="ss-panel__content-row">
+                        <h6>{{'Generic_Country' | translate}}</h6>
+                        <span *ngIf="profileModel.country"
+                              [attr.data-automation]="'user-country'">
+                            {{getCountryKey | translate}}</span>
+                        <a *ngIf="!profileModel.country"
+                           class="ss-button ss-button--secondary-clear-blue"
+                           [routerLink]="editProfilePageUrl"
+                           [queryParams]="{focus: 'country'}"
+                           [attr.data-automation]="'set-country-button'">
+                            {{'Generic_SetCountry' | translate}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ss-panel ss-profile__panel-contacts">
+            <div class="ss-panel__title">
+                <h1>{{'Generic_Contacts' | translate}}</h1>
+            </div>
+            <div class="ss-panel__content">
+                <div *ngIf="!profileModel.phoneNumbers.length"
+                     class="row"
+                     [attr.data-automation]="'no-data-feedback'">
+                    <div class="ss-panel__content-row">
+                        <h6>{{'Generic_NoDataAvailable' | translate}}.</h6>
+                    </div>
+                </div>
+                <div *ngFor="let phoneNumber of profileModel.phoneNumbers; trackBy: trackByFn"
+                     class="row">
+                    <div class="ss-panel__content-row">
+                        <h6>{{getPhoneTypeKey(phoneNumber) | translate}}</h6>
+                        <ss-phone-link [phone]="phoneNumber.value"></ss-phone-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ss-panel ss-profile__panel-singlekey-id">
+            <div class="ss-panel__title">
+                <h1>{{'Generic_SingleKeyId' | translate}}</h1>
+            </div>
+            <div class="ss-panel__content">
+                <div class="row">
+                    <div class="ss-panel__content-row">
+                        <h6>{{'Generic_EmailAddress' | translate}}</h6>
+                        <span *ngIf="ownProfile; else otherUserEmail"
+                              [attr.data-automation]="'own-user-email'">{{profileModel.email}}</span>
+
+                        <ng-template #otherUserEmail>
+                            <ss-mail-link [email]="profileModel.email"
+                                        [attr.data-automation]="'other-user-email'"></ss-mail-link>
+                        </ng-template>
+                    </div>
+                </div>
+                <div *ngIf="ownProfile"
+                     class="row"
+                     [attr.data-automation]="'manage-singlekey-id'">
+                    <div class="ss-panel__content-row">
+                        <button ss-button
+                                [buttonStyle]="'integrated'"
+                                [buttonNoPadding]="true"
+                                (click)="handleSingleKeyId()"
+                                [attr.data-automation]="'manage-singlekey-id-button'">
+                            {{'Generic_ManageSingleKeyId' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="ownProfile"
+             class="ss-panel ss-profile__panel-privacy"
+             [attr.data-automation]="'privacy'">
+            <div class="ss-panel__title">
+                <h1>{{'Generic_Privacy' | translate}}</h1>
+            </div>
+            <div class="ss-panel__content">
+                <div class="row">
+                    <div class="ss-panel__content-row">
+                        <button ss-button
+                                [buttonStyle]="'integrated'"
+                                [buttonNoPadding]="true"
+                                (click)="handleChangePrivacySettings()"
+                                [attr.data-automation]="'change-privacy-settings-button'">
+                            {{'Generic_ChangePrivacySettings' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

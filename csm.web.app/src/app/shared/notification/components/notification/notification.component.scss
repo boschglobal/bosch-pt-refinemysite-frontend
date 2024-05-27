@@ -1,0 +1,86 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+.ss-notification {
+    display: flex;
+    flex-direction: row;
+    padding: $base-dimension--x2 $base-dimension--x2 $base-dimension--x2 ($base-dimension--x2 - $base-dimension--x05);
+    border-left: $base-dimension--x05 solid $light_blue;
+    background: $white;
+    font-size: $font-size-xs;
+    line-height: $font-size-md;
+    cursor: pointer;
+
+    &:hover {
+        background: $light_grey_12_5;
+    }
+
+    &--read {
+        background: $light_grey_12_5;
+        border-left-color: transparent;
+    }
+
+    &--read:hover {
+        background: $light_grey_25;
+    }
+
+    &__picture {
+        width: $base-dimension--x4 + $base-dimension--x05;
+        height: $base-dimension--x4 + $base-dimension--x05;
+        border-radius: 100%;
+        background-size: cover;
+        background-position: center center;
+        border: solid 1px $light_grey_50;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex: 1;
+        margin-left: $base-dimension;
+        overflow: hidden;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: $base-dimension--x025;
+    }
+
+    &__title {
+        max-width: 100%;
+        color: $black;
+        flex: 1;
+    }
+
+    &__date {
+        color: $dark_grey_50;
+        margin-left: $base-dimension--x05;
+    }
+
+    &__description {
+        font-size: $font-size-sm;
+        color: $black;
+        margin-bottom: $base-dimension--x025;
+        font-family: RmS-Bold, sans-serif;
+        line-height: 21px;
+        max-height: 42px;
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    &__context {
+        color: $dark_grey_75;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}

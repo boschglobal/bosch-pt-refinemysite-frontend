@@ -1,0 +1,96 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/mixins";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-project-overview-card {
+    position: relative;
+    display: flex;
+    background: $light_grey_25;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &-content {
+        width: 50%;
+        padding: $base-dimension--x2;
+        order: 1;
+
+        &__title {
+            @include heading-4($dark_grey);
+            margin-bottom: $base-dimension--x2;
+            min-height: 30px;
+            word-wrap: break-word;
+        }
+
+        &__details {
+            &-chart {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    &-picture {
+        width: 50%;
+        background-size: cover;
+        background-position: center;
+        order: 2;
+        min-height: 200px;
+        border-left: 1px solid $light_grey_50;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .ss-project-overview-card {
+        flex-direction: column;
+
+        &-content {
+            width: 100%;
+            order: 2;
+
+            &__title {
+                font-size: $font-size-lg;
+                @include ellipsis();
+            }
+
+            &__details {
+                display: flex;
+
+                &-chart,
+                &-topics {
+                    width: 50%;
+                }
+
+                &-topics {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+
+                    &-amount {
+                        @include heading-5($dark_grey);
+                        font-size: $base-dimension--x6;
+                    }
+
+                    &-detail {
+                        @include heading-5($dark_grey);
+                    }
+                }
+            }
+        }
+
+        &-picture {
+            width: 100%;
+            order: 1;
+            border-bottom: 1px solid $light_grey_50;
+            border-left: 0;
+        }
+    }
+}

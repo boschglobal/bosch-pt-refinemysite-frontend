@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-drawer">
+    <header *ngIf="header"
+            class="ss-drawer__header"
+            [attr.data-automation]="'drawer-header'">
+        <ng-container *ngTemplateOutlet="header"></ng-container>
+    </header>
+
+    <div *ngIf="body"
+         class="ss-drawer__body"
+         [attr.data-automation]="'drawer-body'">
+        <ng-container *ngTemplateOutlet="body"></ng-container>
+    </div>
+
+    <footer *ngIf="footer"
+            class="ss-drawer__footer"
+            [attr.data-automation]="'drawer-footer'">
+        <ng-container *ngTemplateOutlet="footer"></ng-container>
+    </footer>
+</div>

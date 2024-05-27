@@ -1,0 +1,82 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+@import "../../constants/milestone.contants";
+
+.ss-milestone-detail-drawer {
+    $this: &;
+
+    &__header {
+        display: flex;
+
+        button:first-child {
+            margin-right: auto;
+        }
+    }
+
+    &--investor {
+        #{$this}__header {
+            background-color: $investor-milestone-background-color;
+            box-shadow: inset 0 0 0 2px $investor-milestone-border-color;
+        }
+    }
+
+    &--project {
+        #{$this}__header {
+            background-color: $project-milestone-background-color;
+            box-shadow: inset 0 0 0 1px $project-milestone-border-color;
+        }
+    }
+
+    &__body {
+        padding: $base-dimension--x3;
+
+        &-title {
+            @include heading-4();
+            margin-bottom: $base-dimension--x3;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        &-subtitle {
+            @include subtitle-1();
+            margin-bottom: $base-dimension;
+        }
+
+        &-user {
+            cursor: pointer;
+        }
+
+        &-section {
+            &:not(:last-child) {
+                display: block;
+                margin-bottom: $base-dimension--x3;
+            }
+
+            & > *:not(:last-child) {
+                display: block;
+                margin-bottom: $base-dimension;
+            }
+        }
+
+        ::ng-deep .ss-card-user__personal .ss-card-user__information > * {
+            color: $dark_blue !important;
+        }
+
+        ::ng-deep .ss-card-user__personal:hover .ss-card-user__information > * {
+            color: $black !important;
+        }
+    }
+
+    ss-milestone-task-relation-list ::ng-deep ss-group-list-selection ::ng-deep ss-group-item-list {
+        display: block;
+        padding-bottom: $base-dimension--x2;
+    }
+}

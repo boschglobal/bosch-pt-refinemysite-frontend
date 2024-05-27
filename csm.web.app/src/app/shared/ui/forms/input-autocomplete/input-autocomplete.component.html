@@ -1,0 +1,60 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-autocomplete"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <span *ngIf="maxCharacter && showCounter"
+          class="ss-input__character"
+          [attr.data-automation]="automationAttr + '-character-counter'">
+            {{characterNumber}}/{{maxCharacter}}
+        </span>
+    <input type="text"
+           class="ss-input-autocomplete__autocomplete ss-input__input"
+           [(ngModel)]="autocomplete"
+           tabindex="-1">
+    <label class="ss-input__label ss-input-autocomplete__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span *ngIf="isInvalid() || isWarning() && !isInvalid()"
+          [ngClass]="getFeedbackClasses()"
+          [attr.data-automation]="automationAttr + getDataAutomation()">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+        </span>
+    <input #input
+           type="text"
+           class="ss-input-autocomplete__input ss-input__input"
+           ssFlyout
+           [flyoutId]="flyoutId"
+           [flyoutTemplate]="ssInputAutocompleteOptions"
+           [flyoutShowOverlay]="false"
+           [flyoutTrigger]="flyoutTriggers"
+           [flyoutUseTriggerWidth]="true"
+           [attr.data-automation]="automationAttr"
+           [name]="name"
+           [disabled]="isDisabled"
+           [readonly]="isReadOnly"
+           [maxlength]="maxCharacter"
+           [autofocus]="autofocus"
+           (keyup)="onInputKeyUp($event)"
+           (keydown)="onInputKeyDown($event)"
+           (blur)="onInputBlur($event)"
+           (focus)="onInputFocus($event)"
+           [(ngModel)]="value">
+</div>
+
+<ng-template #ssInputAutocompleteOptions>
+    <div class="ss-input-autocomplete__options">
+        <ss-menu-list
+            [itemsList]="options"
+            (itemHovered)="handleItemHovered($event)"
+            (itemClicked)="handleItemClicked($event.value)">
+        </ss-menu-list>
+    </div>
+</ng-template>

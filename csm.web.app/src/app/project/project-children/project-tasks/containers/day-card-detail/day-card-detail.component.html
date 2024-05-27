@@ -1,0 +1,77 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-day-card-detail">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <section class="ss-day-card-detail__content">
+        <header>
+            <h6>{{dayCardTitle}}</h6>
+            <div class="ss-day-card-detail__header-buttons">
+                <button
+                    *ngIf="canEdit"
+                    ss-button
+                    [buttonNoPadding]="true"
+                    [buttonStyle]="'tertiary'"
+                    (click)="handleEdit()"
+                    [attr.data-automation]="'day-card-detail-edit'">
+                    <ss-icon [name]="'edit'"></ss-icon>
+                </button>
+                <ss-dropdown-menu
+                    [buttonSize]="'normal'"
+                    [buttonStyle]="'tertiary'"
+                    [icon]="'options'"
+                    [items]="dropdownItems"
+                    (itemClicked)="handleDropdownItemClicked($event)"
+                    [attr.data-automation]="'day-card-detail-delete'">
+                </ss-dropdown-menu>
+                <button class="ss-button ss-button--normal ss-button--no-padding ss-day-card-detail__close"
+                        [attr.data-automation]="'day-card-detail-close'"
+                        (click)="handleClose()">
+                    <ss-icon [name]="'close'"></ss-icon>
+                </button>
+            </div>
+        </header>
+        <div class="ss-day-card-detail__content-wrapper">
+            <div *ngIf="dayCardNotes || canEdit"
+                 class="ss-day-card-detail__item"
+                 [attr.data-automation]="'day-card-detail-notes'">
+                <ss-icon [name]="'notes-frame'">
+                </ss-icon>
+                <div class="ss-day-card-detail__item-text">
+                    <ss-text-link
+                        *ngIf="dayCardNotes"
+                        [text]="dayCardNotes"
+                        [maxLength]="maxLength"
+                        (truncatedTextLength)="handleTextLengthChanged($event)"></ss-text-link>
+                    <button *ngIf="!dayCardNotes && canEdit"
+                            class="ss-button ss-button--secondary-clear-blue"
+                            (click)="handleEdit('notes')"
+                            [attr.data-automation]="'day-card-detail-notes-call-to-action'">
+                        {{'Generic_AddNote' | translate}}
+                    </button>
+                    <ss-show-more *ngIf="canShowMore"
+                                  [showMore]="showMoreConfig"
+                                  (showMoreEnabled)="handleShowMoreNotes($event)"
+                                  [attr.data-automation]="'day-card-detail-notes-show-more'">
+                    </ss-show-more>
+                </div>
+            </div>
+            <div *ngFor="let item of dayCardInfo;"
+                 class="ss-day-card-detail__item">
+                <ss-icon [name]="item.icon">
+                </ss-icon>
+                <span class="ss-day-card-detail__item-text">
+                    {{item.text}}
+                </span>
+            </div>
+        </div>
+        <footer>
+            <ss-day-card-status [dayCard]="dayCard"></ss-day-card-status>
+        </footer>
+    </section>
+</div>

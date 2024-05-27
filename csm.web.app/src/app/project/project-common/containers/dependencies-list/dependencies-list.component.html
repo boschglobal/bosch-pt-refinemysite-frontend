@@ -1,0 +1,55 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-group-list-selection
+    *ngIf="canShowRelationList"
+    [title]="'Generic_Dependencies' | translate"
+    [multipleSelectionToolbarData]="multipleSelectionToolbarData"
+    [itemsPerGroupItem]="itemsPerGroupItem"
+    [groups]="groups"
+    [attr.data-automation]="'ss-dependencies-list'">
+    <ng-template #itemTemplate let-item>
+        <ng-container [ngSwitch]="item.type">
+            <ss-milestone-overview-card *ngSwitchCase="objectTypeEnumMilestone"
+                                        [milestone]="item.resource"
+                                        [isCritical]="item.critical"
+                                        [actions]="item.actions"
+                                        (actionClicked)="handleActionClicked($event)"
+                                        (itemClicked)="handleMilestoneCardClicked($event)"
+                                        [attr.data-automation]="'ss-dependencies-list-milestone-overview-card-' + item.id">
+            </ss-milestone-overview-card>
+            <ss-task-overview-card *ngSwitchCase="objectTypeEnumTask"
+                                   [task]="item.resource"
+                                   [isCritical]="item.critical"
+                                   [actions]=item.actions
+                                   (actionClicked)="handleActionClicked($event)"
+                                   (itemClicked)="handleTaskCardClicked($event)"
+                                   [attr.data-automation]="'ss-dependencies-list-task-overview-card-' + item.id">
+            </ss-task-overview-card>
+        </ng-container>
+    </ng-template>
+    <ng-template #actionsTemplate>
+        <ss-tiny-loader *ngIf="isLoading"
+                        [attr.data-automation]="'ss-dependencies-list-loading'">
+        </ss-tiny-loader>
+        <ss-dropdown-menu
+            *ngIf="!isLoading && canShowAddButton"
+            [buttonSize]="'tiny'"
+            [menuItemSize]="'tiny'"
+            [buttonStyle]="'tertiary'"
+            [icon]="'more'"
+            [items]="dropdownItems"
+            (itemClicked)="handleDropdownItemClicked($event)"
+            [attr.data-automation]="'ss-dependencies-list-add-dropdown'">
+        </ss-dropdown-menu>
+    </ng-template>
+</ss-group-list-selection>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData"></ss-icon>
+</ng-template>

@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-working-days-capture">
+    <form [formGroup]="form">
+        <ul class="ss-working-days-capture__working-days"
+            [formGroupName]="'workingDays'">
+            <li class="ss-working-days-capture__working-days__option"
+                *ngFor="let checkbox of workingDaysOptions; trackBy: trackByFn">
+                <ss-checkbox-button
+                    [name]="checkbox.value"
+                    [dimension]="'normal'"
+                    [control]="form.controls.workingDays.controls[checkbox.value]"
+                    [formControlName]="checkbox.value">
+                    {{checkbox.label}}
+                </ss-checkbox-button>
+            </li>
+        </ul>
+        <ss-input-select-dropdown [class]="'ss-working-days-capture__startOfWeek-input'"
+                                  [name]="'startOfWeek'"
+                                  [label]="'WorkingDays_FirstDay_Label' | translate"
+                                  [control]="form.controls.startOfWeek"
+                                  [options]="startOfWeekOptions"
+                                  [translateLabel]="true"
+                                  [formControlName]="'startOfWeek'">
+        </ss-input-select-dropdown>
+        <button type="submit"
+                ss-button
+                [buttonProportional]="true"
+                [ssMonitorClickAction]="monitoringClickActionName"
+                [ssMonitorClickActionContext]="form.value"
+                (click)="handleSaveChange()"
+                [attr.data-automation]="'saveChange'">
+            {{'Generic_Save' | translate}}
+        </button>
+    </form>
+</div>

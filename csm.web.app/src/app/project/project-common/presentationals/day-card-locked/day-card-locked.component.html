@@ -1,0 +1,35 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-day-card-locked"
+     ssFlyout
+     [flyoutTrigger]="tooltipFlyoutTrigger"
+     [flyoutId]="'ssDayCardLockedTooltip-'+slotID"
+     [flyoutTemplate]="ssDayCardLockedTooltip"
+     [flyoutPosition]="'below'"
+     [flyoutAlignment]="'center'"
+     [attr.data-automation]="'day-card-locked'">
+    <ss-icon [name]="icon.name"
+             [color]="icon.color"
+             [dimension]="'small'">
+    </ss-icon>
+</div>
+
+<ng-template #ssDayCardLockedTooltip>
+    <ss-flyout-tooltip
+        [attr.data-automation]="'day-card-locked-tooltip-flyout'">
+        <span *ngIf="!holidayName"
+              [attr.data-automation]="'default-message'">
+            {{ 'DayCard_Locked_TooltipMessage' | translate }}
+        </span>
+        <span *ngIf="holidayName"
+              [attr.data-automation]="'holiday-name'">
+            {{holidayName}}
+        </span>
+    </ss-flyout-tooltip>
+</ng-template>

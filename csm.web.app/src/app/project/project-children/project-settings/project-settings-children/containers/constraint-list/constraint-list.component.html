@@ -1,0 +1,68 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-constraint-list"
+     [ngClass]="{'ss-constraint-list--loading': isLoading}"
+     [attr.data-automation]="'constraint-list'">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-constraint-info-header
+        [activeItems]="activeConstraintListTotalItems"
+        [totalItems]="constraintListTotalItems">
+    </ss-constraint-info-header>
+    <ul>
+        <li *ngFor="let constraint of constraintList; trackBy: trackByFn; let i = index;"
+            class="ss-constraint-list__item"
+            [ngClass]="getConstraintItemStyles(constraint)"
+            [attr.data-automation]="'constraint-list-item'">
+            <div>
+                <span [attr.data-automation]="'constraint-list-item-number'">{{ i + 1 }}.</span>
+                <span *ngIf="!isEditingConstraint(constraint)"
+                      class="ss-constraint-list__item-name"
+                      [attr.data-automation]="'constraint-list-item-name'">{{constraint.name}}</span>
+            </div>
+            <ss-constraint-capture [hidden]="!isEditingConstraint(constraint)"
+                                    [defaultValue]="constraint.name"
+                                    [mode]="updateCaptureMode"
+                                    (submitForm)="updateConstraintName($event, constraint)"
+                                    (cancelForm)="cancelConstraintEdit()">
+            </ss-constraint-capture>
+            <div *ngIf="!isEditingConstraint(constraint)"
+                 class="ss-constraint-list__item-actions"
+                 [attr.data-automation]="'constraint-list-item-actions'">
+                <ng-container *ngIf="isConstraintLoading(constraint)">
+                    <ss-tiny-loader></ss-tiny-loader>
+                </ng-container>
+                <ng-container *ngIf="!isConstraintLoading(constraint)">
+                    <ul>
+                        <li *ngIf="constraint.permissions.canUpdate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="updateConstraint(i, constraint)"
+                                    [attr.data-automation]="'constraint-list-item-update-button'">
+                                <ss-icon [name]="'edit'"></ss-icon>
+                            </button>
+                        </li>
+                        <li *ngIf="constraint.permissions.canActivate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="activateConstraint(constraint)"
+                                    [attr.data-automation]="'constraint-list-item-activate-button'">
+                                <ss-icon [name]="'eye-off'"></ss-icon>
+                            </button>
+                        </li>
+                        <li *ngIf="constraint.permissions.canDeactivate">
+                            <button class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-blue"
+                                    (click)="deactivateConstraint(constraint)"
+                                    [attr.data-automation]="'constraint-list-item-deactivate-button'">
+                                <ss-icon [name]="'eye-on'"></ss-icon>
+                            </button>
+                        </li>
+                    </ul>
+                </ng-container>
+            </div>
+        </li>
+    </ul>
+</div>

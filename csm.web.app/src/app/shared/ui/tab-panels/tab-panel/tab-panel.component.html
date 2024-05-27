@@ -1,0 +1,14 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="active"
+     #contentWrapper
+     [attr.data-automation]="'content-wrapper'"
+     class="ss-tab-panels__content">
+    <ng-content></ng-content>
+</div>

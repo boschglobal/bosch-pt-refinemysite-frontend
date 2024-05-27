@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-multiple-selection-toolbar-confirmation
+    [itemsCount]="itemsCount"
+    [initialItemsCount]="initialItemsCount"
+    [mode]="mode"
+    [emptyItemsLabel]="emptyItemsLabel"
+    [selectedItemLabel]="selectedItemLabel"
+    [selectedItemsLabel]="selectedItemsLabel"
+    (submitSelection)="handleSubmit()"
+    (dismissSelection)="handleDismiss()">
+</ss-multiple-selection-toolbar-confirmation>

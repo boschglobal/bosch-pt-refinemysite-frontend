@@ -1,0 +1,12 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<a *ngIf="phone" class="ss-phone-link" [href]="getLink()" (click)="$event.stopPropagation()">
+    <ss-icon *ngIf="showIcon" [name]="'call'" [color]="iconColor" [attr.data-automation]="'phone-link-icon'"></ss-icon>
+    <span>{{getLinkText()}}</span>
+</a>

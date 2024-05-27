@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-confirmation">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <h5 class="ss-confirmation__title"
+        [attr.data-automation]="'confirmation-title'">{{confirmation.title | translate}}</h5>
+    <span class="ss-confirmation__description"
+          [attr.data-automation]="'confirmation-description'">{{confirmation.description | translate}}</span>
+    <div class="ss-confirmation__buttons">
+        <button class="ss-button ss-button--normal ss-button--secondary-ghost-grey"
+                (click)="handleCancel()"
+                [attr.data-automation]="'confirmation-cancel'">
+            {{cancelButtonMessage | translate}}
+        </button>
+        <button ss-button
+                [buttonProportional]="true"
+                [buttonStyle]="buttonStyle"
+                (click)="handleConfirm()"
+                [attr.data-automation]="'confirmation-confirm'">
+            {{confirmButtonMessage | translate}}
+        </button>
+    </div>
+</div>

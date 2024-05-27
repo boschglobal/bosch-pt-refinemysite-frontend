@@ -1,0 +1,99 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+
+.ss-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, .7);
+    z-index: $z-index_4;
+
+    &__icon {
+        position: relative;
+        height: initial !important;
+        width: 50px !important;
+        z-index: $z-index_5;
+
+        &:before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        svg {
+            @include infinite-rotate();
+            height: 100%;
+            transform-origin: center center;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+
+            circle {
+                stroke-width: 3;
+                stroke-miterlimit: 10;
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+                animation: dash .75s ease-in-out infinite, color 3s ease-in-out infinite;
+                stroke-linecap: round;
+                fill: none;
+            }
+        }
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
+
+@keyframes color {
+    0%, 100% {
+        stroke: $dark_blue
+    }
+    15% {
+        stroke: $magenta;
+    }
+    30% {
+        stroke: $violet;
+    }
+    45% {
+        stroke: $light_blue;
+    }
+    60% {
+        stroke: $turquoise;
+    }
+    75% {
+        stroke: $light_green;
+    }
+    90% {
+        stroke: $dark_green;
+    }
+}

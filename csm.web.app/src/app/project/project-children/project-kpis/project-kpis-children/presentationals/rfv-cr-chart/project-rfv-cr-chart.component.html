@@ -1,0 +1,12 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+<div class="ss-project-rfv-cr-chart" [ngSwitch]="currentChart">
+    <ss-project-rfv-cr-chart-line *ngSwitchCase="chartType.Line" [chartData]="chartData" [seriesColors]="chartSeriesColors" [settings]="settings"></ss-project-rfv-cr-chart-line>
+    <ss-project-rfv-cr-chart-bar-stacked *ngSwitchCase="chartType.StackedBar" [chartData]="chartData" [seriesColors]="chartSeriesColors" [settings]="settings"></ss-project-rfv-cr-chart-bar-stacked>
+    <ss-project-rfv-cr-chart-bar-grouped *ngSwitchCase="chartType.GroupedBar" [chartData]="chartData" [seriesColors]="chartSeriesColors" [settings]="settings"></ss-project-rfv-cr-chart-bar-grouped>
+</div>

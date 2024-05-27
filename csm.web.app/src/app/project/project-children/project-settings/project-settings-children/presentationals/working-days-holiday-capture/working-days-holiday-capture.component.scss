@@ -1,0 +1,24 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+
+.ss-working-days-holiday-capture {
+
+    padding: $base-dimension--x2;
+
+    &__required-info {
+        @include caption-2($dark_grey_75);
+        text-align: right;
+    }
+
+    .ss-button-group {
+        justify-content: flex-end;
+    }
+}

@@ -1,0 +1,246 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar [title]="'Generic_CalendarLabel' | translate">
+    <ss-tasks-calendar-mappings mappings
+                                class="ss-tasks-calendar__mappings"
+                                [scopeStart]="calendarScope.start"
+                                [mode]="selectedMode"
+                                (scopeStartChange)="handleScopeStartChange($event)"
+                                (todayButtonClicked)="handleTodayButtonClicked()"
+                                (modeChange)="handleModeChange($event)"
+                                (collapseWeeks)="handleExpandedWeeks([])"
+                                [attr.data-automation]="'tasks-calendar-mappings'">
+    </ss-tasks-calendar-mappings>
+    <ss-tasks-calendar-actions actions
+                               class="ss-tasks-calendar__actions"
+                               [filterDrawerOpenState]="isFilterDrawerOpen"
+                               [hasFilters]="hasFiltersApplied"
+                               [quickFilterDrawerOpenState]="isQuickFilterDrawerOpen"
+                               (addMilestone)="handleEnableAddMilestone()"
+                               (addTask)="handleAddTask()"
+                               (toggleFilterDrawer)="handleToggleFilterDrawer()"
+                               (toggleQuickFilterDrawer)="handleToggleQuickFilterDrawer()"
+                               (toggleRescheduleDrawer)="handleRescheduleFilterDrawer()">
+    </ss-tasks-calendar-actions>
+</ss-toolbar>
+<div class="container-no-padding ss-tasks-calendar"
+     [attr.data-automation]="'tasks-calendar'">
+    <div class="ss-tasks-calendar__content">
+        <ss-calendar #calendar
+                    class="ss-tasks-calendar__content__calendar"
+                    [scope]="calendarScope"
+                    [drawingStrategy]="drawingStrategy"
+                    [rows]="rows"
+                    [dependencies]="calendarDependencies"
+                    [sourceAnchorPointByObjectType]="sourceAnchorPointByObjectType"
+                    [targetAnchorPointByObjectType]="targetAnchorPointByObjectType"
+                    [anchorPointYBaseByStrategyAndObjectType]="anchorPointYBaseByStrategyAndObjectType"
+                    [isLoading]="isLoading"
+                    [isResizingRecord]="isResizingTaskCard"
+                    [isCopying]="isCopying"
+                    [addRecordPermission]="addRecordPermission"
+                    [canMoveMilestone]="canMoveMilestoneFunction"
+                    [canDragRecord]="canDragTaskFunction"
+                    [canMoveRecord]="moveTaskPermissionFunction"
+                    [canHideRecord]="canHideTaskFunction"
+                    [expandedWeeks]="expandedWeeks"
+                    [navigateToElement]="calendarNavigateToElement"
+                    [focusedElementId]="focusedElementId"
+                    [hideScroll]="hideScroll"
+                    [selectedRecordIds]="selectedTaskIds"
+                    [enableMilestoneCreation]="enableMilestoneCreation"
+                    [milestones]="calendarMilestones"
+                    [holidays]="holidays"
+                    [recordGridUnit]="recordGridUnit"
+                    [workingDays]="workingDays"
+                    (moveMilestone)="handleMoveMilestone($event)"
+                    (moveRecords)="handleMoveRecords($event)"
+                    (copyRecords)="handleCopyRecords($event)"
+                    (expandWeeks)="handleExpandedWeeks($event)"
+                    (addRecord)="openModal($event)"
+                    (weekWidthChange)="handleWeekWidthChange($event)"
+                    (navigateToElementEnd)="handleNavigateToElementEnd($event)"
+                    (dragRecordStarted)="handleRecordDragStart()"
+                    [attr.data-automation]="'tasks-calendar-content-calendar'">
+            <ng-template #creationSlotsTemplate let-milestone>
+                <ss-milestone-creation-slots [week]="milestone.week"
+                                             [header]="milestone.header"
+                                             [workAreaId]="milestone.rowId"
+                                             (addMilestone)="handleAddMilestone($event)">
+                </ss-milestone-creation-slots>
+            </ng-template>
+            <ng-template #milestoneTemplate let-milestone>
+                <ss-milestone
+                    [milestone]="milestone"
+                    [canSelectMilestone]="canSelectMilestone(milestone.id)"
+                    [isDimmedOut]="isMilestoneDimmedOut(milestone.id)"
+                    [focusedMilestoneId]="focusedMilestoneId"
+                    [selectedMilestoneIds]="selectedMilestoneIds"
+                    (selectMilestone)="handleSelectMilestone($event)">
+                </ss-milestone>
+            </ng-template>
+            <ng-template #columnTemplate let-row>
+                <ss-calendar-workarea-row-header
+                    [workarea]="getWorkareaHeader(row)"
+                    [projectId]="projectId"
+                    [attr.data-automation]="'tasks-calendar-row-header'">
+                </ss-calendar-workarea-row-header>
+            </ng-template>
+            <ng-template #cardTemplate let-task>
+                <ss-task-card-week
+                    [taskId]="task.id"
+                    [taskViewMode]="taskViewMode"
+                    [focusedDaycardId]="focusedDaycardId"
+                    [calendarScope]="calendarScope"
+                    [expandedWeeks]="expandedWeeks"
+                    [showDayCardIndicators]="calendarUserSettings.showDayCardIndicators"
+                    [isCopying]="isCopying"
+                    [isMultiSelecting]="calendarSelectionEnabled"
+                    [canDragTask]="canDragTaskFunction(task.id)"
+                    [canSelectTask]="canSelectTask(task.id)"
+                    [selectedTasksIds]="selectedTaskIds"
+                    [focusedTaskId]="focusedTaskId"
+                    [isTaskDimmedOut]="isTaskDimmedOut(task.id)"
+                    [weekWidth]="weekWidth"
+                    [showUnreadNews]="showUnreadNews"
+                    (isResizing)="handleIsResizingTaskCard($event)"
+                    (selectTask)="handleSelectTask($event)">
+                </ss-task-card-week>
+            </ng-template>
+            <ng-template #cardPlaceholderTemplate let-task>
+                <ss-task-card-week-placeholder [taskId]="task.id"
+                                               [taskStyles]="taskStyles[task.id]">
+                </ss-task-card-week-placeholder>
+            </ng-template>
+            <ng-template #cardDragPreviewTemplate
+                         let-shiftAmount="shiftAmount"
+                         let-currentRecordsIds="currentRecordsIds">
+                <ss-tasks-preview
+                    [isTaskSelected]="isTaskSelectedFunction"
+                    [isTaskFocused]="isTaskFocusedFunction"
+                    [isTaskDimmedOut]="isTaskDimmedOutFunction"
+                    [shiftMode]="shiftMode"
+                    [taskIds]="currentRecordsIds"
+                    [shiftAmount]="shiftAmount"
+                    [shiftUnit]="shiftUnit"></ss-tasks-preview>
+            </ng-template>
+            <ng-template #filterAlertMessageTemplate>
+                <ss-no-items
+                    *ngIf="hasFiltersApplied"
+                    class="ss-tasks-calendar__content__calendar__filter-alert"
+                    [description]="(highlightTasks || highlightMilestones ? 'Project_Filter_AlertHighlighted' : 'Project_Filter_Alert') | translate"
+                    [buttonText]="'Generic_ClearFilters' | translate"
+                    [showButton]="true"
+                    (clickButton)="handleResetFilters()"
+                    [attr.data-automation]="'calendar-filters-applied'">
+                </ss-no-items>
+            </ng-template>
+        </ss-calendar>
+    <ng-container #drawer></ng-container>
+    </div>
+    <ss-multi-select-command-bar
+        *ngIf="canShowMultiSelectCommandBar"
+        class="ss-tasks-calendar__multiple-selection-toolbar"
+        [canDragTask]="canDragTaskFunction"
+        (closeToolbar)=handleMultiSelectToolbarClose()
+        [attr.data-automation]="'tasks-calendar-multiple-selection-toolbar'">
+    </ss-multi-select-command-bar>
+</div>
+<ss-modal
+    [title]="'Task_Create_Title' | translate"
+    [id]="calendarCreateTaskModalId"
+    [size]="'large'">
+    <ng-template #body let-data>
+        <ss-project-tasks-create
+            [defaultValues]="defaultValues"
+            [context]="projectTasksCreateContext"
+            (onClose)="closeModal()">
+        </ss-project-tasks-create>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'Task_Update_Title' | translate"
+    [id]="calendarEditTaskModalId"
+    [size]="'large'">
+    <ng-template #body let-data>
+        <ss-project-tasks-edit
+            (onClose)="closeModal()">
+        </ss-project-tasks-edit>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'DayCard_Create_Title' | translate"
+    [id]="calendarCreateDayCardModalId"
+    [size]="'small'">
+    <ng-template #body>
+        <ss-day-card-create
+            (onClose)="closeModal()">
+        </ss-day-card-create>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'DayCard_Edit_Title' | translate"
+    [id]="calendarEditDayCardModalId"
+    [size]="'small'">
+    <ng-template #body>
+        <ss-day-card-edit
+            (onClose)="closeModal()">
+        </ss-day-card-edit>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'Milestone_Edit_Title' | translate"
+    [id]="calendarEditMilestoneModalId"
+    [size]="'small'">
+    <ng-template #body>
+        <ss-milestone-edit
+            (onClose)="closeModal()">
+        </ss-milestone-edit>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'DayCard_ReasonNotDone_Title' | translate"
+    [id]="cancelDayCardReasonsModalId"
+    [size]="'medium'">
+    <ng-template #body>
+        <ss-daycard-reason
+            (onClose)="closeModal()">
+        </ss-daycard-reason>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'DayCard_MultipleReasonNotDone_Title' | translate"
+    [id]="cancelMultipleDayCardReasonsModalId"
+    [size]="'medium'">
+    <ng-template #body>
+        <ss-daycard-reason-multiple
+            (onClose)="closeModal()">
+        </ss-daycard-reason-multiple>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'Constraint_Select_DialogTitle' | translate"
+    [id]="calendarUpdateConstraintsModalId"
+    [size]="'medium'">
+    <ng-template #body>
+        <ss-task-constraints
+            (closeEvent)="closeModal()">
+        </ss-task-constraints>
+    </ng-template>
+</ss-modal>
+<ss-modal
+    [title]="'Topic_Create_Label' | translate"
+    [id]="calendarCreateTopicModalId"
+    [size]="'small'">
+    <ng-template #body>
+        <ss-task-topic-create
+            (closed)="closeModal()">
+        </ss-task-topic-create>
+    </ng-template>
+</ss-modal>

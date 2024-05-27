@@ -1,0 +1,44 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-chip" *ngIf="item"
+     [attr.data-automation]="'chip-' + item.id">
+    <div class="ss-chip__content">
+        <div *ngIf="item.customVisualContent || item.icon || item.imageUrl"
+             class="ss-chip__content-visual"
+             [attr.data-automation]="'chip-visual-content-' + item.id">
+            <ng-container *ngTemplateOutlet="item.customVisualContent ? item.customVisualContent.template : defaultVisualContentTemplate; context: {$implicit: item?.customVisualContent?.data}"></ng-container>
+        </div>
+        <span class="ss-chip__content-text"
+              title="{{item.text}}"
+              [attr.data-automation]="'chip-text-' + item.id">
+        {{item.text}}
+        </span>
+    </div>
+    <button class="ss-button ss-button--tiny ss-button--no-padding ss-button--secondary-clear-grey"
+            (click)="removeChip(item)"
+            [attr.data-automation]="'chip-remove-' + item.id">
+        <ss-icon [name]="'close-small'"
+                 [dimension]="'normal'">
+        </ss-icon>
+    </button>
+</div>
+<ng-template #defaultVisualContentTemplate>
+    <div *ngIf="item.imageUrl"
+         class="ss-chip__content-image"
+         [ssBackgroundImage]="item.imageUrl"
+         [attr.data-automation]="'chip-image-' + item.id">
+    </div>
+    <ss-icon *ngIf="item.icon"
+             class="ss-chip__content-icon"
+             [name]="item.icon.name"
+             [color]="item.icon.color"
+             [dimension]="'small'"
+             [attr.data-automation]="'chip-icon-' + item.id">
+    </ss-icon>
+</ng-template>

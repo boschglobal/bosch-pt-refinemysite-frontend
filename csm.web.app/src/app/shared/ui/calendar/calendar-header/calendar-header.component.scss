@@ -1,0 +1,130 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+
+$today-line-bg-color: rgba(2, 142, 207, 0.09);
+
+.ss-calendar-header {
+    $this: &;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+        padding: $base-dimension--x05 $base-dimension--x05 $base-dimension--x05 $base-dimension;
+        background-color: $white;
+        box-shadow: inset 0px -1px 0px 0px $light_grey_50,
+        inset 0px 0px 0px 1px $light_grey_25;
+
+        &:hover {
+            background-color: $light_grey_25;
+        }
+
+        &--active {
+            background-color: $light_blue_05;
+
+            #{$this}__title {
+                color: $light_blue;
+            }
+        }
+
+        &-content {
+            display: flex;
+            align-items: baseline;
+        }
+
+        ss-icon {
+            fill: $dark_grey_50;
+        }
+    }
+
+    &__title {
+        @include subtitle-1();
+        margin: 0;
+    }
+
+    &__subtitle {
+        @include caption-2($dark_grey);
+        @include ellipsis;
+        flex: 1;
+        margin-left: $base-dimension;
+    }
+
+    &__week-days {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 0;
+
+        @include media-breakpoint-up(xl) {
+            min-height: 37px;
+        }
+
+        &__day {
+            @include caption-2($dark_grey);
+            @include ellipsis;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            align-items: center;
+            text-align: center;
+            padding: $base-dimension--x025 0;
+
+            &--current {
+                position: relative;
+                overflow: visible !important;
+
+                & #{$this}__week-days__day--label {
+                    @include caption-3($light_blue);
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    height: var(--row-height);
+                    width: 100%;
+                    background-color: $today-line-bg-color;
+                    pointer-events: none;
+                }
+            }
+
+            &--non-working-day {
+                color: $light_grey;
+            }
+
+            &--focused #{&}--label {
+                background-color: $black;
+                color: $white;
+            }
+
+            &--label {
+                @include ellipsis;
+                width: 100%;
+            }
+        }
+
+        &__day + &__day {
+            margin-left: $base-dimension--x025;
+        }
+    }
+
+    &__milestone-marker {
+        margin: $base-dimension--x05 0;
+        align-items: center;
+        justify-content: center;
+        width: 7px;
+        height: 7px;
+        transform: rotate(45deg);
+        background-color: $black;
+    }
+}

@@ -1,0 +1,24 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+.ss-main {
+    display: block;
+    height: 3000px;
+    width: 800px;
+
+    & .ss-flyout {
+        display: block;
+        width: 300px;
+        height: 300px;
+    }
+
+    & .ss-flyout-component-trigger {
+        width: 100px;
+        height: 25px;
+    }
+}

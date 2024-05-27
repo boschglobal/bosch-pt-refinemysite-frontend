@@ -1,0 +1,82 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<table class="ss-table">
+    <thead class="ss-table__header">
+        <tr>
+            <th *ngIf="isSelecting"
+                class="ss-table__checkbox"
+                [ngClass]="{'ss-table__checkbox--disabled': isSelectAllCheckboxDisabled}"
+                [attr.data-automation]="'table-select-all-checkbox-content'">
+                <button class="ss-table__checkbox-wrapper"
+                        [disabled]="isSelectAllCheckboxDisabled"
+                        (click)="handleSelectAll(!isSelectAllToggled)"
+                        [attr.data-automation]="'table-select-all-checkbox-wrapper'">
+                    <ss-icon *ngIf="isSelectAllToggled"
+                             [name]="'check'"
+                             [dimension]="'small'"
+                             [color]="iconCheckColor"
+                             [attr.data-automation]="'table-select-all-button-checked-state'">
+                    </ss-icon>
+                    <ss-icon *ngIf="isIndeterminate"
+                             [dimension]="'small'"
+                             [name]="'minimize'"
+                             [attr.data-automation]="'table-select-all-button-indeterminate-state'">
+                    </ss-icon>
+                </button>
+            </th>
+            <th *ngFor="let header of getHeaders()"
+                class="ss-table__header-cell"
+                [ngClass]="getHeaderSortClasses(header)"
+                [ngStyle]="header.headerStyle"
+                [style.width]="getWidth(header)"
+                (click)="isSortable(header) ? handleSort($event, header) : null"
+                [attr.data-automation]="getAttrDataAutomation('header', header.field)">
+                <span class="ss-table__header-cell-label">{{header.title | translate}}</span>
+                <span *ngIf="isSortable(header)"
+                      class="ss-table__header-cell--sortable-arrow">
+                    <ss-icon *ngIf="isArrowVisible(header)"
+                             [attr.data-automation]="'icon-arrow'"
+                             [name]="'arrow'"
+                             [dimension]="'small'"
+                             [rotate]="getArrowRotation(header)">
+                    </ss-icon>
+                </span>
+            </th>
+        </tr>
+    </thead>
+    <tbody class="ss-table__body">
+        <tr *ngFor="let record of records; trackBy: trackByFn; let i = index;"
+            class="ss-table__body-row"
+            [ngClass]="getRowClasses(record)"
+            (click)="handleRow($event, record)"
+            [attr.data-automation]="getAttrDataAutomation('row', i)">
+            <td *ngIf="isSelecting"
+                class="ss-table__checkbox">
+                <button class="ss-table__checkbox-wrapper"
+                        [disabled]="!isRowSelectable(record)">
+                    <ss-icon *ngIf="isRowSelected(record)"
+                             [name]="'check'"
+                             [dimension]="'small'"
+                             [color]="iconCheckColor">
+                    </ss-icon>
+                </button>
+            </td>
+            <td *ngFor="let cell of cells; let j = index; trackBy: trackByCellFn.bind(this, record.id);"
+                class="ss-table__body-cell"
+                (click)="handleCell($event, cell.field, i, j)"
+                [attr.data-automation]="getAttrDataAutomation('cell', cell.field) + ' ' + getAttrDataAutomation('cell', i + '-' + j)">
+                <ng-container *ngIf="record[cell.field] !== null && record[cell.field] !== undefined; else emptyCell">
+                    <ng-container *ngTemplateOutlet="getCellTemplate(cell); context: {$implicit: record[cell.field]};">
+                    </ng-container>
+                </ng-container>
+                <ng-template #emptyCell>-</ng-template>
+            </td>
+        </tr>
+    </tbody>
+</table>

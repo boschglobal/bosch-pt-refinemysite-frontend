@@ -1,0 +1,70 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-supergraphic__footer ::ng-deep.ss-supergraphic {
+    bottom: 0;
+}
+
+.ss-footer {
+    position: relative;
+    z-index: $z-index_2;
+    width: 100%;
+    background: $white;
+    border-top: 1px solid $light_grey_50;
+
+    &-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        padding: $base-dimension--x2 $base-dimension--x05 ($supergraphic-height + $base-dimension--x2) $base-dimension--x05;
+
+        @include media-breakpoint-up(lg) {
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        ss-copyright {
+            font-family: "RmS-Bold", sans-serif;
+            font-size: $font-size-sm;
+            padding: 0 12px;
+        }
+
+        ul {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: flex-start;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+
+            @include media-breakpoint-up(sm) {
+                width: auto;
+                justify-content: initial;
+            }
+
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                list-style-type: none;
+                padding-top: $base-dimension;
+
+                @include media-breakpoint-up(lg) {
+                    padding-top: 0;
+                }
+            }
+        }
+    }
+}

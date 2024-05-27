@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-rfv-cr-legend">
+    <header class="ss-project-rfv-cr-legend__header">
+        <h6 class="ss-project-rfv-cr-legend__title">{{ 'Generic_Reasons' | translate }}</h6>
+    </header>
+    <ul [attr.data-automation]="'project-rfv-cr-legend-list'" class="ss-project-rfv-cr-legend__list" [ngClass]="{'ss-project-rfv-cr-legend__list--filtered': isListFiltered() }">
+        <li *ngFor="let item of rfvItems; trackBy: trackByFn" (click)="click(item)" (mouseenter)="mouseenter(item)" (mouseleave)="mouseleave(item)" class="ss-project-rfv-cr-legend__list-item" [ngClass]="{'ss-project-rfv-cr-legend__list-item--active': isListFiltered() && item.active }">
+            <div class="ss-project-rfv-cr-legend__list-item__color" [style.background-color]="item.color"></div>
+            <div class="ss-project-rfv-cr-legend__list-item__label">{{ item.name }}</div>
+        </li>
+    </ul>
+    <ss-button-link *ngIf="isListFiltered()"
+                    class="ss-project-rfv-cr-legend__bt-show-all"
+                    [link]="showAllButton"
+                    [linkIcon]="null"
+                    [attr.data-automation]="'project-rfv-cr-legend-clear'">
+    </ss-button-link>
+</div>

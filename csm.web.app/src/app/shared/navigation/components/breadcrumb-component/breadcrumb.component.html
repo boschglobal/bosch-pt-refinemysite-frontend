@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ng-container *ngIf="showContent">
+    <ng-content></ng-content>
+</ng-container>
+<div *ngIf="showBreadcrumb" class="ss-breadcrumb" [attr.data-automation]="'breadcrumb'">
+    <button
+        class="ss-button ss-button--normal ss-button--no-padding ss-button--secondary-clear-grey ss-breadcrumb__back-navigation"
+        (click)="handleNavigateBack()"
+        [disabled]="!hasNavigationHistory"
+        [attr.data-automation]="'breadcrumb-back-navigation'">
+        <ss-icon [name]="'arrow-left'" [dimension]="'normal'"></ss-icon>
+    </button>
+    <div #breadcrumbPath class="ss-breadcrumb__path" [attr.data-automation]="'breadcrumb-path'">
+        <ul [attr.data-automation]="'breadcrumb-path-ul'">
+            <li *ngFor="let breadcrumb of breadcrumbs; let i = index; trackBy: trackByFn"
+                [attr.data-automation]="'breadcrumb-path-li'">
+                <a [routerLink]="breadcrumb.url"
+                   [attr.data-automation]="'breadcrumb-path-' + i">
+                    <ng-container *ngIf="breadcrumb.staticLabel">
+                        {{breadcrumb.staticLabel | translate}}
+                    </ng-container>
+                    <ng-container *ngIf="breadcrumb.dynamicLabel">
+                        {{breadcrumb.dynamicLabel | async}}
+                    </ng-container>
+                </a>
+                <ss-icon class="ss-breadcrumb__path-separator"
+                         [name]="'slash'" [color]="pathSeparatorColor"
+                         [dimension]="'normal'"
+                         [rotate]="180"></ss-icon>
+            </li>
+        </ul>
+    </div>
+</div>

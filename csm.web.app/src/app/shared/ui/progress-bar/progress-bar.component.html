@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-progress-bar"
+    [ngClass]="{'ss-progress-bar--has-border': showBarBorder}"
+    [attr.data-automation]="'ss-progress-bar'">
+
+    <div *ngIf='showIndeterminateBar'>
+        <div class="ss-progress-bar__indeterminate"
+            [attr.data-automation]="'ss-progress-indeterminate-bar'">
+            <div class="ss-progress-bar__indeterminate--anim-bar">
+                <div class="ss-progress-bar__indeterminate--inner-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf='!showIndeterminateBar'>
+        <div class="ss-progress-bar__determinate"
+            [style.width.%]="percentageValue"
+            [attr.data-automation]="'ss-progress-determinate-bar'">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/vendor/bootstrap/index";
+
+:host {
+    display: block;
+    overflow: hidden;
+}
+
+.ss-navigation-tabs {
+    display: flex;
+    height: 60px;
+    background: $light_grey_12_5;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0;
+    font-size: $font-size-base;
+    border-bottom: 1px solid $light_grey_50;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+        height: 0;
+        width: 0;
+        background: transparent;
+    }
+
+    &__tab {
+        height: inherit;
+
+        a {
+            display: flex;
+            align-items: center;
+            height: inherit;
+            color: $black;
+            padding: 0 $base-dimension--x2;
+            white-space: nowrap;
+
+            @include media-breakpoint-up(lg) {
+                padding: 0 $base-dimension--x3;
+            }
+
+            &.ss-navigation-tabs__tab--active {
+                color: $dark_blue;
+
+                span {
+                    position: relative;
+
+                    &:last-child:after {
+                        content: '';
+                        position: absolute;
+                        bottom: -17px;
+                        left: 0;
+                        height: $active-border-size;
+                        width: 100%;
+                        background: $dark_blue;
+                    }
+                }
+            }
+        }
+
+        a:hover {
+            color: $dark_blue;
+        }
+
+        &--disabled {
+            cursor: not-allowed;
+
+            a {
+                pointer-events: none;
+                color: $light_grey;
+            }
+        }
+    }
+
+    &__marker {
+        width: $base-dimension;
+        height: $base-dimension;
+        border-radius: $base-dimension--x05;
+        background-color: $red;
+        margin-right: $base-dimension;
+    }
+}

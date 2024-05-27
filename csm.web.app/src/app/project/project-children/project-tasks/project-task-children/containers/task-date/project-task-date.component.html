@@ -1,0 +1,29 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="canView()" class="ss-project-task-date" [attr.data-automation]="'ss-project-task-date'">
+    <ss-icon [name]="'calendar'" [color]="iconColor"></ss-icon>
+    <div class="ss-project-task-date__information">
+        <ss-time-scope-label [start]="start"
+                             [end]="end"
+                             [canAdd]="canAddTimeScope"
+                             (addStart)="openModal(taskCaptureFormField.StartDate)"
+                             (addEnd)="openModal(taskCaptureFormField.EndDate)"></ss-time-scope-label>
+        <ng-container *ngIf="timeScopeIsComplete()">
+            <ss-button-link *ngIf="!calendarContext"
+                            [link]="getNavigateToCalendarLink()"
+                            class="ss-project-task-date__link"
+                            [attr.data-automation]="'navigate-to-calendar-button'"></ss-button-link>
+            <ss-button-link *ngIf="calendarContext"
+                            [link]="getNavigateWithinCalendarLink()"
+                            [linkIcon]="null"
+                            class="ss-project-task-date__link"
+                            [attr.data-automation]="'navigate-within-calendar-button'"></ss-button-link>
+        </ng-container>
+    </div>
+</div>

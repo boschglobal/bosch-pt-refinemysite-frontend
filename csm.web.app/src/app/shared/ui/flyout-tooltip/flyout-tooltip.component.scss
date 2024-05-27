@@ -1,0 +1,15 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/index";
+
+.ss-flyout-tooltip {
+    max-width: 350px;
+    padding: $base-dimension--x2;
+    background: $white;
+    font-size: $font-size-xs;
+}

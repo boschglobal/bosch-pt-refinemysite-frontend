@@ -1,0 +1,25 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+$investor-milestone-background-color: $light_grey_12_5;
+$investor-milestone-border-color: $dark_grey_50;
+$investor-milestone-background-color--dimmed: $light_grey_12_5;
+$investor-milestone-border-color--dimmed: $dark_grey_25;
+
+$project-milestone-background-color: $dark_grey_50;
+$project-milestone-border-color: $dark_grey;
+$project-milestone-background-color--dimmed: $dark_grey_25;
+$project-milestone-border-color--dimmed: $dark_grey_50;
+
+$milestone-border-color--critical-dimmed: $red_50;
+
+$marker-inner-size: 14px;
+$marker-inner-size-critical: 10px;
+$marker-size: 20px;

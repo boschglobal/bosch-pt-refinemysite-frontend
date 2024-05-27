@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-donut-chart" [attr.data-automation]="'task-donut-chart'">
+    <ss-donut-chart [dimension]="170"
+                    [innerCircle]="60"
+                    [label]="getTaskLabelKey()"
+                    [defaultHoverOpacity]="1"
+                    [slices]="taskChart.donutChartSlices"
+                    (clickSlice)="handleSetStatusFilter($event)"
+                    (clickCenter)="handleClickCenter()">
+    </ss-donut-chart>
+</div>

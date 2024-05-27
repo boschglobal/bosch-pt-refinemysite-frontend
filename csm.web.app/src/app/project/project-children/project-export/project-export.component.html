@@ -1,0 +1,142 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-export">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <form [formGroup]="form">
+        <div class="row">
+            <fieldset class="col-12">
+                <legend>{{'Generic_Format' | translate}}</legend>
+                <ul>
+                    <li *ngFor="let format of formats">
+                        <ss-radio-button
+                            [automationAttr]="'format'"
+                            [name]="'format'"
+                            [value]="format.value"
+                            [dimension]="'small'"
+                            [control]="form.get('format')"
+                            formControlName="format">
+                            {{format.label | translate}}
+                        </ss-radio-button>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset class="col-12"
+                      [disabled]="isFormDisabled('taskExportSchedulingType')">
+                <legend>
+                    {{'Project_Export_TaskSchedulingLabel' | translate}}
+                    <ng-container *ngTemplateOutlet="ssProjectExportTooltip">
+                    </ng-container>
+                </legend>
+                <ul>
+                    <li *ngFor="let schedulingType of schedulingTypes">
+                        <ss-radio-button
+                            [automationAttr]="'taskExportSchedulingType'"
+                            [name]="'taskExportSchedulingType'"
+                            [value]="schedulingType.value"
+                            [dimension]="'small'"
+                            [isDisabled]="isFormDisabled('taskExportSchedulingType')"
+                            [control]="form.get('taskExportSchedulingType')"
+                            formControlName="taskExportSchedulingType">
+                            {{schedulingType.label | translate}}
+                        </ss-radio-button>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset class="col-12"
+                      [disabled]="isFormDisabled('milestoneExportSchedulingType')">
+                <legend>
+                    {{'Project_Export_MilestoneSchedulingLabel' | translate}}
+                    <ng-container *ngTemplateOutlet="ssProjectExportTooltip">
+                    </ng-container>
+                </legend>
+                <ul>
+                    <li *ngFor="let schedulingType of schedulingTypes">
+                        <ss-radio-button
+                            [automationAttr]="'milestoneExportSchedulingType'"
+                            [name]="'milestoneExportSchedulingType'"
+                            [value]="schedulingType.value"
+                            [dimension]="'small'"
+                            [control]="form.get('milestoneExportSchedulingType')"
+                            [isDisabled]="isFormDisabled('milestoneExportSchedulingType')"
+                            formControlName="milestoneExportSchedulingType">
+                            {{schedulingType.label | translate}}
+                        </ss-radio-button>
+                    </li>
+                </ul>
+            </fieldset>
+            <fieldset class="col-12"
+                      [disabled]="isFormDisabled('includeTopics')"
+                      [attr.data-automation]="'include-options'">
+                <legend>{{'Generic_Options' | translate}}</legend>
+                <ss-checkbox-button
+                    [automationAttr]="'includeTopics'"
+                    [name]="'includeTopics'"
+                    [formControlName]="'includeTopics'"
+                    [control]="form.get('includeTopics')"
+                    [isDisabled]="isFormDisabled('includeTopics')">
+                    <span class="ss-project-export__checkbox-text">
+                        <span class="ss-project-export__checkbox-text__title">
+                            {{'Project_Export_IncludeTopicsTitle' | translate}}
+                        </span>
+                        <span *ngIf="isMicrosoftProjectFormatSelected"
+                              class="ss-project-export__checkbox-text__sub_title"
+                              [attr.data-automation]="'topic-notes-subtitle'">
+                            {{'Project_Export_IncludeTopicsAsNotesSubTitle' | translate}}
+                        </span>
+                        <span *ngIf="!isMicrosoftProjectFormatSelected"
+                              class="ss-project-export__checkbox-text__sub_title"
+                              [attr.data-automation]="'topic-comments-subtitle'">
+                            {{'Project_Export_IncludeTopicsAsCommentsSubTitle' | translate}}
+                        </span>
+                    </span>
+                </ss-checkbox-button>
+            </fieldset>
+        </div>
+        <div class="ss-project-export__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'export'"
+                        [disabled]="!isFormValid()"
+                        (click)="handleDownload()">
+                    {{'Generic_Export' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<ng-template #ssProjectExportSchedulingTooltipContent>
+    <ss-flyout-tooltip
+        class="ss-project-export__tooltip"
+        [attr.data-automation]="'project-export-milestone-scheduling-tooltip'">
+        <span>{{'Project_Export_SchedulingInformation' | translate}}</span>
+    </ss-flyout-tooltip>
+</ng-template>
+
+<ng-template #ssProjectExportTooltip>
+    <ss-icon class="ss-project-export__info-icon"
+             ssFlyout
+             [flyoutAlignment]="'start'"
+             [flyoutPosition]="'right'"
+             [flyoutTemplate]="ssProjectExportSchedulingTooltipContent"
+             [flyoutTrigger]="tooltipFlyoutTrigger"
+             [flyoutContentZIndex]="tooltipFlyoutZIndex"
+             [name]="'info-tiny'"
+             [color]="infoIconColor"
+             [dimension]="'xsmall'">
+    </ss-icon>
+</ng-template>

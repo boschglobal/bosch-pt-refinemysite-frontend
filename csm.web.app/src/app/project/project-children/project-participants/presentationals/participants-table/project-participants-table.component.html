@@ -1,0 +1,59 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-table class="ss-project-participants-table"
+          [records]="participants"
+          [settings]="settings"
+          (sort)="onSortTable($event)"
+          (clickRow)="onClickRowTable($event)">
+    <ss-table-cell [field]="'company'">
+        <ng-template let-company>
+            <ss-card-company [company]="company"></ss-card-company>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'user'">
+        <ng-template let-user>
+            <ss-card-user
+                [attr.data-automation]="'project-participants-user'"
+                [user]="user"
+                [status]="getUserStatus(user.id)"
+                [invitedStatusTooltipMessage]="'Participant_Invited_TooltipMessage'"
+                [validationStatusTooltipMessage]="'Participant_InValidation_TooltipMessage'"></ss-card-user>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'role'">
+        <ng-template let-role>
+            <span>{{role | translate}}</span>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'craft'"></ss-table-cell>
+    <ss-table-cell [field]="'telephone'">
+        <ng-template let-telephone>
+            <ss-phone-link [phone]="telephone"></ss-phone-link>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'email'">
+        <ng-template let-email>
+            <ss-mail-link [email]="email"></ss-mail-link>
+        </ng-template>
+    </ss-table-cell>
+    <ss-table-cell [field]="'options'">
+        <ng-template let-options>
+            <div>
+                <ss-dropdown-menu
+                    [buttonSize]="'normal'"
+                    [buttonStyle]="'tertiary'"
+                    [icon]="'options'"
+                    [items]="options"
+                    (itemClicked)="handleDropdownItemClicked($event)"
+                    (click)="$event.stopPropagation()">
+                </ss-dropdown-menu>
+            </div>
+        </ng-template>
+    </ss-table-cell>
+</ss-table>

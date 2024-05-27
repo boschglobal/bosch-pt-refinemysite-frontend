@@ -1,0 +1,107 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "../../constants/milestone.contants";
+
+$circle-size: 4px;
+$marker-padding: ($marker-size - $marker-inner-size)*0.5;
+
+:host {
+    display: inline-block;
+    padding: $marker-padding;
+}
+
+.ss-milestone-marker {
+    $this: &;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $marker-inner-size;
+    height: $marker-inner-size;
+    transform: rotate(45deg);
+
+    &__circle {
+        height: $circle-size;
+        width: $circle-size;
+        border-radius: 50%;
+        background: $white;
+    }
+
+    &__checkmark,
+    &__critical {
+        transform: rotate(-45deg);
+    }
+
+    &--critical {
+        width: $marker-inner-size-critical;
+        height: $marker-inner-size-critical;
+        margin: 2px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 0 1px $white,
+            0 0 0 3px $red;
+        }
+
+        &#{$this}--dimmed-out {
+            &::before {
+                box-shadow: 0 0 0 1px $white,
+                0 0 0 3px $milestone-border-color--critical-dimmed;
+            }
+        }
+    }
+
+    &--investor {
+        background-color: $investor-milestone-background-color;
+
+        &:not(#{$this}--critical):not(#{$this}--selected) {
+            border: 2px solid $investor-milestone-border-color;
+        }
+
+        &#{$this}--dimmed-out:not(#{$this}--selected) {
+            background-color: $investor-milestone-background-color--dimmed;
+            border-color: $investor-milestone-border-color--dimmed;
+        }
+
+        #{$this}__circle {
+            background: $black;
+        }
+
+        #{$this}__critical {
+            ::ng-deep .ss-icon {
+                fill: $black;
+            }
+        }
+    }
+
+    &--project:not(&--selected) {
+        background-color: $project-milestone-background-color;
+
+        &:not(#{$this}--critical) {
+            border: 1px solid $project-milestone-border-color;
+        }
+
+        &#{$this}--dimmed-out {
+            background-color: $project-milestone-background-color--dimmed;
+            border-color: $project-milestone-border-color--dimmed;
+        }
+    }
+
+    &--selected {
+        background-color: $light_blue;
+        border: none;
+
+        &#{$this}--dimmed-out {
+            opacity: 0.75;
+        }
+    }
+}

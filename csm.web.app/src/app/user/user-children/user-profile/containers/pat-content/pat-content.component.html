@@ -1,0 +1,53 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-pat-content">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <h1 class="ss-pat-content__title">{{'PAT_Content_Title' | translate}}</h1>
+    <div class="ss-pat-content__header">
+        <h4 class="ss-pat-content__subtitle">{{'PAT_Content_Subtitle'| translate}}</h4>
+        <button ss-button
+                class="ss-pat-content__create-button"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                (click)="openCreatePAT()">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span>{{ 'PAT_Create_Title' | translate }}</span>
+        </button>
+    </div>
+    <p class="ss-pat-content__description">{{'PAT_Content_Description'| translate}}</p>
+    <ss-pat-list *ngIf="patList?.length"
+                 [pats]="patList"
+                 (patEditClicked)="openUpdatePAT($event)"
+                 (patDeleteClicked)="handleDeletePAT($event)">
+    </ss-pat-list>
+</div>
+
+<ss-modal
+    [title]="'PAT_Create_Title' | translate"
+    [id]="modalCreatePAT"
+    [size]="'small'"
+    (close)="closeCreateModal()">
+    <ng-template #body let-data>
+        <ss-pat-create class="ss-pat-content__modal"
+                       (closed)="closeModal()">
+        </ss-pat-create>
+    </ng-template>
+</ss-modal>
+
+<ss-modal
+    [title]="'PAT_Update_Title' | translate"
+    [id]="modalUpdatePAT"
+    [size]="'small'">
+    <ng-template #body let-data>
+        <ss-pat-edit class="ss-pat-content__modal"
+                     [defaultValue]="patResource"
+                     (closed)="closeModal()">
+        </ss-pat-edit>
+    </ng-template>
+</ss-modal>

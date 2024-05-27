@@ -1,0 +1,67 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-select-dropdown"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <label class="ss-input__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span class="ss-input__icon ss-input-select-dropdown__icon"
+          (mousedown)="handleToggleMouseDown($event)"
+          (click)="handleToggle($event)"
+          [attr.data-automation]="automationAttr + '-toggle'">
+        <ss-icon [name]="'arrow'"
+                 [rotate]="isOpened ? 90 : 270">
+        </ss-icon>
+    </span>
+    <input #input
+           class="ss-input__input ss-input-select-dropdown__input"
+           type="text"
+           ssFlyout
+           [flyoutId]="flyoutId"
+           [flyoutTemplate]="ssInputSelectDropdownOptions"
+           [flyoutTrigger]="flyoutTriggers"
+           [flyoutCloseKeyTriggers]="flyoutCloseKeyTriggers"
+           [flyoutContentZIndex]="flyoutZIndex"
+           [flyoutShowOverlay]="false"
+           [flyoutUseTriggerWidth]="true"
+           (focus)="onInputFocus($event)"
+           [value]="translateLabel ? (displayValue | translate) : displayValue"
+           [disabled]="isDisabled"
+           [readonly]="true"
+           [attr.data-automation]="automationAttr">
+    <ul *ngIf="optionTemplate"
+        class="ss-input-select-dropdown__display-value">
+        <li *ngFor="let displayOption of displayOptions"
+            [attr.data-automation]="automationAttr + '-display-option'">
+            <ng-container *ngTemplateOutlet="optionTemplate; context: {$implicit: displayOption}"></ng-container>
+            <span *ngIf="displayOption.label"
+                  class="ss-input-select-dropdown__display-value-label"
+                  [attr.data-automation]="automationAttr + '-display-option-label'">
+                {{translateLabel ? (displayOption.label | translate) : displayOption.label}}
+            </span>
+        </li>
+    </ul>
+    <span *ngIf="control.errors"
+          [ngClass]="{'ss-input__invalid--active': isInvalid()}"
+          [attr.data-automation]="automationAttr + '-invalid'"
+          class="ss-input__invalid">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>
+
+<ng-template #ssInputSelectDropdownOptions>
+    <div class="ss-input-select-dropdown__options">
+        <ss-menu-list
+            [itemsList]="itemsList"
+            (itemClicked)="handleItemClicked($event)">
+        </ss-menu-list>
+    </div>
+</ng-template>

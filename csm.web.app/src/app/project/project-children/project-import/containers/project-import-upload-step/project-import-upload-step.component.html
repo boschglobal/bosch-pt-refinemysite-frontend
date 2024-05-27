@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-project-import-upload-capture
+    *ngIf="!status"
+    (fileChanged)="handleUploadStepChanged($event)"
+    [attr.data-automation]="'project-import-upload-step-capture'">
+</ss-project-import-upload-capture>
+<ss-status-transition
+    *ngIf="status"
+    class="ss-project-import-upload-step__status-transition"
+    [status]="status"
+    [title]="title"
+    [description]="file.name"
+    [showCancelButton]="showCancelButton"
+    (cancel)="handleUploadStepChanged(null)"
+    [attr.data-automation]="'project-import-upload-step-status-transition'">
+</ss-status-transition>

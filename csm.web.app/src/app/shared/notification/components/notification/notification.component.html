@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<article *ngIf="notification"
+     class="ss-notification"
+     [ngClass]="{'ss-notification--read': notification.read}"
+     [attr.data-automation]="'notification'">
+
+    <div class="ss-notification__picture"
+         [ssBackgroundImage]="notification.actor.picture"
+         [attr.data-automation]="'notification-picture'">
+    </div>
+
+    <section class="ss-notification__content">
+        <header class="ss-notification__header">
+            <div class="ss-notification__title" [attr.data-automation]="'notification-title'">{{ getTitle() }}</div>
+            <time class="ss-notification__date" [dateTime]="notification.date" [attr.data-automation]="'notification-date'">{{ notification.date | ssDate:'xs':'relative' | async }}</time>
+        </header>
+        <div *ngIf="notification.changes" class="ss-notification__description" [attr.data-automation]="'notification-description'">{{ notification.changes }}</div>
+        <footer class="ss-notification__context" [attr.data-automation]="'notification-context'">{{ getContext() }}</footer>
+    </section>
+</article>

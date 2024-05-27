@@ -1,0 +1,41 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-text"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <input #input
+           class="ss-input__input"
+           [type]="type"
+           [attr.data-automation]="automationAttr"
+           [name]="name"
+           [disabled]="isDisabled"
+           [readonly]="isReadOnly"
+           [maxlength]="maxCharacter"
+           [placeholder]="placeholder"
+           [autofocus]="autofocus"
+           (focus)="onInputFocus($event)"
+           (blur)="onInputBlur($event)"
+           [ngModel]="value"
+           (ngModelChange)="onInputChange($event)">
+    <label *ngIf="label"
+           class="ss-input__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span *ngIf="maxCharacter && showCounter"
+          class="ss-input__character"
+          [attr.data-automation]="automationAttr + '-character-counter'">
+        {{characterNumber}}/{{maxCharacter}}
+    </span>
+    <span *ngIf="isInvalid() || isWarning() && !isInvalid()"
+          [ngClass]="getFeedbackClasses()"
+          [attr.data-automation]="automationAttr + getDataAutomation()">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>

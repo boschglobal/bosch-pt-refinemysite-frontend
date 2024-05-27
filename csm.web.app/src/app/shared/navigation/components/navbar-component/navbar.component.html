@@ -1,0 +1,41 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<nav class="ss-navbar"
+     [ngClass]="{'ss-navbar--expanded': isNavBarOpen,'ss-navbar--expanded-scroll': shouldHideScroll()}"
+     [attr.data-automation]="'ss-navbar-component'"
+     [ngStyle]="getNavStyle()"
+     #nav>
+    <div class="ss-navbar__header">
+        <span class="ss-navbar__header-title"
+              *ngIf="isNavBarOpen">
+                {{'Generic_Refinemysite' | translate}}
+        </span>
+        <button class="ss-navbar__header-button"
+                (click)="toggleNavBarPanel($event)"
+                [attr.data-automation]="'ss-navbar-expand'">
+            <ss-icon [name]="getNavBarIcon()" [dimension]="'normal'">
+            </ss-icon>
+        </button>
+    </div>
+    <div class="ss-navbar__items">
+        <ul>
+            <li *ngFor="let navBarItem of navBar; trackBy: trackByFn;">
+                <span *ngFor="let item of navBarItem; trackBy: trackByFn; let i = index;">
+                    <ss-navbar-item [item]="item"
+                                    [iterator]="i"
+                                    [attr.data-automation]="'ss-navbar-path-' + i">
+                    </ss-navbar-item>
+                </span>
+            </li>
+        </ul>
+        <ss-copyright *ngIf="isNavBarOpen"
+                      [attr.data-automation]="'ss-navbar-copyright-label'">
+        </ss-copyright>
+    </div>
+</nav>

@@ -1,0 +1,46 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-tasks-calendar-mappings">
+    <button
+        ss-button
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        (click)="handleWeekNavigation(-1)"
+        [attr.data-automation]="'previous'">
+        <ss-icon [name]="'arrow'"></ss-icon>
+    </button>
+    <button
+        ss-button
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        (click)="handleWeekNavigation(1)"
+        [attr.data-automation]="'next'">
+        <ss-icon [name]="'arrow'"
+                 [rotate]="180"></ss-icon>
+    </button>
+    <ss-scope-dropdown [scopeStart]="scopeStart"
+                       [scopeDuration]="scopeDuration"
+                       (scopeStartChange)="handleScopeStartChange($event)">
+    </ss-scope-dropdown>
+    <button
+        ss-button
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary-black'"
+        (click)="handleTodayClicked()"
+        [attr.data-automation]="'today'">
+        {{'Generic_Today' | translate}}
+    </button>
+    <ss-dropdown-select
+        *ssIfMediaQuery="['sm', 'md', 'lg', 'xl']"
+        [items]="modeItems"
+        (itemClicked)="handleMenuItemClicked($event)">
+    </ss-dropdown-select>
+</div>

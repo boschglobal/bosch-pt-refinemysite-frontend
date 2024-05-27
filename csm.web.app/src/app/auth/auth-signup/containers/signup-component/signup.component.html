@@ -1,0 +1,259 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-signup">
+    <ss-loader [isLoading]="isRequesting || isRequestingLegalDocuments"></ss-loader>
+    <form [formGroup]="signupForm">
+        <div class="container-no-padding">
+
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="ss-signup__title">{{'Signup_Header_Title' | translate}}</h2>
+                </div>
+            </div>
+
+            <div class="ss-signup__wrap-steps">
+                <ss-wizard-steps #wizardStepsComponent
+                    [wizardSteps]="wizardSteps"
+                    (wizardStepsChange)="handleWizardStepsChange($event)">
+                </ss-wizard-steps>
+            </div>
+            <div>
+                <ng-container [ngSwitch]="activeStep">
+                    <div *ngSwitchCase="0">
+                        <div class="ss-signup__fields ss-signup__wrap-fields">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="ss-signup__fields-picture">
+                                        <ss-input-picture [control]="signupForm.get('profilePicture')"
+                                            [accept]="'image/jpg,image/jpeg,image/png,image/gif,image/bmp'"
+                                            [automationAttr]="'profilePicture'"
+                                            [defaultPicture]="profileDefaultPicture"
+                                            (onChange)="onChangeProfilePicture($event)"
+                                            formControlName="profilePicture">
+                                        </ss-input-picture>
+                                    </div>
+                                    <span class="ss-signup__fields-picture-info">
+                                        {{'Generic_AttachmentUploadCondition' | translate: {maxFileSizeInMb: validations?.profilePicture.maxSizeInMb} }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ss-input-text [automationAttr]="'first-name'"
+                                        [name]="'firstName'"
+                                        [label]="('User_FirstName_Label' | translate)"
+                                        [isRequired]="true"
+                                        [maxCharacter]="validations.names.maxLength"
+                                        [showCounter]="false"
+                                        [control]="signupForm.get('firstName')"
+                                        formControlName="firstName">
+                                    </ss-input-text>
+                                </div>
+                                <div class="col-md-6">
+                                    <ss-input-text [automationAttr]="'last-name'"
+                                        [name]="'lastName'"
+                                        [label]="('User_LastName_Label' | translate)"
+                                        [isRequired]="true"
+                                        [maxCharacter]="validations.names.maxLength"
+                                        [showCounter]="false"
+                                        [control]="signupForm.get('lastName')"
+                                        formControlName="lastName">
+                                    </ss-input-text>
+                                </div>
+                            </div>
+
+                            <div class="row"
+                                [ngStyle]="{'margin-top': '30px'}">
+                                <div class="col-12">
+                                    <span class="ss-info-label">* {{'Generic_SaveCondition' | translate}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 ss-button-group ss-button-group--space-between">
+                                    <button type="button"
+                                        class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                                        [attr.data-automation]="'cancel-signup'"
+                                        (click)="cancelSignUp()">
+                                        {{'Generic_Logout' | translate}}
+                                    </button>
+                                    <button type="button"
+                                        ss-button
+                                        [buttonProportional]="true"
+                                        [disabled]="!(signupForm.controls['firstName'].valid && signupForm.controls['lastName'].valid)"
+                                        [attr.data-automation]="'next-step'"
+                                        (click)="handleNext()">
+                                        <span>{{'Generic_Next' | translate}}</span>
+                                        <ss-icon [name]="'arrow'"
+                                            [dimension]="'small'"
+                                            [rotate]="180"
+                                            [color]="iconArrowColor"></ss-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngSwitchCase="1">
+                        <div class="ss-signup__fields ss-signup__wrap-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ss-input-select-dropdown [name]="'language'"
+                                        [isRequired]="true"
+                                        [label]="'Generic_Language' | translate"
+                                        [control]="signupForm.get('language')"
+                                        [options]="languages"
+                                        [translateLabel]="true"
+                                        formControlName="language"
+                                        [automationAttr]="'language'">
+                                    </ss-input-select-dropdown>
+                                </div>
+                                <div class="col-md-6">
+                                    <ss-input-autocomplete [name]="'country'"
+                                        [label]="'Generic_Country' | translate"
+                                        [isRequired]="true"
+                                        [control]="signupForm.get('country')"
+                                        [list]="countryLabels"
+                                        [alwaysShowOptions]="true"
+                                        [formControl]="signupForm.get('country')"
+                                        [autofocus]="true"
+                                        [automationAttr]="'country'">
+                                    </ss-input-autocomplete>
+                                </div>
+                            </div>
+
+
+                            <div class="row"
+                                [ngStyle]="{'margin-top': '30px'}">
+                                <div class="col-12">
+                                    <span class="ss-info-label">* {{'Generic_SaveCondition' | translate}}</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 ss-button-group ss-button-group--space-between">
+                                    <button type="button"
+                                        class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                                        [attr.data-automation]="'back-step'"
+                                        (click)="handleBack()">
+                                        <ss-icon [name]="'arrow'"
+                                            [dimension]="'small'"
+                                            [rotate]="0"
+                                            [color]="iconArrowColor"></ss-icon>
+                                        <span>{{'Generic_Back' | translate}}</span>
+                                    </button>
+                                    <button type="button"
+                                        ss-button
+                                        [buttonProportional]="true"
+                                        [disabled]="!(signupForm.controls['country'].valid && signupForm.controls['language'].valid)"
+                                        [attr.data-automation]="'next-step'"
+                                        (click)="handleNext()">
+                                        <span>{{'Generic_Next' | translate}}</span>
+                                        <ss-icon [name]="'arrow'"
+                                            [dimension]="'small'"
+                                            [rotate]="180"
+                                            [color]="iconArrowColor"></ss-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngSwitchCase="2">
+                        <div class="ss-signup__fields ss-signup__wrap-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ss-input-text [automationAttr]="'position'"
+                                        [name]="'position'"
+                                        [label]="'User_Position_Label'| translate"
+                                        [maxCharacter]="validations.position.maxLength"
+                                        [showCounter]="false"
+                                        [control]="signupForm.get('position')"
+                                        formControlName="position">
+                                    </ss-input-text>
+                                </div>
+                                <div class="col-md-6">
+                                    <ss-input-select-dropdown [attr.data-automation]="'crafts'"
+                                        [name]="'crafts'"
+                                        [label]="'User_Crafts_Label' | translate"
+                                        [multiple]="true"
+                                        [control]="signupForm.get('crafts')"
+                                        [options]="craftList"
+                                        formControlName="crafts">
+                                    </ss-input-select-dropdown>
+                                </div>
+                            </div>
+
+                            <ss-form-group-phone (onChange)="onChangePhones($event)"></ss-form-group-phone>
+
+                            <div class="row ss-signup__legal-documents-accepted__row">
+                                <div class="col-md-12">
+                                    <div *ngFor="let legalDocument of legalDocumentsList"
+                                        class="ss-signup__legal-documents-accepted">
+                                        <ss-checkbox-button [automationAttr]="'legal-documents-accepted'"
+                                            [dimension]="'small'"
+                                            [name]="legalDocument.type"
+                                            [formControlName]="legalDocument.type"
+                                            [control]="signupForm.get(legalDocument.type)">
+                                                {{'Generic_AcceptThe' | translate}}
+                                        </ss-checkbox-button>
+                                        <a target="_blank"
+                                            [href]="legalDocument.url">
+                                            {{legalDocument.displayName}}
+                                        </a>
+                                    </div>
+                                    <div class="ss-signup__legal-documents-accepted">
+                                        <ss-checkbox-button [automationAttr]="'data-protection-accepted'"
+                                            [dimension]="'small'"
+                                            [name]="'dataProtectionAccepted'"
+                                            [formControlName]="'dataProtectionAccepted'"
+                                            [control]="signupForm.get('dataProtectionAccepted')">
+                                                {{'Generic_IRecognize' | translate}}
+                                        </ss-checkbox-button>
+                                        <a target="_blank"
+                                            [href]="'Legal_PrivacyStatement_Link' | translate">
+                                            {{'Legal_PrivacyStatement_Label' | translate}}
+                                        </a>
+                                        {{'Generic_IRecognize_Sufix' | translate}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 ss-button-group ss-button-group--space-between">
+                                    <button type="button"
+                                        class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                                        [attr.data-automation]="'back-step'"
+                                        (click)="handleBack()">
+                                        <ss-icon [name]="'arrow'"
+                                            [dimension]="'small'"
+                                            [rotate]="0"
+                                            [color]="iconArrowColor">
+                                        </ss-icon>
+                                        <span>{{'Generic_Back' | translate}}</span>
+                                    </button>
+                                    <button type="button"
+                                        ss-button
+                                        [buttonProportional]="true"
+                                        [attr.data-automation]="'submit-signup'"
+                                        [disabled]="!isFormValid()"
+                                        (click)="onSubmitForm(signupForm.value)">
+                                        {{'Generic_SignUpLabel' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+        </div>
+    </form>
+</div>

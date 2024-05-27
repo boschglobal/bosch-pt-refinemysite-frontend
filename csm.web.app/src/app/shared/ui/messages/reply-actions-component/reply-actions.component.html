@@ -1,0 +1,50 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-reply-actions">
+    <div *ngIf="replyAmount"
+         class="ss-reply-actions__counter">
+        <ss-marker
+            class="ss-reply-actions__marker"
+            [isVisible]="hasMarker"
+            [isCritical]="false"
+            [triggerAnimation]="false"
+            [attr.data-automation]="'reply-marker'"></ss-marker>
+        <button
+            type="button"
+            ss-button
+            [buttonSize]="'tiny'"
+            [buttonStyle]="'integrated-grey'"
+            [buttonNoPadding]="true"
+            (click)="clickedReplies()"
+            [attr.data-automation]="'reply-counter'">
+            {{replyAmount}} {{replyKey | translate}}
+            <ss-icon class="ss-reply-actions__icon"
+                     [name]="'arrow'"
+                     [color]="arrowIconColor"
+                     [rotate]="arrowRotation">
+            </ss-icon>
+        </button>
+    </div>
+    <div class="ss-reply-actions__expand">
+        <button
+            type="button"
+            ss-button
+            [buttonSize]="'tiny'"
+            [buttonStyle]="'integrated'"
+            [buttonNoPadding]="true"
+            (click)="clickedReplies()"
+            [attr.data-automation]="'reply-expand'">
+            {{'Reply_Action_Label' | translate}}
+            <ss-icon class="ss-reply-actions__icon"
+                     [name]="'reply'"
+                     [color]="replyIconColor">
+            </ss-icon>
+        </button>
+    </div>
+</div>

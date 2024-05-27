@@ -1,0 +1,21 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+a {
+  &:link,
+  &:visited {
+    color: $dark_blue;
+    fill: $dark_blue;
+  }
+
+  &:hover,
+  &:active {
+    color: $black;
+    fill: $black;
+  }
+}

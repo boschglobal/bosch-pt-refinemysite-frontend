@@ -1,0 +1,37 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-filter-capture">
+    <ss-common-filter-capture
+        #commonFilterCapture
+        [defaultValues]="commonFiltersDefaultValues"
+        [showTopRowWorkAreaOption]="showTopRowWorkAreaOption"
+        [showWholeProjectDurationOption]="emitValueChanged"
+        [emitValueChanged]="emitValueChanged"
+        (formValidity)="handleFormValidityChange($event)"
+        (rangeChange)="handleRangeChange($event)"
+        (valueChanged)="valueChanged.emit()"
+        [attr.data-automation]="'common-filter-capture'"></ss-common-filter-capture>
+    <ss-milestone-filter-capture
+        #milestoneFilterCapture
+        *ngIf="showMilestoneFilterCapture"
+        [defaultValues]="milestoneFiltersDefaultValues"
+        [useCriteria]="milestoneFilters.useCriteria"
+        [emitValueChanged]="emitValueChanged"
+        (valueChanged)="valueChanged.emit()"
+        [attr.data-automation]="'milestone-filter-capture'"></ss-milestone-filter-capture>
+    <ss-tasks-filter-capture
+        #taskFilterCapture
+        [allDaysInDateRangeDisabled]="allDaysInDateRangeDisabled"
+        [context]="context"
+        [defaultValues]="taskFiltersDefaultValues"
+        [useCriteria]="taskFilters.useCriteria"
+        [emitValueChanged]="emitValueChanged"
+        (valueChanged)="valueChanged.emit()"
+        [attr.data-automation]="'tasks-filter-capture'"></ss-tasks-filter-capture>
+</div>

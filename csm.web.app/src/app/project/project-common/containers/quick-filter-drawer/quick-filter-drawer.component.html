@@ -1,0 +1,95 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-drawer *ngIf="activePanel === 'list'"
+           class="ss-quick-filter-drawer">
+    <ng-template #header>
+        <div class="ss-quick-filter-drawer__header">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleCloseDrawer()"
+                [attr.data-automation]="'quick-filter-drawer-close'">
+                <ss-icon [name]="'close'"></ss-icon>
+            </button>
+            <span>{{'Generic_QuickFilters' | translate}}</span>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-quick-filter-drawer__body">
+            <ss-quick-filter-list
+                [appliedFilterId]="appliedFilterId"
+                (apply)="handleApplyQuickFilter($event)"
+                (create)="handleCreate()"
+                (edit)="handleEdit($event)">
+            </ss-quick-filter-list>
+        </div>
+    </ng-template>
+</ss-drawer>
+<ss-drawer *ngIf="activePanel === 'edit' || activePanel === 'create'"
+           class="ss-quick-filter-drawer ss-quick-filter-drawer--capture">
+    <ng-template #header>
+        <div class="ss-quick-filter-drawer__header">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleCloseCapture()"
+                [attr.data-automation]="'quick-filter-drawer-back'">
+                <ss-icon [name]="'arrow'"></ss-icon>
+            </button>
+            <span [attr.data-automation]="'quick-filter-drawer-title'">
+                {{(activePanel === 'create' ? 'Generic_AddNewFilter' : 'QuickFilter_Update_Label') | translate}}
+            </span>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-quick-filter-drawer__body">
+            <ss-loader [isLoading]="isLoading"></ss-loader>
+            <ss-quick-filter-capture
+                #quickFilterCapture
+                [defaultValue]="quickFilterCaptureFormData"
+                (formValidity)="handleFormValidityChange($event)">
+            </ss-quick-filter-capture>
+        </div>
+    </ng-template>
+    <ng-template #footer>
+        <form *ngIf="showHighlightOption"
+              class="ss-quick-filter-drawer__footer-form"
+              [formGroup]="form">
+            <ss-checkbox-button
+                [control]="form.controls.highlight"
+                [dimension]="'tiny'"
+                [formControlName]="'highlight'"
+                [name]="'highlight'"
+                [automationAttr]="'quick-filter-drawer-highlight'">
+                {{'Task_Filter_HighlightResultsLabel' | translate}}
+            </ss-checkbox-button>
+        </form>
+        <div class="ss-quick-filter-drawer__footer-buttons">
+            <button
+                ss-button
+                [buttonStyle]="'secondary-black'"
+                [buttonSize]="'small'"
+                (click)="handleCloseCapture()"
+                [attr.data-automation]="'quick-filter-drawer-cancel'">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button
+                ss-button
+                [buttonStyle]="'primary'"
+                [buttonSize]="'small'"
+                [disabled]="!isFormValid"
+                (click)="submitForm()"
+                [attr.data-automation]="'quick-filter-drawer-submit'">
+                {{(activePanel === 'create' ? 'Generic_Create' : 'Generic_Save') | translate}}
+            </button>
+        </div>
+    </ng-template>
+</ss-drawer>

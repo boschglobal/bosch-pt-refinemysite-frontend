@@ -1,0 +1,98 @@
+trigger: none
+
+schedules:
+  - cron: "0 6 * * Mon-Fri"
+    displayName: Daily Web App Build
+    always: true
+    branches:
+      include:
+        - master
+
+name: "1.0.0-$(Date:yyyyMMdd)-$(Build.SourceBranchName)$(Rev:.r)"
+
+resources:
+  repositories:
+    - repository: csm_templates
+      type: git
+      name: csm.azuredevops.pipelines
+      ref: refs/heads/master
+
+variables:
+  - template: /templates/variables/pipelines.yaml@csm_templates
+
+stages:
+  - stage: build
+    displayName: BUILD
+    dependsOn: []
+    pool:
+      vmImage: ${{ variables.webImage }}
+    variables:
+      - name: NODE_OPTIONS
+        value: --max_old_space_size=8192
+    jobs:
+      - job: build
+        steps:
+          - task: NodeTool@0
+            displayName: Install Node.js
+            inputs:
+              versionSpec: 16.19.1
+
+          - task: Cache@2
+            displayName: Cache npm build
+            inputs:
+              key: '"csm.web.app.v1" | package.json'
+              path: ../../../.npm
+
+          - script: |
+              npm install -g @angular/cli
+              npm ci
+            displayName: Install dependencies
+
+          - script: npm run prod
+            displayName: Build application
+
+  - stage: test
+    displayName: TEST
+    dependsOn: []
+    pool:
+      vmImage: ${{ variables.webImage }}
+    variables:
+      - name: NODE_OPTIONS
+        value: --max_old_space_size=8192
+    jobs:
+      - job: test
+        steps:
+          - task: NodeTool@0
+            displayName: Install Node.js
+            inputs:
+              versionSpec: 16.19.1
+
+          - task: Cache@2
+            displayName: Cache npm build
+            inputs:
+              key: '"csm.web.app.v1" | package.json'
+              path: ../../../.npm
+
+          - script: |
+              npm install -g @angular/cli
+              npm ci
+            displayName: Install dependencies
+
+          - script: npm run check-licenses
+            displayName: Check existence of dependencies with strong copyleft licenses
+
+          - script: npm audit --production
+            displayName: Check existence of dependencies with vulnerabilities
+
+          - script: npm run test-coverage
+            displayName: Run unit tests
+
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish code coverage results
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml
+              reportDirectory: $(System.DefaultWorkingDirectory)/coverage
+
+          - script: npm run lint
+            displayName: Run linter

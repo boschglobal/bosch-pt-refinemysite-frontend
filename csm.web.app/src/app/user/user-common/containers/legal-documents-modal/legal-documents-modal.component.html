@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-modal [id]="legalDocumentsModalId"
+          [size]="'medium'"
+          [closeable]="false">
+    <ng-template #body>
+        <ss-loader [isLoading]="isLoading"></ss-loader>
+        <ss-legal-documents
+            [legalDocuments]="legalDocuments"
+            (accept)="handleAccept($event)"
+            (delay)="handleDelay()">
+        </ss-legal-documents>
+    </ng-template>
+</ss-modal>

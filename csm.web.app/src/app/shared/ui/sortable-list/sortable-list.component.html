@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+<div class="ss-sortable-list"
+     [attr.data-automation]="'sortable-list'">
+    <ul class="ss-sortable-list-holder" cdkDropList (cdkDropListDropped)="handleDrop($event)">
+        <li *ngFor="let record of parsedRecords; trackBy: trackByFn; let rowIndex = index"
+            class="ss-sortable-list__item"
+            [ngClass]="{
+                'ss-sortable-list__item--editing': editIndex === rowIndex,
+                'ss-sortable-list__item--draggable': record.drag
+                }"
+            [attr.data-automation]="'sortable-list-item-' + rowIndex"
+            cdkDrag
+            [cdkDragDisabled]="!record.drag"
+            [cdkDragStartDelay]="dragStartDelay">
+            <div class="ss-sortable-list__item-template"
+                 [ngClass]="{'ss-sortable-list__item-template-edit': editIndex === rowIndex}">
+                <ng-container *ngTemplateOutlet="template; context: {$implicit: record};"></ng-container>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,83 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-drawer class="ss-milestone-detail-drawer"
+           [ngClass]="drawerClass"
+           [attr.data-automation]="'milestone-detail-drawer'">
+    <ng-template #header>
+        <div class="ss-milestone-detail-drawer__header"
+             [ngStyle]="{'backgroundColor':milestone.craft?.color}">
+            <button
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="buttonStyle"
+                (click)="handleClose()"
+                [attr.data-automation]="'milestone-detail-drawer-close'">
+                <ss-icon [name]="'close'"></ss-icon>
+            </button>
+            <button *ngIf="milestone.permissions.canUpdate"
+                    ss-button
+                    [buttonNoPadding]="true"
+                    [buttonStyle]="buttonStyle"
+                    (click)="handleUpdate()"
+                    [attr.data-automation]="'milestone-detail-drawer-update'">
+                <ss-icon [name]="'edit'"></ss-icon>
+            </button>
+            <ss-dropdown-menu
+                [buttonSize]="'normal'"
+                [buttonStyle]="buttonStyle"
+                [icon]="'options'"
+                [items]="dropdownItems"
+                (itemClicked)="handleDropdownItemClicked($event)"
+                [attr.data-automation]="'milestone-detail-drawer-more-options'">
+            </ss-dropdown-menu>
+        </div>
+    </ng-template>
+    <ng-template #body>
+        <div class="ss-milestone-detail-drawer__body">
+            <h2 class="ss-milestone-detail-drawer__body-title"
+                [attr.data-automation]="'milestone-detail-drawer-title'">
+                {{milestone.name}}
+            </h2>
+            <div class="ss-milestone-detail-drawer__body-section">
+                <ss-milestone-type-label [milestone]="milestone"></ss-milestone-type-label>
+                <ss-milestone-date-label [date]="milestone.date"></ss-milestone-date-label>
+                <ss-milestone-location-label [milestone]="milestone"
+                                             [workArea]="workArea"
+                                             (addLocation)="handleUpdate('location')">
+                </ss-milestone-location-label>
+                <ss-description-label *ngIf="milestone.description"
+                                      [description]="milestone.description"
+                                      [attr.data-automation]="'milestone-detail-drawer-description'">
+                </ss-description-label>
+            </div>
+            <div class="ss-milestone-detail-drawer__body-section">
+                <ss-milestone-task-relation-list [milestone]="milestone">
+                </ss-milestone-task-relation-list>
+                <ss-dependencies-list
+                    [originator]="dependencyOriginator"
+                    [relationsObservables]="relationsObservables"
+                    [canAddDependencies]="true">
+                </ss-dependencies-list>
+            </div>
+            <div *ngIf="creatorParticipant"
+                 class="ss-milestone-detail-drawer__body-section"
+                 [attr.data-automation]="'milestone-detail-drawer-creator-label'">
+                <h6 class="ss-milestone-detail-drawer__body-subtitle">{{'Generic_Creator' | translate}}</h6>
+                <ss-card-user
+                    class="ss-milestone-detail-drawer__body-user"
+                    [size]="'small'"
+                    [user]="creatorParticipant.user"
+                    [company]="creatorParticipant.company"
+                    [attr.data-automation]="'milestone-detail-drawer-card-user'"
+                    (click)="navigateToUserProfile()">
+                </ss-card-user>
+            </div>
+        </div>
+    </ng-template>
+</ss-drawer>

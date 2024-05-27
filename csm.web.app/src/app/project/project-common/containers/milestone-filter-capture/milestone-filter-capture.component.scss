@@ -1,0 +1,18 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+@import 'assets/styles/constants/index';
+
+.ss-milestone-filter-capture {
+    &__marker {
+        margin: 0 $base-dimension 0 $base-dimension--x05;
+    }
+}
+
+::ng-deep .ss-chip .ss-milestone-filter-capture__marker {
+    margin: 0 $base-dimension;
+}

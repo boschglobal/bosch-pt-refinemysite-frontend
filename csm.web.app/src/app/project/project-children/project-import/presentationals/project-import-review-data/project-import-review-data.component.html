@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-import-review-data">
+    <span class="ss-project-import-review-data__title">{{'Project_Import_ReviewDataStepDescription' | translate}}</span>
+    <ss-collapsible-list
+        class="ss-project-import-review-data__list"
+        [records]="records">
+        <ng-template #primaryTemplate let-record>
+            <div class="ss-project-import-review-data__upper-content" [attr.data-automation]="'primary-template'">
+                <ss-icon *ngIf="record.state === 'success'"
+                         class="ss-project-import-review-data__status-icon"
+                         [name]="'day-card-status-done-frame'"
+                         [color]="statisticsIconColor">
+                </ss-icon>
+                <ss-icon *ngIf="record.state === 'warning'"
+                         class="ss-project-import-review-data__status-icon"
+                         [name]="'alert-warning'"
+                         [color]="validationWarningColor">
+                </ss-icon>
+                <ss-icon *ngIf="record.state === 'error'"
+                         class="ss-project-import-review-data__status-icon"
+                         [name]="'alert-error'"
+                         [color]="validationErrorColor">
+                </ss-icon>
+                <span>{{record.summary}}</span>
+            </div>
+        </ng-template>
+        <ng-template #secondaryTemplate let-record>
+            <ul class="ss-project-import-review-data__lower-content">
+                <li *ngFor="let element of record.elements" [attr.data-automation]="'secondary-template'">
+                    {{element}}
+                </li>
+            </ul>
+        </ng-template>
+    </ss-collapsible-list>
+</div>

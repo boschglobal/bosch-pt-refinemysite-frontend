@@ -1,0 +1,42 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<article class="ss-message-item">
+    <header>
+        <ss-card-user
+            class="ss-message-item__user-card"
+            [size]="'tiny'"
+            [user]="message.createdBy">
+        </ss-card-user>
+        <ss-dropdown-menu
+            [buttonSize]="'small'"
+            [buttonStyle]="'tertiary-black'"
+            [icon]="'options'"
+            [items]="dropdownItems"
+            (itemClicked)="handleDropdownItemClicked($event)">
+        </ss-dropdown-menu>
+    </header>
+    <div class="ss-message-item__content">
+        <ss-text-image-article
+            [picturePerRow]="4"
+            [textMaxSize]="textMaxSize"
+            [pictureLinks]="pictureLinks"
+            [textContent]="message.description"
+            (clickThumbnail)="openTheater($event)">
+        </ss-text-image-article>
+        <div class="ss-message-item__details">
+            <ss-marker class="ss-message-item__details-marker"
+                       *ngIf="message.isNew"
+                       [isCritical]="false"
+                       [triggerAnimation]="false"
+                       size="small"
+                       data-automation="message-item-new"></ss-marker>
+            <span>{{message.lastModifiedDate}}</span>
+        </div>
+    </div>
+</article>

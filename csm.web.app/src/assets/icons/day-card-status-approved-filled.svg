@@ -1,0 +1,10 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2024
+  ~
+  ~ **************************************************************************
+  -->
+<svg id="day-card-status-approved-filled" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+    <rect x="5" y="5" rx="10" ry="10" width="14" height="14" stroke="black" fill="transparent" stroke-width="5"/>
+</svg>

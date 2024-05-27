@@ -1,0 +1,94 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-datepicker-calendar"
+     [attr.data-automation]="'calendar-dropdown'">
+    <div class="ss-datepicker-calendar__header">
+        <ss-icon [name]="'arrow'"
+                 [attr.data-automation]="'previous'"
+                 (click)="setPreviousView()"></ss-icon>
+        <span *ngIf="view === datepickerCalendarViewEnum.Day"
+              [attr.data-automation]="'change-view'"
+              (click)="setView(datepickerCalendarViewEnum.Month)">
+                {{currentMonth}} {{currentYear}}
+            </span>
+        <span *ngIf="view === datepickerCalendarViewEnum.Month"
+              [attr.data-automation]="'change-view'"
+              (click)="setView(datepickerCalendarViewEnum.Year)">
+                {{currentYear}}
+            </span>
+        <span *ngIf="view === datepickerCalendarViewEnum.Year"
+              [attr.data-automation]="'change-view'">
+                {{yearRows[0][0]}} - {{yearRows[3][2]}}
+            </span>
+        <ss-icon [name]="'arrow'"
+                 [rotate]="180"
+                 [attr.data-automation]="'next'"
+                 (click)="setNextView()"></ss-icon>
+    </div>
+    <div class="ss-datepicker-calendar__body">
+        <table *ngIf="view === datepickerCalendarViewEnum.Day">
+            <thead>
+            <tr>
+                <th></th>
+                <th *ngFor="let day of weekdays">{{day}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let week of weekRows">
+                <th
+                    (click)="handleSelectWeek(week)"
+                    (mouseenter)="handleEnterWeekCell(week)"
+                    (mouseleave)="handleLeaveCell()"
+                    [attr.data-automation]="getWeekDataAutomation(week)"
+                    class="ss-datepicker-calendar__cell ss-datepicker-calendar__cell-week"
+                    [ngClass]="week.classes">
+                    <div>
+                        {{week.week}}
+                    </div>
+                </th>
+                <td *ngFor="let day of week.days"
+                    (click)="handleSelectDay(day)"
+                    (mouseenter)="handleEnterDayCell(day)"
+                    (mouseleave)="handleLeaveCell()"
+                    [attr.data-automation]=" getDayDataAutomation(day.date)"
+                    class="ss-datepicker-calendar__cell ss-datepicker-calendar__cell-day"
+                    [ngClass]="day.classes">
+                    <div>
+                        {{day.day}}
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table *ngIf="view === datepickerCalendarViewEnum.Month">
+            <tbody>
+            <tr *ngFor="let monthRow of monthRows;">
+                <td *ngFor="let month of monthRow;"
+                    (click)="handleSelectMonth(month.value)"
+                    class="ss-datepicker-calendar__cell"
+                    [attr.data-automation]="getMonthDataAutomation(month.value)">
+                    <div>{{month.label}}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table *ngIf="view === datepickerCalendarViewEnum.Year">
+            <tbody>
+            <tr *ngFor="let yearRow of yearRows">
+                <td *ngFor="let year of yearRow"
+                    (click)="handleSelectYear(year)"
+                    class="ss-datepicker-calendar__cell"
+                    [attr.data-automation]="'year-' + year">
+                    <div>{{year}}</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

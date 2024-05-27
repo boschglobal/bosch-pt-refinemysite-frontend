@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section>
+    <ss-toolbar [title]="'Generic_CreateProject'" ssSticky [stickyTop]="54" [stickyId]="'toolbar'" [stickyBorderBottom]="true"></ss-toolbar>
+    <div class="container-fluid ss-project-create-container">
+        <ss-loader [isLoading]="isSubmitting"></ss-loader>
+        <ss-project-capture #projectCapture
+                            [contacts]="contacts"
+                            [mode]="captureMode"
+                            (onSubmit)="onSubmitCreate($event)"
+                            (onCancel)="onCancelCreate()">
+        </ss-project-capture>
+    </div>
+</section>

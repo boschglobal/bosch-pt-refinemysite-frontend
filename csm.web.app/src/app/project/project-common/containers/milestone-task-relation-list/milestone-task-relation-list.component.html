@@ -1,0 +1,38 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-group-list-selection
+    *ngIf="canShowMilestoneTaskRelationList"
+    [title]="'MilestoneTaskRelation_Title_RequiredTasksLabel' | translate"
+    [multipleSelectionToolbarData]="multipleSelectionToolbarData"
+    [itemsPerGroupItem]="itemsPerGroupItem"
+    [groups]="groups"
+    [attr.data-automation]="'ss-milestone-task-relation-list'">
+    <ng-template #itemTemplate let-item>
+        <ss-task-overview-card
+            [task]="item.task"
+            [actions]=item.actions
+            (actionClicked)="handleActionClicked($event)"
+            (itemClicked)="handleTaskCardClicked($event)">
+        </ss-task-overview-card>
+    </ng-template>
+    <ng-template #actionsTemplate>
+        <ss-tiny-loader *ngIf="isLoading"
+                        [attr.data-automation]="'ss-milestone-task-relation-list-loading'">
+        </ss-tiny-loader>
+        <button *ngIf="!isLoading && canShowAddButton"
+                ss-button
+                [buttonSize]="'tiny'"
+                [buttonStyle]="'tertiary'"
+                [buttonNoPadding]="true"
+                (click)="handleAddTask()"
+                [attr.data-automation]="'ss-milestone-task-relation-list-add-button'">
+            <ss-icon [name]="'more'"></ss-icon>
+        </button>
+    </ng-template>
+</ss-group-list-selection>

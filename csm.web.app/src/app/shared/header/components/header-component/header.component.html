@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2024
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-header">
+    <ss-breadcrumb [attr.data-automation]="'header-breadcrumb'">
+        <ss-brand></ss-brand>
+    </ss-breadcrumb>
+    <div class="ss-header__actions">
+        <ss-job-list-button></ss-job-list-button>
+
+        <ss-notification-list class="ss-header__action-item"
+            [attr.data-automation]="'header-notifications'">
+        </ss-notification-list>
+
+        <ss-help-section class="ss-header__action-item-question-mark"
+            [attr.data-automation]="'header-help-section'"></ss-help-section>
+
+        <ss-account-menu [attr.data-automation]="'header-account-menu'">
+        </ss-account-menu>
+    </div>
+</div>

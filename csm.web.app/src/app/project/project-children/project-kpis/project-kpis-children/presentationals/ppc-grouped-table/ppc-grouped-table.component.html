@@ -1,0 +1,55 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<table class="ss-ppc-grouped-table">
+    <thead>
+        <tr class="ss-ppc-grouped-table__border">
+            <th *ngFor="let column of columns; let i = index"
+                class="ss-ppc-grouped-table__header"
+                [attr.data-automation]="'ppc-grouped-table-header'"
+                [ngClass]="{'ss-ppc-grouped-table__header--total': showTotalsColumn && i === columns.length -1 }">
+                <div [attr.data-automation]="'ppc-grouped-table-header-title'" class="ss-ppc-grouped-table__header-title">{{ column.title }}</div>
+                <div *ngIf="column.subtitle" [attr.data-automation]="'ppc-grouped-table-header-subtitle'">{{ column.subtitle }}</div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let row of rows; let rowI = index">
+            <tr [attr.data-automation]="'ppc-grouped-table-row-header'">
+                <td [attr.colspan]="getColSpan(row)" class="ss-ppc-grouped-table__row">
+                    <div class="ss-ppc-grouped-table__row-container">
+                        <div [attr.data-automation]="'ppc-grouped-table-row-title'" class="ss-ppc-grouped-table__title">{{ row.title }}</div>
+                        <div [attr.data-automation]="'ppc-grouped-table-row-subtitle'" class="ss-ppc-grouped-table__subtitle">{{ row.subtitle }}</div>
+                    </div>
+                </td>
+                <td *ngIf="showTotalsColumn" class="ss-ppc-grouped-table__cell ss-ppc-grouped-table__cell--total"></td>
+            </tr>
+            <tr [attr.data-automation]="'ppc-grouped-table-row'" class="ss-ppc-grouped-table__border">
+                <td *ngFor="let cell  of row.cells; let i = index"
+                    [attr.data-automation]="'ppc-grouped-table-cell'"
+                    class="ss-ppc-grouped-table__cell"
+                    [ngClass]="{'ss-ppc-grouped-table__cell--total': showTotalsColumn && i === row.cells.length -1 }">
+                    <div class="ss-ppc-grouped-table__cell__content">
+                        <ss-traffic-light-with-label ssFlyout
+                                                     [flyoutAlignment]="'center'"
+                                                     [flyoutTemplate]="flyoutTemplate"
+                                                     [flyoutTrigger]="'hover'"
+                                                     [flyoutId]="rowI * columns.length + i"
+                                                     [settings]="trafficLightSettings"
+                                                     [value]="cell.ppc"></ss-traffic-light-with-label>
+                        <ng-template #flyoutTemplate>
+                            <div class="ss-ppc-grouped-table__tooltip">
+                                <ss-project-kpis-tooltip [showFooter]="false"  [weekLabel]="cell.week" [value]="cell.ppc" [list]="cell.reasons"></ss-project-kpis-tooltip>
+                            </div>
+                        </ng-template>
+                    </div>
+                </td>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

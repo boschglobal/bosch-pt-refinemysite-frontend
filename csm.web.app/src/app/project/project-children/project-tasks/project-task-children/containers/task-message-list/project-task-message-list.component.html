@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div id="project-task-message-list"
+     class="ss-project-task-message-list"
+     [attr.data-automation]="'project-task-message-list'">
+    <ss-project-task-reply-capture
+        class="ss-project-task-message-list__reply-capture"
+        [topicId]="topicId"
+        [inputFilesSize]="inputFilesSize"
+        (submitForm)="onSubmitMessage($event)">
+    </ss-project-task-reply-capture>
+    <ul class="ss-project-task-message-list__messages">
+        <li *ngFor="let message of messages">
+            <ss-message-item
+                [message]="message"
+                [textMaxSize]="textMaxSize"
+                (delete)="handleDelete($event)"
+                [attr.data-automation]="'message-item-entry'">
+            </ss-message-item>
+        </li>
+    </ul>
+    <ss-tiny-loader *ngIf="isLoading && !showLoadMore"
+                    class="ss-project-task-message-list__loader"
+                    [attr.data-automation]="'project-task-message-list-normal-loader'">
+    </ss-tiny-loader>
+    <div *ngIf="showLoadMore"
+         class="ss-project-task-message-list__show-more">
+        <button
+            ss-button
+            [disabled]="isLoading"
+            [buttonStyle]="'secondary-grey'"
+            [buttonSize]="'tiny'"
+            (click)="handleLoadMore()"
+            [attr.data-automation]="'show-more-items'">
+            <span *ngIf="!isLoading">{{'Reply_LoadMore_Label' | translate}}</span>
+            <ss-tiny-loader *ngIf="isLoading"
+                            [attr.data-automation]="'project-task-message-list-show-more-loader'">
+            </ss-tiny-loader>
+        </button>
+    </div>
+</div>

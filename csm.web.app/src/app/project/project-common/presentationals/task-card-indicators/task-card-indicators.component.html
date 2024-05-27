@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-card-indicators">
+    <ss-icon *ngIf="dependenciesIcon"
+             [dimension]="16"
+             [name]="dependenciesIcon"
+             [title]="dependenciesLabel | translate"
+             [attr.data-automation]="'task-card-indicators-dependencies'">
+    </ss-icon>
+    <ss-icon *ngIf="topicsIcon"
+             [dimension]="16"
+             [name]="topicsIcon"
+             [title]="topicsLabel | translate"
+             [attr.data-automation]="'task-card-indicators-topics'">
+    </ss-icon>
+    <ss-icon *ngIf="constraintsIcon"
+             [dimension]="16"
+             [name]="constraintsIcon"
+             [title]="constraintsLabel"
+             [attr.data-automation]="'task-card-indicators-constraints'">
+    </ss-icon>
+</div>

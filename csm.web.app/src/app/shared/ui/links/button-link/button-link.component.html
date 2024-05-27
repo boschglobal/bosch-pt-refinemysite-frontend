@@ -1,0 +1,57 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<button
+    *ngIf="link?.action"
+    class="ss-button-link"
+    ss-button
+    [buttonSize]="'auto'"
+    [buttonStyle]="'integrated'"
+    (click)="link.action()"
+    [attr.data-automation]="'button-action'">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+</button>
+
+<a
+    *ngIf="link?.routerLink"
+    class="ss-button-link"
+    ss-button
+    [buttonSize]="'auto'"
+    [buttonStyle]="'integrated'"
+    [routerLink]="link.routerLink"
+    [queryParams]="link.queryParams"
+    [attr.data-automation]="'button-link-internal'">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+</a>
+
+<a
+    *ngIf="link?.href"
+    class="ss-button-link"
+    ss-button
+    [buttonSize]="'auto'"
+    [buttonStyle]="'integrated'"
+    [href]="link.href"
+    [target]="link.hrefNewTab ? '_blank': '_self'"
+    [rel]="link.hrefNewTab ? 'noopener noreferrer nofollow': ''"
+    [attr.data-automation]="'button-link-external'">
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
+</a>
+
+<ng-template #content>
+    <span class="ss-button-link--label"
+          [attr.data-automation]="'button-link-label'">
+        {{link.label | translate}}
+    </span>
+    <ss-icon *ngIf="linkIcon"
+             class="ss-button-link--icon"
+             [name]="linkIcon.name"
+             [rotate]="linkIcon.rotation"
+             [dimension]="'small'"
+             [attr.data-automation]="'button-link-icon'">
+    </ss-icon>
+</ng-template>

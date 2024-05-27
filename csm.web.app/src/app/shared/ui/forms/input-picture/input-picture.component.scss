@@ -1,0 +1,141 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+.ss-input-picture {
+    position: relative;
+    height: 150px;
+    width: 150px;
+
+    :disabled {
+        opacity: .4;
+    }
+
+    &__label {
+        padding: 20px 0 30px 0;
+        cursor: pointer;
+        margin-bottom: 0 !important;
+        display: block !important;
+
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 150px;
+            width: 150px;
+            border-radius: 100%;
+            border: 3px solid $light_grey;
+            background: transparent;
+            z-index: $z-index_2;
+            transition: .2s all;
+        }
+
+        &:hover {
+            &:after {
+                background: rgba(0, 0, 0, .2);
+            }
+
+            .ss-input-picture__icon--edit {
+                background: $dark_blue;
+            }
+        }
+    }
+
+    &__input {
+        display: none;
+    }
+
+    &__preview {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: $z-index_1;
+        pointer-events: none;
+        border-radius: 100%;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    &__invalid {
+        display: none;
+        position: relative;
+        top: 130px;
+        margin: 10px 0 0 0;
+        font-size: $font-size-xs;
+        font-family: RmS-Bold, sans-serif;
+        text-align: center;
+        color: $form-invalid;
+
+        ::selection {
+            background: none;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        bottom: 4px;
+        width: 40px;
+        height: 40px;
+        z-index: $z-index_3;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $white;
+        font-size: 20px;
+        transition: .2s all;
+
+        &--delete {
+            left: 0;
+            background: $dark_grey_50;
+            cursor: pointer;
+
+            &:hover {
+                background: $dark_grey_75;
+            }
+        }
+
+        &--edit {
+            right: 0;
+            background: $dark_blue;
+
+            &:hover {
+                background: $dark_blue;
+            }
+        }
+    }
+
+    &--filled {
+        .ss-input-picture__preview {
+            border-color: $form-valid;
+        }
+    }
+
+    &--focused {
+        &:after {
+            background: rgba(0, 0, 0, .2);
+        }
+    }
+
+    &--valid {
+        &:after {
+            border-color: $form-valid !important;
+        }
+    }
+
+    &--invalid {
+        &:after {
+            border-color: $form-invalid !important;
+            background: rgba(0, 0, 0, .5);
+        }
+    }
+}

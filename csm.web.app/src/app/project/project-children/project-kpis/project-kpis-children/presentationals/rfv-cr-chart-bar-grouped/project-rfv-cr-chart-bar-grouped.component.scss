@@ -1,0 +1,17 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+.ss-project-rfv-cr-chart-bar-grouped {
+    display: block;
+    height: 350px;
+    width: 100%;
+
+    ::ng-deep .ngx-charts .bar {
+        cursor: default;
+    }
+}

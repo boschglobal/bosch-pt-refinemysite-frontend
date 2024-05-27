@@ -1,0 +1,15 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-project-task-topic-capture
+    [isSubmitting]="isSubmitting"
+    [isCollapsed]="false"
+    [user]="user"
+    (canceled)="handleCancel()"
+    (submitted)="handleSubmit($event)">
+</ss-project-task-topic-capture>

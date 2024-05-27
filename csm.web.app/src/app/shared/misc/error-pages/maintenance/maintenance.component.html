@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2024
+  ~
+  ~ **************************************************************************
+  -->
+<div class="ss-maintenance">
+    <ss-supergraphic class="ss-supergraphic__header"></ss-supergraphic>
+    <div class="ss-maintenance__logo" [attr.data-automation]="'maintenance-logo'" (click)="navigateToHome()">
+        <img src="../../assets/images/logo/rms_logo.svg" class="ss-maintenance__logo-image" alt="bosch logo">
+    </div>
+    <div class="ss-maintenance__main-content">
+        <img src="../../assets/images/errors/error-500.png" class="ss-maintenance__main-image" alt="maintenance logo">
+        <ss-no-items
+            [attr.data-automation]="'maintenance-no-records'"
+            [buttonText]="'Generic_BackToProjects' | translate"
+            [buttonStyle]="'primary'"
+            [description]="'Maintenance_Ongoing_Description' | translate"
+            [showButton]="true"
+            [title]="'Maintenance_Ongoing_Title' | translate"
+            (clickButton)="navigateToHome()">
+        </ss-no-items>
+    </div>
+</div>

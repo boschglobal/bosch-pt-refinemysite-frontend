@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+<div>
+    <span *ssIfMediaQuery="['xs']">xs</span>
+    <span *ssIfMediaQuery="['sm']">sm</span>
+    <span *ssIfMediaQuery="['md']">md</span>
+    <span *ssIfMediaQuery="['lg']">lg</span>
+    <span *ssIfMediaQuery="['xl']">xl</span>
+
+    <span *ssIfMediaQuery="['xs', 'sm', 'md']">xs sm md</span>
+    <span *ssIfMediaQuery="['lg', 'xl']">lg xl</span>
+
+    <span *ssIfMediaQuery="{min: min, max: max}">768px to 991px</span>
+</div>
+

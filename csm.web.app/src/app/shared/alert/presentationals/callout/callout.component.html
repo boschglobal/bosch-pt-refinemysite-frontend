@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div [class]="'ss-callout ss-callout--' + type"
+     [attr.data-automation]="'callout'">
+    <div class="ss-callout__container">
+        <ss-icon class="ss-callout__icon"
+                 [name]="type"
+                 [attr.data-automation]="'callout-icon-' + type">
+        </ss-icon>
+        <span class="ss-callout__message"
+              [class.ss-callout__message--preformatted]="preformatted"
+              [attr.data-automation]="'callout-message'">{{message}}</span>
+    </div>
+    <button *ngIf="isCloseable"
+            class="ss-button ss-button--no-padding"
+            (click)="handleCloseCallout()"
+            [attr.data-automation]="'ss-callout__close'">
+        <ss-icon [name]="'close-small'"></ss-icon>
+    </button>
+</div>

@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-textarea"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr + '-wrapper'">
+    <textarea class="ss-input-textarea__hidden"
+              [attr.data-automation]="automationAttr + '-mirror'"
+              [(ngModel)]="value"
+              #inputTextareaHidden>
+    </textarea>
+    <textarea #textarea
+              class="ss-input__input ss-input-textarea__input"
+              [attr.data-automation]="automationAttr"
+              [name]="name"
+              [disabled]="isDisabled"
+              [readonly]="isReadOnly"
+              [maxlength]="maxCharacter"
+              (change)="onInputChange()"
+              (input)="onInputChange()"
+              (focus)="onInputFocus($event)"
+              (blur)="onInputBlur($event)"
+              (keyup)="onInputKeyup()"
+              [(ngModel)]="value"
+              [ngStyle]="getStyle()"
+              [ngClass]="getClasses()">
+    </textarea>
+    <label class="ss-input__label"
+           [attr.data-automation]="automationAttr + '-label'">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+    <span *ngIf="maxCharacter && showCounter"
+          class="ss-input__character"
+          [attr.data-automation]="automationAttr + '-character-counter'">
+        {{characterNumber}}/{{maxCharacter}}
+    </span>
+    <span *ngIf="isInvalid() || isWarning() && !isInvalid()"
+          [ngClass]="getFeedbackClasses()"
+          [attr.data-automation]="automationAttr + getDataAutomation()">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>

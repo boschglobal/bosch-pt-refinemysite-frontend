@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-datepicker
+            [automationAttr]="defaultInputState.datepicker.automationAttr"
+            [name]="defaultInputState.datepicker.name"
+            [label]="defaultInputState.datepicker.label | translate"
+            [rangeLabel]="defaultInputState.datepicker.rangeLabel"
+            [min]="defaultInputState.datepicker.min"
+            [max]="defaultInputState.datepicker.max"
+            [disabledDates]="defaultInputState.datepicker.disabledDates"
+            [isRequired]="defaultInputState.datepicker.isRequired"
+            [isRequiredStart]="defaultInputState.datepicker.isRequiredStart"
+            [isRequiredEnd]="defaultInputState.datepicker.isRequiredEnd"
+            [isDisabled]="defaultInputState.datepicker.isDisabled"
+            [referenceDate]="defaultInputState.datepicker.referenceDate"
+            [selectRange]="defaultInputState.datepicker.selectRange"
+            [control]="formGroup.get(defaultInputState.datepicker.controlName)"
+            [displayErrors]="true"
+            formControlName="datepicker">
+    </ss-input-datepicker>
+</form>

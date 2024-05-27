@@ -1,0 +1,60 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-working-days-holiday-capture">
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col-12">
+                <ss-input-text
+                    #nameInput
+                    [automationAttr]="'name'"
+                    [name]="'name'"
+                    [label]="'Generic_Name' | translate"
+                    [maxCharacter]="validations.name.maxLength"
+                    [isRequired]="true"
+                    [displayErrors]="true"
+                    [control]="form.controls.name"
+                    [formControlName]="'name'">
+                </ss-input-text>
+            </div>
+            <div class="col-12">
+                <ss-input-datepicker
+                    [automationAttr]="'date'"
+                    [name]="'date'"
+                    [label]="'Generic_Date' | translate"
+                    [displayErrors]="true"
+                    [isRequired]="true"
+                    [control]="form.controls.date"
+                    [formControlName]="'date'">
+                </ss-input-datepicker>
+            </div>
+            <span class="ss-working-days-holiday-capture__required-info col-12">
+                * {{'Generic_SaveCondition' | translate}}
+            </span>
+        </div>
+        <div class="ss-working-days-holiday-capture__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [disabled]="!isFormValid()"
+                        [ssMonitorClickAction]="monitoringClickActionName"
+                        (click)="handleSubmit()"
+                        [attr.data-automation]="'save'">
+                    {{submitButtonLabel | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

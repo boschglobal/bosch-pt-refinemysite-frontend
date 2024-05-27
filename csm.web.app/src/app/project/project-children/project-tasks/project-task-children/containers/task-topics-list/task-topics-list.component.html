@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-topics-list">
+    <ul>
+        <li *ngFor="let topic of topics; trackBy: trackByFn;"
+            class="ss-task-topics-list__card"
+            [attr.data-automation]="'task-topics-list-card'">
+            <ss-project-task-topic-card
+                [inputFilesSize]="inputFilesSize"
+                [textMaxSize]="textMaxSize"
+                [topicContent]="topic"
+                (criticalityChanged)="handleCriticalityChange($event)"
+                (delete)="handleDelete($event)">
+            </ss-project-task-topic-card>
+        </li>
+    </ul>
+    <ss-tiny-loader *ngIf="isLoading && !hasMoreItems"
+                    class="ss-task-topics-list__loader"
+                    [attr.data-automation]="'task-topics-list-loader'">
+    </ss-tiny-loader>
+    <button *ngIf="hasMoreItems"
+            class="ss-task-topics-list__load-more"
+            ss-button
+            [disabled]="isLoading"
+            [buttonStyle]="'secondary-grey'"
+            [buttonSize]="buttonSize"
+            (click)="handleLoadMore()"
+            [attr.data-automation]="'task-topics-list-load-more'">
+        <span *ngIf="!isLoading">{{'Topic_LoadMore_Label' | translate}}</span>
+        <ss-tiny-loader *ngIf="isLoading"
+                        [attr.data-automation]="'task-topics-list-show-more-loader'">
+        </ss-tiny-loader>
+    </button>
+</div>

@@ -1,0 +1,22 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/mixins";
+
+.ss-scope-dropdown {
+    @include body-2();
+    padding: 0 $base-dimension--x2;
+
+    &--open,
+    &:focus,
+    &:hover {
+        background-color: $light_grey_25;
+    }
+}
+

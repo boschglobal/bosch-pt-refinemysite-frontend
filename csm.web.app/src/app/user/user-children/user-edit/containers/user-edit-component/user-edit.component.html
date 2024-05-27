@@ -1,0 +1,21 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<section>
+    <ss-toolbar [title]="'Generic_EditProfileLabel'" ssSticky [stickyTop]="54" [stickyId]="'toolbar'" [stickyBorderBottom]="true">
+    </ss-toolbar>
+    <div class="container-fluid ss-user-edit-container">
+        <ss-loader [isLoading]="isRequesting || isLoading"></ss-loader>
+        <ss-user-capture [defaultValues]="defaultValues"
+                         [crafts]="crafts"
+                         [focus]="focus"
+                         (onSubmit)="onSubmitEdit($event)"
+                         (onCancel)="onCancelEdit()">
+        </ss-user-capture>
+    </div>
+</section>

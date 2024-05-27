@@ -1,0 +1,107 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+@import "assets/styles/typography/mixins";
+@import "assets/styles/mixins";
+
+$picture-width: 150px;
+$banner-height: 150px;
+
+.ss-generic-banner {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+    flex-direction: column;
+    padding: $base-dimension--x2 $base-dimension--x3;
+    background: $light_grey_25;
+    overflow: hidden;
+
+    &__content {
+        margin: $base-dimension--x2 0;
+        max-width: 568px;
+
+        &-holder {
+            width: 100%;
+        }
+    }
+
+    &__title,
+    h2 {
+        @include heading-2($dark_grey);
+        margin-bottom: $base-dimension;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    &__subtitle,
+    h3 {
+        @include subtitle-1($dark_grey);
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    &__title,
+    &__subtitle {
+        color: $black;
+    }
+
+    &__description {
+        @include subtitle-2($dark_grey);
+
+        &--short {
+            @include multi-line-ellipsis(1);
+        }
+    }
+
+    &__picture {
+        align-self: flex-start;
+        width: $picture-width;
+        height: $picture-width;
+        min-width: $picture-width;
+        min-height: $picture-width;
+        border-radius: $picture-width * 0.5;
+        background-size: cover;
+        background-position: center center;
+    }
+
+    &__picture-border {
+        border-radius: 100%;
+        border: 3px solid $light_grey;
+    }
+
+    &__actions {
+        position: absolute;
+        top: $base-dimension;
+        right: $base-dimension;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .ss-generic-banner {
+        flex-direction: row;
+
+        &__content {
+            margin: 0 0 $base-dimension--x2 0;
+
+            &-holder {
+                display: flex;
+                flex-direction: column;
+                align-self: flex-start;
+                width: calc(100% - 136px);
+                min-height: $picture-width;
+                padding: $base-dimension 0 0 $base-dimension--x3;
+            }
+        }
+
+        &__link {
+            margin-top: auto;
+        }
+    }
+}

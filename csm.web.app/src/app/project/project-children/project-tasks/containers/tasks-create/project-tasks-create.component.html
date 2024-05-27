@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-create">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-project-tasks-capture
+            #createCapture
+            [hasDefaultValues]="defaultValues"
+            [mode]="captureMode"
+            (onCancel)="onClose.emit($event)"
+            (onSubmit)="handleSubmit($event)">
+    </ss-project-tasks-capture>
+</div>

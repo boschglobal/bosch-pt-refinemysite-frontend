@@ -1,0 +1,25 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-rfv-cr-chart-line">
+    <ngx-charts-line-chart
+        [customColors]="graphSettings.customColors"
+        [results]="graphSettings.results"
+        [xAxis]="graphSettings.xAxis"
+        [xAxisTickFormatting]="graphSettings.xAxisTickFormatting"
+        [yAxis]="graphSettings.yAxis"
+        [yAxisTickFormatting]="graphSettings.yAxisTickFormatting"
+        [yScaleMax]="graphSettings.yScaleMax">
+        <ng-template #tooltipTemplate let-model="model">
+        </ng-template>
+        <ng-template #seriesTooltipTemplate let-model="model">
+            <ss-project-kpis-tooltip [weekLabel]="getWeekLabel(model)" [list]="getWeekRfvList(model)" [showTotal]="true"
+                                     [showFooter]="false" [value]="hasWeeklyRfvs(model)"></ss-project-kpis-tooltip>
+        </ng-template>
+    </ngx-charts-line-chart>
+</div>

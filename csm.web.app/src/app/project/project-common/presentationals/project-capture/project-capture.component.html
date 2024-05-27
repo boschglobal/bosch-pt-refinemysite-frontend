@@ -1,0 +1,204 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="form">
+    <div class="ss-project-capture__first">
+        <div class="row">
+            <div class="col-12">
+                <span class="ss-project-capture__first-info">* {{'Generic_SaveCondition' | translate}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="ss-project-capture__first-picture">
+                    <ss-input-picture
+                        [control]="form.get('picture')"
+                        [accept]="'image/jpg,image/jpeg,image/png,image/gif,image/bmp'"
+                        [automationAttr]="'picture'"
+                        [defaultPicture]="'./assets/images/project/default.png'"
+                        formControlName="picture">
+                    </ss-input-picture>
+                </div>
+                <div class="ss-project-capture__first-picture-info">
+                    {{'Generic_AttachmentUploadCondition' | translate: {maxFileSizeInMb: validations?.picture.maxSizeInMb} }}
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row no-gutters">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <ss-input-text
+                                    [automationAttr]="'title'"
+                                    [name]="'title'"
+                                    [label]="'Project_Title_Label' | translate"
+                                    [isRequired]="true"
+                                    [maxCharacter]="validations.title.maxLength"
+                                    [control]="form.get('title')"
+                                    formControlName="title">
+                                </ss-input-text>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <ss-input-textarea
+                                    [automationAttr]="'description'"
+                                    [name]="'description'"
+                                    [label]="'Generic_Description' | translate"
+                                    [maxCharacter]="validations.description.maxLength"
+                                    [control]="form.get('description')"
+                                    formControlName="description">
+                                </ss-input-textarea>
+                            </div>
+                            <div class="col-md-3">
+                                <ss-input-text
+                                    [automationAttr]="'number'"
+                                    [name]="'number'"
+                                    [label]="'Generic_Number' | translate"
+                                    [isRequired]="true"
+                                    [maxCharacter]="validations.projectNumber.maxLength"
+                                    [control]="form.get('projectNumber')"
+                                    formControlName="projectNumber">
+                                </ss-input-text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ss-project-capture__second">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="ss-project-capture__second-first">
+                    <div class="ss-panel--background">
+                        <div class="ss-panel__title">
+                            <h1>{{'Generic_Details' | translate}}</h1>
+                        </div>
+                        <div class="ss-panel__content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <ss-input-datepicker
+                                        [selectRange]="true"
+                                        [automationAttr]="'range'"
+                                        [name]="'range'"
+                                        [rangeLabel]="{start: 'Project_Start_Label' | translate, end: 'Project_End_Label' | translate}"
+                                        [displayErrors]="true"
+                                        [isRequiredStart]="true"
+                                        [isRequiredEnd]="true"
+                                        [control]="form.get('range')"
+                                        formControlName="range">
+                                    </ss-input-datepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ss-input-text
+                                        [automationAttr]="'client'"
+                                        [name]="'client'"
+                                        [label]="'Generic_Client' | translate"
+                                        [maxCharacter]="validations.client.maxLength"
+                                        [control]="form.get('client')"
+                                        formControlName="client">
+                                    </ss-input-text>
+                                </div>
+                                <div class="col-md-6">
+                                    <ss-input-select-dropdown
+                                        [automationAttr]="'category'"
+                                        [name]="'category'"
+                                        [label]="'Generic_Category' | translate"
+                                        [control]="form.get('category')"
+                                        [options]="categoryList"
+                                        [emptyOptionMessageKey]="'Generic_NoSelection'"
+                                        [translateLabel]="true"
+                                        formControlName="category">
+                                    </ss-input-select-dropdown>
+                                </div>
+                            </div>
+                            <ng-container formGroupName="address">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ss-input-text
+                                            [automationAttr]="'street'"
+                                            [name]="'street'"
+                                            [label]="'Generic_Street' | translate"
+                                            [isRequired]="true"
+                                            [maxCharacter]="validations.address.street.maxLength"
+                                            [control]="form.get('address').get('street')"
+                                            formControlName="street">
+                                        </ss-input-text>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ss-input-text
+                                            [automationAttr]="'houseNumber'"
+                                            [name]="'houseNumber'"
+                                            [label]="'Generic_HouseNumber' | translate"
+                                            [isRequired]="true"
+                                            [maxCharacter]="validations.address.houseNumber.maxLength"
+                                            [control]="form.get('address').get('houseNumber')"
+                                            formControlName="houseNumber">
+                                        </ss-input-text>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <ss-input-text
+                                            [automationAttr]="'zipCode'"
+                                            [name]="'zipCode'"
+                                            [label]="'Generic_ZipCode' | translate"
+                                            [isRequired]="true"
+                                            [maxCharacter]="validations.address.zipCode.maxLength"
+                                            [control]="form.get('address').get('zipCode')"
+                                            formControlName="zipCode">
+                                        </ss-input-text>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ss-input-text
+                                            [automationAttr]="'city'"
+                                            [name]="'city'"
+                                            [label]="'Generic_City' | translate"
+                                            [isRequired]="true"
+                                            [maxCharacter]="validations.address.city.maxLength"
+                                            [control]="form.get('address').get('city')"
+                                            formControlName="city">
+                                        </ss-input-text>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <div class="ss-project-capture__second-second">
+                    <ss-project-card-contact [contacts]="contacts"></ss-project-card-contact>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ss-button-group">
+            <button type="button"
+                    class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                    [attr.data-automation]="'cancel'"
+                    (click)="onCancelForm()">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'submit'"
+                    [disabled]="!isFormValid()"
+                    (click)="onSubmitForm()">
+                {{getMode() === 'create' ? ('Generic_Create' | translate) : ('Generic_Save' | translate)}}
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-kpis-list">
+    <ul class="ss-project-kpis-list__container" [attr.data-automation]="'project-kpis-list'">
+        <li *ngFor="let rfv of data" class="ss-project-kpis-list__item" [attr.data-automation]="'project-kpis-list-item'">
+            <div *ngIf="hasColors()" class="ss-project-kpis-list__item-color" [ngStyle]="{'background-color': rfv.color}"></div>
+            <div class="ss-project-kpis-list__item-value">{{ rfv.value }}</div>
+            <div class="ss-project-kpis-list__item-name">{{ rfv.name | translate }}</div>
+        </li>
+    </ul>
+
+    <div *ngIf="canShowTotal()" class="ss-project-kpis-list__total" [attr.data-automation]="'project-kpis-list-total'">
+        <div class="ss-project-kpis-list__total-value" [ngClass]="{'ss-project-kpis-list__total-value--colored':hasColors()}">{{ total() }}</div>
+        <div class="ss-project-kpis-list__total-name">{{ 'Generic_Total' | translate }}</div>
+    </div>
+
+</div>

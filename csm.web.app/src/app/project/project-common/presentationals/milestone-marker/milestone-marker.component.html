@@ -1,0 +1,30 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-milestone-marker"
+     [ngClass]="markerClasses"
+     [style.background-color]="markerColor"
+     [attr.data-automation]="'milestone-marker--' + markerType">
+    <ss-icon *ngIf="isSelected"
+             class="ss-milestone-marker__checkmark"
+             [color]="'white'"
+             [dimension]="16"
+             [name]="'check-tiny'"
+             [attr.data-automation]="'milestone-marker-checkmark'">
+    </ss-icon>
+    <span *ngIf="isFocused && !isSelected"
+          class="ss-milestone-marker__circle"
+          [attr.data-automation]="'milestone-marker-circle'"></span>
+    <ss-icon *ngIf="isCritical && !isSelected && !isFocused"
+             class="ss-milestone-marker__critical"
+             [color]="'white'"
+             [dimension]="16"
+             [name]="'milestone-critical'"
+             [attr.data-automation]="'milestone-marker-critical'">
+    </ss-icon>
+</div>

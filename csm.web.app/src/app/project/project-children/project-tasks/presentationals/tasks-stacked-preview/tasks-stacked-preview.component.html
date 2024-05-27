@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ul class="ss-tasks-stacked-preview">
+    <li class="ss-tasks-stacked-preview__card ss-tasks-stacked-preview__card--background"
+        [ngClass]="{'ss-tasks-stacked-preview__card--dimmed-out': backgroundCard.dimmed}"
+        [style.border-color]="backgroundCard.color.solid"
+        [attr.data-automation]="'tasks-stacked-preview-card-background'"></li>
+    <li class="ss-tasks-stacked-preview__card ss-tasks-stacked-preview__card--top"
+        [ngClass]="{'ss-tasks-stacked-preview__card--dimmed-out': topCard.dimmed}"
+        [style.border-color]="topCard.color.solid"
+        [attr.data-automation]="'tasks-stacked-preview-card-top'">
+        <div class="ss-tasks-stacked-preview__card__count"
+             [style.background-color]="counterColor"
+             [attr.data-automation]="'tasks-stacked-preview-card-count'">{{cardCount}}</div>
+        <div class="ss-tasks-stacked-preview__card__content">
+            <h3 class="ss-tasks-stacked-preview__card__title"
+                [attr.data-automation]="'tasks-stacked-preview-card-title'">{{topCard.title}}</h3>
+            <span class="ss-tasks-stacked-preview__card__description"
+                  [attr.data-automation]="'tasks-stacked-preview-card-description'">{{topCard.description}}</span>
+        </div>
+    </li>
+</ul>

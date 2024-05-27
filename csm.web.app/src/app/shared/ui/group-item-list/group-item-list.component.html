@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="items.length"
+     class="ss-group-item-list"
+     [attr.data-automation]="'ss-group-item-list'">
+    <h2 *ngIf="groupItem.title"
+        [attr.data-automation]="'ss-group-item-list-title'">
+        {{groupItem.title | translate}} ({{groupItem.items.length}})</h2>
+    <ul>
+        <li *ngFor="let item of items; trackBy: trackByFn"
+            [attr.data-automation]="'ss-group-item-list-item-' + item.id">
+            <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit: item}"></ng-container>
+        </li>
+    </ul>
+    <button *ngIf="showLoadMore"
+            class="ss-group-item-list__load-more ss-button ss-button--tiny ss-button--secondary-ghost-grey"
+            (click)="handleLoadMore()"
+            [attr.data-automation]="'ss-group-item-list-load-more-button'">
+        {{'Generic_ShowMore' | translate}}
+    </button>
+</div>

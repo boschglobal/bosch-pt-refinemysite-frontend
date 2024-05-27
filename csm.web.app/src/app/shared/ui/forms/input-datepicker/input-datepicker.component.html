@@ -1,0 +1,98 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-input ss-input-datepicker"
+     [ngClass]="getInputClasses()"
+     [attr.data-automation]="automationAttr"
+     #datePicker>
+    <span *ngIf="!selectRange"
+          class="ss-input__icon"
+          [attr.data-automation]="'calendar-toggle'">
+        <ss-icon [name]="'calendar'"
+                 (mousedown)="handleMouseDown($event)"
+                 (click)="handleToggleOpen()"></ss-icon>
+    </span>
+    <div class="ss-input-datepicker__container"
+         ssFlyout
+         [flyoutId]="flyoutId"
+         [flyoutTemplate]="ssInputDatepickerCalendar"
+         [flyoutPosition]="'below'"
+         [flyoutAlignment]="'start'"
+         [flyoutContentZIndex]="flyoutZIndex"
+         [flyoutTrigger]="[]"
+         [flyoutCloseKeyTriggers]="flyoutCloseKeyTriggers"
+         [flyoutShowOverlay]="false"
+         [flyoutUseTriggerWidth]="true">
+        <ng-container *ngIf="selectRange; then ssInputDatepickerRangeInput; else ssInputDatepickerSingleInput"></ng-container>
+    </div>
+    <span *ngIf="isInvalid()"
+          [ngClass]="getErrorClasses()"
+          [attr.data-automation]="'invalid'"
+          class="ss-input__invalid">
+        {{getErrorMessageKey() | translate:getErrorParams()}}
+    </span>
+</div>
+
+<ng-template #ssInputDatepickerSingleInput>
+    <ng-container
+        *ngTemplateOutlet="ssInputDatepickerInput; context: {isRequired: isRequired, label: label, displayValue: displayValue, selectionType:selectionTypeEnum.SingleDate}">
+    </ng-container>
+</ng-template>
+
+<ng-template #ssInputDatepickerRangeInput>
+    <div class="ss-input-datepicker__input-range"
+         [ngClass]="{'ss-input--focused': isSelectingStart()}"
+         [attr.data-automation]="'range-input-wrapper-' + selectionTypeEnum.StartDate">
+        <ng-container
+            *ngTemplateOutlet="ssInputDatepickerInput; context: {isRequired: isRequiredStart, label: rangeLabel.start, displayValue: displayValue?.start, selectionType:selectionTypeEnum.StartDate}">
+        </ng-container>
+    </div>
+    <div class="ss-input-datepicker__input-range"
+         [ngClass]="{'ss-input--focused': isSelectingEnd()}"
+         [attr.data-automation]="'range-input-wrapper-' + selectionTypeEnum.EndDate">
+        <ng-container
+            *ngTemplateOutlet="ssInputDatepickerInput; context: {isRequired:isRequiredEnd, label: rangeLabel.end, displayValue: displayValue?.end, selectionType:selectionTypeEnum.EndDate}">
+        </ng-container>
+    </div>
+</ng-template>
+
+<ng-template #ssInputDatepickerInput
+             let-isRequired="isRequired"
+             let-label="label"
+             let-displayValue="displayValue"
+             let-selectionType="selectionType">
+    <input #dateInput
+           type="text"
+           class="ss-input__input ss-input-datepicker__input"
+           ssInputMask
+           [mask]="inputMask"
+           [maskPlaceholder]="inputPlaceholder"
+           (maskValueChange)="handleInputValueChange($event)"
+           [attr.data-automation]="'date-input-field-' + selectionType"
+           [value]="displayValue"
+           [disabled]="isDisabled"
+           (keydown)="handleKeyDown($event)"
+           (focus)="handleFocus(selectionType)">
+    <label class="ss-input__label ss-input-datepicker__label"
+           [attr.data-automation]="'label-' + selectionType">
+        {{label}} {{isRequired ? '*' : ''}}
+    </label>
+</ng-template>
+
+<ng-template #ssInputDatepickerCalendar>
+    <ss-datepicker-calendar
+        [ngStyle]="getDropdownStyles()"
+        [min]="min"
+        [max]="max"
+        [disabledDates]="disabledDates"
+        [referenceDate]="referenceDate"
+        [selectionType]="selectionType"
+        [selection]="selection"
+        (pick)="handleSelectDate($event)">
+    </ss-datepicker-calendar>
+</ng-template>

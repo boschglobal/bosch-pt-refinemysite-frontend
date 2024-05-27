@@ -1,0 +1,103 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-daycards"
+     [attr.data-automation]="'ss-task-daycards'"
+     [ngClass]="{'ss-task-daycards--dragging': isDragging}">
+
+    <div *ngFor="let week of weeks; let weekIndex = index; trackBy: trackByWeek"
+         class="ss-task-daycards__week"
+         [ngClass]="{'ss-task-daycards__week--expanded': week.expanded}"
+         [ngStyle]="week.styles"
+         [attr.data-automation]="'task-daycards-week-' + weekIndex">
+
+        <div *ngIf="!week.expanded && showIndicators"
+             class="ss-task-daycards__indicators">
+            <ng-container *ngFor="let slot of week.slots; trackBy: trackBySlot">
+                <ss-day-card-indicator *ngIf="!slot.outOfScope"
+                                       class="ss-task-daycards__indicator"
+                                       [status]="slot.status"
+                                       [attr.data-automation]="'task-daycards-indicator'">
+                </ss-day-card-indicator>
+                <div *ngIf="slot.outOfScope"
+                     class="ss-task-daycards__indicator--out-of-scope">
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="week.expanded">
+            <div *ngFor="let slot of week.slots; let slotIndex = index; trackBy: trackBySlot"
+                 cdkDropList
+                 cdkDropListSortingDisabled
+                 [cdkDropListConnectedTo]="connectedDropLists"
+                 (cdkDropListEntered)="handleEnter(weekIndex, slotIndex)"
+                 (cdkDropListExited)="handleExit()"
+                 (cdkDropListDropped)="handleDrop(weekIndex, slotIndex)"
+                 [cdkDropListEnterPredicate]="enterSlotPredicateFn(weekIndex, slotIndex)"
+                 class="ss-task-daycards__daycard"
+                 [ngClass]="slot.classes"
+                 [attr.data-automation]="'task-daycards-slot'">
+
+                <ss-day-card *ngIf="slot.dayCard"
+                             (click)="handleDayCardClick(slot)"
+                             [id]="slot.id"
+                             [dayCard]="slot.dayCard"
+                             [hasSelectedItems]="hasSelectedItems"
+                             [canMultiSelect]="canMultiSelect"
+                             [isRelevant]="isRelevant"
+                             [isCopying]="isCopying"
+                             [isSelected]="slot.isSelected"
+                             [isMultiSelecting]="isMultiSelecting"
+                             cdkDrag
+                             [cdkDragDisabled]="!slot.canDrag || isLoading || (isMultiSelecting && !isCopying) || hasSelectedItems"
+                             (cdkDragStarted)="handleDragStart(weekIndex, slotIndex)"
+                             [cdkDragStartDelay]="dayCardDragStartDelay"
+                             ssFlyout
+                             [flyoutComponent]="dayCardFlyout.component"
+                             [flyoutComponentProperties]="slot.flyoutProperties"
+                             [flyoutId]="slot.id"
+                             [flyoutMobileDrawer]="dayCardFlyout.mobileDrawer"
+                             [flyoutPosition]="dayCardFlyout.position"
+                             [flyoutTrigger]="dayCardFlyout.trigger"
+                             [flyoutAlignment]="dayCardFlyout.alignment"
+                             [flyoutShowOverlay]="false"
+                             (flyoutInitialized)="flyoutInitialized($event)">
+                    <div *cdkDragPlaceholder
+                         class="ss-task-daycards__placeholder"
+                         [ngClass]="{'ss-task-daycards__placeholder--invalid': !isValidDrag,
+                                     'ss-task-daycards__placeholder--valid': isValidDrag,
+                                     'ss-task-daycards__placeholder--copying': isCopying}">
+                    </div>
+                </ss-day-card>
+
+                <ss-day-card
+                    *ngIf="slot.dayCard && slot.isDragging"
+                    [ngClass]="{'ss-task-daycards--ghost': !isCopying}"
+                    [dayCard]="slot.dayCard"
+                    [isRelevant]="isRelevant">
+                </ss-day-card>
+
+                <button *ngIf="slot.showCreateButton && canCreatePermission"
+                        class="ss-button"
+                        (mousedown)="$event.stopPropagation()"
+                        (click)="handleCreateDayCard($event, slot.date)"
+                        [attr.data-automation]="'task-daycards-slot-create'">
+                    <ss-icon [name]="createButtonIconSettings.name"
+                             [color]="slot.createButtonIconColor"
+                             [dimension]="createButtonIconSettings.dimension"
+                             [attr.data-automation]="'task-daycards-icon-create'">
+                    </ss-icon>
+                </button>
+
+                <ss-day-card-locked *ngIf="slot.isLockedAndEmpty && canCreatePermission"
+                                    [holiday]="slot.holiday"
+                                    [attr.data-automation]="'task-daycards-slot-locked'">
+                </ss-day-card-locked>
+            </div>
+        </ng-container>
+    </div>
+</div>

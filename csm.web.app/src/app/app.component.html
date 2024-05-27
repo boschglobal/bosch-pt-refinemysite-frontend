@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-app">
+    <router-outlet></router-outlet>
+</div>
+<router-outlet name="theater"></router-outlet>
+<ss-modal
+    [id]="confirmationDialogId"
+    [size]="'dialog'">
+    <ng-template #body>
+        <ss-confirmation-dialog></ss-confirmation-dialog>
+    </ng-template>
+</ss-modal>
+<ss-alert-list></ss-alert-list>
+<ss-privacy-settings-modal></ss-privacy-settings-modal>
+<ss-legal-documents-modal></ss-legal-documents-modal>

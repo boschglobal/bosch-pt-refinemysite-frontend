@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-collapsible-list [records]="records"
+                     [isLoading]="isLoading"
+                     [selectedRows]="selectedRows"
+                     [isSelecting]="isSelecting"
+                     [isRowSelectable]="isRowSelectable">
+    <ng-template #primaryTemplate let-record>
+        <span [attr.data-automation]="'primary-template'">{{record.a}}</span>
+    </ng-template>
+    <ng-template #secondaryTemplate let-record>
+        <span [attr.data-automation]="'secondary-template'">{{record.b}}</span>
+    </ng-template>
+</ss-collapsible-list>

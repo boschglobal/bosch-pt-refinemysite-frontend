@@ -1,0 +1,80 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-multi-select-command-bar">
+    <button
+        ss-button
+        [buttonNoPadding]="true"
+        [buttonSize]="'small'"
+        [buttonStyle]="'integrated-grey'"
+        (click)="handleClose()"
+        [attr.data-automation]="'ss-multi-select-command-bar-close'">
+        <ss-icon [name]="'close'"></ss-icon>
+    </button>
+    <span [ngSwitch]="selectionItemsType"
+          class="ss-multi-select-command-bar__label"
+          [attr.data-automation]="'ss-multi-select-command-bar-label'">
+        <ng-container *ngSwitchCase="taskObjectTypeEnum">
+            {{selectionItemsLength}} {{ (selectionItemsLength > 1 ? 'MultiSelectCommandBar_Tasks_Label' : 'MultiSelectCommandBar_Task_Label') | translate }}
+        </ng-container>
+        <ng-container *ngSwitchCase="dayCardObjectTypeEnum">
+            {{selectionItemsLength}} {{ (selectionItemsLength > 1 ? 'MultiSelectCommandBar_DayCards_Label' : 'MultiSelectCommandBar_DayCard_Label') | translate }}
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+            {{'Generic_StartSelecting' | translate}}
+        </ng-container>
+    </span>
+    <span *ngIf="actions.length"
+          class="ss-multi-select-command-bar__separator"
+          [attr.data-automation]="'ss-multi-select-command-bar-actions-separator'"></span>
+    <ng-container *ngFor="let action of actions">
+        <button *ngIf="action.show"
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonSize]="'small'"
+                [buttonActive]="action.active"
+                [buttonStyle]="action.buttonStyle"
+                ssFlyout
+                [flyoutAlignment]="'center'"
+                [flyoutPosition]="'above'"
+                [flyoutTemplate]="tooltipTemplate"
+                [flyoutTemplateProperties]="{label: action.tooltip}"
+                [flyoutTrigger]="flyoutTrigger"
+                [disabled]="action.disabled"
+                (click)="action.handleClick()"
+                [attr.data-automation]="action.dataAutomation">
+            <ss-icon [name]="action.iconName"></ss-icon>
+        </button>
+    </ng-container>
+    <span *ngIf="dropdownItems.length"
+          class="ss-multi-select-command-bar__separator"
+          [attr.data-automation]="'ss-multi-select-command-bar-dropdown-separator'"></span>
+    <ss-dropdown-menu
+        [icon]="'options'"
+        [items]="dropdownItems"
+        [itemsAlignment]="'start'"
+        [title]="'Generic_Options' | translate"
+        (itemClicked)="handleDropdownItemClicked($event)">
+    </ss-dropdown-menu>
+</div>
+
+<ng-template #tooltipTemplate let-tooltip>
+    <div class="ss-multi-select-command-bar__tooltip">
+        {{ tooltip.label | translate }}
+    </div>
+</ng-template>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon
+        [color]="item.customData['color']"
+        [name]="item.customData['name']"></ss-icon>
+</ng-template>
+
+<ng-template #iconTaskStatusTemplate let-item>
+    <ss-task-status-icon [status]="item.customData"></ss-task-status-icon>
+</ng-template>

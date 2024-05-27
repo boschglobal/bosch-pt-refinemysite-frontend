@@ -1,0 +1,82 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+.ss-project-task-activity-card {
+    display: flex;
+    margin-bottom: $base-dimension--x2;
+    padding-left: $base-dimension--x2;
+
+    &--has-marker {
+        border-left: 4px solid $light_blue;
+        padding-left: 12px;
+    }
+
+    &__user {
+        width: $base-dimension--x4 + 2px;
+        height: $base-dimension--x4;
+        display: inline-flex;
+        background-size: cover;
+        background-position: 50%;
+        margin-right: $base-dimension--x2;
+        margin-top: $base-dimension;
+        border-radius: 100%;
+        border: solid 1px $light_grey_50;
+    }
+
+    &__information {
+        width: 100%;
+        text-align: left;
+
+        a, &--bold {
+            font-family: "RmS-Bold", sans-serif;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+    }
+
+    &__information-date,
+    &__information-picture-name {
+        display: flex;
+        color: $light_grey;
+        font-size: 12px;
+        font-family: RmS-Regular, sans-serif;
+        line-height: 20px;
+        margin-bottom: $base-dimension;
+    }
+
+    &__information-list {
+        margin-bottom: $base-dimension;
+    }
+
+    &__information-list-item {
+        font-size: 14px;
+        color: $dark_grey;
+        list-style-type: disc !important;
+        margin-left: $base-dimension--x2;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    @for $index from 1 through 6 {
+        h#{$index} {
+            display: block;
+            font-size: 14px;
+            color: $dark_grey;
+            align-content: center;
+            align-items: center;
+            margin-top: $base-dimension;
+            margin-bottom: $base-dimension;
+            font-weight: $font-weight-base;
+            line-height: $base-dimension--x3;
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+    }
+}

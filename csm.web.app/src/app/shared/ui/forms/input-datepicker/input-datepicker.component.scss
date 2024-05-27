@@ -1,0 +1,43 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "../input.base";
+
+.ss-input-datepicker {
+    $this: &;
+
+    ss-icon {
+        cursor: pointer;
+        z-index: $z-index_3;
+    }
+
+    &__label {
+        @include label-small;
+        color: $form-label;
+    }
+
+    &__container {
+        display: flex;
+
+
+        #{$this}__input-range {
+            flex: 1;
+            position: relative;
+
+            #{$this}__label {
+                top: $base-dimension;
+            }
+        }
+
+        #{$this}__input-range + #{$this}__input-range {
+            #{$this}__input {
+                border-left: 1px solid $light_grey;
+            }
+        }
+    }
+}

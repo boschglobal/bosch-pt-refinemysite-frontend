@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-tab-panels">
+    <div class="ss-tab-panels__navigation">
+        <ul>
+            <li *ngFor="let tab of tabs; let i = index"
+                [ngClass]="getTabClasses(tab)"
+                [attr.data-automation]="'tab-panels-' + i">
+                <button (click)="togglePanel(tab)"
+                   class="ss-button ss-button--normal ss-button--fit ss-button--secondary-clear-grey">
+                    <ss-icon [name]="tab.icon"></ss-icon>
+                    <span *ngIf="tab.title">{{tab.title}}</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="ss-tab-panels__wrap-content"
+         [attr.data-automation]="'tab-panels-content'">
+        <ng-content></ng-content>
+    </div>
+</div>

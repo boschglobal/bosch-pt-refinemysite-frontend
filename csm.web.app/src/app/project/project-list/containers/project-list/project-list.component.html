@@ -1,0 +1,79 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="container-no-padding">
+    <ss-project-toolbar
+        [showCreateButton]="hasCreatePermission && !!projectList.length"></ss-project-toolbar>
+</div>
+<div class="container-fluid">
+    <div class="ss-project-list">
+        <div *ngIf="projectList.length === 0"
+             class="ss-project-list__no-items-container">
+            <ss-loader [isLoading]="isLoading"
+                       [attr.data-automation]="'project-list-loader'">
+            </ss-loader>
+            <div class="ss-project-list__no-items-wrapper">
+                <ss-no-items *ngIf="showEmptyState && !isUserActivated"
+                             class="ss-project-list__no-items"
+                             [title]="'Project_List_NoRecords_ActivationPendingTitle' | translate"
+                             [description]="'Project_List_NoRecords_ActivationPendingDescription' | translate"
+                             [icon]="'fireworks'"
+                             [animatedIcon]="true"
+                             [attr.data-automation]="'no-items-not-activated'">
+                </ss-no-items>
+                <ss-no-items *ngIf="showEmptyState && isUserActivated && hasCreatePermission"
+                             class="ss-project-list__no-items"
+                             [title]="'Project_List_NoRecords_ActivationCompletedTitle' | translate"
+                             [description]="'Project_List_NoRecords_CreateFirstProjectDescription' | translate"
+                             [showButton]="true"
+                             [buttonIcon]="buttonProperty.icon"
+                             [buttonStyle]="'primary'"
+                             [buttonText]="'Generic_CreateProject' | translate"
+                             (clickButton)="navigateToCreate()"
+                             [icon]="'building'"
+                             [attr.data-automation]="'no-items-activated-with-creation'">
+                </ss-no-items>
+                <ss-no-items *ngIf="showEmptyState && isUserActivated && !hasCreatePermission"
+                             class="ss-project-list__no-items"
+                             [description]="'Project_List_NoRecords_ActivationCompletedDescription' | translate"
+                             [icon]="'team'"
+                             [title]="'Project_List_NoRecords_ActivationCompletedTitle' | translate"
+                             [attr.data-automation]="'no-items-activated-no-creation'">
+                </ss-no-items>
+                <ss-no-items *ngIf="canRenderProjectsUnavailable"
+                             class="ss-project-list__no-items"
+                             [title]="'Project_NoRecords_Title' | translate"
+                             [description]="'Generic_TryAgainLater' | translate"
+                             [buttonText]="'Generic_Retry' | translate"
+                             [showButton]="true"
+                             [icon]="'connection-off'"
+                             (clickButton)="handleRetry()"
+                             [attr.data-automation]="'project-list-unavailable'">
+                </ss-no-items>
+                <div *ngIf="showEmptyState"
+                     class="ss-project-list__contact-us">
+                    <h5 class="ss-project-list__contact-us__description"
+                        [attr.data-automation]="'no-items-contact-us'">
+                        {{'Generic_ContactUs' | translate}}
+                    </h5>
+                    <ss-mail-link
+                        [attr.data-automation]="'no-items-mail-link'"
+                        [email]="'Generic_SupportEmail' | translate">
+                    </ss-mail-link>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <ss-project-overview-card *ngFor="let project of projectList"
+                                      class="col-xl-4 col-md-6 col-sm-12 ss-project-overview-card-{{project.id}}"
+                                      [project]="project"
+                                      [attr.data-automation]="'project-overview-card-' + project.id">
+            </ss-project-overview-card>
+        </div>
+    </div>
+</div>

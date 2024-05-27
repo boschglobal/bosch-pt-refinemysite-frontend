@@ -1,0 +1,21 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+::ng-deep {
+    .ss-project-tasks-table {
+        &__title {
+            color: $dark_blue;
+        }
+
+        .ss-table__body-row {
+            cursor: pointer;
+        }
+    }
+}

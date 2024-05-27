@@ -1,0 +1,31 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-attachments-list">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <ss-no-items
+        *ngIf="!isLoading && !attachmentPreviewLinks.length"
+        [icon]="'paperclip'"
+        [title]="'Task_Attachments_NoRecordsTitle' | translate"
+        [description]="'Task_Attachments_NoRecordsDescription' | translate"
+        [attr.data-automation]="'task-attachments-list-no-items'">
+    </ss-no-items>
+    <ss-thumbnail-gallery
+        [itemsPerRow]="4"
+        [links]="attachmentPreviewLinks"
+        (clickThumbnail)="openTheater($event)"></ss-thumbnail-gallery>
+    <button *ngIf="hasMoreItemsToShow"
+            class="ss-task-attachments-list__load-more"
+            ss-button
+            [buttonStyle]="'secondary-grey'"
+            [buttonSize]="'small'"
+            (click)="handleLoadMore()"
+            [attr.data-automation]="'task-attachments-list-load-more'">
+        <span>{{'Attachment_LoadMore_Label' | translate}}</span>
+    </button>
+</div>

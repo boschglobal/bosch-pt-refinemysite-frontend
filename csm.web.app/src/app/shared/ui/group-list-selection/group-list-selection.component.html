@@ -1,0 +1,62 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-group-list-selection">
+    <div class="ss-group-list-selection__header"
+        *ngIf="title"
+        [attr.data-automation]="'ss-group-list-selection-header'">
+        <div class="ss-group-list-selection__header-left">
+            <h2 [attr.data-automation]="'ss-group-list-selection-title'">
+                <span [title]="title">{{title}}</span>
+                <span>&nbsp;({{totalItems}})</span>
+            </h2>
+            <button
+                *ngIf="showCollapsedButton"
+                class="ss-group-list-selection__collapse-button"
+                ss-button
+                [buttonSize]="'tiny'"
+                [buttonNoPadding]="true"
+                [buttonStyle]="'integrated-black'"
+                (click)="handleCollapse()"
+                [attr.data-automation]="'ss-group-list-selection-collapsed-button'">
+                <ss-icon
+                    [name]="'arrow'"
+                    [rotate]="arrowIconRotation">
+                </ss-icon>
+            </button>
+        </div>
+        <ng-container *ngTemplateOutlet="actionsTemplate"></ng-container>
+    </div>
+    <ss-multiple-selection-toolbar-confirmation
+        *ngIf="multipleSelectionToolbarData"
+        class="ss-group-list-selection__selection-toolbar"
+        [itemsCount]="multipleSelectionToolbarData.itemsCount"
+        [initialItemsCount]="totalItems"
+        [mode]="multipleSelectionToolbarData.mode"
+        [emptyItemsLabel]="multipleSelectionToolbarData.emptyItemsLabel"
+        [selectedItemLabel]="multipleSelectionToolbarData.selectedItemLabel"
+        [selectedItemsLabel]="multipleSelectionToolbarData.selectedItemsLabel"
+        (submitSelection)="multipleSelectionToolbarData.submitSelection()"
+        (dismissSelection)="multipleSelectionToolbarData.dismissSelection()"
+        [attr.data-automation]="'ss-group-list-selection-multiple-selection-toolbar'">
+    </ss-multiple-selection-toolbar-confirmation>
+    <div [hidden]="collapsed">
+        <ng-container *ngTemplateOutlet="messageTemplate"></ng-container>
+    </div>
+    <div [hidden]="collapsed"
+         [attr.data-automation]="'ss-group-list-selection-groups'">
+        <ng-container *ngFor="let groupItem of groups; trackBy: trackByFn">
+            <ss-group-item-list *ngIf="groupItem.items.length"
+                                class="ss-group-list-selection__group"
+                                [itemTemplate]="itemTemplate"
+                                [itemsPerGroupItem]="itemsPerGroupItem"
+                                [groupItem]="groupItem">
+            </ss-group-item-list>
+        </ng-container>
+    </div>
+</div>

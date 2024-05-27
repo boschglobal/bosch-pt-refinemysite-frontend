@@ -1,0 +1,56 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-main">
+    <div class="ss-flyout-component">
+        <div class="ss-flyout-component-trigger" ssFlyout
+             [flyoutTrigger]="flyoutTrigger"
+             [flyoutTriggerElement]="flyoutTriggerElement"
+             [flyoutCloseTrigger]="flyoutCloseTrigger"
+             [flyoutCloseKeyTriggers]="flyoutCloseKeyTriggers"
+             [flyoutComponent]="flyoutComponent"
+             [flyoutComponentProperties]="flyoutProperties"
+             [flyoutId]="flyoutComponentId"
+             [flyoutShowOverlay]="flyoutShowOverlay"
+             [flyoutAlignment]="flyoutAlignment"
+             [flyoutPosition]="flyoutPosition"
+             [flyoutOverTrigger]="flyoutOver"
+             [flyoutMobileDrawer]="flyoutMobileDrawer"
+             [flyoutUseTriggerWidth]="flyoutUseTriggerWidth"
+             [attr.data-automation]="'flyout-trigger-component'"
+             (click)="openFlyout()"></div>
+        <div class="ss-flyout-component-trigger"
+             [attr.data-automation]="'flyout-trigger-component-new'">
+        </div>
+    </div>
+    <div class="ss-flyout-template">
+        <div ssFlyout
+             [flyoutTrigger]="flyoutTrigger"
+             [flyoutCloseTrigger]="flyoutCloseTrigger"
+             [flyoutCloseKeyTriggers]="flyoutCloseKeyTriggers"
+             [flyoutId]="flyoutTemplateId"
+             [flyoutShowOverlay]="flyoutShowOverlay"
+             [flyoutTemplate]="template"
+             [flyoutTemplateProperties]="flyoutTemplateProperties"
+             [flyoutAlignment]="flyoutAlignment"
+             [flyoutPosition]="flyoutPosition"
+             [flyoutOverTrigger]="flyoutOver"
+             [flyoutMobileDrawer]="flyoutMobileDrawer"
+             [flyoutUseTriggerWidth]="flyoutUseTriggerWidth"
+             [attr.data-automation]="'flyout-trigger-template'"
+             (click)="openFlyout()"></div>
+        <ng-template #template let-content>
+            <ss-flyout-content-test [content]="content?.content" [automationAttr]="'flyout-template-content'"></ss-flyout-content-test>
+        </ng-template>
+    </div>
+    <div class="ss-flyout-general">
+        <div *ngIf="isFlyoutVisible" ssFlyout
+             [flyoutId]="flyoutInitializeId"
+             (flyoutInitialized)="flyoutInitialized($event)"></div>
+    </div>
+</div>

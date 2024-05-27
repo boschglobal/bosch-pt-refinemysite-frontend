@@ -1,0 +1,23 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/constants/colors";
+
+.ss-project-tasks-card-assignee {
+    &__user {
+        cursor: pointer;
+
+        ::ng-deep .ss-card-user__personal:hover {
+            .ss-card-user__information {
+                &-title,
+                &-description {
+                    color: $black;
+                }
+            }
+        }
+    }
+}

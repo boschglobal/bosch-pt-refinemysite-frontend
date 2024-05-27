@@ -1,0 +1,126 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+@import "../../constants/milestone.contants";
+
+.ss-milestone-overview-card {
+    $this: &;
+
+    display: flex;
+    transition: background 250ms ease, color 250ms ease;
+
+    @mixin card-hover {
+        outline: 1px solid $dark_grey;
+        background: $light_grey_25;
+
+        &#{$this}--critical {
+            outline: 1px solid $red;
+        }
+
+        #{$this}__content-location {
+            color: $dark_grey_50;
+        }
+    }
+
+    &#{$this}--fallback-has:hover {
+        @include card-hover();
+    }
+
+    &:has(#{$this}__button:hover) {
+        @include card-hover();
+    }
+
+    &:has(#{$this}__button:active) {
+        background: $light_grey_50;
+
+        #{$this}__content-location {
+            color: $dark_grey_50;
+        }
+    }
+
+    &--critical {
+        outline: 1px solid $red;
+    }
+
+    &__button {
+        @include button-reset();
+        display: flex;
+        flex: 0 1 100%;
+        overflow: hidden;
+
+        &:last-child {
+            padding-right: $base-dimension + $base-dimension--x05;
+        }
+    }
+
+    &__icon {
+        flex: 1 0 auto;
+        padding: 10px;
+
+        &--skeleton {
+            @include skeleton-loading();
+            margin: 10px;
+            height: $marker-size;
+            width: $marker-size;
+        }
+    }
+
+    &__content {
+        flex: 0 1 100%;
+        min-width: 0;
+        padding: 10px 0 8px 0;
+
+        &-name,
+        &-date,
+        &-location {
+            @include ellipsis();
+            display: block;
+        }
+
+        &-name {
+            @include subtitle-2();
+
+            &--skeleton {
+                @include skeleton-loading();
+                height: $font-size-sm;
+                width: 60%;
+                margin-bottom: $font-size-sm * 0.5;
+            }
+        }
+
+        &-date {
+            @include body-2();
+
+            &--skeleton {
+                @include skeleton-loading();
+                height: $font-size-sm;
+                width: 80%;
+                margin-bottom: $font-size-sm * 0.5;
+            }
+        }
+
+        &-location {
+            @include caption-1($light_grey);
+
+            &--skeleton {
+                @include skeleton-loading();
+                height: $font-size-xs;
+                width: 40%;
+                margin-bottom: $font-size-xs * 0.5;
+            }
+        }
+
+    }
+
+    &__actions {
+        flex: 1 0 auto;
+    }
+}

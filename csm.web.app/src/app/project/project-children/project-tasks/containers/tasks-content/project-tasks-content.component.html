@@ -1,0 +1,55 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-content" [ngClass]="{'ss-project-tasks-content--loading': isLoading}">
+    <ss-loader [isLoading]="isLoading && !tasks.length"></ss-loader>
+    <ss-project-tasks-list
+        *ssIfMediaQuery="['xs', 'sm', 'md','lg']"
+        [tasks]="tasks"
+        [isLoading]="isLoading"
+        [isSelecting]="isSelecting"
+        [isRowSelectable]="isRowSelectable"
+        [selectedRows]="selectedRows"
+        (onClickTask)="onClickTask($event)"
+        (onSelectionChange)="onSelectionChange($event)">
+    </ss-project-tasks-list>
+    <ss-project-tasks-table
+        *ssIfMediaQuery="['xl']"
+        [tasks]="tasks"
+        [sort]="sort"
+        [isSelecting]="isSelecting"
+        [isRowSelectable]="isRowSelectable"
+        [selectedRows]="selectedRows"
+        (onSort)="onSortTable($event)"
+        (onClickTask)="onClickTask($event)"
+        (onSelectionChange)="onSelectionChange($event)">
+    </ss-project-tasks-table>
+    <ss-no-items
+        *ngIf="hasNoTasks"
+        class="ss-project-tasks-content__no-items"
+        [icon]="'tasks-triangle'"
+        [title]="noItemsTitle | translate"
+        [description]="noItemsDescription | translate"
+        [buttonText]="noItemsButton | translate"
+        [showButton]="noItemsShowButton"
+        (clickButton)="handleResetFilters()">
+    </ss-no-items>
+    <ss-no-items
+        *ngIf="showFilterAlert"
+        class="ss-project-tasks-content__alert"
+        [description]="'Task_Filter_Alert' | translate"
+        [attr.data-automation]="'calendar-filters-applied'"
+        [buttonText]="'Generic_ClearFilters' | translate"
+        [showButton]="true"
+        (clickButton)="handleResetFilters()">
+    </ss-no-items>
+</div>
+<div class="container-no-padding" *ngIf="!isLoading && tasks.length">
+    <ss-project-tasks-pagination></ss-project-tasks-pagination>
+</div>
+

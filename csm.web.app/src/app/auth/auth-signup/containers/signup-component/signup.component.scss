@@ -1,0 +1,89 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+:host {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.ss-signup {
+    position: relative;
+    width: 100%;
+    background-color: $white;
+    padding: $base-dimension--x2;
+
+    @include media-breakpoint-up(sm) {
+        max-width: 800px;
+        padding: $base-dimension--x6;
+    }
+
+    &__wrap {
+        &-steps {
+            margin-top: $base-dimension--x5 + $base-dimension--x05;
+        }
+
+        &-fields {
+            margin: $base-dimension--x6 + $base-dimension--x025 0 0 0;
+        }
+    }
+
+    &__title {
+        margin-bottom: 0 !important;
+        padding: 0;
+        color: $dark_blue;
+        font-weight: $font-weight-light;
+    }
+
+    &__fields {
+        &-picture {
+            display: flex;
+            justify-content: center;
+
+            &-info {
+                display: flex;
+                justify-content: center;
+                margin: $base-dimension--x3 0;
+                font-size: $font-size-sm;
+                color: $form-info;
+            }
+        }
+
+        &-gender {
+            display: flex;
+            justify-content: center;
+            margin: 41px 0 ($base-dimension--x4 + $base-dimension--x05) 0;
+
+            ::ng-deep .ss-radio-button {
+                margin: 0 10px;
+            }
+        }
+    }
+
+    &__legal-documents-accepted {
+        display: flex;
+        font-size: $font-size-sm;
+        align-items: center;
+
+        &__row {
+            margin-bottom: $base-dimension;
+        }
+
+        a {
+            margin-left: $base-dimension--x05;
+            margin-right: $base-dimension--x05;
+        }
+    }
+}
+
+::ng-deep .ss-form-group-phone {
+    margin: $base-dimension--x2 0 $base-dimension--x4 0;
+}

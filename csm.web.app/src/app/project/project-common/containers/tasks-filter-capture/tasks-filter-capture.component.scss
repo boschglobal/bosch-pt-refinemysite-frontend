@@ -1,0 +1,72 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/typography/index";
+
+.ss-tasks-filter-capture {
+
+    &__input-group:first-child {
+        margin-top: $base-dimension--x2;
+    }
+
+    &__input-group:not(:last-child) {
+        margin-bottom: $base-dimension;
+    }
+
+    &__group-title {
+        @include subtitle-1();
+        padding-bottom: $base-dimension;
+        display: flex;
+    }
+
+    &__checkbox-icon {
+        margin-right: $base-dimension;
+
+        ::ng-deep .ss-icon {
+            fill: $dark_grey;
+        }
+    }
+
+    &__callout {
+        display: flex;
+        padding: $base-dimension 0;
+    }
+
+    ::ng-deep &__assignee__user-picture {
+        background: center no-repeat;
+        background-size: cover;
+        width: $base-dimension--x3;
+        height: $base-dimension--x3;
+        margin: 0 $base-dimension 0 $base-dimension--x05;
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 $light_grey_25;
+        border: solid 1px $light_grey_50;
+    }
+}
+
+::ng-deep .ss-chip .craft {
+    width: $base-dimension--x2;
+    height: $base-dimension--x2;
+    margin: 0 $base-dimension 0 10px;
+}
+
+::ng-deep .ss-input-checkbox-nested .craft {
+    width: $base-dimension--x2;
+    height: $base-dimension--x2;
+    margin-right: $base-dimension;
+}
+
+::ng-deep #flyout > div > ul > li > ss-input-checkbox-nested > div > ul > li:first-child,
+::ng-deep #flyout.ssInputMultipleSelect-ss-task-filter-assignee > div > ul > li > ss-input-checkbox-nested > div > ul > li {
+    display: block;
+    padding-top: $base-dimension;
+    margin-top: $base-dimension;
+    border-top: 1px solid;
+    border-color: $light_grey_25;
+}

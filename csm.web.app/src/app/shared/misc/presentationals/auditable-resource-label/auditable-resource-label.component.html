@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-auditable-resource-label">
+    <p [attr.data-automation]="'ss-auditable-resource-label-created-label'">
+        {{'Generic_CreatedBy' | translate}}
+        {{resource.createdBy.displayName}} {{getCalendarTime(resource.createdDate)}}
+    </p>
+    <p *ngIf="showModifiedDate()" [attr.data-automation]="'ss-auditable-resource-label-modified-label'">
+        {{'Generic_UpdatedBy' | translate}}
+        {{resource.lastModifiedBy.displayName}} {{getCalendarTime(resource.lastModifiedDate)}}
+    </p>
+</section>

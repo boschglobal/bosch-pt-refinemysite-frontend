@@ -1,0 +1,31 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-alert ss-alert--{{alert.type}}">
+    <ss-icon class="ss-alert__icon"
+             [name]="alert.type"
+             [dimension]="40">
+    </ss-icon>
+    <span class="ss-alert__content"
+          [attr.data-automation]="'ss-alert__content'">
+        <ng-container *ngIf="alert.message.key">
+            {{alert.message.key | translate:alert.message.params}}
+        </ng-container>
+        <ng-container *ngIf="alert.message.text">
+            {{alert.message.text}}
+        </ng-container>
+    </span>
+    <button class="ss-button ss-button--secondary-clear-grey ss-button--normal ss-button--no-padding">
+        <ss-icon class="ss-alert__close"
+                 [name]="'close'"
+                 [dimension]="'small'"
+                 (click)="handleClose()"
+                 [attr.data-automation]="'ss-alert__close'">
+        </ss-icon>
+    </button>
+</div>

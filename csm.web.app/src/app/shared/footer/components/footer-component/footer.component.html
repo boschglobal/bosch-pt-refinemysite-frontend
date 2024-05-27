@@ -1,0 +1,40 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-footer">
+    <div class="ss-footer-wrapper">
+        <ss-copyright [attr.data-automation]="'footer-copyright-label'"></ss-copyright>
+        <ul>
+            <li *ngFor="let document of legalDocumentsQueries.observeLegalDocumentsList() | async">
+                <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                   [href]="document.url"
+                   [target]="'_blank'"
+                   [attr.data-automation]="'footer-' + document.type">{{document.displayName}}</a>
+            </li>
+            <li>
+                <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                   [href]="'Legal_PrivacyStatement_Link' | translate"
+                   [target]="'_blank'"
+                   [attr.data-automation]="'footer-privacy-statement-link'">{{'Legal_PrivacyStatement_Label' | translate}}</a>
+            </li>
+            <li>
+                <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                   [href]="'Legal_Imprint_Link' | translate"
+                   [target]="'_blank'"
+                   [attr.data-automation]="'footer-imprint-link'">{{'Legal_Imprint_Label' | translate}}</a>
+            </li>
+            <li>
+                <a class="ss-button ss-button--tiny ss-button--secondary-clear-grey"
+                   [href]="'3rdpartylicenses.txt'"
+                   [target]="'_blank'"
+                   [attr.data-automation]="'footer-oss-licenses-link'">{{'Legal_OSSLicenses_Label' | translate}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<ss-supergraphic class="ss-supergraphic__footer"></ss-supergraphic>

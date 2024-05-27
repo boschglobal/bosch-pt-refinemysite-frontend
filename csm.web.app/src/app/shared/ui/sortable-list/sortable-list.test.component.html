@@ -1,0 +1,15 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-sortable-list
+    [records]="records"
+    [editIndex]="editIndex">
+    <ng-template #template let-record>
+        <span [attr.data-automation]="'primary-template'">{{record.a}}</span>
+    </ng-template>
+</ss-sortable-list>

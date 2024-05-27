@@ -1,0 +1,29 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+$bosch-font-path: "/assets/fonts" !default;
+
+@font-face {
+    font-family: 'RmS-Regular';
+    src: url('#{$bosch-font-path}/Roboto-Regular.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'RmS-Bold';
+    src: url('#{$bosch-font-path}/Roboto-Bold.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'RmS-Light';
+    src: url('#{$bosch-font-path}/Roboto-Light.ttf') format('truetype'),
+}
+
+@font-face {
+    font-family: 'RmS-Medium';
+    src: url('#{$bosch-font-path}/Roboto-Medium.ttf') format('truetype'),
+}

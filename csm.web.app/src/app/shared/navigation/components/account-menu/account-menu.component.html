@@ -1,0 +1,47 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-dropdown-menu
+    class="ss-account-menu"
+    [buttonSize]="'normal'"
+    [buttonStyle]="'integrated'"
+    [buttonNoPadding]="true"
+    [items]="dropdownItems"
+    (itemClicked)="handleItemClicked($event)">
+    <div class="ss-account-menu__user-picture"
+         [ssBackgroundImage]="userPicture"
+         [attr.data-automation]="'account-menu-button'"></div>
+</ss-dropdown-menu>
+
+<ng-template #internalLinkTemplate let-item>
+    <a class="ss-account-menu__link"
+       [routerLink]="item.customData.routerLink"
+       [attr.data-automation]="item.customData.dataAutomation">{{item.customData.label | translate}}</a>
+</ng-template>
+
+<ng-template #externalLinkTemplate let-item>
+    <a class="ss-account-menu__link"
+       [href]="item.customData.href | translate"
+       [target]="'_blank'"
+       [attr.data-automation]="item.customData.dataAutomation">{{item.customData.label | translate}}</a>
+</ng-template>
+
+<ng-template #externalLinkWithIconTemplate let-item>
+    <a class="ss-account-menu__link ss-account-menu__link--with-icon"
+       [href]="item.customData.href | translate"
+       [target]="'_blank'"
+       [attr.data-automation]="item.customData.dataAutomation">
+        <ss-icon [name]="item.customData.icon"
+        [attr.data-automation]="item.customData.dataAutomation">
+        </ss-icon><span>{{item.customData.label | translate}}</span></a>
+</ng-template>
+
+<ng-template #iconTemplate let-item>
+    <ss-icon [name]="item.customData.icon"
+             [attr.data-automation]="item.customData.dataAutomation"></ss-icon>
+</ng-template>

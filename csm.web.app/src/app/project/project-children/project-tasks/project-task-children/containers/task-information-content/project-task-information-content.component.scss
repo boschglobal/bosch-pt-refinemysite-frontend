@@ -1,0 +1,92 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+@import "assets/styles/typography/index";
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+.ss-project-task-information {
+    position: inherit;
+    width: 100%;
+    margin-bottom: $base-dimension--x2;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        align-items: center;
+        min-height: 60px;
+        background-color: $light_grey_12_5;
+        padding: 0 $base-dimension--x2;
+        border-bottom: 1px solid $light_grey_50;
+
+        &-actions {
+            display: flex;
+        }
+
+        h3 {
+            @include heading-2($dark_grey);
+            word-break: break-word;
+            overflow-wrap: break-word;
+            margin: $base-dimension--x2 $base-dimension--x2 $base-dimension--x2 0 !important;
+            width: calc(100% - #{$base-dimension--x11});
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        position: relative;
+        overflow: hidden;
+        margin: 0;
+    }
+
+    &__content {
+        padding: $base-dimension--x2;
+        background: $light_grey_12_5;
+
+        h6 {
+            @include subtitle-1();
+            margin-bottom: $base-dimension--x2;
+        }
+    }
+
+    &__details {
+        & > * > ::ng-deep * {
+            padding: $base-dimension;
+        }
+    }
+
+    &__participants {
+        display: flex;
+        flex-wrap: wrap;
+
+        & > div {
+            width: 100%;
+            padding: $base-dimension;
+        }
+
+        @include media-breakpoint-up(md) {
+            & > div {
+                width: 50%;
+            }
+        }
+    }
+
+    &__task-auditable-resource-label {
+        display: block;
+        margin-left: $base-dimension--x6;
+    }
+
+    &__task-status-button {
+        display: block;
+        margin: 0 $base-dimension $base-dimension--x2 $base-dimension;
+
+        @include media-breakpoint-up(sm) {
+            float: right;
+            margin-bottom: 0;
+        }
+    }
+}

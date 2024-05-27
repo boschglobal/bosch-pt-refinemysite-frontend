@@ -1,0 +1,99 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$user-picture-width: 45px;
+$user-name-padding: 10px;
+$indent-width: calc(#{$user-picture-width} + #{$user-name-padding} + #{$base-dimension});
+
+.ss-project-participants-list {
+    color: $dark_grey;
+
+    &__row-cell {
+        display: flex;
+        align-items: center;
+    }
+
+    &__secondary {
+        margin-top: 30px;
+
+        &-first {
+            margin-left: $indent-width;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @include media-breakpoint-only(md) {
+            > div {
+                flex-direction: row-reverse;
+            }
+        }
+
+        button {
+            margin-top: 20px;
+            margin-left: 63px;
+
+            @include media-breakpoint-up(xs) {
+                margin-top: 10px;
+            }
+        }
+    }
+
+    &__actions-placeholder {
+        display: flex;
+        width: $base-dimension--x6;
+        height: $base-dimension--x6;
+    }
+
+    ::ng-deep .ss-collapsible-list {
+        &__secondary-wrapper {
+            padding-right: $base-dimension--x12;
+        }
+
+        &__row {
+            padding: $base-dimension $base-dimension $base-dimension--x2 $base-dimension;
+
+            @include media-breakpoint-up(md) {
+                padding: $base-dimension--x2;
+            }
+
+            .ss-card-user--active {
+                cursor: pointer;
+
+                span:not(.ss-card-user__information-status):hover {
+                    color: $black;
+                }
+            }
+        }
+    }
+
+    ::ng-deep .ss-card-company {
+        height: auto;
+    }
+
+    ::ng-deep ss-mail-link,
+    ::ng-deep ss-mail-link .ss-mail-link {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    ::ng-deep .ss-card-company,
+    ss-mail-link,
+    ss-phone-link {
+        margin-left: $indent-width;
+        display: inline-flex;
+    }
+
+    @include media-breakpoint-up(sm) {
+        padding-bottom: 0;
+    }
+}

@@ -1,0 +1,69 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-loader [isLoading]="isLoading"></ss-loader>
+<div class="ss-project-import-wizard">
+    <ss-wizard-steps
+        #wizardStepsComponent
+        class="ss-project-import-wizard__steps"
+        [wizardSteps]="wizardSteps"
+        (wizardStepsChange)="handleWizardStepsChange($event)">
+    </ss-wizard-steps>
+    <div class="ss-project-import-wizard__body">
+        <ng-container [ngSwitch]="activeStep">
+            <ss-project-import-upload-step
+                *ngSwitchCase="projectImportWizardStepsEnum.UploadStep"
+                [file]="wizardStepsData[projectImportWizardStepsEnum.UploadStep].data"
+                (fileUploaded)="handleUploadStepChanged($event)"
+                [attr.data-automation]="'project-import-wizard-upload-step'">
+            </ss-project-import-upload-step>
+            <ss-project-import-craft-capture
+                *ngSwitchCase="projectImportWizardStepsEnum.CraftStep"
+                [defaultValue]="wizardStepsData[projectImportWizardStepsEnum.CraftStep].data"
+                [options]="options"
+                (valueChanged)="handleCraftStepChanged($event)"
+                [attr.data-automation]="'project-import-wizard-craft-step'">
+            </ss-project-import-craft-capture>
+            <ss-project-import-workarea-capture
+                *ngSwitchCase="projectImportWizardStepsEnum.WorkareaStep"
+                [defaultValue]="wizardStepsData[projectImportWizardStepsEnum.WorkareaStep].data"
+                [options]="options"
+                (valueChanged)="handleWorkareaStepChanged($event)"
+                [attr.data-automation]="'project-import-wizard-workarea-step'">
+            </ss-project-import-workarea-capture>
+            <div *ngSwitchCase="projectImportWizardStepsEnum.ReviewStep">
+                <ss-project-import-review-data
+                    class="ss-project-import-wizard__body--review-step"
+                    [resource]="wizardStepsData[projectImportWizardStepsEnum.ReviewStep].data"
+                    [attr.data-automation]="'project-import-wizard-review-step'">
+                </ss-project-import-review-data>
+            </div>
+        </ng-container>
+    </div>
+    <div class="ss-project-import-wizard__footer">
+        <button
+            *ngIf="activeStep !== projectImportWizardStepsEnum.UploadStep"
+            ss-button
+            [buttonStyle]="'secondary-black'"
+            [buttonProportional]="true"
+            (click)="handleBack()"
+            [attr.data-automation]="'project-import-wizard-back-button'">
+            <ss-icon [name]="'arrow'"></ss-icon>
+            <span>{{'Generic_Back' | translate}}</span>
+        </button>
+        <button
+            ss-button
+            [buttonProportional]="true"
+            [disabled]="!canClickNext"
+            (click)="handleNext()"
+            [attr.data-automation]="'project-import-wizard-next-button'">
+            <span>{{ nextButtonLabel  | translate}}</span>
+            <ss-icon [name]="'arrow'" [rotate]="180"></ss-icon>
+        </button>
+    </div>
+</div>

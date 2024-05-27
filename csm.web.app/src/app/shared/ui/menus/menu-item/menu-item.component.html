@@ -1,0 +1,45 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<button class="ss-menu-item"
+        [ngClass]="classes"
+        [disabled]="disabled"
+        (click)="handleClick($event)"
+        [attr.data-automation]="'ss-menu-item'">
+    <div class="ss-menu-item__indicator"
+         [ngSwitch]="type"
+         [attr.data-automation]="'ss-menu-item-indicator'">
+        <ss-checkbox-button
+            *ngSwitchCase="'checkbox'"
+            [dimension]="'small'"
+            [value]="selected"
+            (click)="$event.preventDefault()"
+            [attr.data-automation]="'ss-menu-item-checkbox'">
+        </ss-checkbox-button>
+        <ss-radio-button
+            *ngSwitchCase="'radio'"
+            [dimension]="'small'"
+            [isChecked]="selected"
+            (click)="$event.preventDefault()"
+            [attr.data-automation]="'ss-menu-item-radio-button'">
+        </ss-radio-button>
+        <ss-icon
+            *ngSwitchCase="'select-icon'"
+            [hidden]="!selected"
+            [name]="selectedIcon"
+            [attr.data-automation]="'ss-menu-item-icon'">
+        </ss-icon>
+    </div>
+    <div class="ss-menu-item__custom-content"
+         [attr.data-automation]="'ss-menu-item-custom-content'">
+        <ng-content></ng-content>
+    </div>
+    <span *ngIf="label"
+          class="ss-menu-item__label"
+          [attr.data-automation]="'ss-menu-item-label'">{{label}}</span>
+</button>

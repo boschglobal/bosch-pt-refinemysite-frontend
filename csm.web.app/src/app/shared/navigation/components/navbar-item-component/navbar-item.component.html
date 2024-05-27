@@ -1,0 +1,22 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-navbar__item"
+     [attr.data-automation]="'ss-navbar-item-' + iterator">
+    <a [routerLink]="item.url"
+       routerLinkActive="ss-navbar__item--active"
+       [routerLinkActiveOptions]="{exact: item.exact}"
+       [title]="label">
+        <span class="ss-navbar__item-icon">
+            <ss-icon [name]="item.icon" [dimension]="'normal'"></ss-icon>
+        </span>
+        <span class="ss-navbar__item-title">
+            {{label}}
+        </span>
+    </a>
+</div>

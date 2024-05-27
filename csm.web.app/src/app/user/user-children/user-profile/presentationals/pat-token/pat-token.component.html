@@ -1,0 +1,26 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<form class="ss-pat-token" [formGroup]="form">
+    <p class="ss-pat-token__label">{{'PAT_Token_DescriptionLabel' | translate}}</p>
+    <div class="ss-pat-token__copy">
+        <ss-input-text
+            class="ss-pat-token__token"
+            [control]="form.controls.token"
+            [formControlName]="'token'"
+            [isReadOnly]="true">
+        </ss-input-text>
+        <button ss-button
+                [buttonStyle]="'primary-light-blue'"
+                [buttonNoPadding]="true"
+                (click)="handleCopy()">
+            <ss-icon [name]="'copy-clipboard'"
+                     [color]="iconColor"></ss-icon>
+        </button>
+    </div>
+</form>

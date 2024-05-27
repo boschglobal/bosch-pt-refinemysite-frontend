@@ -1,0 +1,55 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="form"
+     class="ss-input-checkbox-nested"
+     [formGroup]="form">
+    <ul class="ss-input-checkbox-nested__list"
+        [formArrayName]="'children'">
+        <li *ngFor="let option of options; let i = index;"
+            class="ss-input-checkbox-nested__option"
+            [formGroupName]="i"
+            [ngClass]="{'ss-input-checkbox-nested__option--separator':option.separator}"
+            [attr.data-automation]="'input-checkbox-nested-option'">
+            <span *ngIf="option.groupText"
+                  class="ss-input-checkbox-nested__option-group-text"
+                  [attr.data-automation]="'input-checkbox-nested-option-group-text'">{{ option.groupText }}</span>
+            <ss-checkbox-button [id]="option.id"
+                                [name]="option.id"
+                                [value]="option.value"
+                                [control]="getOptionFormGroupById(option.id).get('value')"
+                                [formControlName]="'value'"
+                                [isIndeterminate]="option.isIndeterminate"
+                                [dimension]="dimension"
+                                [automationAttr]="'input-checkbox-nested-option--' + option.id">
+                <div class="ss-input-checkbox-nested__option-content"
+                     [attr.title]="option.text"
+                     [attr.data-automation]="'input-checkbox-nested-option-content'">
+                    <div *ngIf="option.customVisualContent"
+                         class="ss-input-checkbox-nested__option-content__custom"
+                         [ngClass]="{'ss-input-checkbox-nested__option-content__custom--full-width': !option.text?.length}">
+                        <ng-container
+                            *ngTemplateOutlet="option.customVisualContent.template; context: {$implicit: option.customVisualContent?.data}">
+                        </ng-container>
+                    </div>
+                    <span *ngIf="option.text?.length"
+                          class="ss-input-checkbox-nested__option-text"
+                          [attr.data-automation]="'input-checkbox-nested-option-text'">{{ option.text }}</span>
+                </div>
+            </ss-checkbox-button>
+            <ss-input-checkbox-nested *ngIf="option.children"
+                                      [form]="getOptionFormGroupById(option.id)"
+                                      [options]="option.children"
+                                      [optionTemplate]="optionTemplate"
+                                      [dimension]="dimension"
+                                      (optionValueChanged)="handleOptionValueChange($event)"
+                                      (updateParentOptionByChildValueChange)="handleChildOptionValueChange(option)">
+            </ss-input-checkbox-nested>
+        </li>
+    </ul>
+</div>

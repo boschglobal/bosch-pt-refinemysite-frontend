@@ -1,0 +1,109 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+@import "constants/index";
+
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin multi-line-ellipsis($line-clamp: 2) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $line-clamp;
+    word-break: break-word;
+    text-overflow: ellipsis;
+}
+
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+@mixin dragging-shadow {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+@mixin shadow-1 {
+    box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.2);
+}
+
+@mixin shadow-2 {
+    box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+@mixin center-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin marker-line {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: $base-dimension--x05;
+    height: calc(100% - 4px);
+    background-color: $light_blue;
+}
+
+@mixin font-smoothing {
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin skeleton-loading($background-color: $light-grey-25, $animation-color: $white) {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background-color: $background-color;
+
+    &::after {
+        position: absolute;
+        content: '';
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(
+                90deg,
+                rgba($animation-color, 0) 0,
+                rgba($animation-color, 0.2) 20%,
+                rgba($animation-color, 0.5) 60%,
+                rgba($animation-color, 0));
+        animation: Shimmer 2s infinite;
+    }
+}
+
+@mixin infinite-rotate($timing: 2s) {
+    animation: Rotate $timing linear infinite;
+}
+
+@mixin button-reset() {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    appearance: none;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}

@@ -1,0 +1,63 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-task-card-preview"
+     [ngClass]="{
+        'ss-task-card-preview--selected': task.selected,
+        'ss-task-card-preview--focused': task.focused,
+        'ss-task-card-preview--dimmed-out': task.dimmed,
+        'ss-task-card-preview--css-has-supported': isCssHasSupported,
+     }"
+     [ngStyle]="{
+        'background-color': task.focused ? task.color.light : task.color.solid,
+        'border-color': task.color.solid
+     }"
+     [attr.data-automation]="'task-card-preview'">
+    <div class="ss-task-card-preview__line">
+        <ss-icon *ngIf="task.selected"
+                 class="ss-task-card-preview__select-icon"
+                 [name]="'check-frame-squared'"
+                 [color]="selectedCheckColor">
+        </ss-icon>
+        <ss-task-status-icon
+            *ngIf="!task.selected"
+            [status]="task.status"
+            class="ss-task-card-preview__status-icon">
+        </ss-task-status-icon>
+        <h3 class="ss-task-card-preview__title"
+            [attr.data-automation]="'task-card-preview-title'">
+            {{task.title}}
+        </h3>
+    </div>
+    <div class="ss-task-card-preview__line">
+        <div class="ss-task-card-preview__description">
+            <span [attr.data-automation]="'task-card-preview-description'">
+                {{task.description}}
+            </span>
+        </div>
+        <ss-task-card-indicators
+            class="ss-task-card-preview__icon-indicators"
+            [constraints]="task.constraints"
+            [predecessorRelations]="predecessorRelations"
+            [successorRelations]="successorRelations"
+            [statistics]="task.statistics"
+            [isDimmed]="task.dimmed"
+            [isFocused]="task.focused"
+            [isSelected]="task.selected"
+            [attr.data-automation]="'task-card-preview-icon-indicators'">
+        </ss-task-card-indicators>
+    </div>
+
+    <ss-marker class="ss-task-card-preview__marker"
+               [isVisible]="hasNews"
+               [triggerAnimation]="false"
+               [isCritical]="true"
+               [withBorder]="true"
+               [attr.data-automation]="'task-card-preview__marker'">
+    </ss-marker>
+</div>

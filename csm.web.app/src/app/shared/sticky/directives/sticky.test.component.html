@@ -1,0 +1,23 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-sticky__spacer"
+     [style.height]="spacerHeight">...</div>
+<ng-container *ngFor="let sticky of stickyElements; let i = index;">
+    <div class="ss-sticky__element"
+         ssSticky
+         [style.height]="elementHeight"
+         [stickyId]="sticky.id"
+         [stickyIndex]="sticky.index"
+         [stickyTop]="sticky.top"
+         [stickyBottom]="sticky.bottom"
+         [attr.data-automation]="'sticky-element-' + i">
+    </div>
+    <div class="ss-sticky__spacer"
+         [style.height]="spacerHeight">...</div>
+</ng-container>

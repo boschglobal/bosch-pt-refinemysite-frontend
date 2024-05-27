@@ -1,0 +1,49 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2022
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-working-days-holidays-list">
+    <h4 class="ss-working-days-holidays-list__title">{{'WorkingDays_NonWorkingDays_Title' | translate}}</h4>
+    <p class="ss-working-days-holidays-list__description">{{'WorkingDays_NonWorkingDays_Description' | translate}}</p>
+    <ul>
+        <li *ngFor="let holiday of holidaysList; trackBy: trackByFn"
+            class="ss-working-days-holidays-list__holiday"
+            [attr.data-automation]="'holiday-list-item'">
+            <div>
+                <span class="ss-working-days-holidays-list__holiday-date">
+                    {{holiday.dateLabel}}
+                </span>
+                <span class="ss-working-days-holidays-list__holiday-name">
+                    {{holiday.name}}
+                </span>
+                <span class="ss-working-days-holidays-list__holiday-weekday">
+                    {{holiday.weekDay}}
+                </span>
+            </div>
+            <ss-dropdown-menu
+                [buttonSize]="'normal'"
+                [buttonStyle]="'tertiary'"
+                [icon]="'options'"
+                [items]="actions"
+                (itemClicked)="handleDropdownItemClicked($event, holiday)"
+                [attr.data-automation]="'dropdown-holiday-menu'">
+            </ss-dropdown-menu>
+        </li>
+    </ul>
+    <button *ngIf="showCreateButton"
+        class="ss-working-days-holidays-list__new-holiday"
+        ss-button
+        [buttonSize]="'small'"
+        [buttonStyle]="'tertiary'"
+        (click)="handleCreateNewHoliday()"
+        [attr.data-automation]="'create-holiday-button'">
+        <ss-icon [name]="'more'"
+                 [dimension]="'normal'">
+        </ss-icon>
+        <span> {{ 'WorkingDays_AddNonWorkingDay_Label' | translate }}</span>
+    </button>
+</div>

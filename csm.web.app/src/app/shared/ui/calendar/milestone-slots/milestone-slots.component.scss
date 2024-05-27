@@ -1,0 +1,89 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2021
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+
+$slot-min-height: 34px;
+$slot-middle-position: 12px;
+$slot-placeholder-height: 24px;
+$slot-preview-background-color: $light_blue_a10;
+$slot-preview-outline-color: $light_blue;
+$slot-preview-outline-size: 2px;
+
+.ss-milestone-slots {
+    $this: &;
+    display: flex;
+
+    &__day {
+        height: 100%;
+        padding: $base-dimension--x025 0 $base-dimension;
+    }
+
+    .cdk-drop-list-dragging {
+        outline: $slot-preview-outline-size dashed $slot-preview-outline-color;
+        outline-offset: -$slot-preview-outline-size;
+        background: $slot-preview-background-color;
+
+        .cdk-drag {
+            transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+    }
+
+    &__slot {
+        display: flex;
+        padding: $base-dimension--x025 0;
+
+        #{$this}__milestone {
+            ::ng-deep .ss-milestone__title {
+                z-index: 1;
+            }
+        }
+    }
+
+    &--dragging {
+        min-height: $slot-min-height;
+
+        #{$this}__milestone {
+            pointer-events: none;
+        }
+    }
+
+    &__placeholder {
+        width: 100%;
+        height: $slot-placeholder-height;
+    }
+
+    &__preview {
+        @include dragging-shadow;
+        background: $white;
+        padding: $base-dimension--x025 $base-dimension + $base-dimension--x05 $base-dimension--x025 $base-dimension--x025;
+        transform: translate3d(-$slot-middle-position, -$slot-middle-position, 0);
+    }
+
+    & > li {
+        transition: 250ms width ease-in-out;
+
+        & + li:not(:nth-child(7n+1)) {
+            margin-left: $base-dimension--x025;
+        }
+
+        &:nth-child(7n+1) {
+            margin-left: $base-dimension;
+        }
+
+        &:nth-child(7n) {
+            margin-right: $base-dimension;
+        }
+
+    }
+}
+
+ul {
+    margin: 0;
+}

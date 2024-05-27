@@ -1,0 +1,28 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-time-scope-label" [ngSwitch]="timeScopeLabelCurrentState">
+    <div *ngSwitchCase="timeScopeLabelState.complete" [attr.data-automation]="'ss-time-scope-label'">
+        <span>{{start}}</span>
+        <span class="ss-time-scope-label__spacer"></span>
+        <span>{{end}}</span>
+    </div>
+    <div *ngSwitchCase="timeScopeLabelState.hasStart" [attr.data-automation]="'ss-time-scope-label'">
+        <span>{{start}}</span>
+        <span class="ss-time-scope-label__spacer"></span>
+        <button class="ss-button ss-button--secondary-clear-blue" (click)="setEnd()" [attr.data-automation]="'ss-time-scope-label__set-end'">{{ 'Generic_AddEndDate' | translate }}</button>
+    </div>
+    <div *ngSwitchCase="timeScopeLabelState.hasEnd" [attr.data-automation]="'ss-time-scope-label'">
+        <button class="ss-button ss-button--secondary-clear-blue" (click)="setStart()" [attr.data-automation]="'ss-time-scope-label__set-start'">{{ 'Generic_AddStartDate' | translate }}</button>
+        <span class="ss-time-scope-label__spacer"></span>
+        <span>{{end}}</span>
+    </div>
+    <div *ngSwitchCase="timeScopeLabelState.empty" [attr.data-automation]="'ss-time-scope-label'">
+        <button class="ss-button ss-button--secondary-clear-blue" (click)="setStart()" [attr.data-automation]="'ss-time-scope-label__set-start'">{{ 'Generic_AddDate' | translate }}</button>
+    </div>
+</div>

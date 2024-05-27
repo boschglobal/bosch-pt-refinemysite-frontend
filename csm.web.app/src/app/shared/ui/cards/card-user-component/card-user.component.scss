@@ -1,0 +1,129 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/index";
+
+$picture-size: $base-dimension--x6;
+$picture-size--small: $base-dimension--x4;
+$picture-size--tiny: 20px;
+
+.ss-card-user {
+    display: flex;
+    flex-direction: column;
+
+    &__personal {
+        display: flex;
+        align-items: center;
+        color: $dark_blue;
+    }
+
+    &__contact {
+        font-size: $font-size-sm;
+        padding: $base-dimension 0 0 $base-dimension;
+
+        > span:not(:last-child) {
+            display: block;
+            margin-bottom: $base-dimension;
+        }
+
+        ::ng-deep .ss-mail-link,
+        ::ng-deep .ss-phone-link {
+
+            .ss-icon {
+                margin-right: $base-dimension--x4;
+            }
+        }
+    }
+
+    &__picture {
+        min-width: $picture-size;
+        min-height: $picture-size;
+        border: solid 1px $light_grey_50;
+        border-radius: 100%;
+        background-size: cover;
+        background-position: center center;
+
+        &--small {
+            min-width: $picture-size--small;
+            min-height: $picture-size--small;
+        }
+
+        &--tiny {
+            min-width: $picture-size--tiny;
+            min-height: $picture-size--tiny;
+        }
+
+        &--default {
+            border: none;
+            background-color: $yellow_12_5;
+            padding: 9px;
+
+            ::ng-deep .ss-icon {
+                fill: $yellow;
+            }
+        }
+    }
+
+    &__information {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        margin-left: $base-dimension--x2;
+        min-width: 0;
+        flex: 1;
+
+        &--special-status {
+            justify-content: start;
+            flex-direction: row;
+            color: $light_grey;
+            align-items: center;
+        }
+
+        &-title, &-status {
+            font-size: $font-size-base;
+            align-items: center;
+            display: block;
+            margin: auto 0;
+        }
+
+        &-description {
+            font-size: $font-size-sm;
+        }
+
+        &-title,
+        &-status,
+        &-description {
+            @include ellipsis();
+        }
+
+        &--small,
+        &--tiny {
+            .ss-card-user__information {
+                &-title, &-status, &-description {
+                    margin-bottom: 0;
+                    color: $dark_grey;
+                    font-size: $font-size-sm;
+                    word-break: break-word;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                }
+
+                &-description {
+                    font-size: $font-size-xs;
+                    color: $dark_grey_75;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .ss-flyout-tooltip {
+    @include caption-1();
+}

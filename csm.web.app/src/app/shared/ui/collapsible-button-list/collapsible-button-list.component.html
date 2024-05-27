@@ -1,0 +1,27 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-collapsible-button-list">
+    <div #inlineButtons class="ss-collapsible-button-list__inline-buttons" [attr.data-automation]="'inline-buttons'">
+        <ng-content select="[inline]"></ng-content>
+    </div>
+    <button *ngIf="showDropdownButton" class="ss-button ss-button--normal ss-button--no-padding ss-collapsible-button-list__dropdown-button"
+            ssFlyout
+            [flyoutId]="collapsedButtonsFlyoutId"
+            [flyoutTemplate]="collapsedButtonsTemplate"
+            [flyoutShowOverlay]="false"
+            [attr.data-automation]="'dropdown-button'">
+        <ss-icon [name]="'options'"></ss-icon>
+    </button>
+</div>
+
+<ng-template #collapsedButtonsTemplate>
+    <div class="ss-collapsible-button-list ss-collapsible-button-list__collapsed-buttons" (click)="handleCollapsedButtonClick()">
+        <ng-content select="[collapsed]"></ng-content>
+    </div>
+</ng-template>

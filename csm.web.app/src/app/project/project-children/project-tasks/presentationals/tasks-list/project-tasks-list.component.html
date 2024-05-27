@@ -1,0 +1,90 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-list">
+    <ss-collapsible-list [records]="tasks"
+                         [isLoading]="isLoading"
+                         [isSelecting]="isSelecting"
+                         [isRowSelectable]="isRowSelectable"
+                         [selectedRows]="selectedRows"
+                         (selectionChange)="onSelectionChange.emit($event)">
+        <ng-template #primaryTemplate let-record>
+            <div class="ss-project-tasks-list__primary">
+                <div class="row ss-project-tasks-list__primary--holder">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="ss-project-tasks-list__primary--status">
+                            <ss-task-status-icon [status]="record.status"></ss-task-status-icon>
+                            <a (click)="onClickDetails(record)">{{record.name}}</a>
+                        </div>
+                        <div class="ss-project-tasks-list__primary--work-area-news"
+                             [attr.data-automation]="'tasks-list-work-area-news'">
+                            <div class="ss-project-tasks-list__primary--news">
+                                <ss-project-tasks-news-label [news]="record.news"></ss-project-tasks-news-label>
+                            </div>
+                            <p *ngIf="record.workArea"
+                               class="ss-project-tasks-list__primary--work-area"
+                               [attr.data-automation]="'tasks-list-work-area'">
+                                {{record.workArea.position}}. {{record.workArea.name}}
+                            </p>
+                        </div>
+                    </div>
+                    <div *ssIfMediaQuery="['lg']" class="col-xs-12 col-sm-6 col-md-2">
+                        <div class="ss-project-tasks-list__primary--dates">
+                            <p *ngIf="record.start">
+                                {{'Generic_Start' | translate}}:
+                                <span [ssMessageDate]="record.start"></span>
+                            </p>
+                            <p *ngIf="record.end">
+                                {{'Generic_Due' | translate}}:
+                                <span [ssMessageDate]="record.end"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                        <ss-project-tasks-card-assignee *ssIfMediaQuery="['sm', 'md', 'lg']"
+                                                        [projectTaskCardAssigneeModel]="record.company">
+                        </ss-project-tasks-card-assignee>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #secondaryTemplate let-record>
+            <div class="ss-project-tasks-list__secondary">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div *ssIfMediaQuery="['xs', 'sm', 'md']" class="ss-project-tasks-list__secondary--dates">
+                            <p *ngIf="record.start">{{'Generic_Start' | translate}}: <span
+                                [ssMessageDate]="record.start"></span></p>
+                            <p *ngIf="record.end">{{'Generic_Due' | translate}}: <span
+                                [ssMessageDate]="record.end"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-12">
+                        <div class="ss-project-tasks-list__secondary--crafts">
+                            <ss-craft-label [craft]="record.craft"
+                                            [hasEllipsis]="true"></ss-craft-label>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <ss-project-tasks-card-assignee *ssIfMediaQuery="['xs']"
+                                                        class="ss-project-tasks-list__secondary--company"
+                                                        [projectTaskCardAssigneeModel]="record.company">
+                        </ss-project-tasks-card-assignee>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <button (click)="onClickDetails(record)"
+                                class="ss-button ss-button--secondary-ghost-blue ss-button--normal"
+                                [attr.data-automation]="'task-detail-button'">
+                            {{'Generic_Details' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ss-collapsible-list>
+</div>

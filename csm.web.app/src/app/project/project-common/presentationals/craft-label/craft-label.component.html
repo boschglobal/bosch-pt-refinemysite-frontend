@@ -1,0 +1,18 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-craft-label" [ngClass]="{'ss-craft-label--ellipsis':hasEllipsis}">
+    <span class="ss-craft-label__position"
+          [attr.data-automation]="'craft-label-position'">{{craft.position}}.</span>
+    <span class="ss-craft-label__color"
+          [style.background]="craft.color"
+          [attr.data-automation]="'craft-label-color'">
+    </span>
+    <span class="ss-craft-label__name"
+          [attr.data-automation]="'craft-label-name'">{{craft.name}}</span>
+</div>

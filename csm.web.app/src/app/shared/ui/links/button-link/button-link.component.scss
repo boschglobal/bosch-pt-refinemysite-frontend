@@ -1,0 +1,29 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2023
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+
+.ss-button-link {
+    display: inline;
+    font-size: $font-size-sm;
+    overflow-wrap: anywhere;
+    white-space: pre-line;
+    hyphens: auto;
+    text-align: start;
+
+    &--label {
+        margin: 0;
+        cursor: pointer;
+        display: inline;
+    }
+
+    &--icon {
+        display: inline-block;
+        margin: 0 0 (-$base-dimension--x05) (-$base-dimension--x025);
+    }
+}

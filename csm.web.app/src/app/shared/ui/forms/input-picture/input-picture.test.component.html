@@ -1,0 +1,20 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="formGroup">
+    <ss-input-picture
+            [automationAttr]="defaultInputState.picture.automationAttr"
+            [name]="defaultInputState.picture.name"
+            [label]="defaultInputState.picture.label | translate"
+            [isRequired]="defaultInputState.picture.isRequired"
+            [accept]="defaultInputState.picture.accept"
+            [defaultPicture]="defaultInputState.picture.value"
+            [control]="formGroup.get(defaultInputState.picture.controlName)"
+            formControlName="picture">
+    </ss-input-picture>
+</form>

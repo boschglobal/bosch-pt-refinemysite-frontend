@@ -1,0 +1,19 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="alerts.length > 0"
+     class="ss-alert-list">
+    <ul>
+        <li *ngFor="let alert of alerts; trackBy: trackByFn;"
+            [attr.data-automation]="'ss-alert-list__alert'">
+            <ss-alert [alert]="alert"
+                      (close)="handleClose($event)">
+            </ss-alert>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-milestone-type-label">
+    <ss-milestone-marker
+        class="ss-milestone-type-label__marker"
+        [milestoneMarker]="milestoneMarker"></ss-milestone-marker>
+    <span class="ss-milestone-type-label__label"
+          [attr.data-automation]="'milestone-type-label-label'">
+        {{ craftName || (milestoneType | translate)}}
+    </span>
+</div>

@@ -1,0 +1,100 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-calendar-export">
+    <ss-loader [isLoading]="isLoading"></ss-loader>
+    <form [formGroup]="form">
+        <div class="row">
+            <fieldset class="col-12">
+                <legend>{{'Generic_Format' | translate}}</legend>
+                <ul>
+                    <li *ngFor="let format of formats">
+                        <ss-radio-button
+                            [automationAttr]="'format'"
+                            [name]="'format'"
+                            [value]="format.value"
+                            [dimension]="'small'"
+                            [control]="form.get('format')"
+                            formControlName="format">
+                            {{getFormatLabel(format, format.label | translate, 'Generic_Beta' | translate)}}
+                        </ss-radio-button>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="col-sm-12">
+                <ss-input-datepicker
+                    [selectRange]="true"
+                    [automationAttr]="'range'"
+                    [name]="'range'"
+                    [rangeLabel]="{start: 'Generic_StartDate' | translate, end: 'Generic_EndDate' | translate}"
+                    [displayErrors]="true"
+                    [isRequiredStart]="true"
+                    [isRequiredEnd]="true"
+                    [control]="form.get('range')"
+                    formControlName="range">
+                </ss-input-datepicker>
+            </div>
+            <fieldset *ngIf="!betaFormatSelected"
+                      class="col-12"
+                      [attr.data-automation]="'include-options'">
+                <legend>{{'Generic_Options' | translate}}</legend>
+                <ss-checkbox-button
+                    [automationAttr]="'includeMilestones'"
+                    [name]="'includeMilestones'"
+                    [formControlName]="'includeMilestones'"
+                    [control]="form.get('includeMilestones')">
+                    {{'Calendar_Export_IncludeMilestonesTitle' | translate}}
+                </ss-checkbox-button>
+                <ss-checkbox-button
+                    [automationAttr]="'includeDayCards'"
+                    [name]="'includeDayCards'"
+                    [formControlName]="'includeDayCards'"
+                    [control]="form.get('includeDayCards')">
+                    <span class="ss-calendar-export__checkbox-text">
+                        <span class="ss-calendar-export__checkbox-text__title">
+                            {{'Calendar_Export_IncludeDayCardsTitle' | translate}}
+                        </span>
+                        <span class="ss-calendar-export__checkbox-text__sub_title">
+                            {{'Calendar_Export_IncludeDayCardsSubTitle' | translate}}
+                        </span>
+                        <span class="ss-calendar-export__checkbox-text__invalid"
+                              [ngClass]="{'ss-calendar-export__checkbox-text__invalid--hidden' : !invalidDateInterval  || !includeDayCardsSelected}">
+                            {{'Calendar_Export_IncludeDayCardsInvalidDates' | translate: translationParameters}}
+                        </span>
+                    </span>
+                </ss-checkbox-button>
+            </fieldset>
+            <div *ngIf="betaFormatSelected"
+                 class="col-12"
+                 [attr.data-automation]="'beta-format-warning'">
+                <ss-callout
+                    [type]="betaFormatWarningType"
+                    [message]="'Calendar_Export_BetaFormatWarning' | translate:{format: selectedFormatLabel | translate}">
+                </ss-callout>
+            </div>
+        </div>
+        <div class="ss-calendar-export__buttons">
+            <div class="ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'export'"
+                        [disabled]="!isFormValid()"
+                        (click)="handleDownload()">
+                    {{'Generic_Export' | translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

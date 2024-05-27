@@ -1,0 +1,55 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+/docs
+
+# dependencies
+/node_modules
+
+# Ignore all ...
+.idea/*
+# ... except:
+!.idea/codeStyles/
+!.idea/copyright/
+!.idea/fileTemplates/
+!.idea/inspectionProfiles/
+!.idea/scopes/
+!.idea/file.template.settings.xml
+!.idea/jsLibraryMappings.xml
+!.idea/modules.xml
+!.idea/typescript-compiler.xml
+!.idea/vcs.xml
+!.idea/web-app.iml
+.web-app.iml
+
+# IDE - VSCode
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.angular/cache
+/.sass-cache
+/connect.lock
+/coverage
+/target
+/typings
+*.log
+eslint-report.json
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Sonar
+.sonar
+.scannerwork
+
+# Helm charts
+/charts/**/*.tgz

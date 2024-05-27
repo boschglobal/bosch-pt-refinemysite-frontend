@@ -1,0 +1,46 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-day-card-reason-capture">
+    <ss-loader [isLoading]="isSubmitting || isRequestingDayCardReasons"></ss-loader>
+    <form [formGroup]="form">
+        <div class="ss-day-card-reason-capture__title">
+            <ng-content></ng-content>
+        </div>
+        <ul class="ss-day-card-reason-capture__list">
+            <li *ngFor="let reason of dayCardReasons"
+                class="ss-day-card-reason-capture__list-item">
+                <ss-radio-button
+                    [automationAttr]="'day-card-reason-capture-list-item'"
+                    [name]="'reason'"
+                    [value]="reason.key"
+                    [dimension]="'tiny'"
+                    [control]="form.get('reason')"
+                    formControlName="reason">
+                    {{reason.name | translate}}
+                </ss-radio-button>
+            </li>
+        </ul>
+        <div class="ss-day-card-reason-capture__buttons ss-button-group">
+            <button type="button"
+                    class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                    [attr.data-automation]="'cancel'"
+                    (click)="handleCancel()">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'create'"
+                    [disabled]="!isFormValid()"
+                    (click)="handleSubmit()">
+                {{'Generic_Ok'| translate}}
+            </button>
+        </div>
+    </form>
+</div>

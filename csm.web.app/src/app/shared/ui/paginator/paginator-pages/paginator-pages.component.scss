@@ -1,0 +1,93 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/mixins";
+@import "assets/styles/typography/mixins";
+@import "assets/styles/vendor/bootstrap/index";
+
+$paginator-dot-size: $base-dimension--x4;
+
+@mixin center-items {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin arrow-default {
+    cursor: pointer;
+    fill: $black;
+}
+
+.ss-paginator-pages {
+    @include center-items;
+    user-select: none;
+    color: $black;
+
+    &__shortcut {
+        @include center-items;
+
+        &--previous, &--next {
+            @include arrow-default;
+
+            &:hover {
+                fill: $light_blue;
+            }
+        }
+
+        &--previous {
+            margin-right: 10px;
+        }
+
+        &--next {
+            margin-left: 10px;
+        }
+
+        &--disabled {
+            cursor: default;
+            fill: $light_grey;
+
+            &:hover {
+                fill: $light_grey;
+            }
+        }
+    }
+
+    &__page {
+        @include center-items;
+        @include body-2();
+        width: $paginator-dot-size;
+        height: $paginator-dot-size;
+        margin: 0 4px;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover:not(.ss-paginator-pages__page--active) {
+            background: $light_blue;
+            color: white;
+        }
+
+        &--active {
+            color: white;
+            background: $dark_blue;
+            cursor: pointer;
+        }
+
+        &-wrapper {
+            @include center-items;
+        }
+    }
+
+    &__points {
+        @include center-items;
+        width: $paginator-dot-size;
+        height: $paginator-dot-size;
+        margin: 0 5px;
+        color: $black;
+    }
+}

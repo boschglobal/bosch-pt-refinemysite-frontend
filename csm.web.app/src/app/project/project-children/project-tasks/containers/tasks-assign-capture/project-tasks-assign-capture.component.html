@@ -1,0 +1,63 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-project-tasks-assign-capture">
+    <ss-loader [isLoading]="isSubmitting"></ss-loader>
+    <form [formGroup]="tasksAssignForm">
+        <span class="ss-project-tasks-assign-capture__hint">{{'Task_Assign_Message' | translate}}</span>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <ss-input-select-dropdown
+                        [automationAttr]="'company'"
+                        [name]="'company'"
+                        [isRequired]="true"
+                        [label]="'Participant_Company_Label' | translate"
+                        [control]="tasksAssignForm.get('company')"
+                        [options]="companyList"
+                        [emptyOptionMessageKey]="'Generic_NoSelection'"
+                        formControlName="company">
+                </ss-input-select-dropdown>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <ss-input-select-dropdown
+                        [automationAttr]="'participant'"
+                        [control]="tasksAssignForm.get('participant')"
+                        [emptyOptionMessageKey]="'Generic_NoSelection'"
+                        [isRequired]="true"
+                        [label]="'Task_Assignee_Title' | translate"
+                        [name]="'participant'"
+                        [optionTemplate]="participantOptionTemplate"
+                        [options]="participantList"
+                        formControlName="participant">
+                    <ng-template #participantOptionTemplate let-option>
+                        <div class="participant" [ssBackgroundImage]="option.value.picture"></div>
+                    </ng-template>
+                </ss-input-select-dropdown>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 ss-button-group">
+                <button type="button"
+                        class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                        [attr.data-automation]="'cancel-assign'"
+                        (click)="handleCancel()">
+                    {{'Generic_Cancel' | translate}}
+                </button>
+                <button type="button"
+                        ss-button
+                        [buttonProportional]="true"
+                        [attr.data-automation]="'submit-assign'"
+                        [disabled]="!isFormValid()"
+                        (click)="onSubmitForm()">
+                    {{'Task_AssignAndSend_Label' | translate}} ({{selectedTasksNumber}})
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

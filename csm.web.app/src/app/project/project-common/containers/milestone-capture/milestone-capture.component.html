@@ -1,0 +1,85 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<form [formGroup]="form"
+      class="ss-milestone-capture">
+    <ss-input-text
+        #titleInput
+        class="ss-milestone-capture__title"
+        [automationAttr]="'title'"
+        [name]="'title'"
+        [label]="'Milestone_Title' | translate"
+        [isRequired]="true"
+        [maxCharacter]="validations.title.maxLength"
+        [control]="form.get('title')"
+        formControlName="title">
+    </ss-input-text>
+    <ss-input-select-dropdown
+        class="ss-milestone-capture__type"
+        [automationAttr]="'type'"
+        [name]="'type'"
+        [label]="'Milestone_Type' | translate"
+        [options]="typeOptions"
+        [isRequired]="true"
+        [control]="form.get('type')"
+        [optionTemplate]="optionTemplate"
+        formControlName="type">
+        <ng-template #optionTemplate let-option>
+            <ss-milestone-marker [milestoneMarker]="option.value.marker"></ss-milestone-marker>
+        </ng-template>
+    </ss-input-select-dropdown>
+    <ss-input-datepicker
+        class="ss-milestone-capture__date"
+        [automationAttr]="'date'"
+        [name]="'date'"
+        [label]="'Generic_Date' | translate"
+        [displayErrors]="true"
+        [isRequired]="true"
+        [control]="form.get('date')"
+        formControlName="date">
+    </ss-input-datepicker>
+    <ss-input-select-dropdown
+        #locationInput
+        class="ss-milestone-capture__location"
+        [automationAttr]="'location'"
+        [name]="'location'"
+        [label]="'Generic_WorkingArea' | translate"
+        [options]="locationOptions"
+        [isRequired]="true"
+        [control]="form.get('location')"
+        formControlName="location">
+    </ss-input-select-dropdown>
+    <ss-input-textarea
+        class="ss-milestone-capture__description"
+        [automationAttr]="'description'"
+        [name]="'description'"
+        [label]="'Generic_Note' | translate"
+        [maxCharacter]="validations.description.maxLength"
+        [control]="form.get('description')"
+        formControlName="description">
+    </ss-input-textarea>
+    <span class="ss-milestone-capture__required-info">* {{'Generic_SaveCondition' | translate}}</span>
+    <div class="ss-milestone-capture__buttons">
+        <div class="ss-button-group">
+            <button type="button"
+                    class="ss-button ss-button--secondary-ghost-grey ss-button--normal"
+                    [attr.data-automation]="'cancel'"
+                    (click)="handleCancel()">
+                {{'Generic_Cancel' | translate}}
+            </button>
+            <button type="button"
+                    ss-button
+                    [buttonProportional]="true"
+                    [attr.data-automation]="'submit'"
+                    [disabled]="!isFormValid()"
+                    (click)="handleSubmit()">
+                {{createMode ? ('Generic_Create' | translate) : ('Generic_Update' | translate)}}
+            </button>
+        </div>
+    </div>
+</form>

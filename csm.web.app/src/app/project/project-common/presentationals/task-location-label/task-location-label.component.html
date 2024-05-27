@@ -1,0 +1,33 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2023
+  ~
+  ~ **************************************************************************
+  -->
+
+<div *ngIf="workArea || task.location || task.permissions.canUpdate"
+     class="ss-task-location-label"
+     [attr.data-automation]="'task-location-label'">
+    <ss-icon [name]="'workarea'"
+             class="ss-task-location-label__icon"></ss-icon>
+    <div *ngIf="workArea || task.location"
+         class="ss-task-location-label__content">
+        <span *ngIf="workArea"
+              class="ss-task-location-label__workarea"
+              [attr.data-automation]="'task-location-label-workarea'">
+            {{workArea.position}}. {{workArea.name}}
+        </span>
+        <span *ngIf="task.location"
+              class="ss-task-location-label__location"
+              [attr.data-automation]="'task-location-label-location'">
+            {{task.location}}
+        </span>
+    </div>
+    <button *ngIf="!workArea && !task.location"
+            class="ss-button ss-button--secondary-clear-blue ss-task-location-label__button"
+            (click)="handleAddLocation()"
+            [attr.data-automation]="'task-location-label-button'">
+        {{'Generic_AddLocation' | translate}}
+    </button>
+</div>

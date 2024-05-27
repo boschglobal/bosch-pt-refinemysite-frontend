@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-menu-list
+    class="ss-milestone-type-options"
+    [itemsList]="items"
+    (itemClicked)="handleSelect($event)">
+</ss-menu-list>
+
+<ng-template #markerTemplate let-item>
+    <ss-milestone-marker [milestoneMarker]="item.value.marker"></ss-milestone-marker>
+</ng-template>

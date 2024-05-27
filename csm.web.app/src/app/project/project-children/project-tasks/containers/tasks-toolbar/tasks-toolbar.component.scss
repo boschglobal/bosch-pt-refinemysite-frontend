@@ -1,0 +1,23 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2022
+ *
+ * *************************************************************************
+ */
+
+@import "assets/styles/constants/index";
+@import "assets/styles/vendor/bootstrap/index";
+
+$collapsed-button-min-width: $base-dimension * 23;
+
+.ss-tasks-toolbar__actions {
+    display: flex;
+}
+
+::ng-deep .ss-project-tasks-create,
+::ng-deep .ss-project-tasks-assign-capture,
+::ng-deep .ss-project-tasks-send-capture {
+    background-color: $light_grey_25;
+    margin-bottom: $base-dimension--x2;
+}

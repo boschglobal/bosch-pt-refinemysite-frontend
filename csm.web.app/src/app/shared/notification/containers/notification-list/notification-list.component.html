@@ -1,0 +1,87 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<div class="ss-notification-list">
+    <button
+        ss-button
+        [buttonStyle]="'tertiary-grey'"
+        [buttonNoPadding]="true"
+        [buttonActive]="isPanelOpen"
+        (click)="togglePanel()"
+        [attr.data-automation]="'notification-button'">
+        <ss-icon [name]="'notification'" [badge]="hasNewNotifications"></ss-icon>
+    </button>
+
+    <div *ngIf="isPanelOpen" class="ss-notification-list__panel" [attr.data-automation]="'notification-panel'">
+        <header class="ss-notification-list__header">
+            <button
+                class="ss-notification-list__close-button"
+                ss-button
+                [buttonNoPadding]="true"
+                [buttonStyle]="'tertiary-black'"
+                [buttonSize]="'normal'"
+                (click)="togglePanel()">
+                <ss-icon [name]="'arrow'"></ss-icon>
+            </button>
+
+            <div class="ss-notification-list__title">
+                <span>{{ 'Notifications_List_Header' | translate }}</span>
+            </div>
+        </header>
+
+        <div *ngIf="isListVisible()" class="ss-notification-list__list-container">
+
+            <ng-container *ngTemplateOutlet="loadingButton; context: {$implicit: loadRecentButton}"></ng-container>
+
+            <ul class="ss-notification-list__list-wrapper">
+                <li *ngFor="let notification of notifications;trackBy: trackByFn">
+                    <a [routerLink]="getNotificationRouterLink(notification)"
+                       [queryParams]="getNotificationRouterQueryParams(notification)"
+                       (click)="handleNotificationClick(notification)">
+                        <ss-notification
+                            [notification]="notification"
+                            [attr.data-automation]="'notification-card'">
+                        </ss-notification>
+                    </a>
+                </li>
+            </ul>
+
+            <ng-container *ngTemplateOutlet="loadingButton; context: {$implicit: loadMoreButton}"></ng-container>
+        </div>
+
+        <ss-no-items *ngIf="isEmptyMessageVisible()"
+                     [icon]="'notification'"
+                     [title]="'Notifications_NoRecords_Label' | translate"
+                     class="ss-notification-list__no-items"
+                     [attr.data-automation]="'notification-empty'">
+        </ss-no-items>
+
+        <ss-no-items *ngIf="showError"
+                     [icon]="'connection-off'"
+                     [title]="'Notifications_NoService_Label' | translate"
+                     [description]="'Generic_TryAgainLater' | translate"
+                     class="ss-notification-list__no-items"
+                     [attr.data-automation]="'notification-error'">
+        </ss-no-items>
+
+        <ss-loader class="ss-notification-list__loader" [isLoading]="isLoadingAll"></ss-loader>
+    </div>
+</div>
+
+<ng-template #loadingButton let-button>
+    <button *ngIf="button.isVisible"
+            class="ss-button ss-button--small ss-button--secondary-clear-blue ss-notification-list__load-button"
+            (click)="button.load()"
+            [attr.data-automation]="button.automation">
+        <ss-tiny-loader *ngIf="button.isLoading"
+                        class="ss-notification-list__load-button-icon"
+                        [attr.data-automation]="'notification-load-more-loader'">
+        </ss-tiny-loader>
+        <span>{{ (button.isLoading ? button.loadingLabel : button.label) | translate}}</span>
+    </button>
+</ng-template>

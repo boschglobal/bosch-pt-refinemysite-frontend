@@ -1,0 +1,33 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section>
+    <ss-toolbar [title]="'Generic_ProjectInformationLabel'" ssSticky [stickyTop]="54" [stickyId]="'toolbar'" [stickyBorderBottom]="true">
+        <div actions>
+            <ss-collapsible-button-list>
+                <div inline>
+                    <button *ngIf="hasEditPermission"
+                            ss-button
+                            [buttonSize]="'small'"
+                            [buttonStyle]="'tertiary-black'"
+                            [buttonNoPadding]="true"
+                            [title]="'Generic_EditProjectLabel' | translate"
+                            [routerLink]="projectEditURI"
+                            [attr.data-automation]="'edit-project-button'">
+                        <ss-icon [name]="'edit'" [dimension]="'normal'" [color]="toolbarInlineButtonsColor"></ss-icon>
+                    </button>
+                </div>
+            </ss-collapsible-button-list>
+        </div>
+    </ss-toolbar>
+    <ss-project-information-content
+        [project]="project"
+        [contacts]="contacts"
+        [hasEditPermission]="hasEditPermission">
+    </ss-project-information-content>
+</section>

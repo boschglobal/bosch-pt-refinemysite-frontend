@@ -1,0 +1,17 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2020
+  ~
+  ~ **************************************************************************
+  -->
+
+<section class="ss-project-kpis-section">
+    <header class="ss-project-kpis-section__header">
+        <h4 *ngIf="title">{{ title }}</h4>
+        <ng-content select="[header]"></ng-content>
+    </header>
+    <div class="ss-project-kpis-section__content">
+        <ng-content></ng-content>
+    </div>
+</section>

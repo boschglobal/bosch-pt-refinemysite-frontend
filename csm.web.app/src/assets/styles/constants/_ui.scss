@@ -1,0 +1,26 @@
+/*
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2020
+ *
+ * *************************************************************************
+ */
+@import "./_dimensions.scss";
+
+$supergraphic-height: 6px;
+$header-height: $base-dimension--x6;
+$toolbar-height: $base-dimension--x6;
+$tab-panels-height: $base-dimension--x6;
+$paginator-height: $base-dimension--x6;
+$active-border-size: $base-dimension--x05;
+$header-toolbar-height: $header-height + $toolbar-height + $supergraphic-height;
+$navbar-width: $base-dimension--x6;
+$navbar-height: $base-dimension--x6;
+
+:root {
+  @supports (height: 100dvh) {
+    --full-height: 100dvh;
+  }
+}
+
+$full-height: var(--full-height, 100vh);

@@ -1,0 +1,49 @@
+/*!
+ * *************************************************************************
+ *
+ * Copyright: Robert Bosch Power Tools GmbH, 2024
+ *
+ * *************************************************************************
+ */
+
+.heading {
+    color: $dark_grey;
+    margin: 0;
+}
+
+h1 {
+    @extend .heading;
+    font-size: 3rem;
+    font-family: RmS-Light, sans-serif;
+    font-weight: $font-weight-base;
+    line-height: 52px;
+    margin-top: 56px;
+}
+
+h2 {
+    @extend .heading;
+    font-family: RmS-Light, sans-serif;
+    font-size: $font-size-xxxl;
+    line-height: 40px;
+}
+
+h3 {
+    @extend .heading;
+    font-family: RmS-Light, sans-serif;
+    font-size: $font-size-xl;
+    line-height: 28px;
+}
+
+h4 {
+    @extend .heading;
+    font-family: RmS-Light, sans-serif;
+    font-size: $font-size-lg;
+    line-height: 24px;
+}
+
+h6 {
+    @extend .heading;
+    font-size: $font-size-base;
+    line-height: 20px;
+    font-weight: $font-weight-base;
+}

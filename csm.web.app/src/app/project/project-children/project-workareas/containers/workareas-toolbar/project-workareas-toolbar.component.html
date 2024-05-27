@@ -1,0 +1,34 @@
+<!--
+  ~ **************************************************************************
+  ~
+  ~ Copyright: Robert Bosch Power Tools GmbH, 2021
+  ~
+  ~ **************************************************************************
+  -->
+
+<ss-toolbar ssSticky
+            [title]="'Project_Dashboard_WorkareaTitle'"
+            [stickyTop]="54"
+            [stickyId]="'toolbar'"
+            [stickyBorderBottom]="true">
+    <div actions>
+        <button *ngIf="hasCreatePermission"
+                ss-button
+                [buttonActive]="showCreateWorkarea"
+                [buttonSize]="'small'"
+                [buttonStyle]="'tertiary'"
+                (click)="toggleCreateWorkarea()"
+                [attr.data-automation]="'create-workarea-button'">
+            <ss-icon [name]="'more'" [dimension]="'normal'"></ss-icon>
+            <span>
+                <span class="ss-project-workareas-toolbar__label--normal">{{ 'Workarea_Create_Label' | translate }}</span>
+                <span class="ss-project-workareas-toolbar__label--small">{{ 'Generic_Add' | translate }}</span>
+            </span>
+        </button>
+    </div>
+</ss-toolbar>
+<ss-project-workareas-create
+    *ngIf="showCreateWorkarea"
+    (onCancel)="toggleCreateWorkarea()"
+    [attr.data-automation]="'project-workarea-create'">
+</ss-project-workareas-create>
