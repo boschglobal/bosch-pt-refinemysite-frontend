@@ -282,10 +282,12 @@ The sources in this repository are Open Source released under [MIT](LICENSE) lic
 - Benjamin Höhensteiger
 - [Christian Schaible](https://github.com/cschaible)
 - Corvin Schapöhler
+- Edgar Pires
+- Filipe Taborda
 - Katharina Kleiner
 - [Lars Dülfer](https://github.com/larsduelfer)
 - Mareike Lowinski
-- Mert Yücel
+- [Mert Yücel](https://github.com/mertyuecel)
 - Nicolas Steimmig
 - Peter Kleimann
 - Rafael Franca
