@@ -290,6 +290,8 @@ The sources in this repository are Open Source released under [MIT](LICENSE) lic
 - Mareike Lowinski
 - [Mert Yücel](https://github.com/mertyuecel)
 - Nicolas Steimmig
+- Nicole Seifert
+- Pedro Letra
 - Peter Kleimann
 - Rafael Franca
 - Renato Cruz
